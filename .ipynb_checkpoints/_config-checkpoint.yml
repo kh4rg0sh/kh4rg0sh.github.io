@@ -20,7 +20,7 @@ timezone:
 
 title: kh4rg0sh's blog # the main title
 
-tagline: A blog where I would be posting interesting things that i come across # it will display as the sub-title
+tagline: A blog where I would be posting nerdy things # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.

@@ -1,0 +1,124 @@
+---
+title: UIUCTF2023 Crypto Writeups
+date: 2023-06-12 00:00:00 +0530
+categories: [CTF]
+tags: [cryptography]
+math: true
+---
+I participated in UIUCTF2023 with the team <a href="https://ctftime.org/team/16691/">InfoSecIITR</a>. We finished $37$th out of the $815$ teams that participated in this contest. I was able to do $4$ cryptography challenges as a part of my contribution to our team on this contest. The other two cryptography challenges were done by my team-mates, nevertheless I'll explain the writeups for all $6$ of them in this blogpost. 
+## Three-Time Pad [Crypto]
+```
+"We've been monitoring our adversaries' communication channels, but they encrypt their data with XOR one-time pads! However, we hear rumors that they're reusing the pads...\n\nEnclosed are three encrypted messages. Our mole overheard the plaintext of message 2. Given this information, can you break the enemy's encryption and get the plaintext of the other messages?"
+```
+
+We are then provided with the attachments to files <a href="/ignore/uiu/c1">c1</a>
+, <a href="/ignore/uiu/c2">c2</a>, <a href="/ignore/uiu/c3">c3</a>, <a href="/ignore/uiu/p2">p2</a>.
+
+### Solution
+As the challenge statement states, we are provided with three ciphertexts and a plaintext. The encryption scheme performs xor of hidden key and plaintext to obtain the ciphertext. Since, we know the ciphertext and the corresponding plaintext, we can recover the hidden key using the property that $ x \oplus x = 0$. Then we reuse that hidden key to decrypt other ciphertexts. 
+```python
+from pwn import *
+
+c1 = open("c1","rb").read()
+c2 = open("c2","rb").read()
+c3 = open("c3","rb").read()
+p2 = "printed on flammable material so that spies could"
+
+key = xor(c2,p2)
+
+print(xor(key,c1))
+print(xor(key,c2))
+print(xor(key,c3))
+``` 
+```
+b'before computers, one-time pads were sometimes\x1d\x96\xf7'
+b'printed on flammable material so that spies could'
+b'uiuctf{burn_3ach_k3y_aft3r_us1ng_1t}\xdbU(e5\x96S:\x1c\xa6\xe6>\x9f'
+```
+and there we have our flag 
+```
+uiuctf{burn_3ach_k3y_aft3r_us1ng_1t}
+```
+## At Home
+```
+Mom said we had food at home
+```
+and we are provided with <a href="/ignore/uiu2/chal.py">chal.py</a> and <a href="/ignore/uiu2/chal.txt">chal.txt</a>. 
+### Solution
+from the chal.txt file it felt as if this challenge implemented some RSA variant in disguise. but it worse than that. notice how the variable flag isn't much long in comparison to values like $n$. therefore, to retrieve the flag we can just compute $c \cdot e^{-1} \pmod{n}$ and convert into bytes to get the flag. 
+```python
+from Cryptodome.Util.number import *
+e = 359050389152821553416139581503505347057925208560451864426634100333116560422313639260283981496824920089789497818520105189684311823250795520058111763310428202654439351922361722731557743640799254622423104811120692862884666323623693713
+n = 26866112476805004406608209986673337296216833710860089901238432952384811714684404001885354052039112340209557226256650661186843726925958125334974412111471244462419577294051744141817411512295364953687829707132828973068538495834511391553765427956458757286710053986810998890293154443240352924460801124219510584689
+c = 67743374462448582107440168513687520434594529331821740737396116407928111043815084665002104196754020530469360539253323738935708414363005373458782041955450278954348306401542374309788938720659206881893349940765268153223129964864641817170395527170138553388816095842842667443210645457879043383345869
+x = (pow(e,-1,n)*c)%n
+print(long_to_bytes(x))
+```
+```
+b'uiuctf{W3_hav3_R5A_@_h0m3}'
+```
+and there we have our flag 
+```
+uiuctf{W3_hav3_R5A_@_h0m3}
+```
+
+## Group Project
+```
+In any good project, you split the work into smaller tasks...
+nc group.chal.uiuc.tf 1337
+```
+and we are provided with <a href="/ignore/uiu3/chal.py">chal.py</a>. 
+### Solution
+The challenge gives us a freedom to choose the exponent for calculation of $S$. Everytime we connect to their remote port, we are provided with renewed values of $g$, $A$ and $p$ that are used for 
+
+$$ 
+A = g^{a} \pmod {p}
+$$
+
+where $a$ is a random natural number chosen smaller than $p-1$. The calculation of $S$ is done by choosing a similar random natural number smaller than $p-1$ and doing
+
+$$
+S = \left(g ^{ab}\right)^k \pmod{p}
+$$
+
+a key corresponding to the md5 hashvalue of the variable $S$ is then used for AES Encryption in ECB mode of the flag and the encrypted value is provided to us. this encryption can be reversed if we get the key. The key value seems dependent on the variable $S$. There are also restrictions on some values of $p$, specifically $p \neq 0, p-1$ to prevent the application of fermat's theorem. However, we can still choose $k$ to be any multiple of $(p-1)$ and this would force $S=1$ for which we know the md5-hashvalue and we can then decrypt the encrypted_flag. We'll choose $k=2\cdot \left( p-1 \right)$
+```python
+from Cryptodome.Cipher import AES
+from Cryptodome.Util.number import *
+from hashlib import md5
+from Cryptodome.Util.Padding import pad
+p = 114472013539228447112062407531612836419002913757508299227324922225196360365729450385394963669470106068659455445122091403847945485093307001413796222142804689129152564428276449745015123921635186724327067057821907457804045095717376446319136804891172131689062687595283052929948727605026226900110583661768773691543
+print(2*(p-1))
+c =  31383420538805400549021388790532797474095834602121474716358265812491198185235485912863164473747446452579209175051706
+key = md5(long_to_bytes(1)).digest()
+cipher = AES.new(key, AES.MODE_ECB)
+print(cipher.decrypt(long_to_bytes(c)))
+```
+```
+b"uiuctf{brut3f0rc3_a1n't_s0_b4d_aft3r_all!!11!!}\x01"
+```
+and there we have our flag 
+```
+uiuctf{brut3f0rc3_a1n't_s0_b4d_aft3r_all!!11!!}
+```
+## Morphing Time
+```
+The all revealing Oracle may be revealing a little too much...
+nc morphing.chal.uiuc.tf 1337
+```
+and we are provided with <a href="/ignore/uiu4/chal.py">chal.py</a>
+### Solution
+
+## Group Projection
+```
+I gave you an easier project last time. This one is sure to break your grade!
+nc group-projection.chal.uiuc.tf 1337
+```
+and we are provided with <a href="/ignore/uiu5/chal.py">chal.py</a>
+### Solution
+## Crack_the_safe
+```
+"I found this safe, but something about it seems a bit off - can you crack it?"
+```
+and we are provided with <a href="/ignore/uiu6/chal.py">chal.py</a>
+### Solution 
