@@ -1,6 +1,6 @@
 ---
 title: UIUCTF2023 Crypto Writeups
-date: 2023-06-12 00:00:00 +0530
+date: 2023-07-10 00:00:00 +0530
 categories: [CTF]
 tags: [cryptography]
 math: true
@@ -108,6 +108,57 @@ nc morphing.chal.uiuc.tf 1337
 ```
 and we are provided with <a href="/ignore/uiu4/chal.py">chal.py</a>
 ### Solution
+In this challenge, we are given a prime $p$, a generator in $\mathbb{F}_p$ namely $g$ and for some random integer $a$ chosen between $(2,p-1)$, we let $A = g^a \pmod{p}$ and we are given $A$. The challenge then encrypts the plaintext $m$ using the following procedure: it choose a random integer $k$ in the range $(2,p-1)$ and we are returned $c_1,c_2$ where 
+
+$$ 
+    c_1 = g^k \pmod{p} 
+$$ 
+
+and,
+
+$$
+    c_2 = m\times A^k \pmod{p}
+$$
+
+we are then asked for two integers that must lie in the range $(1,p-1)$, namely $c_1', c_2'$. the following operation would be performed on these and we would be returned
+
+$$
+    m' = (c_2c_2')\times (c_1c_1')^{-a} \pmod{p}
+$$
+
+and then $m'$ would be returned. clearly the vulnerability lies in the freedom provided to us to choose the integers $c_1'$ and $c_2'$. how could we exploit this to our benefit? first let's replace $c_1, c_2$ and $A$ with other variables and remove variable dependencies
+
+$$
+    m' \equiv \left( mg^{ak}c_2'\right) \times \left(g^{k}c_1' \right)^{-a} \pmod{p} 
+$$
+
+this gets reduced to
+
+$$
+    m' \equiv mc_2' \left(c_1'\right)^{-a} \pmod{p}
+$$
+
+if we could eliminate $c_1'$ and $c_2'$ from the above modular equation, we would be left with just $m$ (which is the plaintext that we wanted to recover) and would consequently trick the oracle into returning the plaintext. we could carefully notice that sending $c_1' = g$ and $c_2' = A$ gives us what we wanted. 
+
+```python
+from Cryptodome.Util.number import *
+g = 2
+p = 7484095248834993502053839017358897823121997713226711587602410464678792331188769816995336914660546321514928192956117931449167231109702558978514881228824583
+A = 6917015961753642834611222605655588360747543255315091129828984308581303900315724342097649061459590513250263027719947039428081218939947910182605895778151740
+c1 = 4299533769027103644199438741010718257531573097277813736345760734743910971303741211886200160686471242418904447891956682529813940960729972961562800573960076
+c2 = 2105852166495505806416415519734132568246748463139463201745419010844107581292456159795671195552446392323270108896540198582465523703753299926022624105858501
+c1_ = g
+c2_ = A
+m = 4207564671745017061459002831657829961985417520046041547841180336049591837607722234018405874709347956760957
+print(long_to_bytes(m))
+```
+```
+b'uiuctf{h0m0m0rpi5sms_ar3_v3ry_fun!!11!!11!!}'
+```
+and there we have out flag 
+```
+uiuctf{h0m0m0rpi5sms_ar3_v3ry_fun!!11!!11!!}
+```
 
 ## Group Projection
 ```
@@ -116,6 +167,9 @@ nc group-projection.chal.uiuc.tf 1337
 ```
 and we are provided with <a href="/ignore/uiu5/chal.py">chal.py</a>
 ### Solution
+
+
+
 ## Crack_the_safe
 ```
 "I found this safe, but something about it seems a bit off - can you crack it?"
