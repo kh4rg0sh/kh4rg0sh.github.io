@@ -168,7 +168,7 @@ nc group-projection.chal.uiuc.tf 1337
 and we are provided with <a href="/ignore/uiu5/chal.py">chal.py</a>
 ### Solution
 
-This is the same premise as that of <a href="https://mmukulkhedekar.github.io/posts/UIUCTF2023-Crypto/#group-project">this challenge</a>. The only difference is that they have included a check to ensure that $p$ lies in the range $(1,p-1)$. So we cannot force $S$ to a known value directly (or maybe we can?). we can clearly not send $k=p-1$ or $k=\tfrac{p-1}{2}$. however, observe that there's a very good possibility that the prime $p$ that's being generated is a prime $1 \pmod{4}$. hence we could raise and check if $g^{\frac{p-1}{2}} \equiv 1 \pmod{p}$ and $g^{\frac{p-1}{4}} \equiv -1 \pmod{p}$. In that case, $S$ is either $1$ or $p-1$ depending upon the parity of the exponent and we could carry out the same attack as earlier.
+This is the same premise as that of <a href="https://mmukulkhedekar.github.io/posts/UIUCTF2023-Crypto/#group-project">this challenge</a>. The only difference is that they have included a check to ensure that $p$ lies in the range $(1,p-1)$. So we cannot force $S$ to a known value directly (or maybe we can?). we can clearly not send $k=p-1$ or $k=\left(\tfrac{p-1}{2}\right)$. however, observe that there's a very good possibility that the prime $p$ that's being generated is a prime $1 \pmod{4}$. hence we could raise and check if $g^{\left(\frac{p-1}{2}\right)} \equiv 1 \pmod{p}$ and $g^{\left(\frac{p-1}{4}\right)} \equiv -1 \pmod{p}$. In that case, $S$ is either $1$ or $p-1$ depending upon the parity of the exponent and we could carry out the same attack as earlier.
 
 ```python
     from Cryptodome.Util.number import *
@@ -202,3 +202,69 @@ uiuctf{brut3f0rc3_w0rk3d_b3f0r3_but_n0t_n0w!!11!!!}
 ```
 and we are provided with <a href="/ignore/uiu6/chal.py">chal.py</a>
 ### Solution 
+
+In this challenge, we are given a prime $p$, a ciphertext $ct$ and we are given that 
+decypting AES in ECB mode with a key $k$ would give us the flag. Also,
+
+
+$$
+c = 7^k \pmod{p}
+$$
+
+where the integer $c$ is known. 
+
+```python
+p = 4170887899225220949299992515778389605737976266979828742347
+ct = bytes.fromhex("ae7d2e82a804a5a2dcbc5d5622c94b3e14f8c5a752a51326e42cda6d8efa4696")
+def crack_safe(key):
+    return pow(7, int.from_bytes(key, 'big'), p) == 0x49545b7d5204bd639e299bc265ca987fb4b949c461b33759
+assert crack_safe(key) and AES.new(key,AES.MODE_ECB).decrypt(ct) == FLAG
+```
+
+so basically we need to compute the discrete logarithm of $7$ modulo $p$. we could compute the order of $p-1$ to check if $p$ is an unsafe prime (so that we could carry out pohlig-hellman's attack to compute the discrete logarithm) and it turns out not so smooth. here's the factorisation of $p-1$
+
+$$ 
+p-1 =  2 \cdot 19 \cdot 151 \cdot 577 \cdot 67061 \cdot 18279232319 \cdot 111543376699 \cdot 9213409941746658353293481
+$$
+
+the last prime factor is too big enough to carry out a normal pohlig-hellman. however, we could do it for the other remaning prime-factors. suppose neglecting the largest prime factor, the discrete logarithm turns out to be $x'$. then the required discrete logarithm is of the form
+
+$$
+    x = x' + k\times\left( \frac{p-1}{9213409941746658353293481}\right)
+$$
+
+where $k<9213409941746658353293481$. we could run a bruteforce
+```python
+for i in range(9213409941746658353293481):
+    x = 444780066250058017668829040430952 + i*452697527364609267740158052564666
+    if (h==pow(g,x,p)):
+        print(x)
+        break
+```
+and it surprisingly ends in a short duration with $k=446038$ and 
+
+$$
+x=201920744490721838622302286278878924260
+$$
+
+```python
+from Cryptodome.Cipher import AES
+from Cryptodome.Util.number import *
+p = 4170887899225220949299992515778389605737976266979828742347
+ct = bytes.fromhex("ae7d2e82a804a5a2dcbc5d5622c94b3e14f8c5a752a51326e42cda6d8efa4696")
+def crack_safe(key):
+    return pow(7, int.from_bytes(key, 'big'), p) == 0x49545b7d5204bd639e299bc265ca987fb4b949c461b33759
+print(int(str("49545b7d5204bd639e299bc265ca987fb4b949c461b33759"),16))
+k = 1798034623618994974454756356126246972179657041628028417881
+key = long_to_bytes(201920744490721838622302286278878924260)
+cipher = AES.new(key, AES.MODE_ECB)
+print(cipher.decrypt(ct))
+```
+```python
+1798034623618994974454756356126246972179657041628028417881
+b'uiuctf{Dl0g_w/__UnS4F3__pR1Me5_}'
+```
+and here's our flag
+```
+uiuctf{Dl0g_w/__UnS4F3__pR1Me5_}
+```

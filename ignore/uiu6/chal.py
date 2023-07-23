@@ -1,4 +1,4 @@
-from Crypto.Cipher import AES
+from Cryptodome.Cipher import AES
 from secret import key, FLAG
 
 p = 4170887899225220949299992515778389605737976266979828742347
