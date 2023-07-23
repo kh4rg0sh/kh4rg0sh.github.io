@@ -1,8 +1,8 @@
-from Crypto.Util.number import getPrime, long_to_bytes
+from Cryptodome.Util.number import getPrime, long_to_bytes
 from random import randint
 import hashlib
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
+from Cryptodome.Cipher import AES
+from Cryptodome.Util.Padding import pad
 
 
 with open("/flag", "rb") as f:
