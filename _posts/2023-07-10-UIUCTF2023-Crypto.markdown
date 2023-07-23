@@ -227,7 +227,25 @@ $$
 p-1 =  2 \cdot 19 \cdot 151 \cdot 577 \cdot 67061 \cdot 18279232319 \cdot 111543376699 \cdot 9213409941746658353293481
 $$
 
-the last prime factor is too big enough to carry out a normal pohlig-hellman. however, we could do it for the other remaning prime-factors. suppose neglecting the largest prime factor, the discrete logarithm turns out to be $x'$. then the required discrete logarithm is of the form
+the last prime factor is too big enough to carry out a normal pohlig-hellman. however, we could do it for the other remaning prime-factors. 
+```python
+from Cryptodome.Util.number import *
+p = 4170887899225220949299992515778389605737976266979828742347
+g = 7
+h = 1798034623618994974454756356126246972179657041628028417881
+
+for i in primes:
+    print(f"g_i = {pow(g,(p-1)//i,p)} and h_i = {pow(h,(p-1)//i,p)}\n")
+
+from modint import chinese_remainder, ChineseRemainderConstructor
+cr = ChineseRemainderConstructor([2,19,151,577,67061,18279232319,111543376699])
+print(cr.rem([0,3,13,500,52782,9948705845,104851607833]))
+print((p-1)//primes[7])
+# 444780066250058017668829040430952
+# 452697527364609267740158052564666
+```
+
+suppose neglecting the largest prime factor, the discrete logarithm turns out to be $x'$. then the required discrete logarithm is of the form
 
 $$
     x = x' + k\times\left( \frac{p-1}{9213409941746658353293481}\right)
