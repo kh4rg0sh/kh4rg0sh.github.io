@@ -168,7 +168,7 @@ nc group-projection.chal.uiuc.tf 1337
 and we are provided with <a href="/ignore/uiu5/chal.py">chal.py</a>
 ### Solution
 
-This is the same premise as that of <a href="https://mmukulkhedekar.github.io/posts/UIUCTF2023-Crypto/#group-project">this challenge></a>. The only difference is that they have included a check to ensure that $p$ lies in the range $(1,p-1)$. So we cannot force $S$ to a known value directly (or maybe we can?). we can clearly not send $k=p-1$ or $k=\tfrac{p-1}{2}$. however, observe that there's a very good possibility that the prime $p$ that's being generated is a prime $1 \pmod{4}$. hence we could raise and check if $g^{\frac{p-1}{2}} \equiv 1 \pmod{p}$ and $g^{\frac{p-1}{4}} \equiv -1 \pmod{p}$. In that case, $S$ is either $1$ or $p-1$ depending upon the parity of the exponent and we could carry out the same attack as earlier.
+This is the same premise as that of <a href="https://mmukulkhedekar.github.io/posts/UIUCTF2023-Crypto/#group-project">this challenge</a>. The only difference is that they have included a check to ensure that $p$ lies in the range $(1,p-1)$. So we cannot force $S$ to a known value directly (or maybe we can?). we can clearly not send $k=p-1$ or $k=\tfrac{p-1}{2}$. however, observe that there's a very good possibility that the prime $p$ that's being generated is a prime $1 \pmod{4}$. hence we could raise and check if $g^{\frac{p-1}{2}} \equiv 1 \pmod{p}$ and $g^{\frac{p-1}{4}} \equiv -1 \pmod{p}$. In that case, $S$ is either $1$ or $p-1$ depending upon the parity of the exponent and we could carry out the same attack as earlier.
 
 ```python
     from Cryptodome.Util.number import *
