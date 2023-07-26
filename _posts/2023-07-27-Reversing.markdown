@@ -4,7 +4,9 @@ date: 2023-07-26 00:00:00 +0530
 categories: [CTF]
 tags: [reverse-engineering]
 ---
-i came across these types of challenges back in april during one of our club lectures. one of our seniors presented this challenge to us. the overview of the challenge is that the program makes a function call to the `sleep()` function with a huge integer passed in as a parameter. so basically your program enters a state of inactivity and doesn't execute the instructions after it. upon static analysis of the binary files in disassembly, we practically get nothing. so how do we do this? our seniors showed us how to do this. basically you have to set a breakpoint at the sleep function and then continue from the next instruction. this way it skips this infinite state of inactiveness. so this was one of the ways you could solve this challenge. i came across this challenge again today (after like 3 months) and a new idea struck me. maybe, it's a known way to solve such challenges, but it was new to me. nevertheless, i'll present it in this blogpost. 
+i came across these types of challenges back in april during one of our club lectures. one of our seniors presented this challenge to us. the overview of the challenge is that the given program makes a function call to a `sleep()` function with a huge integer passed in as a parameter. so basically your program enters a state of inactivity and doesn't execute the instructions after it. upon static analysis of the binary files in disassembly, we practically get nothing. so how do we do this? our seniors showed us how to do this. basically you have to set a breakpoint at the sleep function and then continue from the next instruction. this way it skips this infinite state of inactiveness and executes the later instructions. so this was one of the ways you could solve this challenge. 
+
+today, i came across this challenge again (after like 3 months) and a new idea struck me. maybe, it's a known way to solve such challenges, but it was new to me. nevertheless, i'll present it in this blogpost. 
 ## GDB Test Drive [PicoCTF 2022 Reverse Engineering (3)]
 challenge description
 ```c++
