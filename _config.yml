@@ -29,10 +29,10 @@ description: >- # used by seo meta and the atom feed
 url: "https://mmukulkhedekar.github.io/"
 
 github:
-  username: github_username # change to your github username
+  username: MmukulKhedekar # change to your github username
 
 twitter:
-  username: twitter_username # change to your twitter username
+  username: fooker34 # change to your twitter username
 
 social:
   # Change to your full name.
@@ -77,7 +77,7 @@ theme_mode: # [light|dark]
 # will be added to all image (site avatar & posts' images) paths starting with '/'
 #
 # e.g. 'https://cdn.com'
-img_cdn:
+img_cdn: https://avatars.githubusercontent.com/u/36923816?v=4
 
 # the avatar on sidebar, support local or CORS resources
 avatar: https://avatars.githubusercontent.com/u/36923816?v=4
