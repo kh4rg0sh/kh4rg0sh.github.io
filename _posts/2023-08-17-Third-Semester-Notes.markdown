@@ -34,4 +34,8 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 ### tutorial and assignment solutions
 
-[work in progress]
+<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 1 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 2 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 3 (HTML)</a>
