@@ -32,10 +32,12 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture12.pdf">lecture 12 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> lecture 12 (HTML)</a>
 
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture13.pdf">lecture 13 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture13/lecture%2013%20(17%208%202023)%20259eaf223bad4adfa0088cf0eaa195cd.html"> lecture 13 (HTML)</a>
+
 ### tutorial and assignment solutions
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 1 (HTML)</a>
 
-<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 2 (HTML)</a>
+<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/tut2/tutorial%203%20(14%208%202023)%20cbacd3e77bc34dba8f8952ca84cc05e0.html"> tutorial 2 (HTML)</a>
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 3 (HTML)</a>
