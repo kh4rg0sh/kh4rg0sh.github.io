@@ -11,7 +11,7 @@ I participated in Nullcon HackIM CTF 2023 with the team <a href="https://ctftime
 "Bob apparently likes squares, but what does it have to do with encryption?"
 ```
 
-We are then provided with the following attachments <a href="/nullcon/euclidean-RSA.py">euclidean-RSA</a> and <a href="/nullcon/output.txt">output</a>
+We are then provided with the following attachments <a href="/ignore/nullcon/euclidean-RSA.py">euclidean-RSA</a> and <a href="/ignore/nullcon/output.txt">output</a>
 
 ### Solution
 
@@ -52,7 +52,7 @@ ENO{Gauss_t0ld_u5_th3r3_1s_mor3_th4n_on3_d1men5i0n}
 It's pretty rudimentary, but gets the job done. Let's just hope, I didn't do anything wrong..."
 ```
 
-We are then provided with the following attachment <a href="/nullcon/sss.py">sss</a> 
+We are then provided with the following attachment <a href="/ignore/nullcon/sss.py">sss</a> 
 
 ### Solution
 if you observe carefully we are required to find `shares[0]` but we could directly receive that by sending in $ \text{sid} = n$ since they return the values `shares[sid%n]` to us 
@@ -70,7 +70,7 @@ Alice has hidden 2 flags in this challenge. And even though she is willing to de
 
 Please submit flag1 here.
 ```
-the challenge has two parts. we are provided with these attachments <a href="/nullcon/utils.py">utils</a>, <a href="/nullcon/ec.py">ec</a> and <a href="/nullcon/curvy_decryptor.py">curvy_decryptor</a>
+the challenge has two parts. we are provided with these attachments <a href="/ignore/nullcon/utils.py">utils</a>, <a href="/ignore/nullcon/ec.py">ec</a> and <a href="/ignore/nullcon/curvy_decryptor.py">curvy_decryptor</a>
 ### Solution
 it's easy to observe that 
 
@@ -123,7 +123,7 @@ ENO{ElGam4l_1s_mult1pl1cativ3}
 ```
 "I heard it is in fashion to have a counter since the last incident happened."
 ```
-we are provided with these attachments <a href="/nullcon/counting.py">counting</a>
+we are provided with these attachments <a href="/ignore/nullcon/counting.py">counting</a>
 ### Solution
 this is clearly vulnerable to franklin-reiter attack because we have access to ciphertexts that have a finite constant difference between their plaintext messages. from the following script we can find the secret token 
 ```python
@@ -221,7 +221,7 @@ ENO{th3_s0lut1on_i5_n0t_th4t_1337}
 ```
 "I prepared a message for Alice but if you'd like to add a PS of your own, feel free to do so."
 ```
-and we are given the following <a href="/nullcon/ps.py">ps</a>
+and we are given the following <a href="/ignore/nullcon/ps.py">ps</a>
 ### Solution
 this is directly vulnerable to coppersmith's short pad attack. you just need two ciphertexts that correspond to the same message and regardless of the padding involved, it's possible to retrieve the original plaintext. here's an implementation
 ```python
