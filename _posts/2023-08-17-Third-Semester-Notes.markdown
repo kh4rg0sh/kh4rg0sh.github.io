@@ -34,10 +34,19 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture13.pdf">lecture 13 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture13/lecture%2013%20(17%208%202023)%20259eaf223bad4adfa0088cf0eaa195cd.html"> lecture 13 (HTML)</a>
 
-### tutorial and assignment solutions
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture14.pdf">lecture 14 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture14/lecture%2014%20(21%208%202023)%20812fc0931c4a4fd2bedf9dca4ee0e3af.html"> lecture 14 (HTML)</a>
+
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture15.pdf">lecture 15 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture15/lecture%2015%20(22%208%202023)%20c6b41d32b23147a3ba6e2284247a1964.html"> lecture 15 (HTML)</a>
+
+### tutorial and assignment solutions and notes
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 1 (HTML)</a>
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/tut2/tutorial%203%20(14%208%202023)%20cbacd3e77bc34dba8f8952ca84cc05e0.html"> tutorial 2 (HTML)</a>
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 3 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 4 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/tut5/tutorial%205%20(23%208%202023)%20b1ecd39071fa4027a4c79078c44bd2be.html"> tutorial 5 (HTML)</a>
+
