@@ -3,4 +3,4 @@
 icon: fas fa-info-circle
 order: 4
 ---
-Hey! My name's Mmukul Khedekar. I'm an undergrad student at IIT Roorkee. I always wanted to share these interesting math/physics ideas that I come across. Since, I don't have the platform to do so, I started this blog. I hope to keep this blog alive :')
+hi, my name's mmukul khedekar! i'm an undergrad student and i'm pursuing my bachelors in computer science and engineering at IIT Roorkee. i always wanted to share interesting things that i come across. since, i dont' have the platform to do so, i've started this blog :)
