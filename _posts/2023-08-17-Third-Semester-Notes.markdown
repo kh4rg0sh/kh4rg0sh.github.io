@@ -38,6 +38,16 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture15.pdf">lecture 15 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture15/lecture%2015%20(22%208%202023)%20c6b41d32b23147a3ba6e2284247a1964.html"> lecture 15 (HTML)</a>
 
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture16.pdf">lecture 16 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture16/lecture%2016%20(24%208%202023)%207f8edf9befd54c68a5677fe8c1a5a1da.html"> lecture 16 (HTML)</a>
+
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture17.pdf">lecture 17 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture17/lecture%2017%20(28%208%202023)%20ebbd474d19bd4dedb3541d85237f97a1.html"> lecture 17 (HTML)</a>
+
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture18.pdf">lecture 18 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture18/lecture%2018%20(29%208%202023)%20cfe4d5c922244572bbe13896d87bf573.html"> lecture 18 (HTML)</a>
+
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture19.pdf">lecture 19 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture19/lecture%2019%20(31%208%202023)%20e9637706552c440ba9b08ab6c1fb70be.html"> lecture 19 (HTML)</a>
+
+
+
 ### tutorial and assignment solutions and notes
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 1 (HTML)</a>
