@@ -18,12 +18,12 @@ the idea is that we could leak the bits of the primes $p$ and $q$ one by one sta
 
 ```python
 from Cryptodome.Util.number import *
-
+from math import ceil,log2
 n = # insert p*q here
 r = # insert p xor q here
 
 tracked = [(1,1)]
-l = int(ceil(log(n, 2)/2))
+l = int(ceil(log2(n, 2)/2))
 dp = [(0,0), (0,1), (1,0), (1,1)]
 for i in range(1,l+1):
     new_tracked = []

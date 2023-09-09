@@ -60,3 +60,10 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/tut5/tutorial%205%20(23%208%202023)%20b1ecd39071fa4027a4c79078c44bd2be.html"> tutorial 5 (HTML)</a>
 
+
+
+## CSN 291 (Object Oriented Analysis and Design)
+
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/CSN-291/main/notes/lecture2.pdf">lecture 2 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/CSN-291/main/notes/lecture2/lecture%202%20(25%207%202023)%2088233ed2bec34590bf0d1f26d57ba79a.html"> lecture 2 (HTML)</a>
+
+<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/CSN-291/main/notes/lecture3.pdf">lecture 3 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/CSN-291/main/notes/lecture3/lecture%203%20(27%207%202023)%20476e24dc4052412c9cbb4403e69e43a3.html"> lecture 3 (HTML)</a>
