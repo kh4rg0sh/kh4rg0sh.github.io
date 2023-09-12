@@ -60,6 +60,38 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/tut5/tutorial%205%20(23%208%202023)%20b1ecd39071fa4027a4c79078c44bd2be.html"> tutorial 5 (HTML)</a>
 
+## MIN 106 (Thermodynamics)
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture2/lecture%202%20(20%207%202023)%200207e1e6f5c14c87a57d53c23bbb5aae.html"> lecture 2 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture3/lecture%203%20(27%207%202023)%20d2aa3bb1fa1c4f71bbeede2e8be20ea9.html"> lecture 3 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture4/lecture%204%20(1%208%202023)%207408bb5efd4141acb3830e3be1414997.html"> lecture 4 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture5/lecture%205%20(7%208%202023)%20b46f66827f5c481a9ca1bea821149cdd.html"> lecture 5 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture6/lecture%206%20(8%208%202023)%2058f5e94f22c9490a993215e2de6b5269.html"> lecture 6 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture7/lecture%207%20(10%208%202023)%2046c5ca80086c4c1cb737407832bbeac6.html"> lecture 7 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture8/lecture%208%20(14%208%202023)%20a8318f9f02de403b987780d394a15846.html"> lecture 8 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture9/lecture%209%20(17%208%202023)%20f99d0944876349e8995d883d50c15875.html"> lecture 9 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture11/lecture%2011%20(22%208%202023)%202d29239d4ba04bf4b5d156d573030eec.html"> lecture 11 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture12/lecture%2012%20(24%208%202023)%20e6bf2655dfc84eb4a87e21dac4c23f9f.html"> lecture 12 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture13/lecture%2013%20(29%208%202023)%20540e2c35fbc94ce7bdc2daa0a6c6328f.html"> lecture 13 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture14/lecture%2014%20(5%209%202023)%206dc9ca0cbdea41448d407b24246e2957.html"> lecture 14 (HTML)</a>
+
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture15/lecture%2015%20(11%209%202023)%2079ff06889b4141068c435617915e60b4.html"> lecture 15 (HTML)</a>
+
+
+
+## CSN 221 (Computer Architecture and Microprocessors)
+
 
 
 ## CSN 291 (Object Oriented Analysis and Design)
@@ -67,3 +99,5 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/CSN-291/main/notes/lecture2.pdf">lecture 2 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/CSN-291/main/notes/lecture2/lecture%202%20(25%207%202023)%2088233ed2bec34590bf0d1f26d57ba79a.html"> lecture 2 (HTML)</a>
 
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/CSN-291/main/notes/lecture3.pdf">lecture 3 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/CSN-291/main/notes/lecture3/lecture%203%20(27%207%202023)%20476e24dc4052412c9cbb4403e69e43a3.html"> lecture 3 (HTML)</a>
+
+
