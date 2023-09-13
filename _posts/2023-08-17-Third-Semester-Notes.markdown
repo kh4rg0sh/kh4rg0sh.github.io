@@ -5,16 +5,15 @@ categories: [Academics]
 tags: [signals-and-systems, data-structures, software-engineering] # TAG names should always be lowercase
 ---
 
-in the start of the semester, i had decided that i'd take careful notes of the courses throughout this semester. it's been almost 1 month since the semester began and i'm kinda enjoying the process of making careful notes. i think these notes are good and i wanted to share my work, hence in this blogpost i'll post the links (in PDF format and HTML format, both) to all the notes that i've taken so far. since it's tedious to update this regularly, i've decided to update this every weekend (the time of the week when i actually have nothing to do). 
-## ECN 203 (Signals and Systems)
-below are my lecture notes and solutions to tutorial and assignment sheet problems.
-### lecture notes
+in the start of the semester, i had decided that i'd take careful notes of the courses throughout this semester. it's been almost 1 month since the semester began and i'm kinda enjoying the process of making careful notes. i think these notes are good and i wanted to share my work, hence in this blogpost i'll post the links (in PDF format and HTML format, both) to all the notes that i've taken so far. since it's tedious to update this regularly, i've decided to update this every weekend (the time of the week when i actually have nothing to do).
 
- <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture2/lecture%202%20(20%207%202023)%20267565cb4f334348b48c141e6aa1da8b.html"> lecture 2 (HTML)</a>
+## ECN 203 (Signals and Systems)
+
+<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture2/lecture%202%20(20%207%202023)%20267565cb4f334348b48c141e6aa1da8b.html"> lecture 2 (HTML)</a>
 
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture3.pdf">lecture 3 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture3/lecture%203%20(24%207%202023)%201984168e42aa453684c3a093287cc6b1.html"> lecture 3 (HTML)</a>
 
- <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture4/lecture%204%20(25%207%202023)%20f4e38ab67e79447683e52cea7b0b1e45.html"> lecture 4 (HTML)</a>
+<a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture4/lecture%204%20(25%207%202023)%20f4e38ab67e79447683e52cea7b0b1e45.html"> lecture 4 (HTML)</a>
 
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture3=5.pdf">lecture 5 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture5/lecture%205%20(27%207%202023)%2076f1a5bea88e48cc8c5c5023522d6b80.html"> lecture 5 (HTML)</a>
 
@@ -46,10 +45,6 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/ECN-203/main/notes/lecture19.pdf">lecture 19 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture19/lecture%2019%20(31%208%202023)%20e9637706552c440ba9b08ab6c1fb70be.html"> lecture 19 (HTML)</a>
 
-
-
-### tutorial and assignment solutions and notes
-
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/notes/lecture12/lecture%2012%20(14%208%202023)%20bf287c329f7d4e9080135377031d1050.html"> tutorial 1 (HTML)</a>
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/tut2/tutorial%203%20(14%208%202023)%20cbacd3e77bc34dba8f8952ca84cc05e0.html"> tutorial 2 (HTML)</a>
@@ -60,7 +55,7 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://raw.githack.com/MmukulKhedekar/ECN-203/main/tut5/tutorial%205%20(23%208%202023)%20b1ecd39071fa4027a4c79078c44bd2be.html"> tutorial 5 (HTML)</a>
 
-## MIN 106 (Thermodynamics)
+## MIN 106 (Engineering Thermodynamics)
 
 <a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture2/lecture%202%20(20%207%202023)%200207e1e6f5c14c87a57d53c23bbb5aae.html"> lecture 2 (HTML)</a>
 
@@ -78,6 +73,8 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture9/lecture%209%20(17%208%202023)%20f99d0944876349e8995d883d50c15875.html"> lecture 9 (HTML)</a>
 
+<a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture10/lecture%2010%20(21%208%202023)%2095c3213350fc4963bf67590a59fab57d.html"> lecture 10 (HTML)</a>
+
 <a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture11/lecture%2011%20(22%208%202023)%202d29239d4ba04bf4b5d156d573030eec.html"> lecture 11 (HTML)</a>
 
 <a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture12/lecture%2012%20(24%208%202023)%20e6bf2655dfc84eb4a87e21dac4c23f9f.html"> lecture 12 (HTML)</a>
@@ -88,8 +85,6 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 
 <a href="https://raw.githack.com/MmukulKhedekar/MIN-106/main/lecture_notes/lecture15/lecture%2015%20(11%209%202023)%2079ff06889b4141068c435617915e60b4.html"> lecture 15 (HTML)</a>
 
-
-
 ## CSN 221 (Computer Architecture and Microprocessors)
 
 
@@ -99,5 +94,3 @@ below are my lecture notes and solutions to tutorial and assignment sheet proble
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/CSN-291/main/notes/lecture2.pdf">lecture 2 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/CSN-291/main/notes/lecture2/lecture%202%20(25%207%202023)%2088233ed2bec34590bf0d1f26d57ba79a.html"> lecture 2 (HTML)</a>
 
 <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/MmukulKhedekar/CSN-291/main/notes/lecture3.pdf">lecture 3 (PDF)</a> <a href="https://raw.githack.com/MmukulKhedekar/CSN-291/main/notes/lecture3/lecture%203%20(27%207%202023)%20476e24dc4052412c9cbb4403e69e43a3.html"> lecture 3 (HTML)</a>
-
-
