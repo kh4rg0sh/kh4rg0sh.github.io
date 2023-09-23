@@ -41,19 +41,19 @@ $$
 this solves for the variable $d$ in $\mathbb{Q}$. note that the values of $d$ that we obtain from the above two equations are different but they are definitely congruent to each other $\pmod{p}$. let's represent the first and second solutions as 
 
 $$
-d_1 = \left(\frac{A_1}{B_1} \right)  \text{ and } d_2 = \left(\frac{C_1}{D_1} \right) \implies p \mid \left(A_1\cdot D_1 - B_1\cdot C_1\right)
+d_1 = \left(\frac{A_1}{B_1} \right)  \text{ and } d_2 = \left(\frac{C_1}{D_1} \right) \implies p \mid \left(A_1D_1 - B_1 C_1\right)
 $$
 
 similarly we obtain more two values of $d$ solving for the first and fourth equation and the second and the third equation simultaneously, respectively. 
 
 $$
-d_3 = \frac{A_2}{B_2}  \text{ and } d_4 = \frac{C_2}{D_2} \implies p \mid \left(A_2\cdot D_2 - B_2\cdot C_2 \right)
+d_3 = \frac{A_2}{B_2}  \text{ and } d_4 = \frac{C_2}{D_2} \implies p \mid \left(A_2 D_2 - B_2C_2 \right)
 $$
 
 hence we can retrieve the prime $p$ using 
 
 $$
-p = \gcd(A_1\cdot D_1 - B_1\cdot C_1 , A_2\cdot D_2 - B_2\cdot C_2)
+p = \gcd(A_1D_1 - B_1 C_1 , A_2D_2 - B_2C_2)
 $$
 
 here's a code that retrieves the prime $p$
@@ -123,29 +123,36 @@ y^2 + a_1 xy + a_3y = x^3 + a_2x^2 + a_4x + a_6
 $$
 
 hence we must transform our curve to the above form. to do so we must perform three curve transformations:
-1. transform the curve to edward form
+1) transform the curve to the standard edward form
 
-an equation of an elliptic curve in edward form is represented in the following way:
+an equation of an elliptic curve in the edward form is represented in the following way:
 
 $$
 x^2 + y^2 = 1 + dx^2 y^2
 $$
 
-to perform the required transformation, we must map
+to perform the required transformation, we must map the variables $x$ and $y$ to 
 
 $$
-x \longrightarrow x/c 
+x \longrightarrow \left( \frac{x}{c}\right) \, ; \,  y \longrightarrow \left( \frac{y}{c}\right) \, ; \,
+d \longrightarrow dc^4
+$$
+
+performing the above variable transforms changes the equation in the following way
+
+$$
+x^2 + y^2 = c^2 \left( 1 + dx^2y^2\right)
+$$
+
+$$
+\implies \left( \frac{x}{c}\right)^2 + \left( \frac{y}{c}\right)^2 = 1 + \left( dc^4\right) \left( \frac{x}{c}\right)^2\left( \frac{x}{c}\right)^2
 $$
 
 $$ 
-y \longrightarrow y/c
+\implies X^2 + Y^2 = 1 + DX^2Y^2
 $$
 
-$$
-d \longrightarrow d\cdot c^4 
-$$
-
-here's a code that does the above
+which is what we required. here's a code that does the above
 
 ```py
 ## check if the point lies on the curve: x^2 + y^2 = c^2(1 + dx^2y^2)
@@ -172,7 +179,7 @@ assert sPx**2 + sPy**2 == 1 + d*(sPx**2)*(sPy**2)
 assert tQx**2 + tQy**2 == 1 + d*(tQx**2)*(tQy**2)
 ```
 
-2. transform the modified curve to montgomery form
+2) transform the modified curve to montgomery form
 
 an equation of an elliptic curve in the montgomery form is represented in the following way:
 
@@ -180,27 +187,50 @@ $$
 By^2 = x^3 + Ax^2 + x
 $$
 
-to perform the above transformation, we must map
+to perform the above transformation, we must map the variables $x$ and $y$ to 
 
 $$
-x \longrightarrow \frac{1+y}{1-y}
+x \longrightarrow \left(\frac{1+y}{1-y} \right) \, ; \, y \longrightarrow \left(\frac{2(1+y)}{x(1-y)} \right)
+$$
+
+and we must introduce new coefficients that are defined in the following way
+
+$$
+A = \left(\frac{4}{1-d}-2\right) \, ; \, B = \left(\frac{1}{1-d}\right)
+$$
+
+to see why this works we can try to show that performing the above substitution in the montgomery form takes us back to the edward form. 
+
+$$
+BY^2 = X^3 + AX^2 + X 
+$$
+
+$$ 
+\implies \left( \frac{1}{1-d}\right)Y^2 = X^3 + \left( \frac{4}{1-d}-2\right) X^2 + X
 $$
 
 $$
-y \longrightarrow \frac{2(1+y)}{x(1-y)}
-$$
-
-and we introduce new coefficients 
-
-$$
-A = \left(\frac{4}{1-d}-2\right)
+\implies \left( \frac{1}{1-d}\right) \left( \frac{4 (1+y)^2}{x^2 (1-y)^2}\right) = 
+\left( \frac{1+y}{1-y}\right)^3 + \left( \frac{2(1+d)}{1-d}\right)\left( \frac{1+y}{1-y}\right)^2 + \left( \frac{1+y}{1-y}\right)
 $$
 
 $$
-B = \left(\frac{1}{1-d}\right)
+\implies 4(1+y)^2 (1-y) = (1+y)^3 (1-d) x^2 + 2x^2 (1+d )(1+y)^2 (1-y) + x^2 (1+y)(1-y)^2(1-d) 
 $$
 
-here's a code that does the above
+$$
+\implies 4(1-y^2) = 2x^2 \left( (1-d)(1+y^2) + (1+d)(1-y^2)\right)
+$$
+
+$$
+\implies 1 - y^2 = x^2 \left( 1-dy^2 \right)
+$$
+
+$$
+\implies x^2 + y^2 = 1 + dx^2y^2
+$$
+
+which proves the above transformation. here's a code that does the above
 
 ```py
 ## transform the curve to: By^2 = x^3 + Ax^2 + x
@@ -225,7 +255,7 @@ assert B*(tQy1**2) == (tQx1**3) + A*(tQx1**2) + tQx1
 
 ```
 
-3. transform the montgomery form to weierstrass form
+3) transform the montgomery form to weierstrass form
 
 an equation of an elliptic curve in the montgomery form is represented in the following way:
 
@@ -233,27 +263,41 @@ $$
 y^2 = x^3 + Cx + D
 $$
 
-to perform the above transformation, we must map
+to perform the above transformation, we must map the variables $x$ and $y$ to 
 
 $$
-x \longrightarrow \frac{\left(x + \frac{A}{3}\right)}{B}
+x \longrightarrow \frac{\left(x + \frac{A}{3}\right)}{B} \, ; \, y \longrightarrow \left(\frac{y}{B}\right)
+$$
+
+and we define some new coefficients as 
+
+$$
+C = \left(\frac{1}{B^2} - \frac{A^2}{3B^2}\right) \, ; \, D = \left( \frac{2A^3-9A}{27B^3}\right)
+$$
+
+to see why this works, let's try to make the above variables changes to the curve equation in the montgomery form. 
+
+$$
+By^2 = x^3 + Ax^2 + x 
 $$
 
 $$
-y \longrightarrow \left(\frac{y}{B}\right)
-$$
-
-and we define new coefficients 
-
-$$
-C = \left(\frac{1}{B^2} - \frac{A^2}{3B^2}\right)
+\implies B\left( BY\right)^2 = \left( BX - \frac{A}{3}\right)^3 + A \left( BX - \frac{A}{3}\right)^2 + \left(BX - \frac{A}{3} \right)
 $$
 
 $$
-D = \left( \frac{2A^3-9A}{27B^3}\right)
+\implies B^3 Y^2 = B^3X^3 +\left(B - \frac{A^2B}{3} \right)X + \left( \frac{2A^3}{27} - \frac{A}{3}\right)
 $$
 
-here's a code that does the above
+$$
+\implies Y^2 = X^3 + \left( \frac{1}{B^2} - \frac{A^2}{3B^2}\right) X  + \left( \frac{2A^3-9A}{27B^3}\right)
+$$
+
+$$
+\implies Y^2 = X^3 + CX + D
+$$
+
+which proves the above transformation. here's a code that performs the above mapping
 
 ```py
 ## transform the curve to: y^2 = x^3 + Cx + D
