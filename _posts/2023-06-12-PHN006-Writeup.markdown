@@ -1,5 +1,5 @@
 ---
-title: PHN006 Writeup
+title: PHN006 Course Work Writeup
 date: 2023-06-12 13:00:00 +0530
 categories: [Physics]
 tags: [quantum_mechanics] # TAG names should always be lowercase

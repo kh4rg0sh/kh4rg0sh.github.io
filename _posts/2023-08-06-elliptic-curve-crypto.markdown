@@ -1,5 +1,5 @@
 ---
-title: Exploiting an ECLCG (Elliptic Curve Linear Congruential Generator) vulnerability
+title: Exploiting an Elliptic-Curve based LCG
 date: 2023-08-06 00:00:00 +0530
 categories: [CTF]
 tags: [elliptic-curves, cryptography]

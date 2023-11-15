@@ -1,8 +1,8 @@
 ---
-title: Nullcon HackIM CTF Goa 2023 Crypto Writeups
+title: Nullcon HackIM CTF Goa 2023 [Crypto Writeups]
 date: 2023-08-22 00:00:00 +0530
 categories: [CTF]
-tags: [cryptography]
+tags: [cryptography, crypto_writeups]
 math: true
 ---
 I participated in Nullcon HackIM CTF 2023 with the team <a href="https://ctftime.org/team/16691/">InfoSecIITR</a>. We finished $4$th out of the $397$ teams that participated in this competition. I'll explain the writeups for all the cryptography problems that were solved by our team. 

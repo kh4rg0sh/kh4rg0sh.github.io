@@ -1,5 +1,5 @@
 ---
-title: Birational Equivalences over Elliptic Curves
+title: A Birational Equivalences over Elliptic Curves
 date: 2023-09-23 00:00:00 +0530
 categories: [CTF]
 tags: [cryptography]
