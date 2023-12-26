@@ -12,7 +12,7 @@ I'll quickly explain a background of how i came up with these problems and a ske
 
 ## mini_RSA_v1 [310 solves]
 
-my idea. we initially wanted to make a problem revolving around the cool identity
+i proposed the idea for this problem. it was scripted by my peer. we initially wanted to make a problem revolving around the cool identity
 
 $$
     p ^ q + q ^ p \equiv p + q \pmod{p \cdot q}
