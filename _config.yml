@@ -3,49 +3,46 @@
 # Import the theme
 theme: jekyll-theme-chirpy
 
-# Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
-# and doesn't have a custom domain.
-baseurl: ""
-
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
 # otherwise, the layout language will use the default value of 'en'.
 lang: en
 
-# Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
+# Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
 timezone:
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: kh4rg0sh's blog # the main title
+title: 0xAlpha # the main title
 
-tagline: A blog where I would be posting interesting things that i come across # it will display as the sub-title
+tagline: ECE undergrad @IITRoorkee | DevOps | CyberSec | Web  # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
 
-# fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: "https://mmukulkhedekar.github.io/"
+# Fill in the protocol & hostname for your site.
+# e.g. 'https://username.github.io', note that it does not end with a '/'.
+url: "https://pratham1812.github.io"
 
 github:
-  username: MmukulKhedekar # change to your github username
+  username: Pratham1812 # change to your github username
 
 twitter:
-  username: fooker34 # change to your twitter username
+  username: prat_018 # change to your twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: Mmukul Khedekar
-  email: mmukul_sk@cs.iitr.ac.in # change to your email address
+  name: Pratham Agarwal
+  email: agarwalpratham1812@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/fooker34 # change to your twitter homepage
-    - https://github.com/MmukulKhedekar # change to your github homepage
+    - https://x.com/prat_018 # change to your twitter homepage
+    - https://github.com/Pratham1812 # change to your github homepage
     # Uncomment below to add more social links
-    - https://www.linkedin.com/in/mmukul-khedekar-881b371b8/
-    - https://www.linkedin.com/in/username
+    # - https://www.facebook.com/username
+    # - https://www.linkedin.com/in/username
 
 google_site_verification: # fill in to your verification string
 
@@ -54,10 +51,6 @@ google_site_verification: # fill in to your verification string
 
 google_analytics:
   id: # fill in your Google Analytics ID
-  # Google Analytics pageviews report settings
-  pv:
-    proxy_endpoint: # fill in the Google Analytics superProxy endpoint of Google App Engine
-    cache_path: # the local PV cache data, friendly to visitors from GFW region
 
 # Prefer color scheme setting.
 #
@@ -70,7 +63,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: # [light|dark]
+theme_mode: dark # [light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
@@ -78,9 +71,9 @@ theme_mode: # [light|dark]
 #
 # e.g. 'https://cdn.com'
 img_cdn: 
-
 # the avatar on sidebar, support local or CORS resources
-avatar: https://avatars.githubusercontent.com/u/36923816?v=4
+avatar: "https://ik.imagekit.io/fxya5jirb/profile.png"
+
 
 # boolean type, the global switch for TOC in posts.
 toc: true
@@ -117,6 +110,9 @@ pwa:
   enabled: true # the option for PWA feature
 
 paginate: 10
+
+# The base URL of your site
+baseurl: ""
 
 # ------------ The following options are not recommended to be modified ------------------
 
@@ -181,12 +177,11 @@ compress_html:
 exclude:
   - "*.gem"
   - "*.gemspec"
+  - docs
   - tools
   - README.md
-  - CHANGELOG.md
   - LICENSE
   - rollup.config.js
-  - node_modules
   - package*.json
 
 jekyll-archives:
