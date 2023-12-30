@@ -3,6 +3,4 @@
 icon: fas fa-info-circle
 order: 4
 ---
-
-
-Hey I am Pratham aka p1r4t3 aka alpha. I am interested in DevOps,Cybersecurity,Systems and LLMs in general. Here you will find my learnings that I have taken up throughout my journey along with writeups of ctf challenges which I have solved playing ctfs with InfoSecIITR. :) 
+hi, my name's mmukul khedekar! i'm an undergrad student and i'm pursuing my bachelors in computer science and engineering at IIT Roorkee. i always wanted to share interesting things that i come across. since, i dont' have the platform to do so, i've started this blog :)
