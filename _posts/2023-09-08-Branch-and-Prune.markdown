@@ -50,7 +50,7 @@ this algorithm solves the given problem at hand easily.
 
 ## Fusion [WaniCTF 2023]
 
-another RSA problem where we are again told about $n$,$e$ and $c$ and the extra information provided to us this time is the information about the odd-positioned bits of $p$ and the even-positioned bits of $q$. turns out that this system is still cryptographically insecure.
+another RSA problem where we are again told about $n$, $e$ and $c$ and the extra information provided to us this time is the information about the odd-positioned bits of $p$ and the even-positioned bits of $q$. turns out that this system is still cryptographically insecure.
 
 ### Solution
 
@@ -62,10 +62,10 @@ the algorithm works as follows. suppose we are the $i$th position and we need to
 from Cryptodome.Util.number import *
 from math import ceil,log2
 
-n = 27827431791848080510562137781647062324705519074578573542080709104213290885384138112622589204213039784586739531100900121818773231746353628701496871262808779177634066307811340728596967443136248066021733132197733950698309054408992256119278475934840426097782450035074949407003770020982281271016621089217842433829236239812065860591373247969334485969558679735740571326071758317172261557282013095697983483074361658192130930535327572516432407351968014347094777815311598324897654188279810868213771660240365442631965923595072542164009330360016248531635617943805455233362064406931834698027641363345541747316319322362708173430359
-e = 65537
-c = 887926220667968890879323993322751057453505329282464121192166661668652988472392200833617263356802400786530829198630338132461040854817240045862231163192066406864853778440878582265466417227185832620254137042793856626244988925048088111119004607890025763414508753895225492623193311559922084796417413460281461365304057774060057555727153509262542834065135887011058656162069317322056106544821682305831737729496650051318517028889255487115139500943568231274002663378391765162497239270806776752479703679390618212766047550742574483461059727193901578391568568448774297557525118817107928003001667639915132073895805521242644001132
-r = 163104269992791295067767008325597264071947458742400688173529362951284000168497975807685789656545622164680196654779928766806798485048740155505566331845589263626813345997348999250857394231703013905659296268991584448212774337704919390397516784976219511463415022562211148136000912563325229529692182027300627232945
+n = #
+e = #
+c = #
+r = #
 
 l = max(len(bin(r)[2:]),int(ceil(log2(n))+1))
 tracked = [(1,1)]
@@ -102,3 +102,84 @@ for (p,q) in new_tracked:
 ```
 
 running this script we get our flag: `FLAG{sequ4ntia1_prim4_fact0rizati0n}`
+
+now i could have ended this here, but this is where things start getting more interesting! it turns out that you need not write out a whole brute script from scratch to prune over the bits and solve for $p$ and $q$. you can instead just use a z3solver to do that for us. lets solve the above challenge using a z3solver. here's my script that works great 
+
+```python
+from z3 import *
+from Crypto.Util.number import *
+
+n = #
+e = #
+c = #
+r = #
+
+bitlen = 1024
+
+P = BitVec('p', bitlen)
+Q = BitVec('q', bitlen)
+
+mask = int("55" * 128, 16)
+# r = p & mask
+# mask = mask << 1
+# r += q & mask
+
+solver = Solver()
+solver.add(P * Q == n)
+solver.add(((P & mask) + (Q & (mask << 1))) == r)
+
+if (solver.check() == sat):
+    M = solver.model()
+    p = M[P].as_long()
+    q = M[Q].as_long()
+
+    phi = (p - 1) * (q - 1)
+    d = pow(e, -1, phi)
+    print(long_to_bytes(pow(c, d, n)))
+```
+
+sometimes it turns out that writing brute scripts from scratch becomes difficult and complicated, hence we rely on z3solver.
+
+
+## Shibs [MapnaCTF 2024]
+another rsa problem where we know $n$, $e$ and $c$. however we also know $p & q$ and we are given that $q$ is just $p[:s]$ $+$ $p[s:]$ for some random hidden $s$. 
+
+### Solution
+
+we'll do the same again. lets pump these all into the z3solver again and let it do the magic for us. since we also dont know the $s$, i'll brute over that too. here's my script
+
+```python
+from Crypto.Util.number import *
+from z3 import *
+
+n = #
+r = #
+enc = #
+
+bitlen = 1024
+e = #
+
+for s in range(1, 1024):
+    P = BitVec('p', bitlen)
+    Q = BitVec('q', bitlen) 
+
+    solver = Solver()
+    solver.add(P * Q == n)
+    solver.add(P & Q == r)
+    shifted_P = Concat(Extract(bitlen - s - 1, 0, P), Extract(bitlen - 1, bitlen - s, P))
+    solver.add(Q == shifted_P)
+
+    if (solver.check() == sat):
+        M = solver.model()
+        print(M)
+        p = M[P].as_long()
+        q = M[Q].as_long()
+
+        phi = (p - 1) * (q - 1)
+        d = pow(e, -1, phi)
+        print(long_to_bytes(pow(enc, d, p * q)))
+        break
+    else:
+        print(s)
+```
+and this gives us our flag `MAPNA{Br4nch_&_prun3_Or_4Nother_ApprOacH???}`.  pretty cool trick aint it?
