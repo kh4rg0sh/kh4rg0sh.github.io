@@ -142,7 +142,7 @@ sometimes it turns out that writing brute scripts from scratch becomes difficult
 
 
 ## Shibs [MapnaCTF 2024]
-another rsa problem where we know $n$, $e$ and $c$. however we also know $p & q$ and we are given that $q$ is just $p[:s]$ $+$ $p[s:]$ for some random hidden $s$. 
+another rsa problem where we know $n$, $e$ and $c$. however we also know $p \& q$ and we are given that $q$ is just $p[:s]$ $+$ $p[s:]$ for some random hidden $s$. 
 
 ### Solution
 
