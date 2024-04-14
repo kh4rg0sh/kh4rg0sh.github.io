@@ -57,7 +57,7 @@ jobs:
         run: |
           hugo \
             --gc --minify \
-            --baseURL "https://parth-badgujar.github.io/"
+            --baseURL "https://mmukulkhedekar.github.io/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
