@@ -6,10 +6,10 @@ math: True
 sidebar:
   open: true
 ---
-This post shall contain the writeups for the challenges that I solved.
+I participated with InfoSecIITR and we ended up on the 6th position. This post shall contain the writeups for the challenges that I solved.
 
 ## Writeups
 ### Cryptography
 1. <a href="./choose-the-param">Choose the Param</a>
 2. <a href="./half-big-rsa">Half Big RSA</a>
-3. <a href="./shamir-for-dummies>
+3. <a href="./shamir-for-dummies">Shamir for dummies</a>
