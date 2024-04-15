@@ -12,3 +12,4 @@ This post shall contain the writeups for the challenges that I solved.
 ### Cryptography
 1. <a href="./choose-the-param">Choose the Param</a>
 2. <a href="./half-big-rsa">Half Big RSA</a>
+3. <a href="./shamir-for-dummies>
