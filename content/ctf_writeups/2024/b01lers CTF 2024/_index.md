@@ -6,7 +6,9 @@ math: True
 sidebar:
   open: true
 ---
-I participated with InfoSecIITR and we ended up on the 6th position. This post shall contain the writeups for the challenges that I solved.
+
+I participated in HackPack CTF 2024 with the team <a href="https://ctftime.org/team/16691/">InfoSecIITR</a>. We finished $6$th out of the $393$ teams that participated in this competition. This post shall contain the writeups for the challenges that I solved.
+![alt text](image.png)
 
 ## Writeups
 ### Cryptography
