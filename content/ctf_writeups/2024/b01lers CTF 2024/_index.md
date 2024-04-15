@@ -15,3 +15,7 @@ I participated in HackPack CTF 2024 with the team <a href="https://ctftime.org/t
 1. <a href="./choose-the-param">Choose the Param</a>
 2. <a href="./half-big-rsa">Half Big RSA</a>
 3. <a href="./shamir-for-dummies">Shamir for dummies</a>
+
+### Misc 
+1. <a href="./wabash">Wabash</a>
+2. <a href="./bash-cat-with-pipe">Bash cat with pipe</a>
