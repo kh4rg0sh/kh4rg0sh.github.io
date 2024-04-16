@@ -3,15 +3,16 @@ linkTitle: Half Big RSA
 title: Half Big RSA [Writeup]
 type: docs
 math: True
+weight: 4
 ---
 ## Challenge Description
 
-```
-Prime numbers are the best numbers. So, you should let me use it for my modulus!
-```
+
+> Prime numbers are the best numbers. So, you should let me use it for my modulus!
+
 ## Challenge Files
 
-```python
+```python {filename=main.py, linenos=table}
 import math
 from Crypto.Util.number import getPrime, bytes_to_long, long_to_bytes
 import os
@@ -44,7 +45,7 @@ c = 2641142127668558876004601749075627713407580699415571243637224915818426548234
 
 ### Step One: Textbook RSA decryption
 We need to solve RSA with a public exponent `e` that is not coprime to the euler totient of the public modulus. We can compute the gcd of `(e, phi(n))` and it turns out to be `18`. Therefore, we can compute `m ** (18)` using textbook RSA decryption
-```python
+```python {filename=solve.py, linenos=table}
 from Crypto.Util.number import *
 from math import gcd
 
@@ -76,7 +77,7 @@ c2 = n - c
 ```
 Now we wish to compute the modular cube roots of the expression twice and that would give us the desired plaintext. Unfortunately, I couldn't find it implemented in sagemath and hence I had to rely on this snippet of code that I found on GitHub (to compute modular cube roots)
 
-```python
+```python {filename=cbrt.py, linenos=table}
 def cube_root(c, q):
     F = FiniteField(q)
     R.<x> = PolynomialRing(F,'x')
@@ -119,7 +120,7 @@ print(f"x = {rems}")
 ```
 and that gives us our flag
 
-{{<callout>}}
+{{<callout type="info">}}
 It's important to note here that, if $p \equiv 2 \pmod{3}$, then there exists a single and unique cube root. However, if $p \equiv 1 \pmod{3}$ then we could either have no cube roots or three cube roots. We already have two square roots and for each of them you would get nine cube roots (when applied twice) and hence a total of all the $18$ roots that we desired. You must test for the flag for each of these values.
 {{</callout>}}
 ## Flag

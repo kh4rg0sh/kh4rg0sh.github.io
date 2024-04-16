@@ -53,3 +53,7 @@ params:
   editURL:
     enable: true
     base: "https://github.com/imfing/hextra-starter-template/edit/main/content"
+
+services:
+  googleAnalytics:
+    ID: G-MEASUREMENT_ID

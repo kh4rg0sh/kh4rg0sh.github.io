@@ -3,14 +3,14 @@ linkTitle: Bash cat with pipe
 title: Bash cat with pipe [Writeup]
 type: docs
 math: True
+weight: 2
 ---
 ## Challenge Description
 
-```
-My terminal seems to be stuck... please help me fix it!
-```
+> My terminal seems to be stuck... please help me fix it!
+
 ## Challenge Files
-```python
+```python {filename=server.py, linenos=table}
 #!/usr/local/bin/python3
 
 import subprocess
@@ -34,7 +34,7 @@ while True:
     run_input()
 ```
 
-{{<callout>}}
+{{<callout type="info">}}
 The participants were NOT provided with the challenge files. This was the file they were using and had been running on their server. I retrieved this file from their server for educational (writeup) purposes. 
 {{</callout>}}
 
@@ -44,14 +44,14 @@ If we type in `ls`, it immediately shows us the contents of the current director
 ### Using Brace Expressions 
 In bash, brace expressions allow us to generate strings or expressions without having to explicitly state them. These are a few ways in which they could be used:
 
-{{<callout>}}
-- `Basic Form: {x, y, z}`: This will expand to each comma-separated item, generating a list. For example, {apples,bananas,oranges} will expand to apples, bananas, and oranges.
+{{<callout type="info">}}
+- `Basic Form: {x, y, z}`: This will expand to each comma-separated item, generating a list. For example, `{apples,bananas,oranges}` will expand to apples, bananas, and oranges.
 
-- `Ranges: {x..z}`: This will expand to each item in the specified range. For example, {1..5} will expand to 1, 2, 3, 4, and 5.
+- `Ranges: {x..z}`: This will expand to each item in the specified range. For example, `{1..5}` will expand to 1, 2, 3, 4, and 5.
 
-- `Combining Forms`: You can combine the basic form and ranges. For example, {1..3, 5, 7} will expand to 1, 2, 3, 5, and 7.
+- `Combining Forms`: You can combine the basic form and ranges. For example, `{1..3, 5, 7}` will expand to 1, 2, 3, 5, and 7.
 
-- `Nesting`: You can also nest brace expansions. For example, {a{1, 2}, b{3, 4}} will expand to a1, a2, b3, and b4.
+- `Nesting`: You can also nest brace expansions. For example, `{a{1, 2}, b{3, 4}}` will expand to a1, a2, b3, and b4.
 {{</callout>}}
 
 We notice that they've only blacklisted the string `flag`. This could easily be bypassed with 

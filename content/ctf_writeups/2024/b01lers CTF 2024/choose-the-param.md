@@ -3,14 +3,14 @@ linkTitle: Choose the param
 title: Choose the param [Writeup]
 type: docs
 math: True
+weight: 3
 ---
 ## Challenge Description
 
-```
-I wounder why we need to specify parameter length in the spec...
-```
+> I wounder why we need to specify parameter length in the spec...
+
 ## Challenge Files
-```python 
+```python {filename=main.py, linenos=table}
 #!/usr/bin/python3
 from Crypto.Util.number import long_to_bytes, bytes_to_long, getPrime
 import os
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 ## Solution
 Since we are allowed to choose the size of the RSA parameters and we are allowed to use the encryption oracle as many times as we want, we could query for RSA of weaker security (for example `64 bits`) and combine these using the chinese remainder theorem. What follows is a textbook RSA attack where the public modulus is easily factorisable. Here's the exploit
 
-```python
+```python {filename=exploit.py, linenos=table}
 from pwn import *
 from sage.all import *
 from Crypto.Util.number import *

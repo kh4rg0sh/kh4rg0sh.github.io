@@ -3,14 +3,14 @@ linkTitle: Shamir for dummies
 title: Shamir for dummies [Writeup]
 type: docs
 math: True
+weight: 5
 ---
 ## Challenge Description
 
-```
-I need to use Shamir secret sharing scheme (https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing), but my friend only knows how to do additions. Can you help me and my friend?
-```
-## Challenge Files
-```python 
+> I need to use Shamir secret sharing scheme (https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing), but my friend only knows how to do additions. Can you help me and my friend?
+
+## Challenge Files 
+```python {filename=main.py, linenos=table}
 import os
 import sys
 import time
@@ -120,7 +120,7 @@ $$
 
 for all `i = 1` to `i = n - 1`. Well, this property is satisfied trivially by the `n`th roots of unity (trivial if you know this result already). The proof is easy and is left as an exercise for the reader. Here's the solve script
 
-```python
+```python {filename=solve.py, linenos=table}
 from pwn import *
 from Crypto.Util.number import *
 from sage.all import *

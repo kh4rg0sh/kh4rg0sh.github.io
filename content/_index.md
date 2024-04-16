@@ -6,23 +6,62 @@ toc: false
 <h3 style="text-align: center;">Mmukul Khedekar</h3>
 
 ## About Me
-Hello! My name's Mmukul Khedekar. I usually go with the aliases `kh4rg0sh` or `fooker` or `alastor moody`. I'm currently a Sophomore, Second Year student at IIT Roorkee and I'm currently pursuing a Bachelors in Computer Science and Engineering. 
+Hello! My name's Mmukul Khedekar. I usually use the aliases `kh4rg0sh` or `fooker` or `alastor moody`. I'm currently a Second Year student at IIT Roorkee and I'm pursuing a Bachelors in Computer Science and Engineering. 
 
-Currently I'm a core team member of two of our campus groups:  
-1. [InfoSecIITR](https://infoseciitr.in/])
-2. [Programming & Algorithms Group](https://pag.iitr.in/)
+Currently, I'm a core team member of two of our campus groups:  
+
+<table>
+    <tr>
+        <th>1.</th>
+        <th>InfoSecIITR</th>
+        <th>A club of information security enthusiasts whose primary aim is to deepen their understanding of softwares, and ofcourse learn how to hack!</th>
+        <th><a href="https://infoseciitr.in/">https://infoseciitr.in/</a></th>
+    </tr>
+    <tr>
+        <th>2.</th>
+        <th>PAG</th>
+        <th>A club of algorithms enthusiast whose primary aim is to participate in Competitive Programming contests.</th>
+        <th><a href="https://pag.iitr.in/">https://pag.iitr.in/</a></th>
+    </tr>
+</table>
 
 ## Socials
-Here are links to a couple of my socials:
-1. <a href="https://artofproblemsolving.com/community/user/378952">Art of Problem Solving</a>
-2. <a href="https://codeforces.com/profile/fooker">Codeforces</a>
-3. <a href="https://atcoder.jp/users/fooker">Atcoder</a>
-4. <a href="https://cryptohack.org/user/f00k3R/">CryptoHack</a>
-5. <a href="https://math.stackexchange.com/users/896141/alastormoody">Math Stackexchange</a>
-6. <a href="https://github.com/MmukulKhedekar">Github</a>
+Here are links to a couple of my socials!
+<table>
+    <tr>
+        <th>1.</th>
+        <th>Github</th>
+        <th><a href="https://github.com/MmukulKhedekar">Github</a></th>
+    </tr>
+    <tr>
+        <th>2.</th>
+        <th>Art of Problem Solving</th>
+        <th><a href="https://artofproblemsolving.com/community/user/378952">Art of Problem Solving</a></th>
+    </tr>
+    <tr>
+        <th>3.</th>
+        <th>Math Stackexchange</th>
+        <th><a href="https://math.stackexchange.com/users/896141/alastormoody">Math Stackexchange</a></th>
+    </tr>
+    <tr>
+        <th>4.</th>
+        <th>CryptoHack</th>
+        <th><a href="https://cryptohack.org/user/f00k3R/">CryptoHack</a></th>
+    </tr>
+    <tr>
+        <th>5.</th>
+        <th>Codeforces</th>
+        <th><a href="https://codeforces.com/profile/fooker">Codeforces</a></th>
+    </tr>
+    <tr>
+        <th>6.</th>
+        <th>Atcoder</th>
+        <th><a href="https://atcoder.jp/users/fooker">Atcoder</a></th>
+    </tr>
+</table>
 
 ## Math Olympiads
-Additionally, I was involved with Math Olympiads during my highschool years. Here are some of my achievements from back then
+Additionally, I was involved with Math Olympiads during my highschool years. Here are some of my achievements from back then!
 
 #### IMOTC 2020
 ---

@@ -6,9 +6,8 @@ math: True
 ---
 ## Challenge Description
 
-```
-"Welcome to YellowDogLLM, a service for providing LLM-generated description for images of (mostly) yellow dogs (aka Carolina dogs or American dingos). Variation 1."
-```
+> "Welcome to YellowDogLLM, a service for providing LLM-generated description for images of (mostly) yellow dogs (aka Carolina dogs or American dingos). Variation 1."
+
 
 ## Solution
 We can navigate to the website and observe that we are provided with a couple of images. We can select these images and ask the LLM Model to describe it. There's an image that has been redacted and we cannot select it. Most probably, if we could select this image and ask the LLM to describe it, we could probably get the flag.

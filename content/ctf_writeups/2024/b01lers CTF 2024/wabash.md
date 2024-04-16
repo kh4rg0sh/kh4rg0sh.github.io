@@ -3,14 +3,14 @@ linkTitle: Wabash
 title: Wabash [Writeup]
 type: docs
 math: True
+weight: 1
 ---
 ## Challenge Description
 
-```
-wabash, its a river, but also a new shell! Flag is in /flag.txt
-```
+> wabash, its a river, but also a new shell! Flag is in /flag.txt
+
 ## Challenge Files
-```python
+```python {filename=server.py, linenos=table}
 #!/usr/local/bin/python3
 
 import os
@@ -42,7 +42,7 @@ while True:
     os.system(wabash(input("$ ")))
 ```
 
-{{<callout>}}
+{{<callout type="info">}}
 The participants were NOT provided with the challenge files. This was the file they were using and had been running on their server. I retrieved this file from their server for educational (writeup) purposes. 
 {{</callout>}}
 
@@ -73,7 +73,7 @@ $(cat${IFS}/flag.txt)
 This executes the command inside (which grabs the flag) and replaces it with the command to be executed. 
 ![alt text](image-2.png)
 
-{{<callout>}}
+{{<callout type="warning">}}
 The dollar parameter expands into the Process ID of the Bash process. If you want to ever execute command substitution on your terminal, then you would do `(ls)` instead of `$(ls)` because the terminal prepends `$` to each of your commands. However, in the above challenge, the python script would execute the resultant string as a whole. 
 {{</callout>}}
 
