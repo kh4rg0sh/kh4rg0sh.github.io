@@ -38,7 +38,7 @@ int main() {
 
 ## Solution 
 Before inspecting the source code, let us first run `checksec` on the provided binary to look out for the security mitigations applied on this binary. 
-```shell
+```bash
 fooker@fooker:~/ctfs/umdctf2024/the_voice$ checksec the_voice
 [*] '~/ctfs/umdctf2024/the_voice/the_voice'
     Arch:     amd64-64-little
@@ -119,7 +119,6 @@ As seen above, during the initilisation of a new stack frame, a seemingly myster
 Right before the stack frame is popped off, the value loaded from `fs:0x28` is compared against the value stored in `[rbp-0x8]`. If these two values match then the program continues an expected flow of instruction. However, if a modification is detected the program calls `__stack_chk_fail@plt` from the `PLT (Procedure Linkage Table)` and the program terminates with the message `*** stack smashing detected ***`
 
 ### Overwriting the Master Canary
-
 Now that we know how the stack protection works, we shall try to exploit this. Firstly, let's take a look at the assembly corresponding to `Line 22` in the source code. 
 
 ```bash
@@ -174,7 +173,6 @@ r.recvline()
 
 r.interactive()
 ```
-
 ## Flag
 ```
 UMDCTF{pwn_g3ss3r1t_sk1ll5_d0nt_tak3_a5_many_y3ar5_t0_l3arn_pau1}
