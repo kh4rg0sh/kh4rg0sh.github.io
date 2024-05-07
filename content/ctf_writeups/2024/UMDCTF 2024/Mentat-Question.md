@@ -210,7 +210,7 @@ pwndbg>
 
 We could now perform a buffer overflow in the next iteration and craft a `ret2win` to get a shell
 
-### Buffer Overflow to Ret2Win
+### Buffer Overflow to ret2win
 First we must know the offset of the buffer `char buf[16]` from the stack base pointer. I'll read a few bytes of visible garbage into the buffer and set a breakpoint right after the gets to examine the stack contents. 
 
 ```bash
