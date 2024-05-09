@@ -49,7 +49,7 @@ Since, the decompiled code is kinda messy and huge, we'll take a look at this st
 ```c 
 #include <stdint.h>
 
-int64_t fcn_00001546 (void) {
+int32_t main (void) {
     void (*0x1552)() ();
     rax = stdin;
     rdi = stdin;
@@ -98,36 +98,13 @@ label_0:
     fcn_00001368 ();
     goto label_0;
 }
- 
-int32_t main (void) {
-    rax = stdout;
-    ecx = 0;
-    edx = 2;
-    esi = 0;
-    rdi = rax;
-    setvbuf ();
-    rax = stdin;
-    ecx = 0;
-    edx = 2;
-    esi = 0;
-    rdi = rax;
-    setvbuf ();
-    puts ("-----Options---");
-    puts ("-----Alloc-----");
-    puts ("-----Free------");
-    puts ("-----View------");
-    puts ("-----Edit------");
-    puts ("-----Exit------");
-    puts ("-----Resize----");
-    eax = 0;
-    fcn_00001546 ();
-    eax = 0;
-    return rax;
-}
 ```
 
 The above decompiled code looks like a menu. It provides us six options and we get to choose either of them. Apparently, it looks like we have 
-infinite tries because that menu is embedded inside a while loop. Also for some reason the decompiled code orders the switch cases in the reverse order. Anyway, the first one on the list is the `Alloc()` function 
+infinite tries because that menu is embedded inside a while loop. Also for some reason the decompiled code orders the switch cases in the reverse order. 
+
+In addition to this, there seem to be two functions that are invoked in each of these menu options. These functions seem to provide the utility to 
+read the index of the chunk to operate on and the size of this chunk to operate on
 
 ```c
 int64_t fcn_00001289 (void) {
@@ -175,7 +152,11 @@ int64_t fcn_0000130a (void) {
     return rax;
     return stack_chk_fail ();
 }
+```
 
+Anyway, we shall take a look at the menu options. The first one on the list is the `Alloc()` function!
+
+```c
 uint64_t fcn_00001368 (void) {
     eax = 0;
     eax = fcn_00001289 ();
@@ -203,32 +184,6 @@ uint64_t fcn_00001368 (void) {
 By the looks of it, the function asks us for the index and probably has a signed check on the input index. It then asks for us the size of the chunk and just mallocs it. Let's take a look at the decompilation of the next function: `free()`
 
 ```c
-int64_t fcn_00001289 (void) {
-    rax = *(fs:0x28);
-    *(var_10h) = rax;
-    eax = 0;
-    eax = 0;
-    printf ("Where? ");
-    rax = var_14h;
-    rsi = rax;
-    rdi = 0x0000200c;
-    eax = 0;
-    isoc99_scanf ();
-    eax = *(var_14h);
-    if (eax >= 0) {
-    }
-    eax = 0;
-    printf ("Illegal idx");
-    eax = 0xffffffff;
-    void (*0x12f4)() ();
-    rdx = *(var_10h);
-    rdx ^= *(fs:0x28);
-    void (*0x1308)() ();
-    return rax;
-    stack_chk_fail ();
-    eax = *(var_14h);
-}
-
 int64_t fcn_000014a6 (void) {
     eax = 0;
     eax = fcn_00001289 ();
@@ -250,32 +205,6 @@ int64_t fcn_000014a6 (void) {
 The above code snippet again asks us for the index of the chunk to be freed. We still have the signed check on the input index and then it just frees that chunk. We have a `Double Free` vulnerability here since it does not check if the chunk to be freed is already freed and nor is this patched in the version of libc we are using! Let's take a look at the `View()` function!
 
 ```c
-int64_t fcn_00001289 (void) {
-    rax = *(fs:0x28);
-    *(var_10h) = rax;
-    eax = 0;
-    eax = 0;
-    printf ("Where? ");
-    rax = var_14h;
-    rsi = rax;
-    rdi = 0x0000200c;
-    eax = 0;
-    isoc99_scanf ();
-    eax = *(var_14h);
-    if (eax >= 0) {
-    }
-    eax = 0;
-    printf ("Illegal idx");
-    eax = 0xffffffff;
-    void (*0x12f4)() ();
-    rdx = *(var_10h);
-    rdx ^= *(fs:0x28);
-    void (*0x1308)() ();
-    return rax;
-    stack_chk_fail ();
-    eax = *(var_14h);
-}
-
 int64_t fcn_000013c6 (void) {
     eax = 0;
     eax = fcn_00001289 ();
@@ -299,52 +228,6 @@ int64_t fcn_000013c6 (void) {
 It probably just blindly reads the data at the input index chunk. This could potentially be used to leak libc addresses. Let's take a look at the `Edit()` function! 
 
 ```c
-int64_t fcn_00001289 (void) {
-    rax = *(fs:0x28);
-    *(var_10h) = rax;
-    eax = 0;
-    eax = 0;
-    printf ("Where? ");
-    rax = var_14h;
-    rsi = rax;
-    rdi = 0x0000200c;
-    eax = 0;
-    isoc99_scanf ();
-    eax = *(var_14h);
-    if (eax >= 0) {
-    }
-    eax = 0;
-    printf ("Illegal idx");
-    eax = 0xffffffff;
-    void (*0x12f4)() ();
-    rdx = *(var_10h);
-    rdx ^= *(fs:0x28);
-    void (*0x1308)() ();
-    return rax;
-    stack_chk_fail ();
-    eax = *(var_14h);
-}
-
-int64_t fcn_0000130a (void) {
-    rax = *(fs:0x28);
-    *(var_10h) = rax;
-    eax = 0;
-    eax = 0;
-    printf ("size? ");
-    rax = var_18h;
-    rsi = rax;
-    rdi = 0x00002022;
-    eax = 0;
-    isoc99_scanf ();
-    rax = *(var_18h);
-    rdx = *(var_10h);
-    rdx ^= *(fs:0x28);
-    if (? != ?) {
-    }
-    return rax;
-    return stack_chk_fail ();
-}
-
 int64_t fcn_000014ea (void) {
     eax = 0;
     eax = fcn_00001289 ();
