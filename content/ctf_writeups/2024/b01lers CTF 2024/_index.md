@@ -34,8 +34,26 @@ I participated in b01lers CTF 2024 with the team <a href="https://ctftime.org/te
   </tr>
 </table>
 
-### Cryptography
+### Binary Exploitation
+<table>
+  <tr>
+    <th>Challenge</th>
+    <th>Link</th>
+    <th>Solves</th>
+  </tr>
+  <tr>
+    <th>Shall we play a game</th>
+    <th><a href="./shall-we-play-a-game">Shall we play a game</a></th>
+    <th>129 solves</th>
+  </tr>
+  <tr>
+    <th>Easy Note</th>
+    <th><a href="./easy-note">Easy Note</a></th>
+    <th>50 solves</th>
+  </tr>
+</table>
 
+### Cryptography
 <table>
   <tr>
     <th>Challenge</th>
