@@ -22,16 +22,6 @@ I participated in UMDCTF 2024 with the team <a href="https://ctftime.org/team/16
     <th>Link</th>
     <th>Solves</th>
   </tr>
-  <tr>
-    <th>The Voice</th>
-    <th><a href="./the-voice">The Voice</a></th>
-    <th>98 solves</th>
-  </tr>
-  <tr>
-    <th>Mentat Question</th>
-    <th><a href="./mentat-question">Mentat Question</a></th>
-    <th>71 solves</th>
-  </tr>
 </table>
 
 <!-- ### Cryptography
