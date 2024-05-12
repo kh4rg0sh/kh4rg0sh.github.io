@@ -1,18 +1,18 @@
 ---
-linkTitle: UMDCTF 2024 
-title: UMDCTF 2024
+linkTitle: squ1rrelCTF 2024 
+title: squ1rrelCTF 2024
 type: docs
 math: True
 sidebar:
   open: false
-weight: 3
+weight: 4
 ---
 
 I participated in UMDCTF 2024 with the team <a href="https://ctftime.org/team/16691/">InfoSecIITR</a>. We finished $12$th out of the $562$ teams that participated in this competition. This post shall contain the writeups for the challenges that I solved and upsolved.
 
 | ![](image.png) | 
 |:--:| 
-| *InfoSecIITR at 12th position* |
+| *InfoSecIITR at 11th position* |
 
 ## Writeups
 ### Binary Exploitation

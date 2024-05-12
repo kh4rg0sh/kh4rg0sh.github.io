@@ -39,5 +39,19 @@ This post contains all the writeups that I've typed for CTFs that I participated
     <th><a href="https://ctftime.org/event/2323">CTFtime details</a></th>
     <th><a href="./umdctf-2024/">here</a></th>
   </tr>
+  <tr>
+    <th>squ1rrelCTF 2024</th>
+    <th>April 27, 2024</th>
+    <th><a href="https://squ1rrel.dev/">Official Website</a></th>
+    <th><a href="https://ctftime.org/event/2370">CTFtime details</a></th>
+    <th><a href="./squ1rrelctf-2024/">here</a></th>
+  </tr>
+  <tr>
+    <th>CyberSecurityRumble Quals 2024</th>
+    <th>April 27, 2024</th>
+    <th><a href="https://cybersecurityrumble.de/2024/">Official Website</a></th>
+    <th><a href="https://ctftime.org/event/2224">CTFtime details</a></th>
+    <th><a href="./cybersecurityrumble-quals-2024/">here</a></th>
+  </tr>
 </table>
 
