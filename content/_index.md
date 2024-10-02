@@ -3,7 +3,7 @@ title: Hi there 👋
 toc: false
 --- -->
 <img src="images/logo.jpg" align="center" width="100px"/>
-<h3 style="text-align: center;">kh4rg0shr</h3>
+<h3 style="text-align: center;">kh4rg0sh</h3>
 
 ## About Me
 hi, im `kh4rg0sh`. i'm currently a Second Year student at IIT Roorkee and I'm pursuing a Bachelors in Computer Science and Engineering. i frequently use one of the following aliases: `['kh4rg0sh', 'fooker', 'alastormoody']`
