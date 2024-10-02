@@ -30,7 +30,7 @@ menu:
         type: search
     - name: GitHub
       weight: 5
-      url: "https://github.com/MmukulKhedekar"
+      url: "https://github.com/kh4rg0sh"
       params:
         icon: github
     - name: Twitter
