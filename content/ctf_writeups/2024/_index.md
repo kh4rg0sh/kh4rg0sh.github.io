@@ -19,13 +19,6 @@ This post contains all the writeups that I've typed for CTFs that I participated
     <th>Writeup</th>
   </tr>
   <tr>
-    <th>Hackpack CTF (LLM Edition)</th>
-    <th>April 12, 2024</th>
-    <th><a href="https://hackpack.club/">Official Website</a></th>
-    <th><a href="https://ctftime.org/event/2333/">CTFtime details</a></th>
-    <th><a href="./hackpack-ctf-llm-edition-2024/">here</a></th>
-  </tr>
-  <tr>
     <th>b01lers CTF 2024</th>
     <th>April 13, 2024</th>
     <th><a href="https://b01lersc.tf/">Official Website</a></th>
@@ -38,13 +31,6 @@ This post contains all the writeups that I've typed for CTFs that I participated
     <th><a href="https://csec.umd.edu/">Official Website</a></th>
     <th><a href="https://ctftime.org/event/2323">CTFtime details</a></th>
     <th><a href="./umdctf-2024/">here</a></th>
-  </tr>
-  <tr>
-    <th>squ1rrelCTF 2024</th>
-    <th>April 27, 2024</th>
-    <th><a href="https://squ1rrel.dev/">Official Website</a></th>
-    <th><a href="https://ctftime.org/event/2370">CTFtime details</a></th>
-    <th><a href="./squ1rrelctf-2024/">here</a></th>
   </tr>
   <tr>
     <th>CyberSecurityRumble Quals 2024</th>
