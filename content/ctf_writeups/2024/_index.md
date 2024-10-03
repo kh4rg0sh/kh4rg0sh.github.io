@@ -39,5 +39,12 @@ This post contains all the writeups that I've typed for CTFs that I participated
     <th><a href="https://ctftime.org/event/2224">CTFtime details</a></th>
     <th><a href="./cybersecurityrumble-quals-2024/">here</a></th>
   </tr>
+  <tr>
+    <th>BuckeyeCTF 2024</th>
+    <th>September 28, 2024</th>
+    <th><a href="https://ctf.osucyber.club/">Official Website</a></th>
+    <th><a href="https://ctftime.org/event/2249">CTFtime details</a></th>
+    <th><a href="./buckeyectf-2024/">here</a></th>
+  </tr>
 </table>
 
