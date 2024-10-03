@@ -34,7 +34,7 @@ This post contains all the writeups that I've typed for CTFs that I participated
   </tr>
   <tr>
     <th>CyberSecurityRumble Quals 2024</th>
-    <th>April 27, 2024</th>
+    <th>May 11, 2024</th>
     <th><a href="https://cybersecurityrumble.de/2024/">Official Website</a></th>
     <th><a href="https://ctftime.org/event/2224">CTFtime details</a></th>
     <th><a href="./cybersecurityrumble-quals-2024/">here</a></th>
