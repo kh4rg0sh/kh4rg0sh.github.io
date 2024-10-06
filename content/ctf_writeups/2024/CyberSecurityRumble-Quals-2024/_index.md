@@ -12,7 +12,7 @@ I participated with the team <a href="https://ctftime.org/team/16691/">InfoSecII
 
 | ![](image.png) | 
 |:--:| 
-| *InfoSecIITR at 44th position* |
+| *InfoSecIITR at 48th position* |
 
 ## Writeups
 ### Cryptography
