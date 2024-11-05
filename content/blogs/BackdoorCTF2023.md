@@ -3,6 +3,7 @@ linkTitle: BackdoorCTF 2023
 title: BackdoorCTF 2023 
 type: docs
 math: true
+weight: 1
 ---
 
 InfosecIITR hosted the annual CTF, "Backdoor CTF," which ran for an impressive `48` hours, starting from the `16th of December` to the `18th of December`. This was the first time I participated as a CTF organizer and a problem setter. Also, it was a huge event this time, with approximately `1300 teams` registering and `800 teams` having a non-zero score. I was anxious as well as excited to contribute by proposing problems for the event. In the end, I set a total of `six problems`, with crux ideas for two out of those six challenges. All the cryptography problems can be found <a href="https://github.com/MmukulKhedekar/BackdoorCTF2023-Crypto">here</a>. I personally found <a href="https://connor-mccartney.github.io/cryptography/other/BackdoorCTF-2023-writeups">this</a> writeup to be really cool and concise. Apart from that, <a href="https://ctfwriteups.org/ctfs/658035f233b399e7fe20f655/edit">this</a> is a cool collection of writeups. 

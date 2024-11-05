@@ -51,7 +51,7 @@ Here are links to a couple of my socials!
     <tr>
         <th>5.</th>
         <th>Codeforces</th>
-        <th><a href="https://codeforces.com/profile/fooker">Codeforces</a></th>
+        <th><a href="https://codeforces.com/profile/ssravs">Codeforces</a></th>
     </tr>
     <tr>
         <th>6.</th>

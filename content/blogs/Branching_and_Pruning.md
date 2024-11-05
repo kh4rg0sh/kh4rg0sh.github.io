@@ -3,6 +3,7 @@ linkTitle: Branching and Pruning
 title: The Branch and Prune Technique 
 type: docs
 math: true
+weight: 2
 ---
 
 Today I'll be discussing a really useful implementation heavy technique that leads to a bit by bit leakage of information of variables when provided some extra information. The best way to demonstrate this is through examples so let's get started 
