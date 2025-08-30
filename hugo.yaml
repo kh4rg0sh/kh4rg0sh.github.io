@@ -21,6 +21,9 @@ menu:
     - name: Blogs
       pageRef: /blogs
       weight: 1
+    - name: Competitive Programming
+      pageRef: /competitive_programming
+      weight: 1
     - name: CTF Writeups  
       pageRef: /ctf_writeups
       weight: 1
