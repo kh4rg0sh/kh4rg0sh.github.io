@@ -1,7 +1,7 @@
 ---
 title: C++ STL Container
 sidebar:
-  open: true
+  open: false
 ---
 ## Introduction
 today i decided to take a look at c++ pwn. c++ library functions are implemented and compiled in `libcstd++`. this binary is locatable on your system. on my system this could be found at

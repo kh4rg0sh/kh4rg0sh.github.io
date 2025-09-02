@@ -28,7 +28,7 @@ I prepared for the infamous IIT engineering entrance exams during the last two y
         <th>1.</th>
         <th>KVPY SX 2022</th>
         <th>All India Rank: 383</th>
-    </tr>
+    </tr> 
     <tr>
         <th>2.</th>
         <th>JEE-Mains 2022</th>
