@@ -1,5 +1,6 @@
 ---
 title: Blogs
+math: true
 sidebar:
   open: true
 ---
@@ -59,4 +60,15 @@ Here's my Atcoder account that I use to participate. Max rating: 1218 <a href="h
 I took a break from competitive programming after August, 2024. I resumed participating in contests again after late August, 2025. 
 
 ## Competitive Programming [2025 onwards]
-To be added.
+
+#### 1. AtCoder ABC 423 [14th September, 2025] 
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>Rating</th>
+  </tr>
+  <tr>
+    <th>196</th>
+    <th>1164 $\longrightarrow$ 1315</th>
+  </tr>
+</table>
