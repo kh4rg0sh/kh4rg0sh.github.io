@@ -5,6 +5,8 @@ sidebar:
   open: false
 ---
 
+![alt text](image.png)
+
 Lately, I'm having a lot of time up my sleeves and after some deep pondering in silence, I came to a realisation. Even though I started doing competitive programming 3 years ago (back in 2022), I really haven't been quite structured in my way of training. 
 
 For example, I've never completely finished handouts, problemsets or books and I've constantly skipped or jumped on problems that felt too difficult. One of the greatest resource for competitive programming is <a href="https://usaco.guide/">USACO Guide</a> and I've not managed to even complete this. USACO Guide is split into multiple parts (with increasing order of difficulty):

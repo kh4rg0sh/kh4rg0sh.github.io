@@ -46,5 +46,5 @@ so first, we need to accept all the input at once from the stdin stream. we will
 https://gist.github.com/kh4rg0sh/333e7280b812852cdf2425aea530d69f
 
 
-you know what, I'm just too anxious. I'm just gonna go ahead and attempt the <a href="/cester/stripe/stripe-coding-challenge">test</a>
+you know what, I'm just too anxious. I'm just gonna go ahead and attempt the <a href="/secret/stripe/stripe-coding-challenge">test</a>
 
