@@ -62,6 +62,7 @@ I took a break from competitive programming after August, 2024. I resumed partic
 ## Competitive Programming [2025 onwards]
 
 #### 1. AtCoder ABC 423 [14th September, 2025] 
+I managed to solve $6$ out of $7$ problems and jumped back to cyan on AtCoder!
 <table>
   <tr>
     <th>Rank</th>
@@ -72,3 +73,4 @@ I took a break from competitive programming after August, 2024. I resumed partic
     <th>1164 $\longrightarrow$ 1315</th>
   </tr>
 </table>
+

@@ -66,15 +66,15 @@ I actively participated in Competitive Programming contests on platforms such as
 
 You can read more about it <a href="https://kh4rg0sh.github.io/competitive_programming">here.</a>
 
-## Summer Analyst (Internship) at Goldman Sachs [Summer, 2025]
-I was hired as at Goldman Sachs for a Software Developer Intern (Summer Analyst), 2025. During my Internship Project, I worked on constructing and optimizing Mongo Views, some API endpoints using Spring Boot Web with a good unit and integrated test coverage using JUnit5 and Mockito, and finally displaying the results of the new API endpoint onto the UI using React.js and Redux Toolkit.
-
-During my internship, they organised a coding competition for all the interns at Bangalore and Hyderabad, where I participated and won the second prize. 
-
 ## CTFs with InfoSecIITR!
 I actively played CTFs with my college team, InfoSecIITR. I would mainly handle challenges related to Cryptography and sometimes, Binary Exploitation. You can read more about my writeups <a href="https://kh4rg0sh.github.io/ctf_writeups">here.</a>
 
 After taking a break from Competitive Programming in August, 2024. I started reading more about Stack Exploitation Techniques such as Return Oriented Programming, GOT overwrite and eventually ventured into Heap Exploitation Techniques such as Tcache Poisoning, etc. I've collected a few writeups: <a href="https://github.com/kh4rg0sh/binary-exploitation-2024">Binary Exploitation 2024</a>. 
+
+## Summer Analyst (Internship) at Goldman Sachs [Summer, 2025]
+I was hired as at Goldman Sachs for a Software Developer Intern (Summer Analyst), 2025. During my Internship Project, I worked on constructing and optimizing Mongo Views, some API endpoints using Spring Boot Web with a good unit and integrated test coverage using JUnit5 and Mockito, and finally displaying the results of the new API endpoint onto the UI using React.js and Redux Toolkit.
+
+During my internship, they organised a coding competition for all the interns at Bangalore and Hyderabad, where I participated and won the second prize. 
 
 ## Socials
 Here are the links to my socials!
