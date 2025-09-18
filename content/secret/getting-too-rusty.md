@@ -33,3 +33,4 @@ I had applied for the role of a Software Engineer at Stripe two weeks ago. I sen
 From what I've heard, Stripe focuses more on clean implementation rather than heavy, complex algorithms. So, my best guess is that this is going to be an implementation challenge. I'll be practising a bit for the same and I'm gonna document this before I take the test. After taking the test, I'll document my experience again in a follow-up post. 
 
 <a href="/cester/stripe/implementation">Practising a few Implementation based challenges</a>
+
