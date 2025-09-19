@@ -19,13 +19,13 @@ Well, I was lazy as fuck. After I was offered an internship in August, 2024; I d
 
 Well, I'm ashamed to say this. But. I NEED TO FIND JOBS.
 
-To be honest, I already have an offer. I interned at Goldman Sachs, Bangalore; this summer and I think they were happy with my performance. I was offered a full-time offer after my graduation in 2026. But I'm not really happy with the pay. I feel like i could be doing much better than this. This is the reason I've started to look out for more opportunities in the garden and I've come to the realisation that almost everyone has these screening rounds that they use to filter out bad candidates. And you guessed it right. These screening rounds test your coding abilities. Which means, they ask you competitive programming problems!
+To be honest, I already have an offer. I interned at Goldman Sachs, Bangalore; this summer and I think they were happy with my performance. I was offered a full-time offer after my graduation in 2026. But I feel like i could be doing much better than this. This is the reason I've started to look out for more opportunities in the garden and I've come to the realisation that almost everyone has these screening rounds that they use to filter out bad candidates. And you guessed it right. These screening rounds test your coding abilities. Which means, they ask you competitive programming problems!
 
 Hell yeah back to start, full circle let's goo!
 
-I cannot afford beign trashed out in the very first round right. I need to atleast make it to the interviews and therefore I must clear these petty little coding rounds. For that, I must improve my pathetic current state and get better. 
+I cannot afford being trashed out in the very first round right. I need to atleast make it to the interviews and therefore I must clear these petty little coding rounds. For that, I must improve my pathetic current state and get better. 
 
-I'm actually planning to do USACO Silver, Gold and Platinum for the next 5 days. I think that should be good enough to remind me of all the standard techniques that are used in coding. I will also be using this page as the main page for branching off all the other secret links that capture all of my journals.
+I will also be using this page as the main page for branching off all the other secret links that capture all of my journals.
 
 ## 16th September, 2025
 I had applied for the role of a Software Engineer at Stripe two weeks ago. I sent my resume and waited. Today, I received a mail that said that I've been shortlisted for the selection process and the first round is a screening round. <a href="/stripe_invitation.pdf">It</a> says that, this is a coding challenge and I will be given 60 minutes to code and submit the solution. 
@@ -33,4 +33,3 @@ I had applied for the role of a Software Engineer at Stripe two weeks ago. I sen
 From what I've heard, Stripe focuses more on clean implementation rather than heavy, complex algorithms. So, my best guess is that this is going to be an implementation challenge. I'll be practising a bit for the same and I'm gonna document this before I take the test. After taking the test, I'll document my experience again in a follow-up post. 
 
 <a href="/secret/stripe/implementation">Practising a few Implementation based challenges</a>
-
