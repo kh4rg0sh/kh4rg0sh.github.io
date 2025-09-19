@@ -24,12 +24,3 @@ To be honest, I already have an offer. I interned at Goldman Sachs, Bangalore; t
 Hell yeah back to start, full circle let's goo!
 
 I cannot afford being trashed out in the very first round right. I need to atleast make it to the interviews and therefore I must clear these petty little coding rounds. For that, I must improve my pathetic current state and get better. 
-
-I will also be using this page as the main page for branching off all the other secret links that capture all of my journals.
-
-## 16th September, 2025
-I had applied for the role of a Software Engineer at Stripe two weeks ago. I sent my resume and waited. Today, I received a mail that said that I've been shortlisted for the selection process and the first round is a screening round. <a href="/stripe_invitation.pdf">It</a> says that, this is a coding challenge and I will be given 60 minutes to code and submit the solution. 
-
-From what I've heard, Stripe focuses more on clean implementation rather than heavy, complex algorithms. So, my best guess is that this is going to be an implementation challenge. I'll be practising a bit for the same and I'm gonna document this before I take the test. After taking the test, I'll document my experience again in a follow-up post. 
-
-<a href="/secret/stripe/implementation">Practising a few Implementation based challenges</a>
