@@ -27,5 +27,20 @@ I have decided to rigorously study the entire USACO Guide for competitive progra
 ## 19th September, 2025
 I haven't really had the chance to clear up the python mess on my system. For some context, I use Ubuntu 24.04 and for some reason the traditional way i worked with python before doesn't quite work on this system. On top of that I had a lot of mess on my system. Default imports would route to site-packages inside some virtual environment that is not even related to my current project. I would cringe so hard looking at wtf is happening and finally I could no longer take it and decided to fix my system setup once and for all.
 
-In <a href="">this</a> post I dive deeper into the python system internals and explore the best option for my system setup.
+In <a href="blogs/python-virtual-environments/">this</a> post I dive deeper into the python system internals and explore the best option for my system setup.
+
+## 20th September, 2025
+I'm still waiting for the results of the Stripe Coding Challenge. Actually the deadline for that challenge was till monday evening, so I'm guessing we will hear about it after that.
+
+Today we have two contest, AtCoder Beginner Contest at 5:30pm and Codeforces Global Round at 8:00 pm. I think I might not be able to do the Codeforces Round because it clashes with my sleep timings and also I might be very tired doing back to back contests. Also, I'm kinda prioritising AtCoder at the moment, because my rating curve is still climbing on AtCoder. I think I'm early blue on AtCoder but let's see. 
+
+I decided to do virtual ABC Contests, I attempted ABC 126 <a href="/competitive_programming/atcoder/abc126/">here</a>.
+
+UPD: <a href="/competitive_programming/atcoder/abc424/">here</a>'s my AtCoder ABC 424 experience! 
+
+## 21st September, 2025
+Today I realised that I can actually replace all the dopamine activities in my life with LeetCode problems. Everytime I feel like, I want to watch Youtube Shorts? Nah, Do LeetCode Easy. I want to scroll on Instagram! Nah, Do LeetCode Easy. I want to waste time laying on the bed? NAH DO LEETCODE EASY!
+
+LeetCode Easy is the new dopamine hit in the market gang. y'all need to try it out.
+
 

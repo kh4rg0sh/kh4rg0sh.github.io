@@ -5,7 +5,7 @@ sidebar:
   open: false
 ---
 
-USACO Silver is an introductory step into the world of data structures and smart algorithms. It is safe to say that USACO Silver difficulty is comparable to 1200 to 1600 rated problems on Codeforces. In this section, I'm going to study the following topics:
+<a href="https://usaco.guide/silver/">USACO Silver</a> is an introductory step into the world of data structures and smart algorithms. It is safe to say that USACO Silver difficulty is comparable to 1200 to 1600 rated problems on Codeforces. In this section, I'm going to study the following topics:
 
 ## Prefix Sums
 <table>

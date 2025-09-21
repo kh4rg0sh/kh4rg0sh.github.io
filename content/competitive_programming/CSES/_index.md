@@ -68,7 +68,7 @@ Problem Set Link: https://cses.fi/problemset/list/
 
 </table>
 
-## Interacitve Problems
+## Interactive Problems
 <table>
 
 </table>
