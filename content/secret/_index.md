@@ -24,4 +24,8 @@ From what I've heard, Stripe focuses more on clean implementation rather than he
 ## 18th September, 2025
 I have decided to rigorously study the entire USACO Guide for competitive programming. I'm going to document all that <a href="/competitive_programming/usaco-guide">here</a>, which is a series of public blog posts (I don't see any reason as to why I should be keeping this private). 
 
+## 19th September, 2025
+I haven't really had the chance to clear up the python mess on my system. For some context, I use Ubuntu 24.04 and for some reason the traditional way i worked with python before doesn't quite work on this system. On top of that I had a lot of mess on my system. Default imports would route to site-packages inside some virtual environment that is not even related to my current project. I would cringe so hard looking at wtf is happening and finally I could no longer take it and decided to fix my system setup once and for all.
+
+In <a href="">this</a> post I dive deeper into the python system internals and explore the best option for my system setup.
 

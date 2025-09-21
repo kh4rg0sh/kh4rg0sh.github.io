@@ -74,3 +74,21 @@ I managed to solve $6$ out of $7$ problems and jumped back to cyan on AtCoder!
   </tr>
 </table>
 
+<a href="/competitive_programming/atcoder/abc423/">Blog Link</a>
+
+#### 2. AtCoder ABC 424 [20th September, 2025]
+I managed to solve $5$ out of $7$ problems. I bricked on problem $E$, and I think I need more practice on binary search.
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>Rating</th>
+  </tr>
+  <tr>
+    <th>685</th>
+    <th>1315 $\longrightarrow$ 1355</th>
+  </tr>
+</table>
+
+<a href="/competitive_programming/atcoder/abc424/">Blog Link</a>
+
+

@@ -5,6 +5,8 @@ toc: false
 <img src="images/logo.jpg" align="center" width="100px"/>
 <h3 style="text-align: center;">kh4rg0sh</h3>
 
+Welcome to this nerdy little corner of the Internet - my personal blog website!
+
 ## About Me
 Hi, my name is Mmukul Khedekar. I'm currently a final year student at the Indian Institute of Technology, Roorkee and I'm pursuing a Bachelor of Technology in Computer Science and Engineering. I love mathematics and programming and over the past few years of my programming journey, I've developed a very keen interest for algorithms, software development and low-level systems programming, and cybersecurity. 
 
