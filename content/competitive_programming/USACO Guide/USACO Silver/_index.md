@@ -38,3 +38,15 @@ sidebar:
     <th>More Problems and Tricks</th>
   </tr>
 </table>
+
+## Sorting & Searching
+<table>
+  <tr>
+    <th>Index</th>
+    <th>Topic</th>
+    <th>Link</th>
+  </tr>
+  <tr>
+    <th>1.</th>
+  </tr>
+</table>

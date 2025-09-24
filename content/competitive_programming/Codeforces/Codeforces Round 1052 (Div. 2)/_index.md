@@ -9,3 +9,33 @@ I participated in this Contest and I managed to solve till D1. That was quite an
 
 Contest Link: https://codeforces.com/contest/2146
 
+<table>
+    <tr>
+        <th>Problem A</th>
+        <th><a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/problem-a/">Blog Link</a></th>
+    </tr>
+    <tr>
+        <th>Problem B</th>
+        <th><a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/problem-b/">Blog Link</a></th>
+    </tr>
+    <tr>
+        <th>Problem C</th>
+        <th><a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/problem-c/">Blog Link</a></th>
+    </tr>
+    <tr>
+        <th>Problem D1</th>
+        <th><a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/problem-d1/">Blog Link</a></th>
+    </tr>
+    <tr>
+        <th>Problem D2</th>
+        <th><a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/problem-d2/">Blog Link</a></th>
+    </tr>
+    <tr>
+        <th>Problem E</th>
+        <th><a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/problem-e/">Blog Link</a></th>
+    </tr>
+    <tr>
+        <th>Problem F</th>
+        <th><a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/problem-f/">Blog Link</a></th>
+    </tr>
+</table>

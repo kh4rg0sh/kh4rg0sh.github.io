@@ -35,4 +35,16 @@ Link: https://kenkoooo.com/atcoder/#/table/
     <th><a href="https://atcoder.jp/contests/abc126/submissions/me">Upsolved</a></th>
     <th><a href="/competitive_programming/atcoder/abc126/">Blog Link</a></th>
   </tr>
+  <tr>
+    <th>10th Aug, 2019</th>
+    <th>ABC 137</th>
+    <th><a href="https://atcoder.jp/contests/abc137/submissions/me">Upsolved</a></th>
+    <th><a href="/competitive_programming/atcoder/abc137/">Blog Link</a></th>
+  </tr>
+  <tr>
+    <th>6th March, 2021</th>
+    <th>ABC 194</th>
+    <th><a href="https://atcoder.jp/contests/abc194/submissions/me">Upsolved</a></th>
+    <th><a href="/competitive_programming/atcoder/abc194/">Blog Link</a></th>
+  </tr>
 </table>
