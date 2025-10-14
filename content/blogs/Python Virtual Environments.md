@@ -320,7 +320,7 @@ here's what these values look like inside an activated virtual environment
 ```
 
 ### Finding Modules
-the above two paths play a very important role in python's package searching mechanism. 
+the above two paths play a very important role in python's module searching mechanism. 
 
 Usually all the libraries that you install are present in a directory called `site-packages` which is located inside `/lib/python3.12/site-packages`. The python interpreter by default searches for the packages inside this directory. 
 
@@ -334,7 +334,7 @@ When you execute `python3 <file.py>` the `PATH` variable determines the location
 
 to `sys.path`, that means it by default searches for module there. Python then searches for the modules in
 
-3. directories specified by `PYTHONPATH` which is another environment variables used for adding python packages to search by default
+3. directories specified by `PYTHONPATH` which is another environment variables used for adding python modules to search by default
 4. Standard library directories
 5. the `site-packages` corresponding to the interpreter.
 

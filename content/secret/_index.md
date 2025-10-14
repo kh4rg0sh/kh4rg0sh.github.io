@@ -43,4 +43,67 @@ Today I realised that I can actually replace all the dopamine activities in my l
 
 LeetCode Easy is the new dopamine hit in the market gang. y'all need to try it out.
 
+Later today I appeared for <a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/">Codeforces Round 1052 (Div. 2)</a> and I think I could have really done better.
 
+## 25th September, 2025
+For the past few days, I've been grinding cp problems a lot. I took part in three more rounds, did a couple of virtual contests. I'm gonna constantly update these in the <a href="/competitive_programming/">Blog</a>.
+
+I'm still a bit scared that I'm not preparing enough for the Stripe rounds. I really haven't heard from them yet. But I just hope that if I do, it isn't on a really short notice.
+
+## 26th September, 2025
+I interviewed a candidate for PAG Round 2 selections and my brain is fucking cooked. It's been so long since I did problems greater than > 1700 rating. Even though I know rating is just a number, I believe it does have a correlation with the complexity of the problem. I had to ask problems on the ranges 1700 to 2000 and even trying to argue or check the correctness of the proposed solution of the candidate is difficult because you need to be able to come up with counter examples quickly. AAAAAAAAA my brain hurts.
+
+## 27th September, 2025
+I think the PAG rounds did something to me. I woke up today and I solved an 1800 problem. Well I was stuck initially and had no idea how to proceed so I opened up the editorial and read the first line and it immediately struck me how to do it. I just read the line `we know floor(a_i/x) <= floor(max(a)/x), so if we could compute the answer for each x in O(floor(max(a)/x)) time then we will be able to compute the total answer in O(AlogA) where A = max(a)`. So then I thought about it and I was immediately able to figure out the solution using some prefix sums and tricks.
+
+this is the problem 
+
+## Price Tags <a href="https://codeforces.com/problemset/problem/2144/D">[CF 2144D]</a>
+![alt text](image.png)
+
+I initially got a wrong answer but that was because I wasn't careful with my bounds. Then I fixed it and it worked!
+
+{{% details title="Solution" closed="true" %}}
+```c++
+void solve() {
+    ll n, y;
+    std::cin >> n >> y;
+    std::vector<ll> c(n + 1, 0);
+    for (ll i = 1; i <= n; i++) {
+        std::cin >> c[i];
+    }
+
+    std::sort(begin(c) + 1, begin(c) + n + 1);
+
+    std::vector<ll> freq(TOTAL_NUM + 2, 0LL);
+    for (ll i = 1; i <= n; i++) {
+        freq[c[i]]++;
+    }
+
+    std::vector<ll> pref(TOTAL_NUM + 2, 0LL);
+    for (ll i = 1; i <= TOTAL_NUM + 1; i++) {
+        pref[i] = pref[i - 1] + freq[i];
+    }
+
+    ll ans = LLONG_MIN;
+    for (ll x = 2; x <= TOTAL_NUM + 1; x++) {
+        ll sum = 0, cnt = 0;
+        for (ll i = 1; i <= (c[n] + x - 1) / x; i++) {
+            sum += i * (pref[std::min(TOTAL_NUM + 1, i * x)] - pref[(i - 1) * x]);
+            cnt += std::min(freq[i], pref[std::min(TOTAL_NUM + 1, i * x)] - pref[(i - 1) * x]);
+        }
+        ans = std::max(ans, sum - y * (n - cnt));
+    }
+
+    std::cout << ans << '\n';
+}
+```
+{{% /details %}}
+
+Submission Link: https://codeforces.com/contest/2144/submission/340692892
+
+## 29th September, 2025
+I wrote my sparse table class template. I've added that in the Snippets section <a href="/competitive_programming/snippets/sparsetable">here</a>.
+
+## 30th September, 2025
+Hell yeah I got the invitation for the next round for Stripe. I'll detail this in this <a href="/secret/stripe/tech-screening">post</a>

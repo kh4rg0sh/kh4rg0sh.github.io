@@ -1,5 +1,7 @@
 ---
 title: Stripe Coding Challenge Experience [Round 1]
+type: docs
+weight: 2
 math: true
 ---
 

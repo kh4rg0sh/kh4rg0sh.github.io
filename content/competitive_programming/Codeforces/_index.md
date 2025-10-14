@@ -16,9 +16,28 @@ The strategy here would be to collect the experiences and techniques from partic
 ## Participated
 <table>
   <tr>
+    <th>Codeforces Round 1054 (Div. 3)</th>
+    <th><a href="https://codeforces.com/contest/2149">Contest Link</a></th>
+    <th><a href="/competitive_programming/codeforces/codeforces-round-1054-div.-3/">Blog Link</a></th>
+  </tr>
+  <tr>
+    <th>Codeforces Round 1053 (Div. 2)</th>
+    <th><a href="https://codeforces.com/contest/2151">Contest Link</a></th>
+    <th><a href="/competitive_programming/codeforces/codeforces-round-1053-div.-2/">Blog Link</a></th>
+  </tr>
+  <tr>
     <th>Codeforces Round 1052 (Div. 2)</th>
     <th><a href="https://codeforces.com/contest/2146">Contest Link</a></th>
     <th><a href="/competitive_programming/codeforces/codeforces-round-1052-div.-2/">Blog Link</a></th>
   </tr>
 </table>
 
+## Upsolved
+### Educational Rounds
+<table>
+  <tr>
+    <th>Educational Round 76</th>
+    <th><a href="https://codeforces.com/contest/1257">Contest Link</a></th>
+    <th><a href="/competitive_programming/codeforces/educational-round-76/">Blog Link</a></th>
+  </tr>
+</table>

@@ -1,5 +1,7 @@
 ---
 title: Warm-up before the Stripe Coding Challenge
+type: docs
+weight: 1
 math: true
 ---
 
