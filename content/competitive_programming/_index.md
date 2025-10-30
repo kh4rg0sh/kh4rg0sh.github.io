@@ -1,8 +1,13 @@
 ---
 title: Blogs
 math: true
-sidebar:
-  open: true
+_build:
+  list: never
+  publishResources: false
+cascade:
+  _build:
+    list: never
+    publishResources: false
 ---
 
 ## Competitive Programming [2022 to 2024]
