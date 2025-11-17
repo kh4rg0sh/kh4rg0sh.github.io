@@ -24,3 +24,8 @@ To be honest, I already have an offer. I interned at Goldman Sachs, Bangalore; t
 Hell yeah back to start, full circle let's goo!
 
 I cannot afford being trashed out in the very first round right. I need to atleast make it to the interviews and therefore I must clear these petty little coding rounds. For that, I must improve my pathetic current state and get better. 
+
+## 17th November, 2025
+After a hustle for about 3 months, I finally received an offer. I have documented my entire hustle here
+
+![alt text](image-1.png)
