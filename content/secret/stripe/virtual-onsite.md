@@ -13,3 +13,25 @@ You will be given a github repository of a medium sized codebase and some github
 
 This was honestly a fun experience and I did quite well in both the parts and I was happy with my performance so I'm expecting the invitation to the next round!
 
+## Update [17th November, 2025]
+I got the offer! Here is the summary of what I was told in my offer:
+
+1. Compensation
+there are three components in the Compensation:
+- Base Salary: 28,06,000 per year fixed + 10% of the fixed as performance bonus
+which makes the total => 30,86,600 per year
+- Bonuses:
+joining bonus: 7,60,000 one time
+relocation: 8,50,000 one time
+- ESOPs:
+annual employee bonus: 26800 USD per year
+performance bonus: no limit
+which is around 68 to 70 LPA
+
+2. Benefits
+- free transportation
+- free breakfast and lunch
+- medical and health insurance
+- 8000 USD worth sports allowance every month
+
+
