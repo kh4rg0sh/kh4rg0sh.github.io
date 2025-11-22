@@ -2,7 +2,7 @@
 public/
 resources/
 .hugo_build.lock
-static/secret
+
 # Editor
 .vscode/
 cp/
