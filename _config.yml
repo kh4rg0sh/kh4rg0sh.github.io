@@ -9,8 +9,8 @@ permalink:        pretty
 title:            kh4rg0sh Blog!
 tagline:          ''
 description: "You've just stumbled across a nerdy little corner of the internet. Come back soon to checkout more stuff as I keep updating the blog!"
-url:              http://hyde.getpoole.com
-baseurl:          /
+url: "https://kh4rg0sh.github.io"
+baseurl: ""
 
 author:
   name:           'Mmukul Khedekar'
