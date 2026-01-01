@@ -25,26 +25,21 @@ Here are the links to my socials!
   </tr>
   <tr>
     <td>3.</td>
-    <td>Math Stackexchange</td>
-    <td><a href="https://math.stackexchange.com/users/896141/alastormoody" target="_blank">alastormoody</a></td>
-  </tr>
-  <tr>
-    <td>4.</td>
     <td>CryptoHack</td>
     <td><a href="https://cryptohack.org/user/f00k3R/" target="_blank">cryptohack.org/user/f00k3R</a></td>
   </tr>
   <tr>
-    <td>5.</td>
+    <td>4.</td>
     <td>Codeforces</td>
     <td><a href="https://codeforces.com/profile/ssravs" target="_blank">codeforces.com/profile/ssravs</a></td>
   </tr>
   <tr>
-    <td>6.</td>
+    <td>5.</td>
     <td>Codechef</td>
     <td><a href="https://www.codechef.com/users/ssravs" target="_blank">codechef.com/users/ssravs</a></td>
   </tr>
   <tr>
-    <td>7.</td>
+    <td>6.</td>
     <td>Atcoder</td>
     <td><a href="https://atcoder.jp/users/fooker" target="_blank">atcoder.jp/users/fooker</a></td>
   </tr>
