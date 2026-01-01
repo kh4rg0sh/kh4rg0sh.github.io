@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Constructing Inconic from Pair of Isogonal Conjugates &middot; kh4rg0sh Blog!
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <img src="/assets/content.png">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          kh4rg0sh Blog!
+        </a>
+      </h1>
+      <p class="lead">You've just stumbled across a nerdy little corner of the internet. Come back soon to checkout more stuff as I keep updating the blog!</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    </nav>
+
+    <p>&copy; 2026. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Constructing Inconic from Pair of Isogonal Conjugates</h1>
+  <span class="post-date">05 Jun 2019</span>
+  <h1 id="statement"><strong>Statement</strong></h1>
+<p>Let $(P,Q)$ be a pair of isogonal conjugates with respect to $\triangle ABC$. Let $R$ be the midpoint of $PQ$. Let $M$ be the isotomic conjugate of the anticomplement of $R$. If $\triangle DEF$ is the cevian triangle of $M$ with respect to $\triangle ABC$, prove that $D,E,F$ are the tangency points of the inconic whose foci are $P$ and $Q$.</p>
+
+<hr />
+
+<h2 id="proof">Proof</h2>
+<h3 id="lemma-1"><strong>Lemma 1</strong></h3>
+<p>Let $P$ be a point outside ellipse $\mathcal E$. If $PX$ and $PY$ are tangents to $\mathcal E$ from $P$, and $F_1,F_2$ are the foci of $\mathcal E$, then $F_1P$ and $F_2P$ are isogonal with respect to $\angle XPY$.</p>
+
+<h4 id="proof-1"><strong>Proof</strong></h4>
+<p>Using the optical property of the ellipse, $P$ is the $F_1$-excenter with respect to $\triangle F_1XY$. $\square$</p>
+
+<hr />
+
+<h3 id="lemma-2"><strong>Lemma 2</strong></h3>
+<p>The complement of the Nagel point is the incenter.</p>
+
+<h4 id="proof-2"><strong>Proof</strong></h4>
+<p>Let $(I)$ touch $BC$ at $D$. Let $AE_A$ be the isotomic of $AD$, with $E_A\in BC$. Let
+\(AE_A\cap (I)=E \implies D,I,E\text{ are collinear}.\)
+Using <em>USAMO 2001/2</em> and the fact that $IM_A\parallel AE_A$, we obtain
+\(IM_A=\tfrac12 AN_a \implies I,G,N_a\text{ are collinear},\)
+so $I$ is the complement of $N_a$. $\square$</p>
+
+<hr />
+
+<p>Let $\Omega$ be the inconic tangent at $D,E$ and $F$. It is enough to prove that $R$ is the center of this conic, as it is well known that the foci will be isogonal conjugates, and there is a unique conic tangent to the sides of the triangle, given its center.</p>
+
+<p>We can now make $\Omega$ into a circle with an affine transformation. $M$ becomes the Gergonne point, so $R$ becomes the Nagel point, as it is still the isotomic conjugate of $M$. The anticomplement of the Nagel point is the incenter. Hence $R$ is the center of $\Omega$, and we are done.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2024/12/25/backdoorctf-2024/">
+            BackdoorCTF 2024
+            <small>25 Dec 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/15/binary-exploitation/">
+            Binary Exploitation 2024
+            <small>15 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/06/elf-golfing/">
+            ELF Golfing
+            <small>06 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

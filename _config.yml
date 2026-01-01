@@ -1,0 +1,31 @@
+# Dependencies
+markdown: kramdown
+highlighter: rouge
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            kh4rg0sh Blog!
+tagline:          ''
+description: "You've just stumbled across a nerdy little corner of the internet. Come back soon to checkout more stuff as I keep updating the blog!"
+url:              https://kh4rg0sh.github.io
+baseurl:          /
+
+author:
+  name:           'Mmukul Khedekar'
+  url:            https://twitter.com/fooker34
+
+paginate:         10
+paginate_path: "/blog/page:num"
+
+# Custom vars
+version:          2.1.0
+
+github:
+  repo:           https://github.com/poole/hyde
+
+plugins:
+  - jekyll-paginate
+  - jekyll-gist
+

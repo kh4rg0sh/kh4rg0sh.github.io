@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Re-discovering the Artzt Parabola &middot; kh4rg0sh Blog!
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <img src="/assets/content.png">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          kh4rg0sh Blog!
+        </a>
+      </h1>
+      <p class="lead">You've just stumbled across a nerdy little corner of the internet. Come back soon to checkout more stuff as I keep updating the blog!</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    </nav>
+
+    <p>&copy; 2026. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Re-discovering the Artzt Parabola</h1>
+  <span class="post-date">11 Sep 2019</span>
+  <h2 id="lets-try-to-motivate-this-parabola">Let’s try to motivate this parabola!</h2>
+<blockquote>
+  <p>Let $d_1 , d_2$ be two abitrary lines that are not perpendicular. Let $A,B$ be abitrary points lie on $d_1,d_2$. How to construct a parabola that is tangent to $d_1,d_2$ at $A,B$.</p>
+</blockquote>
+
+<p>I was working on this construction because it is impossible to construct a parabola tangent to two lines at given points in GeoGebra. While searching for some lemmas in <em>S.L. Loney’s Coordinate Geometry</em>, I found the following result:</p>
+
+<blockquote>
+  <p>Let $\mathcal{P}$ be a parabola with $X,Y \in \mathcal{P}$.<br />
+Let the tangents at $X,Y$ meet at $A$.<br />
+Then,
+$ \triangle TAY \sim \triangle TXA$</p>
+</blockquote>
+
+<p>This lemma clearly motivates the construction of a parabola with focus at the Dumpty Point and so we have the following problem.</p>
+
+<hr />
+
+<h2 id="problem"><strong>Problem</strong></h2>
+<p>Let $\triangle ABC$ be a triangle. Let $D$ be the midpoint of the $A$-symmedian chord. Let $M$ be the midpoint of $BC$. Let $AM$ intersect the nine-point circle at $M’$. Let $\ell$ be the line perpendicular to $AM$ at $M’$.</p>
+
+<p>Prove that there exists a parabola $\mathcal{P}$ with focus at $D$, tangent to $AB$ and $AC$ at $B$ and $C$, and with directrix $\ell$.</p>
+
+<hr />
+
+<p>I showed this problem to some of my friends and they communicated back some really beautiful proofs for this, which I’d like to post here.</p>
+
+<h2 id="proof-by-shantanu-nene"><strong>Proof (by Shantanu Nene)</strong></h2>
+
+<blockquote>
+  <p>Let $B’$ and $C’$ be midpoints of $AC$ and $AB$ respectively.<br />
+Let $\ell$ meet $AC,AB$ at $E,F$ respectively. Let $AM$ meet $BD$ at $P$ and $CD$ at $Q$.</p>
+</blockquote>
+
+<blockquote>
+  <p>Using angle chasing (symmedian properties, midpoint theorem, and the fact that $M’,B’,C’,M$ are concyclic), we see that $E,M’,D,Q,B’$ are concyclic. Hence
+$\angle EDC = \angle EM’Q = 90^\circ$.
+Similarly, $\angle FDB = 90^\circ$</p>
+</blockquote>
+
+<blockquote>
+  <p>Thus it is sufficient to show that $B$ and $C$ lie on the parabola with focus $D$ and directrix $\ell$.</p>
+</blockquote>
+
+<blockquote>
+  <p>Let $G$ be the foot from $C$ to $\ell$. Since $\angle EDC = \angle EGC = 90^\circ$, and by angle chasing,
+$\angle ECD = \angle ECG$, the quadrilateral $EGCD$ is a kite.<br />
+Hence $CG = CD$, so $C$ lies on the parabola.</p>
+</blockquote>
+
+<blockquote>
+  <p>Similarly, $B$ also lies on the parabola, and we are done.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="proof-by-aatman-supkar"><strong>Proof (by Aatman Supkar)</strong></h2>
+
+<blockquote>
+  <p>Consider an in-parabola of $AB’C’$ whose directrix is the perpendicular bisector of $AM’$.</p>
+</blockquote>
+
+<blockquote>
+  <p>Since the foci of the parabola are isogonal conjugates, if the axis is parallel to the $A$-median, the other focus lies on the $A$-symmedian.</p>
+</blockquote>
+
+<blockquote>
+  <p>Also, since the isogonal conjugate of a point at infinity lies on the circumcircle, the focus lies on $\odot(AB’C’)$, which is a homothety of ratio $\tfrac{1}{2}$ of $\odot(ABC)$ from $A$.</p>
+</blockquote>
+
+<blockquote>
+  <p>Therefore $D$ lies on this circle, and is the focus of the in-parabola.</p>
+</blockquote>
+
+<hr />
+
+<p>I posted this result on AoPS <a href="https://artofproblemsolving.com/community/q1h1912112p13117117" target="_blank">here</a>, which has some more beautiful results and extensions.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2024/12/25/backdoorctf-2024/">
+            BackdoorCTF 2024
+            <small>25 Dec 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/15/binary-exploitation/">
+            Binary Exploitation 2024
+            <small>15 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/06/elf-golfing/">
+            ELF Golfing
+            <small>06 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

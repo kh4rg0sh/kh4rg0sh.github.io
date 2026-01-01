@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      ELF Golfing &middot; kh4rg0sh Blog!
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <img src="/assets/content.png">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          kh4rg0sh Blog!
+        </a>
+      </h1>
+      <p class="lead">You've just stumbled across a nerdy little corner of the internet. Come back soon to checkout more stuff as I keep updating the blog!</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    </nav>
+
+    <p>&copy; 2026. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">ELF Golfing</h1>
+  <span class="post-date">06 Oct 2024</span>
+  <p>I participated in <a href="https://ctftime.org/event/2389/" target="_blank">BRICS+ CTF Quals 2024</a> yesterday. One of the challenges was about <em>ELF golfing</em>, and I found it quite interesting.</p>
+
+<p>For those who aren’t familiar with what this business is all about, here’s a quick introduction.</p>
+
+<h3 id="the-idea-of-code-golf">The idea of Code Golf</h3>
+
+<p>Code golfing refers to minimizing the size of a program (in bytes) while still performing a task.</p>
+
+<h3 id="what-are-elf-files">What are ELF files?</h3>
+
+<p>ELF is the standard executable file format on Linux. It has a defined structure and headers that tell the operating system how to load and run the program.</p>
+
+<p>So, when we talk about <em>ELF golfing</em>, we mean minimizing the size of the final executable binary. That was the essence of this challenge.</p>
+
+<p>I’ll post my write up for the challenge now.</p>
+
+<h1 id="shelfing-173-solves">shELFing [173 solves]</h1>
+<h2 id="challenge">Challenge</h2>
+<p>here’s a brief of the challenge in just words. your goal is to supply an executable to the remote server, such that the size of the executable does not exceed <code class="language-plaintext highlighter-rouge">76 bytes</code> and we should be able to pop a shell with that.</p>
+
+<h1 id="solution">Solution</h1>
+<h2 id="analysis">Analysis</h2>
+<p>it’s clear from the challenge statement that we need to do an ELF golfing. so i googled up ELF golfing and found out this nice article:</p>
+<blockquote>
+  <p>https://www.muppetlabs.com/~breadbox/software/tiny/teensy.html</p>
+</blockquote>
+
+<p>however, this article describes how to golf the following piece of code</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">42</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>as opposed to what we desire</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">system</span><span class="p">(</span><span class="s">"/bin/sh"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>if you were to simply compile this program with <code class="language-plaintext highlighter-rouge">gcc</code>. the executable size is over <code class="language-plaintext highlighter-rouge">20000</code> bytes. humongous as compared to the target size: <code class="language-plaintext highlighter-rouge">76 bytes</code>!</p>
+<h2 id="assembly-to-drop-a-shell">Assembly to Drop a Shell</h2>
+<p>how about we start with the assembly that just invokes the <code class="language-plaintext highlighter-rouge">syscall execve()</code>. i wrote a <code class="language-plaintext highlighter-rouge">64-bit intel assembly</code> to do the same</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>section .data
+    msg: db "/bin/sh", 0
+
+section .text
+    global _start
+
+_start:
+    xor rax, rax
+    mov rdi, msg
+    mov rsi, rax
+    mov rdx, rax
+    mov rax, 59
+    syscall
+</code></pre></div></div>
+<p>to generate an executable we assemble this using <code class="language-plaintext highlighter-rouge">nasm</code> and link it using <code class="language-plaintext highlighter-rouge">ld</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nasm <span class="nt">-f</span> elf64 shell.s
+ld shell.o <span class="nt">-o</span> shell
+./shell
+</code></pre></div></div>
+
+<p>it seems to work fine. lets’s check the size of the executable.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">wc</span> <span class="nt">-c</span> shell
+8832 <span class="nv">$ </span>|
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">8832</code> bytes is a really huge number. so we have no other choice than to resort to writing out our own ELF header.</p>
+
+<h2 id="64-bit-elf">64-bit ELF</h2>
+<p>an ELF comprises of four major components:</p>
+<ul>
+  <li>ELF Header</li>
+  <li>Program Header</li>
+  <li>Sections</li>
+  <li>Section Header</li>
+</ul>
+
+<blockquote>
+  <p>quoting from https://gist.github.com/x0nu11byt3/bcb35c3de461e5fb66173071a2379779
+“he program header table provides a segment view of the binary, as opposed to the section view provided by the section header table. The section view of an ELF binary, is meant for static-linking purposes only.</p>
+</blockquote>
+
+<p>In contrast, the segment view, is used by the operating system and dynamic-linker when loading an ELF into a process for execution to locate the relevant code and data and decide what to load into virtual memory.”</p>
+
+<p>and as mentioned in the article, it’s not harmful to drop the <code class="language-plaintext highlighter-rouge">Section Header</code>.</p>
+
+<p>we still however absolutely need the <code class="language-plaintext highlighter-rouge">ELF Header</code> and the <code class="language-plaintext highlighter-rouge">Program Header</code></p>
+
+<h3 id="elf-header-64-bit">ELF Header (64-bit)</h3>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+  <span class="kt">unsigned</span> <span class="kt">char</span>	<span class="n">e_ident</span><span class="p">[</span><span class="n">EI_NIDENT</span><span class="p">];</span>	<span class="cm">/* Magic number and other info */</span>
+  <span class="n">Elf64_Half</span>	<span class="n">e_type</span><span class="p">;</span>			<span class="cm">/* Object file type */</span>
+  <span class="n">Elf64_Half</span>	<span class="n">e_machine</span><span class="p">;</span>		<span class="cm">/* Architecture */</span>
+  <span class="n">Elf64_Word</span>	<span class="n">e_version</span><span class="p">;</span>		<span class="cm">/* Object file version */</span>
+  <span class="n">Elf64_Addr</span>	<span class="n">e_entry</span><span class="p">;</span>		<span class="cm">/* Entry point virtual address */</span>
+  <span class="n">Elf64_Off</span>	<span class="n">e_phoff</span><span class="p">;</span>		<span class="cm">/* Program header table file offset */</span>
+  <span class="n">Elf64_Off</span>	<span class="n">e_shoff</span><span class="p">;</span>		<span class="cm">/* Section header table file offset */</span>
+  <span class="n">Elf64_Word</span>	<span class="n">e_flags</span><span class="p">;</span>		<span class="cm">/* Processor-specific flags */</span>
+  <span class="n">Elf64_Half</span>	<span class="n">e_ehsize</span><span class="p">;</span>		<span class="cm">/* ELF header size in bytes */</span>
+  <span class="n">Elf64_Half</span>	<span class="n">e_phentsize</span><span class="p">;</span>		<span class="cm">/* Program header table entry size */</span>
+  <span class="n">Elf64_Half</span>	<span class="n">e_phnum</span><span class="p">;</span>		<span class="cm">/* Program header table entry count */</span>
+  <span class="n">Elf64_Half</span>	<span class="n">e_shentsize</span><span class="p">;</span>		<span class="cm">/* Section header table entry size */</span>
+  <span class="n">Elf64_Half</span>	<span class="n">e_shnum</span><span class="p">;</span>		<span class="cm">/* Section header table entry count */</span>
+  <span class="n">Elf64_Half</span>	<span class="n">e_shstrndx</span><span class="p">;</span>		<span class="cm">/* Section header string table index */</span>
+<span class="p">}</span> <span class="n">Elf64_Ehdr</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="program-header-64-bit">Program Header (64-bit)</h3>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+  <span class="n">Elf64_Word</span>	<span class="n">p_type</span><span class="p">;</span>			<span class="cm">/* Segment type */</span>
+  <span class="n">Elf64_Word</span>	<span class="n">p_flags</span><span class="p">;</span>		<span class="cm">/* Segment flags */</span>
+  <span class="n">Elf64_Off</span>	<span class="n">p_offset</span><span class="p">;</span>		<span class="cm">/* Segment file offset */</span>
+  <span class="n">Elf64_Addr</span>	<span class="n">p_vaddr</span><span class="p">;</span>		<span class="cm">/* Segment virtual address */</span>
+  <span class="n">Elf64_Addr</span>	<span class="n">p_paddr</span><span class="p">;</span>		<span class="cm">/* Segment physical address */</span>
+  <span class="n">Elf64_Xword</span>	<span class="n">p_filesz</span><span class="p">;</span>		<span class="cm">/* Segment size in file */</span>
+  <span class="n">Elf64_Xword</span>	<span class="n">p_memsz</span><span class="p">;</span>		<span class="cm">/* Segment size in memory */</span>
+  <span class="n">Elf64_Xword</span>	<span class="n">p_align</span><span class="p">;</span>		<span class="cm">/* Segment alignment */</span>
+<span class="p">}</span> <span class="n">Elf64_Phdr</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>using the above mentioned formats, i crafted the <code class="language-plaintext highlighter-rouge">ehdr</code> and <code class="language-plaintext highlighter-rouge">phdr</code></p>
+<div class="language-s highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bits</span><span class="w"> </span><span class="m">64</span><span class="w">
+</span><span class="n">org</span><span class="w"> </span><span class="mh">0x400000</span><span class="w">
+</span><span class="n">ehdr</span><span class="o">:</span><span class="w">
+        </span><span class="n">db</span><span class="w">  </span><span class="mh">0x7f</span><span class="p">,</span><span class="w"> </span><span class="s2">"ELF"</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span><span class="n">times</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="n">db</span><span class="w">  </span><span class="m">0</span><span class="w">
+        </span><span class="n">dw</span><span class="w">  </span><span class="m">2</span><span class="w">
+        </span><span class="n">dw</span><span class="w">  </span><span class="m">62</span><span class="w">
+        </span><span class="n">dd</span><span class="w">  </span><span class="m">1</span><span class="w">
+        </span><span class="n">dq</span><span class="w">  </span><span class="err">_</span><span class="n">start</span><span class="w"> 
+        </span><span class="n">dq</span><span class="w">  </span><span class="n">phdr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">$$</span><span class="w"> 
+        </span><span class="n">dq</span><span class="w">  </span><span class="m">0</span><span class="w">
+        </span><span class="n">dd</span><span class="w">  </span><span class="m">0</span><span class="w"> 
+        </span><span class="n">dw</span><span class="w">  </span><span class="n">ehdrsize</span><span class="w">
+        </span><span class="n">dw</span><span class="w">  </span><span class="n">phdrsize</span><span class="w">
+        </span><span class="n">dw</span><span class="w">  </span><span class="m">1</span><span class="w">
+        </span><span class="n">dw</span><span class="w">  </span><span class="m">0</span><span class="w">
+        </span><span class="n">dw</span><span class="w">  </span><span class="m">0</span><span class="w">
+        </span><span class="n">dw</span><span class="w">  </span><span class="m">0</span><span class="w">
+
+</span><span class="n">ehdrsize</span><span class="w">    </span><span class="n">equ</span><span class="w">     </span><span class="o">$</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ehdr</span><span class="w">
+
+</span><span class="n">phdr</span><span class="o">:</span><span class="w">
+        </span><span class="n">dd</span><span class="w">  </span><span class="m">1</span><span class="w">
+        </span><span class="n">dd</span><span class="w">  </span><span class="m">5</span><span class="w">
+        </span><span class="n">dq</span><span class="w">  </span><span class="m">0</span><span class="w">
+        </span><span class="n">dq</span><span class="w">  </span><span class="o">$$</span><span class="w">
+        </span><span class="n">dq</span><span class="w">  </span><span class="o">$$</span><span class="w">
+        </span><span class="n">dq</span><span class="w">  </span><span class="n">filesize</span><span class="w">
+        </span><span class="n">dq</span><span class="w">  </span><span class="n">filesize</span><span class="w">
+        </span><span class="n">dq</span><span class="w">  </span><span class="mh">0x1000</span><span class="w">
+
+</span><span class="n">phdrsize</span><span class="w">    </span><span class="n">equ</span><span class="w">     </span><span class="o">$</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phdr</span><span class="w">
+
+</span><span class="n">section</span><span class="w"> </span><span class="n">.data</span><span class="w">
+    </span><span class="n">msg</span><span class="o">:</span><span class="w">    </span><span class="n">db</span><span class="w">  </span><span class="s2">"/bin/sh"</span><span class="p">,</span><span class="w">  </span><span class="m">0</span><span class="w">
+
+</span><span class="err">_</span><span class="n">start</span><span class="o">:</span><span class="w">
+    </span><span class="n">xor</span><span class="w"> </span><span class="n">rax</span><span class="p">,</span><span class="w"> </span><span class="n">rax</span><span class="w">
+    </span><span class="n">mov</span><span class="w"> </span><span class="n">rdi</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="w">
+    </span><span class="n">mov</span><span class="w"> </span><span class="n">rsi</span><span class="p">,</span><span class="w"> </span><span class="n">rax</span><span class="w">
+    </span><span class="n">mov</span><span class="w"> </span><span class="n">rdx</span><span class="p">,</span><span class="w"> </span><span class="n">rax</span><span class="w">
+    </span><span class="n">mov</span><span class="w"> </span><span class="n">rax</span><span class="p">,</span><span class="w"> </span><span class="m">59</span><span class="w">
+    </span><span class="n">syscall</span><span class="w">
+
+</span><span class="n">filesize</span><span class="w">    </span><span class="n">equ</span><span class="w">     </span><span class="o">$</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">$$</span><span class="w">
+</span></code></pre></div></div>
+<p>just for ref: <code class="language-plaintext highlighter-rouge">db, dw, dd, dq</code> correspond to <code class="language-plaintext highlighter-rouge">1, 2, 4, 8</code> bytes. next i turned this assembly into an executable.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nasm <span class="nt">-f</span> bin <span class="nt">-o</span> shell shell.s
+</code></pre></div></div>
+<p>and it works as expected. let’s check the size of the executable</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">wc</span> <span class="nt">-c</span> tiny
+154 <span class="nv">$ </span>|
+</code></pre></div></div>
+<p>so it’s still <code class="language-plaintext highlighter-rouge">154 bytes</code> and we still have a long way to go. i still had to optimise this. i wondered if i could shorten up the assembly</p>
+
+<h2 id="golfing-the-text-section">Golfing the .text section</h2>
+<p>the <code class="language-plaintext highlighter-rouge">.text</code> section took about <code class="language-plaintext highlighter-rouge">34 bytes</code> itself. first of all, it’s possible to completely get rid of the <code class="language-plaintext highlighter-rouge">.data section</code>. we need to move the string directly into a register, then pop it onto the stack. now the address corresponding to the string is just the stack pointer (the <code class="language-plaintext highlighter-rouge">rsp</code>).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_start:
+    xor rax, rax
+    push rax 
+    mov rdi, 0x68732f6e69622f2f
+    push rdi 
+
+    mov rdi, rsp
+    xor rsi, rsi
+    xor rdx, rdx
+    mov rax, 59
+    syscall
+</code></pre></div></div>
+<p>the <code class="language-plaintext highlighter-rouge">.text section</code> drops to just <code class="language-plaintext highlighter-rouge">31 bytes</code> now. if observe carefully, some assembly instructions in there are just simply redundant. once we get rid of these, this drops to a mere <code class="language-plaintext highlighter-rouge">22 bytes</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_start:
+    push rax 
+    mov rdi, 0x68732f6e69622f2f
+    push rdi 
+
+    mov rdi, rsp
+    mov rax, 59
+    syscall
+</code></pre></div></div>
+<p>despite all that, the overall size of the executable is still <code class="language-plaintext highlighter-rouge">142 bytes</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">wc</span> <span class="nt">-c</span> tiny
+142 <span class="nv">$ </span>|
+</code></pre></div></div>
+<p>we need to almost cut the size by half!</p>
+<h2 id="switching-to-32-bit-elf">Switching to 32-bit ELF</h2>
+<p>we noticed that <code class="language-plaintext highlighter-rouge">x86_64</code> is actually backwards compatible and it therefore can execute <code class="language-plaintext highlighter-rouge">32-bit</code> executables given that the headers used are appropriate. i switched all my progress to the <code class="language-plaintext highlighter-rouge">32-bit</code> format and the size of the executable drops to <code class="language-plaintext highlighter-rouge">105 bytes</code>!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bits 32
+org     0x08048000
+  
+ehdr:                                                 ; Elf32_Ehdr
+        db      0x7F, "ELF", 1, 1, 1, 0         ;   e_ident
+times 8 db      0
+        dw      2                               ;   e_type
+        dw      3                               ;   e_machine
+        dd      1                               ;   e_version
+        dd      _start                          ;   e_entry
+        dd      phdr - $$                       ;   e_phoff
+        dd      0                               ;   e_shoff
+        dd      0                               ;   e_flags
+        dw      ehdrsize                        ;   e_ehsize
+        dw      phdrsize                        ;   e_phentsize
+        dw      1                               ;   e_phnum
+        dw      0                               ;   e_shentsize
+        dw      0                               ;   e_shnum
+        dw      0                               ;   e_shstrndx
+  
+ehdrsize      equ     $ - ehdr
+  
+phdr:                                                 ; Elf32_Phdr
+        dd      1                               ;   p_type
+        dd      0                               ;   p_offset
+        dd      $$                              ;   p_vaddr
+        dd      $$                              ;   p_paddr
+        dd      filesize                        ;   p_filesz
+        dd      filesize                        ;   p_memsz
+        dd      5                               ;   p_flags
+        dd      0x1000                          ;   p_align
+  
+phdrsize      equ     $ - phdr
+
+_start:
+    push    eax
+    push    0x68732f6e  ; 'n/sh'
+    push    0x69622f2f  ; '//bi'
+    mov     ebx, esp    ; pointer to '/bin/sh\0'
+    push    eax
+    push    ebx
+    mov     ecx, esp    ; pointer to argv
+    mov     al, 0xb     ; syscall number for execve
+    int     0x80
+  
+filesize      equ     $ - $$
+</code></pre></div></div>
+
+<p>we could try golfing the <code class="language-plaintext highlighter-rouge">.text section</code> again. currently, it’s about <code class="language-plaintext highlighter-rouge">21 bytes</code> in size. i was able to cut-down <code class="language-plaintext highlighter-rouge">4 bytes</code> more.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_start:      
+    push   eax              
+    push   0x68732f6e       
+    push   0x69622f2f       
+    mov    ebx, esp         
+    mov    al, 0xb          
+    int    0x80
+</code></pre></div></div>
+<p>so that brings us to <code class="language-plaintext highlighter-rouge">101 bytes</code>!</p>
+
+<h2 id="embedding-phdr-inside-ehdr">Embedding PHDR inside EHDR</h2>
+<p>if you scroll down to the bottom of the article, the article authose explains how it’s possible to merge the <code class="language-plaintext highlighter-rouge">program header</code> completely within the <code class="language-plaintext highlighter-rouge">ELF header</code>. since the <code class="language-plaintext highlighter-rouge">ELF header</code> on <code class="language-plaintext highlighter-rouge">32-bit</code> system is <code class="language-plaintext highlighter-rouge">52 bytes</code> large, we’ll able to cut down <code class="language-plaintext highlighter-rouge">48 bytes</code> in this optimization! we can then append out <code class="language-plaintext highlighter-rouge">.text section</code> right below the headers. this should bring the executable size to <code class="language-plaintext highlighter-rouge">69 bytes</code> which fits right into the constraints.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BITS 32
+
+            org     0x00010000
+
+            db      0x7F, "ELF"             ; e_ident
+            dd      1                                       ; p_type
+            dd      0                                       ; p_offset
+            dd      $$                                      ; p_vaddr 
+            dw      2                       ; e_type        ; p_paddr
+            dw      3                       ; e_machine
+            dd      _start                  ; e_version     ; p_filesz
+            dd      _start                  ; e_entry       ; p_memsz
+            dd      4                       ; e_phoff       ; p_flags
+fake:
+            mov     bl, 42                  ; e_shoff       ; p_align
+            xor     eax, eax
+            inc     eax                     ; e_flags
+            int     0x80
+            db      0
+            dw      0x34                    ; e_ehsize
+            dw      0x20                    ; e_phentsize
+            dw      1                       ; e_phnum
+            dw      0                       ; e_shentsize
+            dw      0                       ; e_shnum
+            dw      0                       ; e_shstrndx
+_start:
+    push   eax              
+    push   0x68732f6e       
+    push   0x69622f2f       
+    mov    ebx, esp         
+    mov    al, 0xb          
+    int    0x80
+
+filesize      equ     $ - $$
+</code></pre></div></div>
+
+<p>here’s <code class="language-plaintext highlighter-rouge">Makefile</code> that makes the executable generation steps a lot less clumsy.</p>
+
+<div class="language-makefile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">all</span><span class="o">:</span> <span class="nf">run</span>
+<span class="nl">build</span><span class="o">:</span>
+    <span class="err">nasm</span> <span class="err">-f</span> <span class="err">bin</span> <span class="err">-Ox</span> <span class="err">-o</span> <span class="err">shell</span> <span class="err">shell.s</span>
+<span class="nl">link</span><span class="o">:</span> <span class="nf">build</span>
+    <span class="err">chmod</span> <span class="err">+x</span> <span class="err">shell</span>
+<span class="nl">run</span><span class="o">:</span> <span class="nf">link</span>
+    <span class="nl">@ls -l shell | awk '{print $$5}' | xargs -I {} echo "size</span><span class="o">:</span> <span class="nf">{} bytes"</span>
+    <span class="err">@./shell</span>
+<span class="nl">clean</span><span class="o">:</span>
+    <span class="err">rm</span> <span class="err">shell.o</span> <span class="err">shell</span>
+</code></pre></div></div>
+
+<p>upon executing <code class="language-plaintext highlighter-rouge">make run</code> it seems to work fine! and we can confirm the size of the executable using <code class="language-plaintext highlighter-rouge">wc</code></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">wc</span> <span class="nt">-c</span> tiny
+69 <span class="nv">$ </span>|
+</code></pre></div></div>
+
+<p>i prepared a small python script to test if this actually works</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span> 
+
+<span class="n">filename</span> <span class="o">=</span> <span class="sh">"</span><span class="s">./shell</span><span class="sh">"</span>
+<span class="n">os</span><span class="p">.</span><span class="nf">execve</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="p">[</span><span class="n">filename</span><span class="p">],</span> <span class="p">{})</span>
+</code></pre></div></div>
+
+<p>and upon executing this python file, as anyone can confirm this certainly works! i grabbed the executable and quickly wrote the a script to send this to the remote server.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">base64</span>
+<span class="kn">from</span> <span class="n">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="sh">"</span><span class="s">./tiny</span><span class="sh">"</span>
+
+<span class="n">elf_data</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">).</span><span class="nf">read</span><span class="p">()</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">base64</span><span class="p">.</span><span class="nf">b64encode</span><span class="p">(</span><span class="n">elf_data</span><span class="p">)</span>
+
+<span class="n">host</span> <span class="o">=</span> <span class="sh">'</span><span class="s">89.169.156.185</span><span class="sh">'</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">10200</span>
+<span class="n">r</span> <span class="o">=</span> <span class="nf">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="sh">'</span><span class="s">DEBUG</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">r</span><span class="p">.</span><span class="nf">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">ELF x64 executable: </span><span class="sh">'</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="nf">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>and that gives us the shell as expected on the remote server!</p>
+
+<h2 id="flag">Flag</h2>
+<p><code class="language-plaintext highlighter-rouge">brics+{0cc8bfea-ec2d-4e68-8c2e-7e55db59cd1a}</code></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2024/12/25/backdoorctf-2024/">
+            BackdoorCTF 2024
+            <small>25 Dec 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/15/binary-exploitation/">
+            Binary Exploitation 2024
+            <small>15 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/02/03/branching-pruning/">
+            Branching and Pruning
+            <small>03 Feb 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

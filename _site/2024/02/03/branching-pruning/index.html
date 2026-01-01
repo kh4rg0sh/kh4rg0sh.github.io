@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Branching and Pruning &middot; kh4rg0sh Blog!
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <img src="/assets/content.png">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          kh4rg0sh Blog!
+        </a>
+      </h1>
+      <p class="lead">You've just stumbled across a nerdy little corner of the internet. Come back soon to checkout more stuff as I keep updating the blog!</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    </nav>
+
+    <p>&copy; 2026. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Branching and Pruning</h1>
+  <span class="post-date">03 Feb 2024</span>
+  <p>Today I’ll be discussing a really useful implementation heavy technique that leads to a bit by bit leakage of information of variables when provided some extra information. The best way to demonstrate this is through examples so let’s get started</p>
+
+<h2 id="xorsa-plaidctf-2021">XORSA [PlaidCTF 2021]</h2>
+
+<p>This is a typical RSA challenge that provides you the information of $n$, $e$ and $c$ and along with that, we are given the information $p \oplus q$ (bitwise XOR). As it turns out that a RSA system with $p\oplus q$ and $p\times q$ publically known is cryptographically insecure!</p>
+
+<h3 id="solution">Solution</h3>
+
+<p>The idea is that we could leak the bits of the primes $p$ and $q$ one by one starting from the LSB (least significant bit). Since in this case, $p$ and $q$ are odd. Therefore, we already know their LSB’s, that is $1$. Suppose we are at the $i$th bit from the left and we have figured out all the bits $p_k$ and $q_k$ for $k &lt; i$. Then there are four possible cases for each such valid number that we’ve found yet. Our strategy would be to check if in any of these four cases we could extend our found solution from $i - 1$ to $i$. We perform this recursively $\log N$ times to solve for $p$ and $q$. Here’s an implementation for the same!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">Cryptodome.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="n">math</span> <span class="kn">import</span> <span class="n">ceil</span><span class="p">,</span><span class="n">log2</span>
+<span class="n">n</span> <span class="o">=</span> <span class="c1"># insert p*q here
+</span><span class="n">r</span> <span class="o">=</span> <span class="c1"># insert p xor q here
+</span>
+<span class="n">tracked</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="n">l</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">ceil</span><span class="p">(</span><span class="nf">log2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">new_tracked</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">tracked</span><span class="p">:</span>
+        <span class="nf">for </span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="n">qi</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dp</span><span class="p">:</span>
+            <span class="n">px</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">qx</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="n">qi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">px</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span> 
+            <span class="n">qx</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">nx</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">rx</span> <span class="o">=</span> <span class="n">r</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">px</span><span class="p">,</span> <span class="n">qx</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">([</span><span class="n">px</span><span class="p">,</span> <span class="n">qx</span><span class="p">])</span>
+            <span class="nf">if </span><span class="p">(</span><span class="n">px</span> <span class="o">*</span> <span class="n">qx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">nx</span> <span class="ow">and</span> <span class="n">px</span> <span class="o">^</span> <span class="n">qx</span> <span class="o">==</span> <span class="n">rx</span> <span class="ow">and</span> <span class="p">(</span><span class="n">px</span><span class="p">,</span> <span class="n">qx</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_tracked</span><span class="p">:</span>
+                <span class="n">new_tracked</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">px</span><span class="p">,</span> <span class="n">qx</span><span class="p">))</span>
+    <span class="n">tracked</span> <span class="o">=</span> <span class="n">new_tracked</span>
+<span class="n">new_tracked</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">tracked</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span> <span class="o">==</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">^</span> <span class="n">q</span> <span class="o">==</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">new_tracked</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">new_tracked</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>this algorithm solves the given problem at hand easily.</p>
+
+<h2 id="fusion-wanictf-2023">Fusion [WaniCTF 2023]</h2>
+
+<p>Another RSA problem where we are again told about $n$, $e$ and $c$ and the extra information provided to us this time is the information about the odd-positioned bits of $p$ and the even-positioned bits of $q$. Turns out that this system is still cryptographically insecure.</p>
+
+<h3 id="solution-1">Solution</h3>
+
+<p>The idea is similar to the previous ones. We need to leak off bit by bit information about the two primes $p$ and $q$. Since we already know that they are odd primes, we already know about their LSB’s. We have to tweak the above algorithm and it would leak off the entire information about the bits of the primes $p$ and $q$ one by one.</p>
+
+<p>The algorithm works as follows. Suppose we are the $i$th position and we need to determine the $i$th bits of $p$ and $q$. If $i$ is even, we know the information about $q_i$ and if $i$ is odd, then we know the information about $p_i$. In each case, we need to check for two cases and propogate the answers from the previous case to the next ones using bit masking.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">Cryptodome.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="n">math</span> <span class="kn">import</span> <span class="n">ceil</span><span class="p">,</span><span class="n">log2</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="c1">#
+</span><span class="n">e</span> <span class="o">=</span> <span class="c1">#
+</span><span class="n">c</span> <span class="o">=</span> <span class="c1">#
+</span><span class="n">r</span> <span class="o">=</span> <span class="c1">#
+</span>
+<span class="n">l</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="nf">bin</span><span class="p">(</span><span class="n">r</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]),</span> <span class="nf">int</span><span class="p">(</span><span class="nf">ceil</span><span class="p">(</span><span class="nf">log2</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">tracked</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+    <span class="n">new_tracked</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="nf">for </span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tracked</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">q0</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="n">px</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">qx</span> <span class="o">=</span> <span class="n">q0</span>
+                <span class="n">px</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">qx</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">nx</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="nf">if </span><span class="p">(</span><span class="n">px</span> <span class="o">*</span> <span class="n">qx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">nx</span> <span class="ow">and</span> <span class="p">(</span><span class="n">px</span><span class="p">,</span> <span class="n">qx</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_tracked</span><span class="p">:</span>
+                    <span class="n">new_tracked</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">px</span><span class="p">,</span> <span class="n">qx</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p0</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="n">qx</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">px</span> <span class="o">=</span> <span class="n">p0</span>
+                <span class="n">px</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span> 
+                <span class="n">qx</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">nx</span> <span class="o">=</span> <span class="n">n</span><span class="o">&amp;</span><span class="p">((</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="nf">if </span><span class="p">(</span><span class="n">px</span><span class="o">*</span><span class="n">qx</span><span class="p">)</span><span class="o">&amp;</span><span class="p">((</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">nx</span> <span class="ow">and</span> <span class="p">(</span><span class="n">px</span><span class="p">,</span><span class="n">qx</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_tracked</span><span class="p">:</span>
+                    <span class="n">new_tracked</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">px</span><span class="p">,</span><span class="n">qx</span><span class="p">))</span>
+    <span class="n">tracked</span> <span class="o">=</span> <span class="n">new_tracked</span>
+<span class="n">new_tracked</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tracked</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">*</span><span class="n">q</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">new_tracked</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">))</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">)</span> <span class="ow">in</span> <span class="n">new_tracked</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="nf">long_to_bytes</span><span class="p">(</span><span class="nf">pow</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="nf">pow</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">q</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span><span class="n">n</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>running this script we get our flag: <code class="language-plaintext highlighter-rouge">FLAG{sequ4ntia1_prim4_fact0rizati0n}</code></p>
+
+<p>now i could have ended this here, but this is where things start getting more interesting! it turns out that you need not write out a whole brute script from scratch to prune over the bits and solve for $p$ and $q$. you can instead just use a z3solver to do that for us. lets solve the above challenge using a z3solver. here’s my script that works great</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">z3</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="n">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="c1">#
+</span><span class="n">e</span> <span class="o">=</span> <span class="c1">#
+</span><span class="n">c</span> <span class="o">=</span> <span class="c1">#
+</span><span class="n">r</span> <span class="o">=</span> <span class="c1">#
+</span>
+<span class="n">bitlen</span> <span class="o">=</span> <span class="mi">1024</span>
+
+<span class="n">P</span> <span class="o">=</span> <span class="nc">BitVec</span><span class="p">(</span><span class="sh">'</span><span class="s">p</span><span class="sh">'</span><span class="p">,</span> <span class="n">bitlen</span><span class="p">)</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="nc">BitVec</span><span class="p">(</span><span class="sh">'</span><span class="s">q</span><span class="sh">'</span><span class="p">,</span> <span class="n">bitlen</span><span class="p">)</span>
+
+<span class="n">mask</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="sh">"</span><span class="s">55</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="c1"># r = p &amp; mask
+# mask = mask &lt;&lt; 1
+# r += q &amp; mask
+</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="nc">Solver</span><span class="p">()</span>
+<span class="n">solver</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">P</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">==</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">solver</span><span class="p">.</span><span class="nf">add</span><span class="p">(((</span><span class="n">P</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">Q</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">==</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="nf">if </span><span class="p">(</span><span class="n">solver</span><span class="p">.</span><span class="nf">check</span><span class="p">()</span> <span class="o">==</span> <span class="n">sat</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">solver</span><span class="p">.</span><span class="nf">model</span><span class="p">()</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">P</span><span class="p">].</span><span class="nf">as_long</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">Q</span><span class="p">].</span><span class="nf">as_long</span><span class="p">()</span>
+
+    <span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="nf">long_to_bytes</span><span class="p">(</span><span class="nf">pow</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>sometimes it turns out that writing brute scripts from scratch becomes difficult and complicated, hence we rely on z3solver.</p>
+
+<h2 id="shibs-mapnactf-2024">Shibs [MapnaCTF 2024]</h2>
+<p>another rsa problem where we know $n$, $e$ and $c$. however we also know $p$ $\&amp;$ $q$ and we are given that $q$ is just $p[:s]$ $+$ $p[s:]$ for some random hidden $s$.</p>
+
+<h3 id="solution-2">Solution</h3>
+
+<p>we’ll do the same again. lets pump these all into the z3solver again and let it do the magic for us. since we also dont know $s$, i’ll brute over that too. here’s my script</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="n">z3</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="c1">#
+</span><span class="n">r</span> <span class="o">=</span> <span class="c1">#
+</span><span class="n">enc</span> <span class="o">=</span> <span class="c1">#
+</span>
+<span class="n">bitlen</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">e</span> <span class="o">=</span> <span class="c1">#
+</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">):</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="nc">BitVec</span><span class="p">(</span><span class="sh">'</span><span class="s">p</span><span class="sh">'</span><span class="p">,</span> <span class="n">bitlen</span><span class="p">)</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nc">BitVec</span><span class="p">(</span><span class="sh">'</span><span class="s">q</span><span class="sh">'</span><span class="p">,</span> <span class="n">bitlen</span><span class="p">)</span> 
+
+    <span class="n">solver</span> <span class="o">=</span> <span class="nc">Solver</span><span class="p">()</span>
+    <span class="n">solver</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">P</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">==</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">solver</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">P</span> <span class="o">&amp;</span> <span class="n">Q</span> <span class="o">==</span> <span class="n">r</span><span class="p">)</span>
+    <span class="n">shifted_P</span> <span class="o">=</span> <span class="nc">Concat</span><span class="p">(</span><span class="nc">Extract</span><span class="p">(</span><span class="n">bitlen</span> <span class="o">-</span> <span class="n">s</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">P</span><span class="p">),</span> <span class="nc">Extract</span><span class="p">(</span><span class="n">bitlen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bitlen</span> <span class="o">-</span> <span class="n">s</span><span class="p">,</span> <span class="n">P</span><span class="p">))</span>
+    <span class="n">solver</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">Q</span> <span class="o">==</span> <span class="n">shifted_P</span><span class="p">)</span>
+
+    <span class="nf">if </span><span class="p">(</span><span class="n">solver</span><span class="p">.</span><span class="nf">check</span><span class="p">()</span> <span class="o">==</span> <span class="n">sat</span><span class="p">):</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">solver</span><span class="p">.</span><span class="nf">model</span><span class="p">()</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">P</span><span class="p">].</span><span class="nf">as_long</span><span class="p">()</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">Q</span><span class="p">].</span><span class="nf">as_long</span><span class="p">()</span>
+
+        <span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="nf">long_to_bytes</span><span class="p">(</span><span class="nf">pow</span><span class="p">(</span><span class="n">enc</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span><span class="p">)))</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</code></pre></div></div>
+<p>and this gives us our flag <code class="language-plaintext highlighter-rouge">MAPNA{Br4nch_&amp;_prun3_Or_4Nother_ApprOacH???}</code>.  pretty cool trick aint it?</p>
+
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2024/12/25/backdoorctf-2024/">
+            BackdoorCTF 2024
+            <small>25 Dec 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/15/binary-exploitation/">
+            Binary Exploitation 2024
+            <small>15 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/06/elf-golfing/">
+            ELF Golfing
+            <small>06 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

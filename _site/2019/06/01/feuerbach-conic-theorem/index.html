@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Short Proof of Feuerbach's Conic Theorem &middot; kh4rg0sh Blog!
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <img src="/assets/content.png">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          kh4rg0sh Blog!
+        </a>
+      </h1>
+      <p class="lead">You've just stumbled across a nerdy little corner of the internet. Come back soon to checkout more stuff as I keep updating the blog!</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    </nav>
+
+    <p>&copy; 2026. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Short Proof of Feuerbach's Conic Theorem</h1>
+  <span class="post-date">01 Jun 2019</span>
+  <h1 id="statement"><strong>Statement</strong></h1>
+<p>Let $\triangle ABC$ be a triangle inscribed in a rectangular hyperbola $\mathcal H$.
+Prove that the center of $\mathcal H$
+lies on the Nine–Point Circle of $\triangle ABC$.</p>
+
+<hr />
+
+<p>This is known as <code class="language-plaintext highlighter-rouge">Feuerbach's Conic Theorem</code> as cited in <em>Coolidge, J. L. A Treatise on Algebraic Plane Curves. New York: Dover, 1959</em>. I recently discovered a short proof for the same, so let’s go over that in this blog post.</p>
+
+<h2 id="proof">Proof</h2>
+<p>Let’s start with a pretty well-known result.</p>
+
+<h3 id="lemma-1"><strong>Lemma 1</strong></h3>
+<p>Let $\mathcal H$ be a rectangular hyperbola with a point $P$ on it and center $G$.
+The reflection of $P$ over $G$ lies on $\mathcal H$.</p>
+
+<hr />
+
+<p>This lemma is well known so we will not prove it here. Let’s use it to prove the statement at hand. Let $\mathcal H$ be a fixed rectangular hyperbola through the vertices of
+$\triangle ABC$.</p>
+
+<p>If $H$ is the orthocenter of $\triangle ABC$, then $H$ also lies on $\mathcal H$.</p>
+
+<p>Let $E_A, E_B, E_C$ be the midpoints of $AH, BH, CH$, and let
+$\triangle H_AH_BH_C$ be the orthic triangle of $\triangle ABC$.</p>
+
+<p>Thus $E_AE_BE_CH_AH_BH_C$ is the Nine–Point Circle of $\triangle ABC$.</p>
+
+<p>Let the tangents to $\mathcal H$ at $(A,H), (B,H), (C,H)$ meet at
+$K, M, N$ respectively. Then the lines
+$E_AK, E_BM, E_CN$ concur at a point $P$, which is the center of $\mathcal H$.</p>
+
+<p>Consider the reflections of $H,A,B,C$ over $P$, denoted
+$Q,R,S,T$. Then $Q,R,S,T$ lie on $\mathcal H$.
+Since $AHRQ$ is a parallelogram, applying Pascal’s Theorem on
+$HHRQQA$ implies that the tangents at $H$ and $Q$ are parallel.</p>
+
+<p>Let
+\(QS \cap AC = U,
+QR \cap BC = V,
+QT \cap AB = W.\)
+Then $\triangle VUW$ is the pedal triangle of $Q$ with respect to $\triangle ABC$.</p>
+
+<p>Applying Pascal’s Theorem on $SQRACB$ and $TCBARQ$
+implies that $VUW$ is the Simson Line of $Q$.</p>
+
+<p>Hence $Q$ lies on $(ABC)$, and therefore
+$P$ lies on the Nine–Point Circle. $\blacksquare$</p>
+
+<hr />
+
+<p><strong>Remark.</strong><br />
+If $Q$ is the fourth intersection of the circum–rectangular hyperbola
+$\mathcal H$ of $\triangle ABC$ with $(ABC)$, then the Simson Line of $Q$
+passes through the center of $\mathcal H$.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2024/12/25/backdoorctf-2024/">
+            BackdoorCTF 2024
+            <small>25 Dec 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/15/binary-exploitation/">
+            Binary Exploitation 2024
+            <small>15 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2024/10/06/elf-golfing/">
+            ELF Golfing
+            <small>06 Oct 2024</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>
