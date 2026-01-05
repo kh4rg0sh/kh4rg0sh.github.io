@@ -1,0 +1,104 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{Problem Set 1}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    Some practice problems based on everything I've taught so far.
+\end{abstract}
+
+\section{Instructions}
+\begin{enumerate}[itemsep=0.01em]
+    \item Try out each problem on paper for a sufficient amount of time before using GeoGebra.
+    \item Ideally you should continue working on the problem until you have exhausted all ideas and are unsure how to proceed further.
+    \item You may then use GeoGebra to identify key observations that may help you in solving the problem.
+    \item Feel free to ask queries or hints if you have made substantial progress and feel stuck. I will release the hints for each problem soon.
+\end{enumerate}
+
+\section{Practice Problems}
+\begin{exercise}
+    Suppose $H$ and $O$ are the orthocenter and circumcenter of $\triangle ABC$. Let $O_A$, $O_B$ and $O_C$ be the reflections of $O$ over the sides $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$. Show that
+    \begin{enumerate}[itemsep=0.01em]
+        \item $O$ is the orthocenter and $H$ is the circumcenter of $\triangle O_AO_BO_C$.
+        \item $O_A$, $O_B$ and $O_C$ are the circumcenters of $\triangle BHC$, $\triangle CHA$ and $\triangle AHB$.
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 1989]
+The vertex $ A$ of the acute triangle $ ABC$ is equidistant from the circumcenter $ O$ and the orthocenter $ H.$ Determine all possible values for the measure of angle $A.$
+\end{exercise}
+
+\begin{exercise}[RMO 2025]
+Let $ABC$ be an acute-angled triangle with $AB<AC$ , orthocenter $H$ and circumcircle $\Omega$ . Let $M$ be the midpoint of the minor arc $BC$ of $\Omega$ . Suppose the $MH$ is equal to the radius of $\Omega$. Prove that $\angle BAC=60^\circ$
+\end{exercise}
+
+\begin{exercise}
+    Let $\triangle ABC$ be an acute triangle such that $\angle A = 60^{\circ}$. Prove that $IH = IO$, where $I$, $H$ and $O$ are the incenter, orthocenter and circumcenter.
+\end{exercise}
+
+\begin{exercise}[APMO 2007]
+    Let $ABC$ be an acute angled triangle with $\angle{BAC}=60^\circ$ and $AB > AC$. Let $I$ be the incenter, and $H$ the orthocenter of the triangle $ABC$ . Prove that $2\angle{AHI}= 3\angle{ABC}$.
+\end{exercise}
+
+\begin{exercise}
+    Let triangle $ABC$ satisfy $2BC = AB+AC$ and have incenter $I$ and circumcircle $\omega$. Let $D$ be the intersection of $AI$ and $\omega$ (with $A, D$ distinct). Prove that $I$ is the midpoint of $AD$.
+\end{exercise}
+
+\begin{exercise}[IMO 2020]
+    Consider the convex quadrilateral $ABCD$. The point $P$ is in the interior of $ABCD$. The following ratio equalities hold:
+\[\angle PAD:\angle PBA:\angle DPA=1:2:3=\angle CBP:\angle BAP:\angle BPC\]Prove that the following three lines meet in a point: the internal bisectors of angles $\angle ADP$ and $\angle PCB$ and the perpendicular bisector of segment $AB$.
+\end{exercise}
+
+\begin{exercise}
+    $\triangle ABC$ is inscribed in circle $\omega$. A circle with chord $BC$ intersects segments $AB$ and $AC$ again at $S$ and $R$, respectively. Segments $BR$ and $CS$ meet at $L$, and rays $LR$ and $LS$ intersect $\omega$ at $D$ and $E$, respectively. The internal angle bisector of $\angle BDE$ meets line $ER$ at $K$. Prove that if $BE = BR$, then
+    \begin{enumerate}[itemsep=0.01em]
+        \item $R$ is the incenter of $\triangle CDE$.
+        \item $\angle ELK = \tfrac{1}{2} \angle BCD$.
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Japan 2017]
+    Let $ABC$ be an acute-angled triangle with the circumcenter $O$. Let $D,E$ and $F$ be the feet of the altitudes from $A,B$ and $C$, respectively, and let $M$ be the midpoint of $BC$. $AD$ and $EF$ meet at $X$, $AO$ and $BC$ meet at $Y$, and let $Z$ be the midpoint of $XY$. Prove that $A,Z,M$ are collinear.
+\end{exercise}
+
+\begin{exercise}[IGO 2021 Advanced]
+    $H$ is the orthocenter of the acute-angled triangle $ABC$. ($AB<AC$). Call the point where the perpendicular bisector of $BC$ meets the sides $AB$ and $AC$ as $P$ and $Q$, respectively. Consider $M$ and $N$ as the midpoints of segments $BC$ and $PQ$. Prove that lines $HM$ and $AN$ intersect on the circumcircle of $ABC$.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2024]
+    Let $ABC$ be a triangle with $AB < AC < BC$. Let the incenter and incircle of triangle $ABC$ be $I$ and $\omega$, respectively. Let $X$ be the point on line $BC$ different from $C$ such that the line through $X$ parallel to $AC$ is tangent to $\omega$. Similarly, let $Y$ be the point on line $BC$ different from $B$ such that the line through $Y$ parallel to $AB$ is tangent to $\omega$. Let $AI$ intersect the circumcircle of triangle $ABC$ at $P \ne A$. Let $K$ and $L$ be the midpoints of $AC$ and $AB$, respectively. Prove that $\angle KIL + \angle YPX = 180^{\circ}$.
+\end{exercise}
+
+\end{document}

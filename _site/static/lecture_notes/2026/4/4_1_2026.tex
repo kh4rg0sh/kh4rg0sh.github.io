@@ -1,0 +1,957 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{Lecture Notes (4th Jan, 2026)}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    We continue with the Incenter and Symmedian Configuration in this lecture.
+\end{abstract}
+
+\section{Ceva's Theorem}
+\begin{theorem}[Ceva's Theorem]
+    In $\triangle ABC$, let $\overline{AD}$, $\overline{BE}$ and $\overline{CF}$ be the $A$-cevian, $B$-cevian and $C$-cevian respectively. Then $\overline{AD}$, $\overline{BE}$ and $\overline{CF}$ concur if and only if
+    \begin{align*}
+        \left( \frac{\overline{BD}}{\overline{DC}} \right) \cdot \left( \frac{\overline{CE}}{\overline{EA}} \right) \cdot \left( \frac{\overline{AF}}{\overline{FB}} \right) = 1
+    \end{align*}
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        size(7cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, D, E, F, O;
+        A = dir(110); B = dir(200); C = dir(340);
+        O = origin; D = extension(A, O, B, C);
+        E = extension(B, O, A, C); F = extension(C, O, A, B);
+
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(B)); dot("$C$", C, dir(C));
+        dot("$D$", D, dir(225)); dot("$E$", E, dir(45)); dot("$F$", F, dir(155));
+
+        draw(A--B--C--cycle); draw(A--D); draw(B--E); draw(C--F);
+    \end{asy}
+\end{figure}
+
+This is a useful criterion that we can use to either \emph{prove} concurrency of three cevians or \emph{extract} information about the ratios in which the sides are divided from the concurrency of the three cevians.
+\begin{remark}
+    Usually, we employ \emph{signed} lengths. It does not make a difference here since we restricted the points to the sides of the triangle. However, if we were to drop that restriction we would need to take signed lengths. We will soon see that in a similar result called \vocab{Menelaus' Theorem} about a transversal cutting a triangle, the products multiply to $-1$ and the negative sign here is contributed from signed lengths. Signed lengths are used to unify multiple configurations. We can choose any direction to be positive and the opposite to it to be negative, but it only makes sense to talk about the signs for a set of parallel lines. The signs assigned for another set of parallel lines would be independent.
+\end{remark}
+
+\begin{exercise}
+    Use the \vocab{Ratio Lemma} to prove \vocab{Ceva's Theorem}. 
+    % \footnote{\textbf{Hint.} Suppose the cevians meet at $X$. Consider $\triangle XBC$, $\triangle XCA$ and $\triangle XAB$.}
+\end{exercise}
+
+\subsection{Ceva's Theorem (Trigonometric Form)}
+Sometimes we might be given conditions on the angle, so it would be nice if we could transition our result on ratios of divisions to angles and we end up with the following result which is worth talking about.
+\begin{theorem}[Trigonometric Ceva's Theorem]
+    In $\triangle ABC$, let $\overline{AD}$, $\overline{BE}$ and $\overline{CF}$ be the $A$-cevian, $B$-cevian and $C$-cevian respectively. Then $\overline{AD}$, $\overline{BE}$ and $\overline{CF}$ concur if and only if
+    \begin{align*}
+        \left( \frac{\sin \angle BAD}{\sin \angle DAC} \right) \cdot \left( \frac{\sin \angle CBE}{\sin \angle EBA} \right) \cdot \left( \frac{\sin \angle ACF}{\sin \angle FCB} \right) = 1
+    \end{align*}
+\end{theorem}
+
+It's very easy to prove this as well. Notice how we want to exchange the ratios of sides divided by a cevian into the ratios of sines of angles partitioned by the cevians? This should ring the Ratio Lemma.
+
+\begin{exercise}
+    Use the Ratio Lemma to prove the \vocab{Trigonometric Ceva's Theorem}.
+\end{exercise}
+
+Now let's take a look at some applications of these two forms of Ceva's Theorem. We shall see how they lead us to prove concurrencies that feel too good to be true.
+
+\subsection{Isogonal Conjugate}
+This is a really fancy term to denote a somewhat angle bisector reflection. The statement is as follows.
+\begin{theorem}[Isogonal Conjugates]
+    In $\triangle ABC$, where $AD$, $BE$ and $CF$ are the $A$-cevian, $B$-cevian and $C$-cevian. Let their concurrency point be $X$. Let $D'$, $E'$ and $F'$ be points on $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$ such that $\angle BAD$ $=$ $\angle D'AC$, $\angle CBE$ $=$ $\angle C'BA$ and $\angle ACF$ $=$ $\angle F'CB$, then the cevians $AD'$, $BE'$ and $CF'$ are concurrent too. The point of concurrency is the \vocab{Isogonal Conjugate} of point $X$ with respect to $\triangle ABC$.
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        size(7cm);
+        defaultpen(fontsize(10pt));
+
+        pair A,B,C,P,Pa;
+        A = dir(110);
+        B = dir(200);
+        C = dir(340);
+
+        P = (0.1,0.1);
+        draw(A--B--C--cycle);
+
+        pair D, E, F;
+        D = extension(A,P, B,C);
+        E = extension(B,P, A,C);
+        F = extension(C,P, A,B);
+        draw(A--D); draw(B--E); draw(C--F);
+
+        dot("$A$",A,dir(A));
+        dot("$B$",B,dir(B));
+        dot("$C$",C,dir(C));
+        dot("$P$",P,dir(55));
+
+        pair IA = incenter(A,B,C);
+        pair rA = reflect(A, IA)*(P);
+        pair Aiso = extension(A,rA,B,C);
+        draw(A--Aiso, heavygray+dashed);
+
+        pair rB = reflect(B, IA)*(P);
+        pair Biso = extension(B,rB,A,C);
+        draw(B--Biso, heavygray+dashed);
+
+        pair rC = reflect(C, IA)*(P);
+        pair Ciso = extension(C,rC,A,B);
+        draw(C--Ciso, heavygray+dashed);
+
+        Pa = extension(A,Aiso,B,Biso);
+
+        dot("$Q$", Pa, dir(135));
+        dot("$D$", D, dir(315)); dot("$E$", E, dir(45)); dot("$F$", F, dir(135));
+        dot("$D'$", Aiso, dir(235)); dot("$E'$", Biso, dir(55)); dot("$F'$", Ciso, dir(145));
+    \end{asy}
+\end{figure}
+
+The existence of such concurrency may seem miraculous but it follows trivially from the results proved earlier.
+
+\begin{proof}
+    From the Trigonometric Form of Ceva's Theorem, 
+    \begin{align*}
+        \left( \frac{\sin \angle BAD}{\sin \angle DAC} \right) \cdot \left( \frac{\sin \angle CBE}{\sin \angle EBA} \right) \cdot \left( \frac{\sin \angle ACF}{\sin \angle FCB} \right) = 1
+    \end{align*}
+
+    However, $\angle BAD = \angle D'AC$ $\implies$ $\angle DAC$ $=$ $\angle BAD'$. Similarly, for the other cevians, we can write
+    \begin{align*}
+        \left( \frac{\sin \angle D'AC}{\sin \angle BAD'} \right) \cdot \left( \frac{\sin \angle E'BA}{\sin \angle CBE'} \right) \cdot \left( \frac{\sin \angle F'CB}{\sin \angle ACF'} \right) = 1
+    \end{align*}
+
+    Taking reciprocals of both sides, we get 
+    \begin{align*}
+        \left( \frac{\sin \angle BAD'}{\sin \angle D'AC} \right) \cdot \left( \frac{\sin \angle CBE'}{\sin \angle E'BA} \right) \cdot \left( \frac{\sin \angle ACF'}{\sin \angle F'CB} \right) = 1
+    \end{align*}
+    which implies that $AD'$, $BE'$ and $CF'$ are concurrent by the converse of the Trigonometric Form of Ceva's Theorem.
+\end{proof}
+
+Another such concurrency point is the \vocab{Isotomic Conjugate}.
+
+\subsection{Isotomic Conjugate}
+\begin{theorem}[Isotomic Conjugates]
+    In $\triangle ABC$, where $AD$, $BE$ and $CF$ are the $A$-cevian, $B$-cevian and $C$-cevian. Let their concurrency point be $X$. Let $D'$, $E'$ and $F'$ be the reflections of $D$, $E$ and $F$ over the midpoints of the sides $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$. Then the cevians $AD'$, $BE'$ and $CF'$ are concurrent too. The point of concurrency is the \vocab{Isotomic Conjugate} of point $X$ with respect to $\triangle ABC$.
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        size(7cm);
+        defaultpen(fontsize(10pt));
+
+        pair A,B,C,P;
+        A = dir(110);
+        B = dir(200);
+        C = dir(340);
+
+        P = (0.1,0.1);
+        draw(A--B--C--cycle);
+        pair D, E, F;
+        D = extension(A,P, B,C);
+        E = extension(B,P, A,C);
+        F = extension(C,P, A,B);
+
+        draw(A--D);
+        draw(B--E);
+        draw(C--F);
+
+        dot("$A$",A,dir(A));
+        dot("$B$",B,dir(B));
+        dot("$C$",C,dir(C));
+        dot("$P$",P,dir(55));
+
+        dot("$D$", D, dir(315));
+        dot("$E$", E, dir(45));
+        dot("$F$", F, dir(135));
+
+        pair Mab = (A+B)/2;
+        pair Mbc = (B+C)/2;
+        pair Mca = (C+A)/2;
+
+        pair Dito = 2*Mbc - D;
+        pair Eito = 2*Mca - E;
+        pair Fito = 2*Mab - F;
+
+        draw(A--Dito, heavygray+dashed);
+        draw(B--Eito, heavygray+dashed);
+        draw(C--Fito, heavygray+dashed);
+
+        pair R = extension(A, Dito, B, Eito);
+        dot("$D'$", Dito, dir(225));
+        dot("$E'$", Eito, dir(45));
+        dot("$F'$", Fito, dir(135));
+        dot("$Q$", R, dir(135));
+    \end{asy}
+\end{figure}
+
+\begin{proof}
+    From Ceva's Theorem,
+
+    \begin{align*}
+        \left( \frac{\overline{BD}}{\overline{DC}} \right) \cdot \left( \frac{\overline{CE}}{\overline{EA}} \right) \cdot \left( \frac{\overline{AF}}{\overline{FB}} \right) = 1
+    \end{align*}
+
+    By the definition of $D'$, we have $\overline{BD} = \overline{D'C}$ and $\overline{DC} = \overline{BD'}$. Therefore, we can write out the above expression as
+    \begin{align*}
+        \left( \frac{\overline{D'C}}{\overline{BD'}} \right) \cdot \left( \frac{\overline{E'A}}{\overline{CE'}} \right) \cdot \left( \frac{\overline{F'B}}{\overline{AF'}} \right) = 1
+    \end{align*}
+
+    Taking the reciprocals on both sides, we get 
+    \begin{align*}
+        \left( \frac{\overline{BD'}}{\overline{D'C}} \right) \cdot \left( \frac{\overline{CE'}}{\overline{E'A}} \right) \cdot \left( \frac{\overline{AF'}}{\overline{F'B}} \right) = 1
+    \end{align*}
+
+    which implies that $AD'$, $BE'$ and $CF'$ are concurrent by the converse of Ceva's Theorem.
+\end{proof}
+
+\section{More on Incenter \& Excenters}
+In the previous lecture, we saw how to compute some important lengths in the incenter configuration. Let's do the same again after adding the incircle into the picture.
+
+\subsection{Tangents to Incircle and Excircles}
+\begin{definition}
+  In $\triangle ABC$, let the incircle touch the sides $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$ at points $D$, $E$ and $F$. Then $\triangle DEF$ is called the \vocab{Intouch Triangle}.
+\end{definition}
+
+\begin{proposition}
+  In $\triangle ABC$, let $\triangle DEF$ be the intouch triangle of $\triangle ABC$. Then
+  \begin{enumerate}[itemsep=0.01em]
+    \item $\overline{AE} = \overline{AF} = s - a$
+    \item $\overline{BF} = \overline{BD} = s - b$
+    \item $\overline{CD} = \overline{CE} = s - c$
+  \end{enumerate}
+\end{proposition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+
+        size(8cm); defaultpen(fontsize(10pt));
+        pair A, B, C, I, D, E, F;
+        
+        A = dir(135); B = dir(200); C = dir(340);
+        I = incenter(A,B,C);
+        D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$I$", I, dir(90)); dot("$D$", D, dir(285));
+        dot("$E$", E, dir(45)); dot("$F$", F, dir(145));
+        draw(circle(I, abs(I-D))); draw(A--B--C--cycle);
+
+        markrightangle(C, D, I, 7); 
+        markrightangle(A, E, I, 7);
+        markrightangle(B, F, I, 7);
+
+        draw(I--D); draw(I--E); draw(I--F);
+    \end{asy}
+\end{figure}
+
+The former equalities are trivial. They follow because $\overline{AE}$ and $\overline{AF}$ are tangents drawn from point $A$ to the incircle and similarly for others. If we add all these equalities, we get 
+\[
+\begin{array}{rcl}
+\overline{BD} + \overline{CD} &=& a \\
+\overline{CE} + \overline{AE} &=& b \\
+\overline{AF} + \overline{BF} &=& c \\
+\hline
+\noalign{\vskip 4pt}
+2(\overline{AF}+\overline{BF} + \overline{CD}) &=& a+b+c
+\end{array}
+\]
+
+Subtracting the equations from the derived equation, we get $\overline{AE} = \overline{AF} = s - a$ and similarly the other relations.
+
+\begin{definition}
+  In $\triangle ABC$, let the $A$-excircle, $B$-excircle and $C$-excircle touch the sides $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$ at points $T$, $U$ and $V$. Then $\triangle TUV$ is called the \vocab{Extouch Triangle} of $\triangle ABC$.
+\end{definition}
+
+\begin{proposition}
+  In $\triangle ABC$, let $\triangle TUV$ be the extouch triangle of $\triangle ABC$. Then
+  \begin{enumerate}[itemsep=0.01em]
+    \item $\overline{CU} = \overline{BV} = s - a$
+    \item $\overline{AV} = \overline{CT} = s - b$
+    \item $\overline{BT} = \overline{AU} = s - c$
+  \end{enumerate}
+\end{proposition}
+
+This can be proven in a similar spirit to the previous result. We shall leave this as an exercise for the reader.
+
+\subsubsection{Exercises}
+\begin{exercise}
+  Prove the results,
+  \begin{enumerate}[itemsep=0.01em]
+    \item $\overline{CU} = \overline{BV} = s - a$
+    \item $\overline{AV} = \overline{CT} = s - b$
+    \item $\overline{BT} = \overline{AU} = s - c$
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+  In $\triangle ABC$, let $R$ be the circumradius. Let $r$ be the inradius and $r_a$, $r_b$ and $r_c$ be the exradii of the corresponding excircles, then show that
+  \begin{align*}
+    r &= 4R \sin \left( \frac{A}{2} \right)  \sin \left( \frac{B}{2} \right) \sin \left( \frac{C}{2} \right) \\ 
+    r_a &= 4R \sin \left( \frac{A}{2} \right) \cos \left( \frac{B}{2} \right) \cos \left( \frac{C}{2} \right) \\ 
+    r_b &= 4R \cos \left( \frac{A}{2} \right) \sin \left( \frac{B}{2} \right) \cos \left( \frac{C}{2} \right) \\ 
+    r_c &= 4R \cos \left( \frac{A}{2} \right) \cos \left( \frac{B}{2} \right) \sin \left( \frac{C}{2} \right) \\ 
+  \end{align*}
+\end{exercise}
+
+\begin{exercise}
+  In $\triangle ABC$, let $\triangle DEF$ be the intouch triangle. Show that the cevians $\overline{AD}$, $\overline{BE}$ and $\overline{CF}$ are concurrent. This concurrency point is known as the \vocab{Gergonne Point}.
+\end{exercise}
+
+\begin{exercise}
+  In $\triangle ABC$, let $\triangle TUV$ be the extouch triangle. Show that the cevians $\overline{AT}$, $\overline{BU}$ and $\overline{CV}$ are concurrent. This concurrency point is known as the \vocab{Nagel Point}.
+\end{exercise}
+
+\begin{exercise}
+  Show that the \vocab{Nagel Point} is the \vocab{Isotomic Conjugate} of the \vocab{Gergonne Point}.
+\end{exercise}
+
+\subsection{Euler's Theorem}
+Euler's Theorem is a result on computing the distances between the circumcenter and incenter. This result uses the \vocab{Power of a Point Theorem} to compute the distance. Let's state this result.
+\begin{theorem}
+  In $\triangle ABC$, let $I$ and $O$ be the incenter and the circumcenter. Then 
+  \begin{align*}
+    \overline{OI}^2 = R \left( R - 2r \right)
+  \end{align*}
+\end{theorem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+
+        size(7cm); defaultpen(fontsize(10pt));
+        pair A, B, C, O, I;
+
+        A = dir(135); B = dir(200); C = dir(340);
+        I = incenter(A,B,C); O = origin;
+
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$O$", O, dir(45)); dot("$I$", I, dir(65));
+        draw(circumcircle(A, B, C)); draw(A--B--C--cycle);
+
+        pair MM[] = intersectionpoints(line(A, I), circumcircle(A, B, C));
+        pair NN[] = intersectionpoints(line(MM[0], O), circumcircle(A, B, C));
+        dot("$M$", MM[0], dir(315)); dot("$M'$", NN[1], dir(45));
+        draw(A--MM[0]); draw(MM[0]--NN[1]); draw(A--NN[1]);
+        markrightangle(MM[0], A, NN[1]); draw(I--O);
+    \end{asy}
+\end{figure}
+
+Computing the Power of Point about point $I$ with respect to circle $\odot(ABC)$, we get 
+\begin{align*}
+  R^2 - \overline{OI}^2 = AI \cdot IM
+\end{align*}
+where $M$ is the midpoint of the arc not containing $A$. Since $\triangle BMC$ is isosceles $\implies$ $OM$ is the perpendicular bisector of side $\overline{BC}$. Let the line $OM$ intersect the circle $\odot(ABC)$ again at $M'$ $\implies$ $M'M$ is the diameter of the circle $\odot(ABC)$. In $\triangle BMM'$, we have $\angle BM'M$ $=$ $\angle BAM$ $=$ $\angle A / 2$.
+\begin{align*}
+  \overline{IM} = \overline{BM} = \overline{M'M} \sin \left( \frac{A}{2} \right) = 2R \sin \left( \frac{A}{2} \right)
+\end{align*} 
+
+However, $\overline{AI}$ $=$ $\tfrac{r}{\sin \left( \frac{A}{2}\right)}$ $\implies$ $R^2 - \overline{OI}^2 = 2Rr$ which proves the result. An important corollary of this theorem is the fact that $R \geq 2r$.
+
+\subsection{Right Angles on Intouch Chord}
+Moving onto one of the most popular subproblems that appear on olympiad problems. It is remarkable how often problems revolve around this result.
+\begin{proposition}
+  In $\triangle ABC$, let $I$ be the incenter and $\triangle DEF$ be the intouch triangle. Suppose the line $BI$ is extended to meet line $EF$ at $K$. Then $\angle BKC = 90^{\circ}$.
+\end{proposition}
+
+We assume that $K$ lies outside $\triangle ABC$. The other case is that $K$ lies inside $\triangle ABC$. Typically on a contest, you should use \emph{directed angles} to prevent configuration issues.
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        size(8cm); defaultpen(fontsize(10pt));
+
+        pair A,B,C,I,EE,F,M,NN,P,X,Y,Q,MA,K; 
+        A=dir(135); B=dir(200); C=dir(340); 
+        I=incenter(A,B,C); EE=foot(I,C,A); F=foot(I,A,B); 
+        K=extension(B,I,EE,F);
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(B)); dot("$C$", C, dir(C));
+        draw(A--B--C--cycle);
+
+        pair D; D = foot(I, B, C);
+        dot("$D$", D, SW); dot("$F$", F, NW); dot("$E$", EE, N);
+        draw(EE--F);
+
+        dot("$I$", I, N); dot("$K$", K, NE);
+        draw(circle(I, abs(I - D)));
+        draw(B--I); draw(I--D); draw(I--F); draw(I--EE);
+        draw(I--K, heavygray+dashed);
+        draw(EE--K, heavygray+dashed);
+        draw(C--K, heavygray+dashed);
+
+        markrightangle(C, D, I, 7);
+        markrightangle(I, F, B, 7);
+        markrightangle(A, EE, I, 7);
+        markrightangle(I, K, C, 7);
+
+        draw(circumcircle(I, D, C), gray+dotted);
+    \end{asy}
+\end{figure}
+
+The main claim is that $IEKC$ is cyclic, which should imply that $\angle BKC = 90^{\circ}$. This is true because,
+\begin{align*}
+  \angle KEC &= \angle AEF \\ 
+          &= 90^{\circ} - \tfrac{1}{2} \angle A \\ 
+          &= 180^{\circ} - \left( 90^{\circ} + \tfrac{1}{2} \angle A \right) \\ 
+          &= 180^{\circ} - \angle BIC \\ 
+          &= \angle KIC
+\end{align*}
+Thus quadrilateral $IEKC$ is cyclic and $\angle BKC = 90^{\circ}$ proving the proposition. The next claim in this chain of propositions is even more bizarre.
+
+\begin{proposition}
+  In $\triangle ABC$, let $I$ be the incenter and $\triangle DEF$ be the intouch triangle. Suppose the line $BI$ is extended to meet the line $EF$ at point $K$. Let $M_A$ and $M_B$ be the midpoints of sides $\overline{BC}$ and $\overline{CA}$. Then $K$ lies on line $M_AM_B$.
+\end{proposition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        size(8cm); defaultpen(fontsize(10pt));
+
+        pair A,B,C,I,E,F,M,N,K; 
+        A=dir(135); B=dir(200); C=dir(340); 
+        I=incenter(A,B,C); E=foot(I,C,A); F=foot(I,A,B); 
+        K=extension(B,I,E,F); M = (B+C)/2; N = (A+C)/2;
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(B)); dot("$C$", C, dir(C));
+        draw(A--B--C--cycle);
+
+        pair D; D = foot(I, B, C);
+        dot("$D$", D, SW); dot("$F$", F, NW); dot("$E$", E, dir(90));
+
+        dot("$I$", I, SE); dot("$K$", K, NE);
+        draw(circle(I, abs(I - D)));
+        draw(B--I); draw(I--D); draw(I--F); draw(I--E);
+        draw(I--K); draw(E--K); draw(C--K); draw(E--F);
+
+        markrightangle(C, D, I, 7);
+        markrightangle(I, F, B, 7);
+        markrightangle(A, E, I, 7);
+        markrightangle(I, K, C, 7);
+
+        draw(circumcircle(I, D, C));
+        dot("$M_A$", M, SE); dot("$M_B$", N, dir(340));
+        draw(M--N--K, heavygray+dashed);
+        draw(arc(circumcircle(B, K, C), 0, 180), heavygray+dashed);
+    \end{asy}
+\end{figure}
+
+Observe that from that previous proposition, $K$ lies on the circle with diameter $\overline{BC}$ and $M_A$ is the center of that circle. Hence, 
+\[
+    \angle KM_AC= 2 \angle KBC = \angle ABC
+\]
+This implies $\overline{KM_A}$ $\parallel$ $\overline{AB}$. Therefore, by converse of midpoint theorem we can conclude that $KM_A$ passes through the midpoint of side $\overline{AC}$, proving the claim.
+
+As demonstrated above, the proofs of these claims are straightforward, but they nevertheless arise in a lot of complex problem settings.
+\subsubsection{Examples}
+
+\begin{problem}[Sharygin 2021]
+  The incircle of triangle $ABC$ centered at $I$ touches $CA,AB$ at points $E,F$ respectively. Let points $M,N$ of line $EF$ be such that $CM=CE$ and $BN=BF$. Lines $BM$ and $CN$ meet at point $P$. Prove that $PI$ bisects segment $MN$.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+size(7cm); defaultpen(fontsize(10pt)); pen pri=heavyred; pen pri2=lightred; pen sec=lightblue; pen tri=purple+pink; pen qua=fuchsia+pink+dashed; pen fil=invisible; pen sfil=invisible; pen tfil=invisible;
+
+pair A,B,C,I,EE,F,M,NN,P,X,Y,Q,MA,K; A=dir(110); B=dir(225); C=dir(315); I=incenter(A,B,C); EE=foot(I,C,A); F=foot(I,A,B); M=extension(EE,F,C,C+A-B); NN=extension(EE,F,B,B+A-C); P=extension(B,M,C,NN); X=extension(A,C,B,M); Y=extension(A,B,C,NN); Q=(M+NN)/2; MA=(B+C)/2; K=extension(B,I,EE,F);
+
+draw(B--K--MA,qua); draw(X--Y,pri2); draw(B--M,tri);draw(C--NN,tri); fill(B--F--NN--cycle,sfil); fill(C--EE--M--cycle,sfil); draw(C--M--NN--B,sec); filldraw(incircle(A,B,C),fil,pri2); filldraw(A--B--C--cycle,fil,pri);
+
+dot("\(A\)",A,N); dot("\(B\)",B,SW); dot("\(C\)",C,SE); dot("\(M_A\)",MA,S); dot("\(E\)",EE,dir(60)); dot("\(F\)",F,NW); dot("\(M\)",M,NE); dot("\(N\)",NN,NW); dot("\(I\)",I,dir(120)); dot("\(P\)",P,S); dot("\(K\)",K,NW); dot("\(X\)",X,dir(-15)); dot("\(Y\)",Y,dir(220));
+  \end{asy}
+\end{figure}
+\begin{proof}
+    Since $\triangle CME$ is isosceles, an angle chase shows that
+    $\overline{CM} \parallel \overline{AF}$. Similarly,
+    $\overline{BN} \parallel \overline{AE}$. Let $BI$ meet $\overline{EF}$ at
+    $K$. Then $K$ must be the midpoint of $\overline{FM}$. Because if
+    $\triangle M_AM_BM_C$ is the medial triangle of $\triangle ABC$, then $K$
+    lies on $\overline{M_AM_B}$. Since $\overline{M_AM_B}$ is parallel to both
+    $\overline{AB}$ and $\overline{CM}$, and $M_A$ is the midpoint of
+    $\overline{BC}$, it follows that $K$ is the midpoint of $\overline{FM}$.
+    
+    Now perform a homothety centered at $B$ that maps $K$ to $I$ and sends
+    $\triangle BFM$ to $\triangle BYX$, where $Y$ lies on $\overline{AB}$ and
+    $X$ lies on $\overline{AC}$. Since $K$ is the midpoint of $\overline{FM}$, we get that $I$ is the midpoint of $\overline{XY}$. Similarly,
+    $CI \cap \overline{EF}$ is the midpoint of $\overline{EN}$. Since $I$ is
+    the midpoint of $\overline{XY}$ and $\overline{XY} \parallel \overline{EF}$,
+    a homothety centered at $C$ maps $N$ to $Y$, so $Y$ lies on
+    $\overline{CN}$.
+    
+    Again because $I$ is the midpoint of $\overline{XY}$, a homothety sending
+    $\triangle PXY$ to $\triangle PMN$ implies that $PI$ bisects $\overline{MN}$,
+    as desired.
+\end{proof}
+    
+\subsubsection{Exercises}
+\begin{exercise}[RMO 2018]
+  Let $ABC$ be an acute-angled triangle with $AB<AC$. Let $I$ be the incenter of triangle $ABC$, and let $D,E,F$ be the points where the incircle touches the sides $BC,CA,AB,$ respectively. Let $BI,CI$ meet the line $EF$ at $Y,X$ respectively. Further assume that both $X$ and $Y$ are outside the triangle $ABC$. Prove that
+  \begin{enumerate}
+    \item $B,C,Y,X$ are concyclic.
+    \item $I$ is also the incenter of triangle $DYX$.
+  \end{enumerate}
+\end{exercise}
+
+\subsection{Mapping Incircles to Excircles}
+If we pick a vertex and look at the incircle and the excircle opposite to that vertex, we observe that the centers of both circles and the vertex we picked are collinear. Also, both circles are tangents to the sides emanating from the vertex we picked. This really suggests that if we were to scale the diagram from point $A$ so that the incircle lands onto the $A$-excircle, there exists a homothetic transformation that maps the incircle to an excircle. In fact, we can precisely calculate this scaling factor.
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+
+        size(9cm); defaultpen(fontsize(10pt));
+        
+        pair A, B, C, I, J, D, E, F, G;
+        
+        A=dir(135); B=dir(200); C=dir(340);
+        I = incenter(A,B,C); J = excenter(B,C,A);
+        D = foot(I, A, B); E = foot(J, A, B);
+        F = foot(J, B, C); G = foot(J, A, C);
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, NW); dot("$C$", C, NE);
+        dot("$I$", I, dir(45)); dot("$I_A$", J, SE);
+        dot("$F$", D, NW); dot("$E$", E, NW);
+        draw(circle(I, abs(I-D)));
+        draw(arc(circumcircle(E, F, G), 0, 180), dashed);
+        draw(A--E); draw(A--G); draw(B--C);
+        draw(A--J); draw(I--D); draw(J--E);
+        markrightangle(J, E, A, 7);
+        markrightangle(I, D, A, 7);
+    \end{asy}
+\end{figure}
+
+Suppose we picked vertex $A$. Now we would like to scale the diagram from point $A$ so that the incircle lands onto the $A$-excircle. That is, we require a scaling factor of $\tfrac{r_a}{r}$, where $r_a$ is the radius of the $A$-excircle and $r$ is the radius of the incircle. Due to the existence of such a homothetic transformation, we have a couple of interesting properties.
+
+\begin{proposition}
+  In $\triangle ABC$, let $I$ be the incenter and suppose the incircle touches the side $\overline{BC}$ at point $D$. Suppose the $A$-excircle touches the side $\overline{BC}$ at $X$ and $D'$ is a point that is diametrically opposite to point $D$ in the incircle. Then, segment $\overline{AX}$ passes through $D'$.
+\end{proposition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+
+        size(8cm); defaultpen(fontsize(10pt));
+        
+        pair A, B, C, I, J, D, E, F, X, Y, Z, G;
+        
+        A=dir(135); B=dir(200); C=dir(340);
+        I = incenter(A,B,C); J = excenter(B,C,A);
+        D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        X = foot(J, B, C); Y = foot(J, A, B); Z = foot(J, A, C);
+        G = 2 * I - D;
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$I$", I, dir(45)); dot("$D$", D, dir(225)); dot("$D'$", G, dir(225));
+        dot("$X$", X, dir(315)); draw(A--B--C--cycle); draw(A--X, dashed); draw(D--G);
+        draw(circle(I, abs(I-D))); draw(arc(circumcircle(X, Y, Z), 75, 105), dashed);
+        markrightangle(C, D, I, 7);
+    \end{asy}
+\end{figure}
+
+Suppose we draw a line $\ell$ parallel to side $\overline{BC}$ through point $D'$. Since $\overline{DD'}$ is the diameter, therefore $\ell$ is tangent to the incircle at point $D'$. Suppose $\ell$ intersects the sides $\overline{AB}$ and $\overline{AC}$ at $B'$ and $C'$. Then the incircle of $\triangle ABC$ is the $A$-excircle of $\triangle AB'C'$. Therefore under the homothetic transformation that maps $\triangle AB'C'$ to $\triangle ABC$, we map the incircle of $\triangle ABC$ to the $A$-excircle of $\triangle ABC$ $\implies$ we map point $D'$ to point $X$ under such scaling and hence points $A$, $D'$ and $X$ are collinear, proving the proposition.
+
+\begin{proposition}
+In $\triangle ABC$, let $I$ be the incenter. Suppose the incircle touches the side $\overline{BC}$ at point $D$ and the $A$-excircle touches the side $\overline{BC}$ at point $X$ and let $X'$ be the point diametrically opposite to $X$ in the $A$-excircle. Then, segment $\overline{AX'}$ passes through $D$.
+\end{proposition}
+
+This property is similar in spirit to the previous proposition. We are mapping the incircle of $\triangle ABC$ to the $A$-excircle under a homothetic transformation which implies the collinearity.
+
+\begin{proposition}
+In $\triangle ABC$, let $I$ be the incenter. Suppose the incircle touches the side $\overline{BC}$ at point $D$ and the $A$-excircle touches the side $\overline{BC}$ at point $X$. Let $M$ be the midpoint of side $\overline{BC}$, then $\overline{IM}$ is parallel to $\overline{AX}$.
+\end{proposition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+
+        size(8cm); defaultpen(fontsize(10pt));
+        
+        pair A, B, C, I, J, D, E, F, X, Y, Z, G, M;
+        
+        A=dir(135); B=dir(200); C=dir(340);
+        I = incenter(A,B,C); J = excenter(B,C,A);
+        D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        X = foot(J, B, C); Y = foot(J, A, B); Z = foot(J, A, C);
+        G = 2 * I - D; M = (B + C) / 2;
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$I$", I, dir(45)); dot("$D$", D, dir(225)); dot("$D'$", G, dir(225));
+        dot("$M$", M, dir(225)); draw(I--M, dashed); markrightangle(C, D, I, 7);
+        dot("$X$", X, dir(315)); draw(A--B--C--cycle); draw(A--X); draw(D--G);
+        draw(circle(I, abs(I-D))); draw(arc(circumcircle(X, Y, Z), 75, 105), dashed);
+    \end{asy}
+\end{figure}
+
+From the previous propositions, we know that if $D'$ is the point diametrically opposite to $D$ in the incircle, then $D'$ lies on $\overline{AX}$. Consider the triangles, $\triangle DIM$ and $\triangle DD'X$. Since the cevians $\overline{AD}$ and $\overline{AX}$ are \vocab{Isotomic} $\implies$ $MD$ $=$ $MX$. From the definition of $D'$, we have $ID$ $=$ $ID'$. Therefore by midpoint theorem, $\overline{IM}$ is parallel to $\overline{AX}$.
+
+\begin{proposition}
+  In $\triangle ABC$, let $I$ be the incenter. Let $AH_A$ be the altitude in $\triangle ABC$ and $K$ be the midpoint of segment $\overline{AH_A}$. Suppose the $A$-excircle touches the side $\overline{BC}$ at point $X$, then segment $\overline{KX}$ passes through $I$.
+\end{proposition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+
+        size(8cm); defaultpen(fontsize(10pt));
+        
+        pair A, B, C, I, J, D, E, F, X, Y, Z, G, M, K, H_A;
+        
+        A=dir(135); B=dir(200); C=dir(340);
+        I = incenter(A,B,C); J = excenter(B,C,A);
+        D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        X = foot(J, B, C); Y = foot(J, A, B); Z = foot(J, A, C);
+        G = 2 * I - D; M = (B + C) / 2;
+        H_A = foot(A, B, C); K = (A + H_A) / 2;
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$I$", I, dir(45)); dot("$D$", D, dir(225)); dot("$D'$", G, dir(225));
+        dot("$X$", X, dir(315)); draw(A--B--C--cycle); draw(A--X); draw(D--G);
+        dot("$H_A$", H_A, dir(255)); dot("$K$", K, dir(45)); draw(K--X, dashed);
+        draw(circle(I, abs(I-D))); draw(arc(circumcircle(X, Y, Z), 75, 105), dashed);
+        draw(A--H_A); markrightangle(C, H_A, A, 7); markrightangle(C, D, I, 7);
+    \end{asy}
+\end{figure}
+
+Suppose the incircle touches side $\overline{BC}$ at point $D$, then we observe that $\overline{ID}$ is parallel to $\overline{AH_A}$. If $D'$ is the point diametrically opposite to $D$ in the incircle, then from the previous propositions we had points $A$, $D'$ and $X$ are collinear. Consider the triangles $\triangle XDD'$ and $\triangle XH_AA$. They are similar due to AA Similarity Criterion. Hence the midpoints of sides $\overline{DD'}$ and $\overline{AH_A}$ are collinear with point $X$ $\implies$ points $K$, $I$ and $X$ are collinear.
+
+\begin{proposition}
+  In $\triangle ABC$, let $I$ be the incenter and $I_A$ be the $A$-excircle. Let $AH_A$ be the altitude in $\triangle ABC$ and $K$ be the midpoint of segment $\overline{AH_A}$. Suppose the $A$-excircle and the incircle touch the side $\overline{BC}$ at point $X$ and $D$. If $X'$ is the point diametrically opposite to point $X$ in the $A$-excircle, then $\overline{KI_A}$ passes through $D$.
+\end{proposition}
+
+With similar argument, we can show that $\triangle ADH_A$ is similar to $\triangle X'DX$ which would imply that $\overline{MI_A}$ passes through point $D$.
+
+Finally, we have one last proposition where we shall use a homothetic mapping argument to prove a result. Let's take a look at the result.
+\begin{proposition}
+  In $\triangle ABC$, let $I$ be the incenter and $\triangle DEF$ be the intouch triangle. Suppose line $ID$ intersects segment $\overline{EF}$ at $X$. Then line $AX$ bisects segment $\overline{BC}$.
+\end{proposition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+        
+        pair A, B, C, I, J, D, E, F, X, Y, Z, G, M, K, H_A;
+        
+        A=dir(135); B=dir(200); C=dir(340);
+        I = incenter(A,B,C); J = excenter(B,C,A);
+        D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        X = extension(D, I, E, F);
+        G = 2 * I - D; M = (B + C) / 2;
+        H_A = foot(A, B, C); K = (A + H_A) / 2;
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$I$", I, dir(45)); dot("$D$", D, dir(225)); dot("$E$", E, dir(45)); dot("$F$", F, dir(145));
+        draw(A--B--C--cycle); dot("$M$", M, dir(315));
+        draw(A--M, dashed); dot("$X$", X, dir(85));
+        draw(E--F); draw(D--X);
+        draw(circle(I, abs(I-D)));
+    \end{asy}
+\end{figure}
+
+Let's draw a line parallel to $\overline{BC}$ through point $X$ that cuts sides $\overline{AB}$ and $\overline{AC}$ at $B'$ and $C'$. Since $\overline{ID}$ is perpendicular to $\overline{BC}$, therefore, $IX$ is perpendicular to $\overline{B'C'}$. Observe the cyclic quadrilaterals $FIXB'$ and $EIXC'$ formed due to the right angle on segment $\overline{B'C'}$. Through an angle chase we can show that $AB'IC'$ is cyclic
+\begin{align*}
+  \angle IB'C' = \angle IB'X = \angle IFX = \angle IFE = \angle IAE = \angle IAC'
+\end{align*}
+
+Therefore, $\angle IB'C' = \angle IC'B'$ implying that $\triangle IB'C'$ is isosceles and $X$ is therefore the midpoint of $\overline{B'C'}$. Since $\overline{B'C'} \parallel \overline{BC}$, therefore there exists a homothetic transformation at point $A$ that scales $\triangle AB'C'$ to $\triangle ABC$ which would imply $X$ is mapped to the midpoint of segment $\overline{BC}$, implying the result that $AX$ bisects $\overline{BC}$.
+
+\subsection{Nagel Line}
+The Nagel Line is the line that passes through the points $I$, $G$ and $N$ which are the Incenter, Centroid and Nagel Point of the triangle respectively. This surprising result is attributed to the homothetic transformation results we investigated in the previous subsection.
+
+\begin{theorem}[Nagel Line Theorem]
+  In $\triangle ABC$, let $I$, $G$ and $N$ be the incenter, centroid and Nagel Point. Then these three points lie on the \vocab{Nagel Line} where $G$ divides the segment $\overline{IN}$ in the ratio $1 : 2$.
+\end{theorem}
+Suppose that $M_A$ is the midpoint of side $\overline{BC}$. We showed that $IM_A$ is parallel to line $AN$. Since the centroid is the center of a homothetic transformation with scaling factor $-2$ that maps $\triangle M_AM_BM_C$ to $\triangle ABC$, therefore if $I$ is mapped to point $N'$ under such transformation, then we must have $AN' \parallel IM_A$ $\implies$ $N'$ lies on $AN$. Similarly, we get $N'$ lies on $BN$ and $CN$ implying that $N'$ is indeed $N$ which is their point of concurrency. The fact that $\overline{GN} = 2 \overline{IG}$ follows from the scaling factor of the homothetic transformation.
+
+\section{Symmedian Point}
+This is the last triangle center that we will study. The \vocab{Symmedian Point} is defined as the intersection of the three symmedians of a triangle. But what is a symmedian? There are several ways to characterize the symmedian of a triangle. We will define it as follows.
+
+\begin{definition}
+  In $\triangle ABC$, let the tangents at points $B$ and $C$ meet at point $X$. Then the line $AX$ is the $A$-\vocab{symmedian} of $\triangle ABC$.
+\end{definition}
+
+Symmedians are linked to harmonic quadrilaterals that we shall study in projective geometry. For now, let's take a look at some basic properties of symmedians.
+\subsection{Symmedians as Isogonal Medians}
+Some people like to define symmedians as the isogonal cevians to medians. Naturally, it means that the Symmedian Point is the isogonal conjugate of the Centroid. Let's prove this fact.
+
+\begin{proposition}
+  In $\triangle ABC$, suppose $D$ lies on side $\overline{BC}$ such that $\overline{AD}$ is the $A$-symmedian, and $AD$ intersects the circle $\odot(ABC)$ again at $K$
+  \begin{align*}
+    \left( \frac{\overline{AB}}{\overline{AC}} \right) = \left( \frac{\overline{BK}}{\overline{CK}} \right)
+  \end{align*}
+\end{proposition}
+
+Suppose the tangents at points $B$ and $C$ to the circle $\odot(ABC)$ meet at point $X$ and the line $AX$ meets $\odot(ABC)$ at $K$ and $\overline{BC}$ at $D$. From the Power of a Point Theorem, we have some naturally arising similar triangles in the configuration. These are 
+\begin{align*}
+  \triangle XBK \sim \triangle XAB \\ 
+  \triangle XCK \sim \triangle XAC
+\end{align*}
+
+As a result of this similarity we have,
+\begin{align*}
+  \left( \frac{\overline{AB}}{\overline{BK}} \right) = \left( \frac{\overline{AX}}{\overline{BX}} \right) \\ 
+  \left( \frac{\overline{AC}}{\overline{CK}} \right) = \left( \frac{\overline{AX}}{\overline{CX}} \right)
+\end{align*} 
+
+But since $\overline{BX}$ and $\overline{CX}$ are tangents drawn from point $X$ to the circle $\odot(ABC)$, therefore $\overline{BX} = \overline{CX}$. As a result the left-hand side expressions are equal and we have 
+\begin{align*}
+\left( \frac{\overline{AB}}{\overline{AC}} \right) = \left( \frac{\overline{BK}}{\overline{CK}} \right)
+\end{align*}
+
+which proves the proposition.
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+        pair A, B, C, O, D, K, X, M;
+
+        A=dir(120); B=dir(210); C=dir(330);
+        O = circumcenter(A, B, C); M = (B+C)/2;
+        X = extension(B,B+rotate(90)*(B-O), O, M);
+        D = extension(A, X, B, C);
+        pair[] KK = intersectionpoints(A--X, circumcircle(A, B, C));
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$X$", X, dir(270)); dot("$D$", D, dir(225)); dot("$K$", KK[1], dir(225));
+        draw(circumcircle(A, B, C)); draw(A--B--C--cycle);
+        draw(B--X); draw(C--X); draw(A--X);
+    \end{asy}
+\end{figure}
+
+Let's look at the next proposition that comments about the ratio in which the symmedian divides the triangle sides.
+
+\begin{proposition}
+  In $\triangle ABC$, suppose $D$ lies on side $\overline{BC}$ such that $\overline{AD}$ is the $A$-symmedian, then 
+  \begin{align*}
+    \left( \frac{\overline{BD}}{\overline{DC}} \right) = \left( \frac{\overline{AB}}{\overline{AC}} \right)^2
+  \end{align*}
+\end{proposition}
+
+Applying the \vocab{Extended Ratio Lemma} for Cyclic Quadrilaterals to the result from the previous proposition, we can write 
+\begin{align*}
+  \left( \frac{\overline{BD}}{\overline{DC}} \right) &= \left( \frac{\overline{AB}}{\overline{AC}} \right) \cdot \left( \frac{\overline{BK}}{\overline{CK}} \right) \\ 
+                &= \left( \frac{\overline{AB}}{\overline{AC}} \right)^2
+\end{align*}
+which proves the desired result. Moving onto the result that we wanted to actually aim to prove.
+
+\begin{proposition}
+  In $\triangle ABC$, the $A$-symmedian is isogonal to the $A$-median.
+\end{proposition}
+
+From the \vocab{Isogonal Ratio Lemma}, if suppose $\overline{AD'}$ is the isogonal cevian to the $A$-symmedian $\overline{AD}$, then 
+\begin{align*}
+  \left( \frac{\overline{BD}}{\overline{DC}} \right) \cdot \left( \frac{\overline{BD'}}{\overline{D'C}} \right) = \left( \frac{\overline{AB}}{\overline{AC}} \right)^2
+\end{align*}
+However, from the previous proposition, this actually implies $\overline{BD'} = \overline{D'C}$ which implies that $D'$ is the midpoint of side $\overline{BC}$ implying that the $A$-symmedian is isogonal to the $A$-median. 
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+        pair A, B, C, O, D, K, X, M;
+
+        A=dir(120); B=dir(210); C=dir(330);
+        O = circumcenter(A, B, C); M = (B+C)/2;
+        X = extension(B,B+rotate(90)*(B-O), O, M);
+        D = extension(A, X, B, C);
+        pair[] KK = intersectionpoints(A--X, circumcircle(A, B, C));
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$X$", X, dir(270)); dot("$D$", D, dir(225)); dot("$K$", KK[1], dir(225));
+        draw(circumcircle(A, B, C)); draw(A--B--C--cycle);
+        draw(B--X); draw(C--X); draw(A--X);
+
+        dot("$M$", M, dir(315)); draw(A--M, dashed);
+    \end{asy}
+\end{figure}
+
+This result in fact implies that the Symmedian Point of the triangle is the isogonal conjugate of the Centroid of the triangle. There are some more properties that we can take a look at. These are elementary, mostly attributed to a lot of similar triangles, all thanks to the isogonal cevians and tangents.
+
+\begin{proposition}
+  In $\triangle ABC$, suppose the tangents at $B$ and $C$ to $\odot(ABC)$ meet at point $X$ and the line $AX$ cuts $\odot(ABC)$ at point $K$, then the circle $\odot(BCX)$ passes through the midpoint of $\overline{AK}$.
+\end{proposition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+        pair A, B, C, O, D, K, X, M_A, M_C, M;
+
+        A=dir(135); B=dir(210); C=dir(330);
+        O = circumcenter(A, B, C); M_A = (B+C)/2; M_C = (A+B)/2;
+        X = extension(B,B+rotate(90)*(B-O), O, M_A);
+        D = extension(A, X, B, C);
+        pair[] KK = intersectionpoints(A--X, circumcircle(A, B, C));
+        M = (A+KK[1])/2;
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$X$", X, dir(270)); dot("$K$", KK[1], dir(225));
+        draw(circumcircle(A, B, C)); draw(A--B--C--cycle);
+        draw(B--X); draw(C--X); draw(A--X);
+
+        dot("$M_A$", M_A, dir(315)); draw(A--M_A);
+        dot("$M_C$", M_C, dir(145)); dot("$M$", M, dir(165));
+        draw(B--M); draw(C--M);
+        draw(circumcircle(B, C, X), heavygray+dashed);
+    \end{asy}
+\end{figure}
+
+Suppose $M_A$ and $M_C$ are the midpoints of the sides $\overline{BC}$ and $\overline{AB}$, and let $M$ be the midpoint of segment $\overline{AK}$. We want to show that $BXCM$ is a cyclic quadrilateral. Essentially, we just want to show that $\angle XBC$ $=$ $\angle XMC$. But $\angle XBC$ $=$ $\angle BAC$, therefore we would like to just show that $\angle XMC = \angle BAC$, but how do we tie these points in the diagram so that we can angle chase?
+
+Observe the triangles $\triangle ABK$ and $\triangle AM_AC$. These are similar by AA similarity criterion. If we map the triangle $\triangle ABK$ to $\triangle AM_CM$ under a homothetic transformation with scale factor $0.5$, we will still have $\triangle AM_CM$ $\sim$ $\triangle AM_AC$. Due to SAS Similarity Criterion, this implies that $\triangle AM_CM_A$ $\sim$ $\triangle AMC$ $\implies$ $\angle AMC$ $=$ $\angle AM_CM_A$ $=$ $180^{\circ} - \angle BAC$ (which is because $\overline{M_AM_C}$ is parallel to $\overline{AC}$). Hence $\angle XMC$ $=$ $180^{\circ} - \angle AMC$ $=$ $\angle BAC$ $=$ $\angle XBC$ which implies that $BXCM$ is a cyclic quadrilateral.
+
+\subsection{Examples}
+\begin{problem}[Russia 2009]
+  In $\triangle ABC$, let $ AD$  be the internal angle bisector $(D\in BC)$. The line $ AD$ intersects the circumcircle $ \Omega$ of triangle $ ABC$ at $ A$ and $ E$. Circle $ \omega$ with diameter $ DE$ cuts $ \Omega$ again at $ F$. Prove that $ AF$ is the symmedian line of triangle $ ABC$.
+\end{problem}
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+      import geometry;
+      size(7cm); defaultpen(fontsize(10pt));
+      pair A, B, C, O, X, I, M_A;
+
+      A=dir(135); B=dir(210); C=dir(330);
+      O = circumcenter(A, B, C); M_A = (B+C)/2;
+      X = extension(B,B+rotate(90)*(B-O), O, M_A);
+      pair[] KK = intersectionpoints(A--X, circumcircle(A, B, C));
+      I = incenter(A, B, C);
+
+      pair[] MM = intersectionpoints(line(X, O), circumcircle(A, B, C));
+
+      dot("$A$", A, dir(A)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+      dot("$F$", KK[1], dir(225)); dot("$E$", MM[0], dir(315));
+      draw(circumcircle(A, B, C)); draw(A--B--C--cycle);
+      
+      pair D = extension(A, MM[0], B, C);
+      dot("$D$", D, dir(60)); draw(A--MM[0]); draw(circumcircle(D, MM[0], KK[1]));
+      draw(A--KK[1]); dot("$O$", O, dir(40));
+      dot("$M$", M_A, dir(50)); dot("$N$", MM[1], dir(75));
+      draw(MM[0]--MM[1]); draw(D--KK[1]); draw(D--MM[1], dashed); draw(KK[1]--MM[0]);
+      markrightangle(MM[0], KK[1], MM[1], 7);
+      markrightangle(D, M_A, MM[0], 7); draw(A--MM[1]); 
+      markrightangle(MM[0], A, MM[1], 7);
+      draw(circumcircle(A, D, M_A), heavygray+dashed);
+  \end{asy}
+\end{figure}
+
+\begin{proof}
+  Suppose $M$ is the midpoint of $\overline{BC}$ and $N$ is a point on $\odot(ABC)$ such that $\overline{EN}$ is the diameter of $\odot(ABC)$. Since $E$ is also the midpoint of arc $BC$ not containing $A$. Therefore, $\triangle EBC$ is isosceles and hence $\overline{EM}$ is the perpendicular bisector of $\overline{BC}$. This implies that $EM$ passes through $O$ and also through $N$. Since $\angle BME = 90^{\circ}$, hence $M$ lies on the circle with diameter $\overline{DE}$. Also, $\overline{EN}$ is the diameter
+  \[
+    \angle DAN = \angle EAN = 90^{\circ} = \angle DMN
+  \]
+  therefore $ADMN$ is cyclic. Next, we see that $DF$ should pass through $N$ because $\angle DFE$ $=$ $90^{\circ}$ and since $\overline{EN}$ is the diameter, therefore $\angle NFE = 90^{\circ}$. A simple angle chase,
+  \[
+    \angle FAD = \angle FAE = \angle FNE = \angle DNM = \angle DAM
+  \]
+  Hence, $\overline{AF}$ is isogonal to $\overline{AM}$ $\implies$ $\overline{AF}$ is the symmedian line of $\triangle ABC$.   
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}
+  Let $ABCD$ be a cyclic quadrilateral, then show that the following are equivalent
+  \begin{enumerate}[itemsep=0.01em]
+    \item $\overline{AB} \cdot \overline{CD} = \overline{BC} \cdot \overline{DA}$
+    \item $\overline{AC}$ is the $A$-symmedian of $\triangle DAB$
+    \item $\overline{AC}$ is the $C$-symmedian of $\triangle BCD$
+    \item $\overline{BD}$ is the $B$-symmedian of $\triangle ABC$
+    \item $\overline{BD}$ is the $D$-symmedian of $\triangle CDA$
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+  In $\triangle ABC$, let the tangents to its circumcircle at $B$ and $C$ meet at point $X$. Let $\overline{AX}$ intersects $\odot(ABC)$ at $K$ and $M$ be midpoint of $\overline{BC}$. Show that $\overline{BC}$ is the interior angle bisector and $\overline{MX}$ is the exterior angle bisector of $\angle AMK$.
+\end{exercise}
+
+\begin{exercise}[USA Junior Math Olympiad 2011]
+  Points $A,B,C,D,E$ lie on a circle $\omega$ and point $P$ lies outside the circle. The given points are such that 
+  \begin{enumerate}[itemsep=0.01em]
+    \item lines $PB$ and $PD$ are tangent to $\omega$,
+    \item $P, A, C$ are collinear,
+    \item $DE \parallel AC$.
+  \end{enumerate}
+  Prove that $BE$ bisects $AC$.
+\end{exercise}
+
+\section{Practice Problems}
+
+\begin{exercise}
+  In $\triangle ABC$, the internal and external angle bisector of $\angle BAC$ intersects line $BC$ at $D$ and $E$, respectively. Show that the tangent to $\odot(ABC)$ at $A$ bisects $\overline{DE}$.
+\end{exercise}
+
+\begin{exercise}[USA 2013]
+  Let $ABC$ be a scalene triangle with circumcircle $\Gamma$, and let $D$,$E$,$F$ be the points where its incircle meets $BC$, $AC$, $AB$ respectively. Let the circumcircles of $\triangle AEF$, $\triangle BFD$, and $\triangle CDE$ meet $\Gamma$ a second time at $X,Y,Z$ respectively. Prove that the perpendiculars from $A,B,C$ to $AX,BY,CZ$ respectively are concurrent.
+\end{exercise}
+
+\begin{exercise}[USA Math Olympiad 1995]
+  Given a non-isosceles, non-right triangle $ABC$, let $O$ denote its circumcenter, and let $A_1$, $B_1$ and $C_1$ be the midpoints of its sides. Point $A_2$ is on ray $OA_1$ so that $\triangle OAA_1$ is similar to $\triangle OA_2A$. Points $B_2$ and $C_2$ are defined similarly. Prove that $AA_2$, $BB_2$ and $CC_2$ are concurrent.
+\end{exercise}
+
+\begin{exercise}[USA IMO Team Selection Test 2011]
+  In an acute scalene triangle $ABC$, points $D$, $E$, $F$ lie on sides $BC$, $CA$, $AB$ respectively, such that $\overline{AD} \perp \overline{BC}$, $\overline{BE} \perp \overline{CA}$, $\overline{CF} \perp \overline{AB}$. Altitudes $\overline{AB}$, $\overline{BE}$, $\overline{CF}$ meet at the orthocenter $H$. Points $P$ and $Q$ lie on the segment $\overline{EF}$ such that $\overline{AP} \perp \overline{EF}$ and $\overline{HQ} \perp \overline{EF}$. Lines $DP$ and $QH$ intersect at point $R$. Compute $HQ/HR$.
+\end{exercise}
+
+\begin{exercise}[APMO 2012]
+  Let $ ABC $ be an acute triangle. Denote by $ D $ the foot of the perpendicular drawn from the point $ A $ to the side $ BC $, by $M$ the midpoint of $ BC $, and by $ H $ the orthocenter of $ ABC $. Let $ E $ be the point of intersection of the circumcircle $ \Gamma $ of the triangle $ ABC $ and the ray $ MH $, and $ F $ be the point of intersection (other than $E$) of the line $ ED $ and the circle $ \Gamma $. Prove that $ \tfrac{BF}{CF} = \tfrac{AB}{AC} $ must hold.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2023]
+  Let $ABCDE$ be a convex pentagon such that $\angle ABC = \angle AED = 90^\circ$. Suppose that the midpoint of $CD$ is the circumcenter of triangle $ABE$. Let $O$ be the circumcenter of triangle $ACD$. Prove that line $AO$ passes through the midpoint of segment $BE$.
+\end{exercise}
+
+\begin{exercise}
+  In triangle $ABC$, angle bisectors $BF$ and $CE$ intersect at point $I$, $G$ is the midpoint of $EF$, $K$ is the intersection point of the tangents to the circumscribed circle of triangle $ABC$ drawn at points $B$ and $C$. Prove that points $K, I$ and $G$ lie on the same line.
+\end{exercise}
+
+\begin{exercise}[Sharygin 2013]
+  The incircle of triangle $ABC$ touches $BC$, $CA$, $AB$ at points $A_1$, $B_1$, $C_1$, respectively. The perpendicular from the incenter $I$ to the median from vertex $C$ meets the line $A_1B_1$ in point $K$. Prove that $CK$ is parallel to $AB$.
+\end{exercise}
+
+\end{document}
