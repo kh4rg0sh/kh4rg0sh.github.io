@@ -1,0 +1,312 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{The Steiner Line of Feuerbach Point}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    In this article, we shall prove that the steiner line of the feuerbach point is with respect to the contact triangle is the $\overline{OI}$ line. Here's a pre-requisite \href{https://kh4rg0sh.github.io/static/lecture_notes/all_final_notes/feuerbach_theorem.pdf}{article} where we discuss the properties of the Feuerbach Point stated here.
+\end{abstract}
+
+\section{Simson-Wallace Line}
+The existence of the \vocab{Simson-Wallace Line} is a result closely related to the existence of the \vocab{Steiner Line}. So, let's look at that first.
+\begin{theorem}[Simson-Wallace Line]\label{sec:Theorem1}
+    Given a $\triangle ABC$ and a point $P$, let $X$, $Y$ and $Z$ be the foot of perpendicular from $P$ to $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$. Points $X$, $Y$ and $Z$ are collinear if and only if $P$ lies on the circumcircle $\odot(ABC)$.
+\end{theorem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, P, O;
+        O = origin;
+        A = dir(110); B = dir(200); C = dir(340);
+
+        P = dir(60);
+
+        pair X, Y, Z;
+        X = foot(P, B, C); Y = foot(P, C, A); Z = foot(P, A, B);
+
+        dot("$A$", A, dir(155)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$P$", P, dir(55)); dot("$X$", X, dir(280)); dot("$Y$", Y, dir(225)); dot("$Z$", Z, dir(100));
+
+        draw(A--B--C--cycle);
+        draw(unitcircle);
+        
+        draw(P--X); draw(P--Y); draw(P--Z);
+        draw(A--Z); markrightangle(A, Z, P);
+        markrightangle(P, Y, A); markrightangle(C, X, P);
+
+        draw(circumcircle(P, X, C), gray+dashed);
+        draw(circumcircle(P, Y, A), gray+dashed);
+        draw(circumcircle(P, X, Z), gray+dashed);
+
+        draw(X--Z, red); draw(P--C, gray); draw(P--A, gray);
+    \end{asy}
+\end{figure}
+\begin{proof}
+Suppose $P$ lies on the circumcircle $\odot(ABC)$. Due to the foot of perpendiculars draw onto the sides, we have that quadrilaterals $PYXC$, $PZAY$ and $PZBX$ are cyclic. Hence
+\begin{align*}
+    \angle PYX &= 180^{\circ} - \angle PCX \\ 
+                &= 180^{\circ} - \angle PCB \\ 
+                &= \angle BAP \\ 
+                &= 180^{\circ} - \angle PAZ \\ 
+                &= 180^{\circ} - \angle PYZ
+\end{align*}
+Therefore points $X$, $Y$ and $Z$ are collinear. For the other direction, we suppose that the point $P$ does not lie on the circumcircle and points $X$, $Y$ and $Z$ are collinear. We would still have that $PYXC$, $PZAY$ and $PZBX$ are cyclic. Then
+\begin{align*}
+    \angle APC &= \angle APY + \angle YPC \\ 
+                &= \angle AZY + \angle BXY \\ 
+                &= 180^{\circ} - \angle ABC
+\end{align*}
+which implies that $PABC$ is cyclic, completing the proof.
+\end{proof}
+Something very remarkable about this line is the following result.
+\begin{theorem}[Simson's Theorem]\label{sec:Theorem2}
+Suppose $H$ is the orthocenter of $\triangle ABC$, then the \vocab{Simson-Wallace} line of $P$ bisects the segment $\overline{PH}$.
+\end{theorem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, P, O;
+        O = origin;
+        A = dir(110); B = dir(200); C = dir(340);
+
+        P = dir(60);
+
+        pair X, Y, Z;
+        X = foot(P, B, C); Y = foot(P, C, A); Z = foot(P, A, B);
+
+        dot("$A$", A, dir(155)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$P$", P, dir(55)); dot("$X$", X, dir(280)); dot("$Y$", Y, dir(225)); dot("$Z$", Z, dir(100));
+
+        draw(A--B--C--cycle);
+        draw(unitcircle);
+        
+        draw(P--X); draw(P--Y); draw(P--Z);
+        draw(A--Z); markrightangle(A, Z, P);
+        markrightangle(P, Y, A); markrightangle(C, X, P);
+
+        draw(X--Z, red); draw(P--C, gray); draw(P--A, gray);
+
+        pair H = orthocenter(A, B, C);
+        dot("$H$", H, dir(220));
+
+        pair[] HH = intersectionpoints(line(A, H), circumcircle(A, B, C));
+        dot("$H'$", HH[0], dir(220));
+
+        pair H_A = foot(A, B, C); draw(A--HH[0]); dot("$H_A$", H_A, dir(230)); markrightangle(C, H_A, A);
+
+        pair W = H + (P - X);
+        dot("$W$", W, dir(160)); draw(A--W);
+
+        draw(HH[0]--X, green); draw(H--X, green); draw(P--W, green);
+        draw(Z--W, red+dashed);
+    \end{asy}
+\end{figure}
+\begin{proof}
+Suppose $H_A$ is the foot of perpendicular from $A$ onto $\overline{BC}$. If $H$ is reflected over $\overline{BC}$ to $H'$, then it's well known that $H'$ lies on $\odot(ABC)$. Therefore, $\triangle XH'H$ is isosceles. Suppose point $W$ is chosen on line $AH$ such that $HXPW$ forms a parallelogram. Since,
+\begin{align*}
+\overline{PW} = \overline{HX} = \overline{H'X}
+\end{align*}
+Since $\overline{WH'} \parallel \overline{PX}$ $\implies$ $PXH'W$ is an isosceles trapezium. However we can show that $W$ lies on the line $\overline{XYZ}$ because,
+\begin{align*}
+\angle WXP = \angle WH'P = \angle AH'P = \angle ACP = \angle YXP
+\end{align*}
+Since the diagonals of parallelogram bisect each other $\implies$ $\overline{XYZ}$ bisects $\overline{PH}$.
+\end{proof}
+Now we are in the position to discuss the main results of this article.
+\section{Steiner Line}
+\begin{theorem}[Steiner Line]\label{sec:Theorem3}
+    Given a $\triangle ABC$ and a point $P$ on its circumcircle $\odot(ABC)$. Let $X$, $Y$ and $Z$ be the reflections of $P$ over $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$. Then points $X$, $Y$ and $Z$ are collinear and the line $\overline{XYZ}$ passes through $H$, the orthocenter of $\triangle ABC$.
+\end{theorem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(10cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, P, O;
+        O = origin;
+        A = dir(110); B = dir(200); C = dir(340);
+
+        P = dir(60);
+
+        pair X, Y, Z;
+        X = reflect(B, C) * P; Y = reflect(C, A) * P; Z = reflect(A, B) * P;
+
+        dot("$A$", A, dir(155)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$P$", P, dir(55)); dot("$X$", X, dir(280)); dot("$Y$", Y, dir(225)); dot("$Z$", Z, dir(100));
+        
+        draw(A--B--C--cycle);
+        draw(unitcircle);
+        draw(X--Z, red); draw(P--C, gray); draw(P--A, gray);
+
+        draw(P--X, gray+dashed); draw(P--Y, gray+dashed); draw(P--Z, gray+dashed);
+
+        pair Xr, Yr, Zr;
+        Xr = foot(P, B, C); Yr = foot(P, C, A); Zr = foot(P, A, B);
+
+        markrightangle(C, Xr, P); markrightangle(C, Yr, P); markrightangle(B, Zr, P);
+        draw(A--Zr, gray(0.65)+dashed);
+    \end{asy}
+\end{figure}
+\begin{proof}
+Perform a homothetic transformation at point $P$ with scaling factor $2$, and combining the results from \ref{sec:Theorem1} and \ref{sec:Theorem2} we get the $\overline{XYZ}$ are collinear and this line passes through the orthocenter of $\triangle ABC$.
+\end{proof}
+That was easy to prove! Formally we define,
+\begin{definition}
+    Suppose $\ell$ is the line that passes through the reflections of point $P$ over the sides of $\triangle ABC$, where $P$ lies on $\odot(ABC)$. Then $\ell$ is said to tbe the \vocab{Steiner Line} of point $P$ with respect to $\triangle ABC$, and $P$ is said to be the \vocab{Anti-Steiner Point} of $\ell$ with respect to $\triangle ABC$.
+\end{definition}
+
+\section{Isogonal Conjugation}
+\begin{lemma}\label{sec:Lemma1}
+Given a $\triangle ABC$, suppose $P$ is a point on $\odot(ABC)$. Let $\ell$ be the steiner line of $P$. The isogonals of lines $\overline{AP}$, $\overline{BP}$ and $\overline{CP}$ with respect to $\angle A$, $\angle B$ and $\angle C$ are all perpendicular to $\ell$. 
+\end{lemma}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(10cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, P, O;
+        O = origin;
+        A = dir(110); B = dir(200); C = dir(340);
+
+        P = dir(60);
+        dot("$A$", A, dir(145)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$P$", P, dir(55));
+
+        pair X, Y, Z;
+        X = reflect(B, C) * P; Y = reflect(C, A) * P; Z = reflect(A, B) * P;
+
+        dot("$A$", A, dir(155)); dot("$B$", B, dir(225)); dot("$C$", C, dir(315));
+        dot("$P$", P, dir(55)); dot("$X$", X, dir(280)); dot("$Y$", Y, dir(225)); dot("$Z$", Z, dir(100));
+        
+        draw(A--B--C--cycle);
+        draw(unitcircle);
+        draw(X--Z, red); draw(P--C, gray); draw(P--A, gray);
+
+        draw(P--X, gray+dashed); draw(P--Y, gray+dashed); draw(P--Z, gray+dashed);
+
+        pair Xr, Yr, Zr;
+        Xr = foot(P, B, C); Yr = foot(P, C, A); Zr = foot(P, A, B);
+
+        markrightangle(C, Xr, P); markrightangle(C, Yr, P); markrightangle(B, Zr, P);
+        draw(A--Zr, gray(0.65)+dashed);
+
+        pair I = incenter(A, B, C);
+        draw(A--reflect(A, I) * P, green);
+        draw(B--reflect(B, I) * P, green);
+        draw(C--reflect(C, I) * P, green);
+
+        pair T, U, V;
+        T = extension(A, reflect(A, I) * P, X, Z);
+        U = extension(B, reflect(B, I) * P, X, Z);
+        V = extension(C, reflect(C, I) * P, X, Z);
+
+        markrightangle(A, T, Z);
+        markrightangle(B, U, X);
+        markrightangle(X, V, C);
+    \end{asy}
+\end{figure}
+\begin{proof}
+This result follows from a simple angle chase. Suppose $\ell_A$ is the isogonal line of $\overline{AP}$ with respect to $\angle A$,
+\begin{align*}
+\angle \left( \ell_A, \overline{AB} \right) = \angle \left( \overline{AC}, \overline{AP} \right) = \angle \left( \overline{ZYX}, \overline{ZP} \right)
+\end{align*}
+which implies that $\ell_A \perp \overline{XYZ}$, and hence the result follows.
+\end{proof}
+
+\section{Steiner Line of Feuerbach Point}
+Recall that the \vocab{Feuerbach Point} is the point of tangency of the \vocab{Incircle} and the \vocab{Nine-Point Circle} of the triangle. It is also the isogonal conjugate of the point at infinity along the line perpendicular to $\overline{OI}$, with respect to the contact triangle. We claim that the steiner line of $Fe$ with respect to the contact triangle is the $\overline{OI}$ line.
+\begin{lemma}
+Given $\triangle ABC$ and its incenter $I$ and circumcenter $O$. Suppose $\triangle DEF$ is the contact triangle of $\triangle ABC$, then $\overline{OI}$ is the \vocab{Euler Line} of $\triangle DEF$.
+\end{lemma}
+\begin{proof}
+Suppose $\triangle I_AI_BI_C$ is the \vocab{excentral triangle} of $\triangle ABC$. Since $I$ and $O$ are the orthocenter and the nine-point center of $\triangle I_AI_BI_C$ $\implies$ $\overline{OI}$ is the euler line of $\triangle I_AI_BI_C$. Since $\triangle DEF$ is homothetic to $\triangle I_AI_BI_C$ $\implies$ euler line of $\triangle DEF$ is parallel to euler line of $\triangle I_AI_BI_C$. However, the euler line of $\triangle DEF$ passes through $I$ $\implies$ $\overline{OI}$ is also the euler line of $\triangle DEF$.
+\end{proof}
+
+Since it's well known that the isogonal of line $\overline{DFe}$ with respect to $\angle FDE$ is perpendicular to $\overline{OI}$ $\implies$ steiner line of $Fe$ is parallel to $\overline{OI}$. However, the steiner line of $\overline{Fe}$ must also pass through the orthocenter of $\triangle DEF$. Additionally, we have also shown that $\overline{OI}$ is the euler line of $\triangle DEF$ $\implies$ $\overline{OI}$ passes through the orthocenter of $\triangle DEF$. Therefore, the steiner line of $Fe$ with respect to $\triangle DEF$ is the $\overline{OI}$ line. In other words, the anti-steiner point of $\overline{OI}$ with respect to $\triangle DEF$ is $Fe$, the feuerbach point of $\triangle ABC$. 
+\begin{figure}
+    \centering
+    \begin{asy}
+        import geometry;
+        size(11cm); defaultpen(fontsize(11pt));
+
+        pair A, B, C, O;
+        A = dir(160); B = dir(215); C = dir(325);
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+    
+        draw(A--B--C--cycle);
+        draw(circumcircle(A, B, C));
+
+        pair D, E, F, I;
+        I = incenter(A, B, C); D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        pair Dp, Ep, Fp;
+        Dp = reflect(A, I) * D; 
+        Ep = reflect(B, I) * E;
+        Fp = reflect(C, I) * F;
+
+        pair Ma, Mb, Mc;
+        Ma = (B + C) / 2; Mb= (C + A) / 2; Mc = (A + B) / 2;
+        pair Mar = reflect(A, I) * Ma;
+
+        draw(incircle(A, B, C));
+        dot("$D$", D, dir(240)); dot("$E$", E, dir(45)); dot("$F$", F, dir(165));
+
+        dot("$I$", I, dir(80));
+        dot("$O$", O, dir(30));
+        draw(D--E--F--cycle);
+
+        pair[] TT = intersectionpoints(line(Ma, Dp), circumcircle(D, E, F));
+        pair[] TTr = intersectionpoints(line(Mar, D), circumcircle(D, E, F));
+
+        dot("$Fe$", TT[1], dir(80));
+        dot("$Fe'$", TTr[1], dir(130));
+
+        draw(D--TTr[1], gray+dashed);
+        draw(I--O); draw(D--TT[1], lightgray);
+
+        pair Ft = foot(O, D, TTr[1]);
+        draw(I--Ft, gray+dotted);
+        markrightangle(D, Ft, I, 7);
+    \end{asy}
+\end{figure}
+
+\end{document}

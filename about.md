@@ -45,21 +45,25 @@ Here are the links to my socials!
   </tr>
 </table>
 
-## Math Olympiads [2017 to 2020]
+# Math Olympiads [2017 to 2020]
 I was involved with Math Olympiads during my highschool years. Here are some of my achievements from back then!
 
-#### Third Diploma at Russian Geometry Olympiad, 2019
+### Third Diploma at Russian Geometry Olympiad, 2019
 I received Third Diploma at the Russian Geometry Olympiad, 2019 held in Moscow in the Grade 8 Division for solving 6 out of 8 problems.
 
-#### Gold at IGO 2019
+### Gold at IGO 2019
 I stood <a href="{{ site.baseurl }}static/files/IGO_2019.xlsx">first</a> in the country and seventh worldwide at <a href="https://igo-official.com/?p=3240" target="_blank">IGO 2019</a> in the Intermediate Division.
 
-#### IMOTC 2020
+### Winner of Tournament of Towns, 2019
+I was the <a href="https://www.turgor.ru/en/results/41/res_world.php" target="_blank">winner</a> of Tournament of Towns, 2019 from India region in fall O-level junior (9th grade).
+
+### IMOTC 2020
 I qualified <a href="https://olympiads.hbcse.tifr.res.in/mathematical-olympiad/inmo/" target="_blank">INMO 2020</a> (`Indian National Mathematics Olympiad`) stood among the top 35 participants and was eligible for the <a href="https://olympiads.hbcse.tifr.res.in/wp-content/uploads/2020/04/List-of-students-invited-to-IMOTC-2020.pdf" target="_blank">IMO Training Camp </a> for India's IMO Team Selection. Additionally, I was eligible to take <a href="https://www.apmo-official.org/" target="_blank">APMO</a> that <a href="https://olympiads.hbcse.tifr.res.in/wp-content/uploads/2020/03/APMO-2020.pdf" target="_blank">year</a>.
 
-## Work Experience
+# Work Experience
 I am a software engineer by profession and also coach math olympiad students in geometry.
-### Summer Analyst at Goldman Sachs [Summer, 2025]
+
+## Summer Analyst at Goldman Sachs [Summer, 2025]
 I was hired as a *Software Developer Intern* at Goldman Sachs for Summer 2025.
 
 During my internship, I built and optimized MongoDB views, developed API endpoints using Spring Boot Web with strong unit and integration test coverage (JUnit 5 and Mockito), and integrated the new APIs into the UI using React.js and Redux Toolkit.
