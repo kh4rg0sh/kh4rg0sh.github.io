@@ -1,0 +1,118 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{The Isogonal Conjugate of Feuerbach Point}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    In this article, we shall explore some properties of the \vocab{Isogonal Conjugate} of the \vocab{Feuerbach Point}. Check out \href{https://kh4rg0sh.github.io/static/lecture_notes/all_final_notes/steiner_line_feuerbach_point.pdf}{this} article for some pre-requisites.
+\end{abstract}
+
+\section{Characterization 1}
+\begin{problem}[Well Known]
+    Given a $\triangle ABC$, its incenter $I$ and circumcenter $O$. Suppose $\triangle DEF$ is the contact triangle of $\triangle ABC$. Reflect $D$ over $\overline{OI}$ to $D'$, and similarly define $E'$ and $F'$. Then $\overline{AD'}$, $\overline{BE'}$ and $\overline{CF'}$ concur at the isogonal conjugate of the feuerbach point. 
+\end{problem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(11cm); defaultpen(fontsize(11pt));
+
+        pair A, B, C, O;
+        A = dir(150); B = dir(215); C = dir(325);
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+    
+        draw(A--B--C--cycle);
+        draw(circumcircle(A, B, C));
+
+        pair D, E, F, I;
+        I = incenter(A, B, C); D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        pair Dp, Ep, Fp;
+        Dp = reflect(A, I) * D; 
+        Ep = reflect(B, I) * E;
+        Fp = reflect(C, I) * F;
+
+        pair Ma, Mb, Mc;
+        Ma = (B + C) / 2; Mb= (C + A) / 2; Mc = (A + B) / 2;
+        pair Mar = reflect(A, I) * Ma;
+
+        draw(incircle(A, B, C));
+        dot("$D$", D, dir(240)); dot("$E$", E, dir(45)); dot("$F$", F, dir(165));
+
+        dot("$I$", I, dir(80));
+        dot("$O$", O, dir(30));
+        draw(D--E--F--cycle);
+
+        pair[] TT = intersectionpoints(line(Ma, Dp), circumcircle(D, E, F));
+        pair[] TTr = intersectionpoints(line(Mar, D), circumcircle(D, E, F));
+
+        dot("$Fe$", TT[1], dir(80));
+        dot("$D'$", TTr[1], dir(130));
+
+        draw(D--TTr[1], gray+dashed);
+        draw(I--O); draw(D--TT[1], lightgray);
+
+        pair Ft = foot(O, D, TTr[1]);
+        draw(I--Ft, gray+dotted);
+        markrightangle(D, Ft, I, 7);
+
+        pair Er, Fr;
+        Er = reflect(O, I) * E;
+        Fr = reflect(O, I) * F;
+
+        dot("$E'$", Er, dir(320));
+        dot("$F'$", Fr, dir(185));
+
+        pair Fer = extension(B, Er, C, Fr);
+        dot("$Fe'$", Fer, dir(270));
+
+        draw(A--Fer, red); draw(B--Er, red); draw(C--Fr, red);
+    \end{asy}
+\end{figure}
+\begin{proof}
+It's well known that the isogonal line of $\overline{DFe}$ with respect to $\angle FDE$ is perpendicular to $\overline{OI}$. Therefore, $D'FEFe$ is an isosceles trapezium $\implies$ $\overline{AD'}$ and $\overline{AFe}$ are symmetric about $\overline{AI}$. Hence, $\overline{AD'}$, $\overline{BE'}$ and $\overline{CF'}$ concur at the isogonal conjugate of the feuerbach point.
+\end{proof}
+
+\section{Characterization 2}
+\begin{problem}[INMO 2019 Mock P5 by Shantanu Nene]
+Given $\triangle ABC$ with circumcenter $O$. Suppose $\triangle M_AM_BM_C$ is the medial triangle of $\triangle ABC$. Let $\omega_A$, $\omega_B$ and $\omega_C$ be the $A$-, $B$- and $C$-mixtilinear excircles of $\triangle AM_BM_C$, $\triangle BM_CM_A$ and $\triangle CM_AM_B$. Show that
+\begin{enumerate}[itemsep=0.01em]
+    \item $\omega_A$, $\omega_B$ and $\omega_C$ are tangent to $\odot(BOC)$, $\odot(COA)$ and $\odot(AOB)$.
+    \item Suppose $X_A$, $X_B$ and $X_C$ are the tangency points, then $\overline{AX_A}$, $\overline{BX_B}$ and $\overline{CX_C}$ are concurrent at the isogonal conjugate of the feuerbach point of $\triangle ABC$.
+\end{enumerate}
+\end{problem}
+\begin{proof}
+Performing a $\sqrt{\tfrac{bc}{2}}$ inversion around point $A$ followed by a reflection along the angle bisector of $\angle BAC$, maps $\omega_A$ to the incircle and $\odot(BOC)$ to the nine-point circle. Therefore, the point of tangency $X_A$ is the image of the feuerbach point under inversion $\implies$ $\overline{AX_A}$ is isogonal to $\overline{AFe}$ in $\angle BAC$. Therefore, $\overline{AX_A}$, $\overline{BX_B}$ and $\overline{CX_C}$ concur at the isogonal conjugate of the feuerbach point.
+\end{proof}
+\end{document}

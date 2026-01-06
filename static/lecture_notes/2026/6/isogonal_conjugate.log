@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.14)  6 JAN 2026 04:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.14)  6 JAN 2026 06:05
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/6/steiner_line.tex
-(/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/6/steiner_line.tex
+**/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/6/isogonal_conjugate.tex
+(/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/6/isogonal_conjugate.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
 (/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrartcl.cls
@@ -220,7 +220,7 @@ Package: derivative 2023/11/04 v1.31 Nice and easy derivatives and differentials
 \l__deriv_sort_max_int=\count281
 ) (/usr/share/texmf/tex/latex/asymptote/asymptote.sty
 Package: asymptote 2024/02/26 v1.38 Asymptote style file for LaTeX
- (./steiner_line.pre)
+ (./isogonal_conjugate.pre)
 \ASYbox=\box56
 \ASYdimen=\dimen150
 \c@asy=\count282
@@ -256,7 +256,7 @@ Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 ))
-\openout4 = `steiner_line.pre'.
+\openout4 = `isogonal_conjugate.pre'.
 
 ) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
@@ -961,8 +961,8 @@ Package: verbatim 2023-11-06 v1.5v LaTeX2e package for verbatim enhancements
 \verbatim@in@stream=\read3
 )) (/usr/share/texlive/texmf-dist/tex/latex/cancel/cancel.sty
 Package: cancel 2013/04/12 v2.2 Cancel math terms
-) (./steiner_line.aux)
-\openout1 = `steiner_line.aux'.
+) (./isogonal_conjugate.aux)
+\openout1 = `isogonal_conjugate.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
@@ -1011,9 +1011,9 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package hyperref Info: Link coloring ON on input line 32.
- (./steiner_line.out) (./steiner_line.out)
+ (./isogonal_conjugate.out) (./isogonal_conjugate.out)
 \@outlinefile=\write6
-\openout6 = `steiner_line.out'.
+\openout6 = `isogonal_conjugate.out'.
 
 Class scrartcl Info: loading recommended package `bookmark'.
 (scrartcl)           Using `bookmark' together with `hyperref' is recommended,
@@ -1086,91 +1086,43 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 44.
-Package hyperref Info: bookmark level for unknown theorem defaults to 0 on input line 44.
-\openout3 = `steiner_line-1.asy'.
+(mdframed)              on input line 43.
+Package hyperref Info: bookmark level for unknown problem defaults to 0 on input line 43.
+\openout3 = `isogonal_conjugate-1.asy'.
 
-<steiner_line-1.pdf, id=32, 227.62239pt x 209.90923pt>
-File: steiner_line-1.pdf Graphic file (type pdf)
-<use steiner_line-1.pdf>
-Package pdftex.def Info: steiner_line-1.pdf  used on input line 77.
-(pdftex.def)             Requested size: 227.62183pt x 209.9087pt.
+<isogonal_conjugate-1.pdf, id=32, 312.9803pt x 312.9803pt>
+File: isogonal_conjugate-1.pdf Graphic file (type pdf)
+<use isogonal_conjugate-1.pdf>
+Package pdftex.def Info: isogonal_conjugate-1.pdf  used on input line 101.
+(pdftex.def)             Requested size: 312.97952pt x 312.97952pt.
  [1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./steiner_line-1.pdf>]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./isogonal_conjugate-1.pdf>]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 97.
-\openout3 = `steiner_line-2.asy'.
-
-<steiner_line-2.pdf, id=61, 187.42622pt x 227.62239pt>
-File: steiner_line-2.pdf Graphic file (type pdf)
-<use steiner_line-2.pdf>
-Package pdftex.def Info: steiner_line-2.pdf  used on input line 140.
-(pdftex.def)             Requested size: 187.42575pt x 227.62183pt.
- [2 <./steiner_line-2.pdf>]
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 155.
-\openout3 = `steiner_line-3.asy'.
-
-<steiner_line-3.pdf, id=91, 182.50282pt x 284.52798pt>
-File: steiner_line-3.pdf Graphic file (type pdf)
-<use steiner_line-3.pdf>
-Package pdftex.def Info: steiner_line-3.pdf  used on input line 187.
-(pdftex.def)             Requested size: 182.50237pt x 284.52728pt.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 194.
-Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 194.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 198.
-Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 198.
-\openout3 = `steiner_line-4.asy'.
-
-<steiner_line-4.pdf, id=94, 185.51007pt x 284.52798pt>
-File: steiner_line-4.pdf Graphic file (type pdf)
-<use steiner_line-4.pdf>
-Package pdftex.def Info: steiner_line-4.pdf  used on input line 246.
-(pdftex.def)             Requested size: 185.50961pt x 284.52728pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[3 <./steiner_line-3.pdf>]
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 259.
-\openout3 = `steiner_line-5.asy'.
-
-<steiner_line-5.pdf, id=116, 312.9803pt x 309.81448pt>
-File: steiner_line-5.pdf Graphic file (type pdf)
-<use steiner_line-5.pdf>
-Package pdftex.def Info: steiner_line-5.pdf  used on input line 309.
-(pdftex.def)             Requested size: 312.97952pt x 309.81372pt.
- [4 <./steiner_line-4.pdf>] [5 <./steiner_line-5.pdf>] (./steiner_line.aux)
+(mdframed)              on input line 108.
+ [2] (./isogonal_conjugate.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
-Package rerunfilecheck Info: File `steiner_line.out' has not changed.
+Package rerunfilecheck Info: File `isogonal_conjugate.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 39469 strings out of 474222
- 830638 string characters out of 5748733
- 1942975 words of memory out of 5000000
- 60936 multiletter control sequences out of 15000+600000
- 576835 words of font info for 152 fonts, out of 8000000 for 9000
+ 39331 strings out of 474222
+ 828429 string characters out of 5748733
+ 1940975 words of memory out of 5000000
+ 60853 multiletter control sequences out of 15000+600000
+ 574018 words of font info for 126 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 123i,21n,128p,11002b,1201s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx1440.pfb>
-Output written on steiner_line.pdf (5 pages, 210877 bytes).
+ 123i,20n,128p,11008b,1195s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx1440.pfb>
+Output written on isogonal_conjugate.pdf (2 pages, 165624 bytes).
 PDF statistics:
- 234 PDF objects out of 1000 (max. 8388607)
- 159 compressed objects within 2 object streams
- 22 named destinations out of 1000 (max. 500000)
- 39078 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 153 PDF objects out of 1000 (max. 8388607)
+ 98 compressed objects within 1 object stream
+ 11 named destinations out of 1000 (max. 500000)
+ 32898 words of extra memory for PDF output out of 35830 (max. 10000000)
 

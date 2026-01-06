@@ -1,33 +1,33 @@
 # Fdb version 4
-["cusdep asy pdf steiner_line-1"] 1767654276.17003 "steiner_line-1.asy" "steiner_line-1.pdf" "steiner_line-1" 1767654285.72638 0
-  "steiner_line-1.asy" 1767654285.09324 2472 f1449dd9f33758f98736bb126fbd5e3b "pdflatex"
+["cusdep asy pdf steiner_line-1"] 1767654276.17003 "steiner_line-1.asy" "steiner_line-1.pdf" "steiner_line-1" 1767654990.79998 0
+  "steiner_line-1.asy" 1767654990.31815 2472 f1449dd9f33758f98736bb126fbd5e3b "pdflatex"
   (generated)
   "steiner_line-1.pdf"
   (rewritten before read)
-["cusdep asy pdf steiner_line-2"] 1767654274.60231 "steiner_line-2.asy" "steiner_line-2.pdf" "steiner_line-2" 1767654285.72632 0
-  "steiner_line-2.asy" 1767654285.33122 2745 475fda01339d53ca3908298e2c8aca09 "pdflatex"
+["cusdep asy pdf steiner_line-2"] 1767654981.96975 "steiner_line-2.asy" "steiner_line-2.pdf" "steiner_line-2" 1767654990.79993 0
+  "steiner_line-2.asy" 1767654990.48332 2745 475fda01339d53ca3908298e2c8aca09 "pdflatex"
   (generated)
   "steiner_line-2.pdf"
   (rewritten before read)
-["cusdep asy pdf steiner_line-3"] 1767654273.70912 "steiner_line-3.asy" "steiner_line-3.pdf" "steiner_line-3" 1767654285.72626 0
-  "steiner_line-3.asy" 1767654285.40424 2498 32c0ed759b507f6a49e8469fc2bae511 "pdflatex"
+["cusdep asy pdf steiner_line-3"] 1767654273.70912 "steiner_line-3.asy" "steiner_line-3.pdf" "steiner_line-3" 1767654990.79988 0
+  "steiner_line-3.asy" 1767654990.53813 2498 32c0ed759b507f6a49e8469fc2bae511 "pdflatex"
   (generated)
   "steiner_line-3.pdf"
   (rewritten before read)
-["cusdep asy pdf steiner_line-4"] 1767654272.76111 "steiner_line-4.asy" "steiner_line-4.pdf" "steiner_line-4" 1767654285.72618 0
-  "steiner_line-4.asy" 1767654285.49424 2951 25b69ac0951f20a17db0506d75436e7e "pdflatex"
+["cusdep asy pdf steiner_line-4"] 1767654272.76111 "steiner_line-4.asy" "steiner_line-4.pdf" "steiner_line-4" 1767654990.79981 0
+  "steiner_line-4.asy" 1767654990.6002 2951 25b69ac0951f20a17db0506d75436e7e "pdflatex"
   (generated)
   "steiner_line-4.pdf"
   (rewritten before read)
-["cusdep asy pdf steiner_line-5"] 1767654271.62141 "steiner_line-5.asy" "steiner_line-5.pdf" "steiner_line-5" 1767654285.7259 0
-  "steiner_line-5.asy" 1767654285.55148 2794 4751298f3ab1d9580b59b0b985c28f15 "pdflatex"
+["cusdep asy pdf steiner_line-5"] 1767654271.62141 "steiner_line-5.asy" "steiner_line-5.pdf" "steiner_line-5" 1767654990.79967 0
+  "steiner_line-5.asy" 1767654990.64703 2794 4751298f3ab1d9580b59b0b985c28f15 "pdflatex"
   (generated)
   "steiner_line-5.pdf"
   (rewritten before read)
-["pdflatex"] 1767654281.78165 "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/6/steiner_line.tex" "steiner_line.pdf" "steiner_line" 1767654285.72643 0
+["pdflatex"] 1767654986.69929 "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/6/steiner_line.tex" "steiner_line.pdf" "steiner_line" 1767654990.80002 0
   "/etc/texmf/web2c/texmf.cnf" 1735619042.2153 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/kh4rg0sh/texmf/tex/latex/evan/evan.sty" 1767116838.07914 30030 79f424f0f0202df396b897b37bd1a627 ""
-  "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/6/steiner_line.tex" 1767654267.27589 13727 39f022a6a809c4758fb46a8189f97b54 ""
+  "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/6/steiner_line.tex" 1767654980.11053 13743 98b35cc3c86bd7087230b19090e280ae ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcsx1440.tfm" 1136768653 1536 d4501080e094848097ac9de5c88222ce ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -293,14 +293,14 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1747213745.11433 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1747213758 8212562 4c305ec569e0631bfecb6c256302e771 ""
   "steiner_line-1.pdf" 1767654277.24325 17348 7d97e0d26c78e6c3640b9ab1318986d9 "cusdep asy pdf steiner_line-1"
-  "steiner_line-2.pdf" 1767654276.14825 28632 dd6b19ee3a59e119752476af706c03c6 "cusdep asy pdf steiner_line-2"
+  "steiner_line-2.pdf" 1767654983.01552 28632 6058ec8ff03e4350f1da3cf4ceca46ad "cusdep asy pdf steiner_line-2"
   "steiner_line-3.pdf" 1767654274.58325 11713 ceea3dbf920de4d6b72faac64eafd9f9 "cusdep asy pdf steiner_line-3"
   "steiner_line-4.pdf" 1767654273.69325 11860 bdc0f5f23c89e9cea6f56287dacfc508 "cusdep asy pdf steiner_line-4"
   "steiner_line-5.pdf" 1767654272.74425 23825 4d9ad6d86b22b6e5d916485d0a6a41ab "cusdep asy pdf steiner_line-5"
-  "steiner_line.aux" 1767654285.57324 3612 09f2cd1f4844976456d27c93b03f8107 "pdflatex"
-  "steiner_line.out" 1767654284.91124 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "steiner_line.pre" 1767654285.56424 205 b39a32f1694771a1433adac1ed949c9e "pdflatex"
-  "steiner_line.tex" 1767654267.27589 13727 39f022a6a809c4758fb46a8189f97b54 ""
+  "steiner_line.aux" 1767654990.66549 3612 09f2cd1f4844976456d27c93b03f8107 "pdflatex"
+  "steiner_line.out" 1767654990.10771 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "steiner_line.pre" 1767654990.65749 205 b39a32f1694771a1433adac1ed949c9e "pdflatex"
+  "steiner_line.tex" 1767654980.11053 13743 98b35cc3c86bd7087230b19090e280ae ""
   (generated)
   "steiner_line-1.asy"
   "steiner_line-2.asy"
