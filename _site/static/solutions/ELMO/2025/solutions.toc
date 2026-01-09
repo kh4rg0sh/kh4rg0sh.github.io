@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Problems}{2}{section.2}%
+\contentsline {subsection}{\numberline {1.1}Algebra}{2}{subsection.3}%
+\contentsline {subsection}{\numberline {1.2}Combinatorics}{3}{subsection.5}%
+\contentsline {subsection}{\numberline {1.3}Geometry}{4}{subsection.6}%
+\contentsline {subsection}{\numberline {1.4}Number Theory}{5}{subsection.8}%
+\contentsline {section}{\numberline {2}Solutions to Algebra}{6}{section.9}%
+\contentsline {subsection}{\numberline {2.1}ELMO 2025 Shortlist A1}{6}{subsection.10}%
+\contentsline {subsubsection}{\numberline {2.1.1}Solution 1 (Using Injectivity \& Periodicity)}{6}{subsubsection.12}%
+\contentsline {section}{\numberline {3}Solutions to Combinatorics}{7}{section.17}%
+\contentsline {section}{\numberline {4}Solutions to Geometry}{8}{section.18}%
+\contentsline {subsection}{\numberline {4.1}ELMO 2025 Shortlist G1}{8}{subsection.19}%
+\contentsline {subsubsection}{\numberline {4.1.1}Solution 1 (Using Centroid)}{8}{subsubsection.21}%
+\contentsline {subsubsection}{\numberline {4.1.2}Solution 2 (Using Areas)}{9}{subsubsection.24}%
+\contentsline {section}{\numberline {5}Solutions to Number Theory}{10}{section.27}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

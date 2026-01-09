@@ -1,0 +1,9 @@
+talk about the bisectors thing.
+simulatenously talk about properties of triangles using congruence.
+
+then move on to quadrilaterals:
+types of quadrilaterals
+investigate their properties using congruence.
+quadrilateral inequality
+
+extend to polygons.

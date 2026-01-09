@@ -5,7 +5,7 @@ We first introduce one way to define conic sections from high school geometry:
 \end{definition}
 
 \begin{definition}
-    A curve $\mathcal{C}$ on a plane $E$ is called a \vocab{Conic} if there exists a circular conical surface $S$ with vertex $V$ such that $\mathcal{C}$ $=$ $S \cap E$.
+    A curve $\mathcal{C}$ on a plane $E$ is called a \vocab{Conic}, if there exists a circular conical surface $S$ with vertex $V$ such that $\mathcal{C}$ $=$ $S \cap E$.
 \end{definition}
 
 Later, when the spatial context is not mentioned, we will omit ``on plane $E$''. Because the equation of a conic is quadratic, conics are also called \emph{quadratic curves}.
@@ -22,4 +22,38 @@ Hereafter, $\mathcal{L}_{\infty}$ will be used to denote the \vocab{Line at Infi
 \begin{align*}
     \infty_{\ell} \coloneqq \ell \cap \mathcal{L}_{\infty}
 \end{align*}
-is called the \vocab{Point at Infinity of $\ell$}. The following are the more commonly seen equivalent definitions of conic sections:
+is called the \vocab{Point at Infinity on $\ell$}. The following are the more commonly seen equivalent definitions of conic sections:
+
+\begin{proposition}
+    Let $\mathcal{C}$ be a conic. Then
+    \begin{enumerate}
+        \item $\mathcal{C}$ is an ellipse \emph{if and only if} there exists two points $F_1$, $F_2$ and a positive real number $\alpha$, where $\alpha > \tfrac{\overline{F_1F_2}}{2}$, such that 
+            \begin{align*}
+                \mathcal{C} = \{ \, P \, \vert \, \overline{F_1P} + \overline{F_2P} = 2 \alpha \}.
+            \end{align*}
+        \item $\mathcal{C}$ is a parabola \emph{if and only if} there exists a point $F$ and a line $\ell$ such that
+            \begin{align*}
+                \mathcal{C} = \{ \, P \, \vert \, \overline{FP} = d \left( \ell, P \right) \}.
+            \end{align*}
+        \item $\mathcal{C}$ is a hyperbola \emph{if and only if} there exists two points $F_1$, $F_2$ and a positive real number $\alpha$, where $\alpha < \tfrac{\overline{F_1F_2}}{2}$, such that
+            \begin{align*}
+                \mathcal{C} = \{ \, P \, \big\vert \, \vert \overline{F_1P} - \overline{F_2P} \vert = 2 \alpha \}.
+            \end{align*}
+    \end{enumerate}
+    \noindent Moreover, the points $F_1$, $F_2$ are called the focii of $\mathcal{C}$, and the line $\ell$ is called the directrix of $\mathcal{C}$.
+\end{proposition}
+
+\begin{proof}
+// to be added
+\end{proof}
+
+Before discussing the next property, we first state the following: \emph{all conic sections are smooth}. We also introduce some more notations.
+\begin{enumerate}
+    \item $T \left( \mathcal{C} \right)$ denotes the set of all tangents to $\mathcal{C}$.
+    \item $T_{P} \left( \mathcal{C} \right)$ denotes the tangent to $\mathcal{C}$ at the point $P$, where $P \in \mathcal{C}$.
+    \item $T_{\ell} \left( \mathcal{C} \right)$ denotes the point of tangency of the line $\ell$ with $\mathcal{C}$, where $\ell \in T \left( \mathcal{C} \right)$.
+\end{enumerate}
+Thus, it is clear that
+\begin{align*}
+T \left( \mathcal{C} \right) = \{ T_{P} \left( \mathcal{C} \right) \, \big\vert \, P \in \mathcal{C} \}, \twotab \mathcal{C} = \{ \, T_{\ell} \left( \mathcal{C} \right) \, \big\vert \, \ell \in T \left( \mathcal{C} \right) \}.
+\end{align*}

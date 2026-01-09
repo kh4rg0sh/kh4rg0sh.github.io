@@ -1,0 +1,300 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{Coaxial Circles}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering In this article, we will discuss about the properties of coaxial circles.
+\end{abstract}
+
+So far, we have studied tools for dealing with pairs of circles that have distinct radical axes. Let us now consider the situation where multiple circles share the same radical axis.
+\begin{definition}
+    A family of circles is called \vocab{Coaxial} if they all share the same radical axis.
+\end{definition}
+
+\section{Reim's Theorem}
+This particular configuration appears very frequently in geometry problems. 
+\begin{theorem}[Reim's Theorem]
+    Suppose circles $\omega_1$ and $\omega_2$ intersect in points $A$ and $B$. Let $\ell_1$ and $\ell_2$ be two lines through passing through $A$ and $B$ such that they intersect $\omega_1$ in $U$ and $V$, and $\omega_2$ in $X$ and $Y$. Then $\overline{UV}$ $\parallel$ $\overline{XY}$.
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(7cm); defaultpen(fontsize(10pt));
+
+        pair O1, O2;
+        O1 = (0, 0); O2 = (0, 2);
+
+        path C1 = circle(O1, 2.5);
+        path C2 = circle(O2, 1);
+
+        draw(C1); draw(C2);
+
+        pair[] AA = intersectionpoints(C1, C2);
+        dot("$A$", AA[1], dir(135)); dot("$B$", AA[0], dir(45));
+
+        pair X, Y;
+        X = dir(10) * 2.5; Y = dir(230) * 2.5;
+        dot("$X$", X, dir(325)); dot("$Y$", Y, dir(225));
+
+        pair[] UU = intersectionpoints(line(AA[1], X), C2);
+        pair[] VV = intersectionpoints(line(AA[0], Y), C2);
+
+        dot("$U$", UU[1], dir(15));
+        dot("$V$", VV[1], dir(120));
+
+        draw(AA[1]--X); draw(AA[0]--Y);
+        draw(X--Y, red); draw(UU[1]--VV[1], red);
+    \end{asy}
+\end{figure}
+Furthermore, the converse of this theorem is true too.
+
+\begin{theorem}[Converse of Reim's Theorem (Collinearity)]
+    Suppose two circles $\omega_1$ and $\omega_2$ intersect in points $A$ and $B$. Let $\ell$ be a line that passes through $A$ and intersects $\omega_1$ and $\omega_2$ at $X$ and $U$. Suppose $Y$ and $V$ lie on circles $\omega_1$ and $\omega_2$ such that $\overline{UV}$ $\parallel$ $\overline{XY}$. Then, points $B$, $V$ and $Y$ are collinear.
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(7cm); defaultpen(fontsize(10pt));
+
+        pair O1, O2;
+        O1 = (0, 0); O2 = (0, 2);
+
+        path C1 = circle(O1, 2.5);
+        path C2 = circle(O2, 1);
+
+        draw(C1); draw(C2);
+
+        pair[] AA = intersectionpoints(C1, C2);
+        dot("$A$", AA[1], dir(135)); dot("$B$", AA[0], dir(45));
+
+        pair X, Y;
+        X = dir(10) * 2.5; Y = dir(230) * 2.5;
+        dot("$X$", X, dir(325)); dot("$Y$", Y, dir(225));
+
+        pair[] UU = intersectionpoints(line(AA[1], X), C2);
+        pair[] VV = intersectionpoints(line(AA[0], Y), C2);
+
+        dot("$U$", UU[1], dir(15));
+        dot("$V$", VV[1], dir(120));
+
+        draw(AA[1]--X); draw(AA[0]--Y, dashed);
+        draw(X--Y, red); draw(UU[1]--VV[1], red);
+    \end{asy}
+\end{figure}
+
+\begin{theorem}[Converse of Reim's Theorem (Concyclicity)]
+    Given a circle $\omega$ and four points $A$, $B$, $X$ and $Y$ on the circle. Choose points $U$ and $V$ on $\overline{AX}$ and $\overline{BY}$ such that $\overline{UV}$ $\parallel$ $\overline{XY}$. Then the points $A$, $B$, $U$ and $V$ are concyclic.
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(7cm); defaultpen(fontsize(10pt));
+
+        pair O1, O2;
+        O1 = (0, 0); O2 = (0, 2);
+
+        path C1 = circle(O1, 2.5);
+        path C2 = circle(O2, 1);
+
+        draw(C1); draw(C2, red+dashed);
+
+        pair[] AA = intersectionpoints(C1, C2);
+        dot("$A$", AA[1], dir(135)); dot("$B$", AA[0], dir(45));
+
+        pair X, Y;
+        X = dir(10) * 2.5; Y = dir(230) * 2.5;
+        dot("$X$", X, dir(325)); dot("$Y$", Y, dir(225));
+
+        pair[] UU = intersectionpoints(line(AA[1], X), C2);
+        pair[] VV = intersectionpoints(line(AA[0], Y), C2);
+
+        dot("$U$", UU[1], dir(15));
+        dot("$V$", VV[1], dir(120));
+
+        draw(AA[1]--X); draw(AA[0]--Y);
+        draw(X--Y, blue); draw(UU[1]--VV[1], blue);
+    \end{asy}
+\end{figure}
+
+To be precise, both of these results follow from a simple two-step angle chase. Nevertheless, because they appear so frequently in various configurations, it is important to have them at your fingertips to avoid overlooking any pair of parallel lines or cyclic quadrilaterals.
+
+\subsection{Examples}
+\begin{problem}[USA TSTST 2019]
+Let $ABC$ be an acute triangle with circumcircle $\Omega$ and orthocenter $H$. Points $D$ and $E$ lie on segments $AB$ and $AC$ respectively, such that $AD = AE$. The lines through $B$ and $C$ parallel to $\overline{DE}$ intersect $\Omega$ again at $P$ and $Q$, respectively. Denote by $\omega$ the circumcircle of $\triangle ADE$.
+\begin{enumerate}
+    \item Show that lines $PE$ and $QD$ meet on $\omega$.
+    \item Prove that if $\omega$ passes through $H$, then lines $PD$ and $QE$ meet on $\omega$ as well.
+\end{enumerate}
+\end{problem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        size(8cm);
+        defaultpen(fontsize(10pt));
+
+        pair O, A, B, C, H, L, P, Q, Y, D, EE, X, SS, T;
+        O=(0,0);
+        A=dir(110);
+        B=dir(220);
+        C=dir(320);
+        H=A+B+C;
+        L=dir(270);
+        P=2*foot(O,B,foot(B,A,L))-B;
+        Q=2*foot(O,C,foot(C,A,L))-C;
+        Y=A+P+Q;
+        D=extension(A,B,P,Y);
+        EE=extension(A,C,Q,Y);
+        X=extension(P,EE,Q,D);
+        SS=foot(P,A,Q);
+        T=foot(Q,A,P);
+
+        draw(circle(O,1));
+        draw(A--B--C--cycle);
+        draw(B--P, heavygray);
+        draw(C--Q, heavygray);
+        draw(circumcircle(A,D,EE),gray(0.6));
+        draw(D--EE, heavygray);
+        draw(H--A--Y--cycle, heavygray);
+
+        dot("$A$",A,N);
+        dot("$B$",B,B);
+        dot("$C$",C,C);
+        dot("$H$",H,S);
+        dot("$P$",P,P);
+        dot("$Q$",Q,Q);
+        dot("$Y$",Y,unit(Y-A));
+        dot("$D$",D,dir(210));
+        dot("$E$",EE,dir(18));
+        dot("$X$",X,NW);
+
+        draw(P--X, gray(0.2)+dashed);
+        draw(Q--X, gray(0.2)+dashed);
+
+        pair M, N;
+        N = reflect(A, B) * H;
+        M = reflect(A, C) * H;
+
+        dot("$M$", M, dir(45));
+        dot("$N$", N, dir(190));
+
+        draw(B--M); draw(C--N);
+        draw(P--N, gray(0.4)+dashed);
+        draw(Q--M, gray(0.4)+dashed);
+
+        draw(arc(circumcircle(N, M, H), 200, 360), gray(0.75)+dashed);
+    \end{asy}
+\end{figure}
+\begin{proof}
+For the first part, suppose $\omega$ $\cap$ $\Omega$ at $X$ $\neq$ $A$. Then applying converse of reim's theorem on $\overline{DE}$ $\parallel$ $\overline{BP}$, we get that $PE$ passes through $X$. Similarly, $QD$ passes through $X$ proving that $PE$ and $QD$ indeed meet on $\omega$ at $X$.
+
+For the second part, suppose $Y$ lies on $\omega$ such that $\overline{AH}$ and$\overline{AY}$ are isogonal with respect to $\angle BAC$. Then, $\overline{HY}$ $\parallel$ $\overline{DE}$. Let $M$ and $N$ be the reflections of $H$ over $\overline{AC}$ and $\overline{AB}$. We can show that $D$ lies on $\overline{NY}$, because
+\begin{align*}
+    \angle NDH &= 2 \angle BDH \\ 
+            &= 2 \left( 180^{\circ} - \angle ADH \right) \\ 
+            &= 2 \angle AYH \\ 
+            &= 2 \left( 90^{\circ} - \tfrac{1}{2} \angle HAY \right) \\ 
+            &= 180^{\circ} - \angle HDY
+\end{align*}
+Similarly, we can show that $E$ lies on $\overline{MY}$. Since $\overline{DE}$ $\parallel$ $\overline{HY}$, therefore by the converse of reim's theorem, we have $NHYM$ as a cyclic quadrilateral. Again by the converse of reim's theorem applied on circle $\odot(NHYM)$ and $\odot(ABC)$, and pairs of parallel lines $\overline{HY}$ $\parallel$ $\overline{BP}$ and $\overline{HY}$ $\parallel$ $\overline{QC}$ $\implies$ $Y$ lies on $\overline{PD}$ and $\overline{QE}$, as desired.
+\end{proof}
+
+\begin{problem}[Iran 2015]
+    Let $ABC$ be a triangle with orthocenter $H$ and circumcenter $O$. Let $K$ be the midpoint of $AH$. point $P$ lies on $AC$ such that $\angle BKP=90^{\circ}$. Prove that $OP\parallel BC$.
+\end{problem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(6cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, H, O, K, D, E, X, Y, P;
+        O = origin;
+
+        A = dir(110); B = dir(210); C = dir(330);
+
+        dot("$A$", A, dir(120)); dot("$B$", B, dir(210)); dot("$C$", C, dir(330));
+        dot("$O$", O, dir(45)); draw(A--B--C--cycle); draw(circumcircle(A, B, C));
+
+        D = foot(A, B, C); E = foot(B, A, C); 
+        H = extension(A, D, B, E); K = (A + H) / 2;
+
+        X = reflect(B, C) * H; Y = reflect(A, C) * H;
+        dot("$X$", X, dir(225)); dot("$Y$", Y, dir(45)); dot("$H$", H, dir(135));
+        dot("$D$", D, dir(225)); dot("$E$", E, dir(75)); draw(A--X); draw(B--Y);
+        dot("$K$", K, dir(135)); draw(circumcircle(B, X, E), dashed);
+
+        path C1 = circumcircle(B, X, E);
+        pair[] PP = intersectionpoints(line(A, C), C1);
+
+        dot("$P$", PP[0], dir(40)); draw(O--PP[0]);
+        draw(B--K); draw(K--PP[0]); draw(X--PP[0]);
+    \end{asy}
+\end{figure}
+\begin{proof}
+    Let $D$ and $E$ be the foot of perpendicular from $A$ and $B$ onto $\overline{BC}$ and $\overline{AC}$, and $X$ and $Y$ be the reflections of $H$ over $\overline{BC}$ and $\overline{AC}$. Since $K$ and $E$ are the midpoints of $\overline{AH}$ and $\overline{HY}$, therefore by the midpoint theorem $\overline{KE}$ $\parallel$ $\overline{AY}$. Applying the converse of reim's theorem, we get that $BKEX$ is a cyclic quadrilateral. Since $\angle BKP$ $=$ $90^{\circ}$ and $\angle BEP$ $=$ $90^{\circ}$ $\implies$ $P$ lies on the circle $\odot(BKEX)$. Since $K$ is the center of $\odot(AEH)$, we have
+    \begin{align*}
+        \angle XAP = \angle KAE = \angle KEA = 180^{\circ} - \angle KEP = \angle KXP = \angle AXP        
+    \end{align*}
+    Therefore, $\triangle PAX$ is isosceles and hence $P$ lies on the perpendicular bisector of $\overline{AX}$. Since, $O$ lies on the perpendicular bisector of $\overline{AX}$ too $\implies$ $\overline{OP}$ $\perp$ $\overline{AX}$. But $\overline{AX}$ $\perp$ $\overline{BC}$ $\implies$ $\overline{OP}$ $\parallel$ $\overline{BC}$.
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}[Iran IMO TST 2008]
+    In the triangle $ ABC$, $ \angle B$ is greater than $ \angle C$. Suppose $T$ is the midpoint of the arc $ BAC$ from the circumcircle of $ ABC$ and $ I$ is the incenter of $ ABC$. Let $E$ be a point such that $\angle AEI = 90^\circ$ and $ AE\parallel BC$. Let $\overline{TE}$ intersect the $\odot(ABC)$ for the second time in $P$. If $\angle B = \angle IPB$, find the angle $ \angle A$.
+\end{exercise}
+
+\begin{exercise}[IMO 2019]
+    In triangle $ABC$, point $A_1$ lies on side $BC$ and point $B_1$ lies on side $AC$. Let $P$ and $Q$ be points on segments $AA_1$ and $BB_1$, respectively, such that $PQ$ is parallel to $AB$. Let $P_1$ be a point on line $PB_1$, such that $B_1$ lies strictly between $P$ and $P_1$, and $\angle PP_1C=\angle BAC$. Similarly, let $Q_1$ be the point on line $QA_1$, such that $A_1$ lies strictly between $Q$ and $Q_1$, and $\angle CQ_1Q=\angle CBA$. Prove that points $P$, $Q$, $P_1$ and $Q_1$ are concyclic.
+\end{exercise}
+
+
+
+\newpage
+\section{Practice Problems}
+\begin{exercise}[Romania TST 2017]
+    Let $ABCD$ be a trapezium, $AD \parallel BC$, and let $E$ and $F$ be points on the sides $AB$ and $CD$, respectively. The circumcircle of $AEF$ meets $AD$ again at $A_1$, and the circumcircle of $CEF$ meets $BC$ again at $C_1$. Prove that $A_1C_1$, $BD$ and $EF$ are concurrent.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2017]
+    Let $ABCC_1B_1A_1$ be a convex hexagon such that $AB=BC$, and suppose that the line segments $AA_1, BB_1$, and $CC_1$ have the same perpendicular bisector. Let the diagonals $AC_1$ and $A_1C$ meet at $D$, and denote by $\omega$ the circle $ABC$. Let $\omega$ intersect the circle $A_1BC_1$ again at $E \neq B$. Prove that the lines $BB_1$ and $DE$ intersect on $\omega$.
+\end{exercise}
+
+\end{document}

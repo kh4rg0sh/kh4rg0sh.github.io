@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.14)  7 JAN 2026 13:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.14)  8 JAN 2026 03:18
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1160,10 +1160,10 @@ Package minitoc Info: I0025
 {\reset@font\ptcCfont\mtc@string\contentsline{chapter}{\noexpand \leavevmode \numberline {0}Notations}{\reset@font\ptcCfont 1}{chapter.0}}
 {\reset@font\ptcCfont\mtc@string\contentsline{chapter}{\noexpand \leavevmode \numberline {1}Fundamentals of Conic Sections}{\reset@font\ptcCfont 3}{chapter.1}}
 {\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.1}Definitions and Basic Properties}{\reset@font\ptcSfont 3}{section.1.1}}
-{\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.2}Cross Ratio}{\reset@font\ptcSfont 4}{section.1.2}}
-{\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.3}Cross Ratio on Conic Sections}{\reset@font\ptcSfont 5}{section.1.3}}
-{\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.4}Some Theorems from Projective Geometry}{\reset@font\ptcSfont 6}{section.1.4}}
-{\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.5}Exercises}{\reset@font\ptcSfont 7}{section.1.5}}
+{\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.2}Cross Ratio}{\reset@font\ptcSfont 5}{section.1.2}}
+{\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.3}Cross Ratio on Conic Sections}{\reset@font\ptcSfont 6}{section.1.3}}
+{\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.4}Some Theorems from Projective Geometry}{\reset@font\ptcSfont 7}{section.1.4}}
+{\reset@font\ptcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.5}Exercises}{\reset@font\ptcSfont 8}{section.1.5}}
 ) (./tex/macros.tex (/usr/share/texlive/texmf-dist/tex/latex/tkz-graph/tkz-graph.sty
 2021/01/20 v 2.00 tkz-graph.sty
 Package: tkz-graph 2021/01/20 2.00 base for graphs
@@ -1461,15 +1461,16 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 chapter 1.
 (./tex/fundamentals/definitions/definitions_and_properties.tex
 Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 4.
-) [3
+Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 28.
+ [3
 
 
 
 
 
-] (./tex/fundamentals/cross-ratio/cross_ratio.tex) [4] (./tex/fundamentals/cross-ratio-conic/cross_ratio_conics.tex) [5] (./tex/fundamentals/theorems/theorems_from_projective_geometry.tex) [6] (./tex/fundamentals/exercises/exercises.tex
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}]) [4] (./tex/fundamentals/cross-ratio/cross_ratio.tex) [5] (./tex/fundamentals/cross-ratio-conic/cross_ratio_conics.tex) [6] (./tex/fundamentals/theorems/theorems_from_projective_geometry.tex) [7] (./tex/fundamentals/exercises/exercises.tex
 Package hyperref Info: bookmark level for unknown problem defaults to 0 on input line 2.
-)) [7]
+)) [8]
 Package minitoc Info: I0009
 (minitoc)             Listing minitoc auxiliary files. 
 (minitoc)             Creating the conic.maf file.
@@ -1498,18 +1499,18 @@ Package logreq Info: Writing requests to 'conic.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 52778 strings out of 474222
- 1101904 string characters out of 5748733
- 2147368 words of memory out of 5000000
- 74025 multiletter control sequences out of 15000+600000
- 638835 words of font info for 175 fonts, out of 8000000 for 9000
+ 52871 strings out of 474222
+ 1103819 string characters out of 5748733
+ 2147367 words of memory out of 5000000
+ 74096 multiletter control sequences out of 15000+600000
+ 639438 words of font info for 181 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 130i,20n,124p,11035b,852s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on conic.pdf (11 pages, 227664 bytes).
+ 130i,20n,124p,11035b,953s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on conic.pdf (12 pages, 253374 bytes).
 PDF statistics:
- 207 PDF objects out of 1000 (max. 8388607)
- 166 compressed objects within 2 object streams
- 46 named destinations out of 1000 (max. 500000)
+ 232 PDF objects out of 1000 (max. 8388607)
+ 186 compressed objects within 2 object streams
+ 55 named destinations out of 1000 (max. 500000)
  45133 words of extra memory for PDF output out of 51595 (max. 10000000)
 
