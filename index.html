@@ -2,23 +2,56 @@
 layout: default
 title: Home
 ---
-<p>
+<style>
+  .intro {
+    font-size: 1.05em;
+    margin-bottom: 1.5em;
+  }
+
+  section {
+    margin-bottom: 1.8em;
+  }
+
+  section h2 {
+    margin-bottom: 0.3em;
+  }
+
+  section p {
+    max-width: 650px;
+    line-height: 1.5;
+  }
+</style>
+
+<p class="intro">
   Welcome to my blog! This page acts as a sitemap and lists everything I've posted here so you can explore easily.
 </p>
 
-<h2>About me</h2>
-<p>
-  More about me <a href="{{ site.baseurl }}about/">here</a>. 
-</p>
+<section>
+  <h2>About me</h2>
+  <p>
+    More about me <a href="{{ site.baseurl }}/about/">here</a>.
+  </p>
+</section>
 
-<h2>Blog posts</h2>
-<p>
-  Check out all of my <a href="{{ site.baseurl }}blog/">blog posts</a>! I occassionally share interesting stuff I come across in mathematics and programming.
-</p>
+<section>
+  <h2>Blog posts</h2>
+  <p>
+    Check out all of my <a href="{{ site.baseurl }}/blog/">blog posts</a>! I occassionally share interesting stuff I come across in mathematics and programming.
+  </p>
+</section>
 
-<h2>Geometry Corner</h2>
-<p>
-  I've been really fond of geometry since middle school. It's that one area in mathematics that has continued to fascinate me for years. Checkout my <a href="{{ site.baseurl }}geometry/">geometry corner</a> to learn more!
-</p>
+<section>
+  <h2>Geometry Corner</h2>
+  <p>
+    I've been really fond of geometry since middle school. It's that one area in mathematics that has continued to fascinate me for years. Checkout my <a href="{{ site.baseurl }}/geometry/">geometry corner</a> to learn more!
+  </p>
+</section>
+
+<section>
+  <h2>Math Olympiads</h2>
+  <p>
+    I've spent a good amount of my highschool years preparing for math olympiads. I used to love solving math olympiad problems and even thought I've grown up, I still find myself finding enjoyment and satisfaction thinking and solving math olympiad problems. Checkout my <a href="{{ site.baseurl }}/math/olympiad">math olympiad corner</a> to learn more!
+  </p>
+</section>
 
 

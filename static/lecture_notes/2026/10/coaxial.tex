@@ -285,16 +285,220 @@ Similarly, we can show that $E$ lies on $\overline{MY}$. Since $\overline{DE}$ $
     In triangle $ABC$, point $A_1$ lies on side $BC$ and point $B_1$ lies on side $AC$. Let $P$ and $Q$ be points on segments $AA_1$ and $BB_1$, respectively, such that $PQ$ is parallel to $AB$. Let $P_1$ be a point on line $PB_1$, such that $B_1$ lies strictly between $P$ and $P_1$, and $\angle PP_1C=\angle BAC$. Similarly, let $Q_1$ be the point on line $QA_1$, such that $A_1$ lies strictly between $Q$ and $Q_1$, and $\angle CQ_1Q=\angle CBA$. Prove that points $P$, $Q$, $P_1$ and $Q_1$ are concyclic.
 \end{exercise}
 
+\begin{exercise}[APMO 2022]
+    Let $ABC$ be a right triangle with $\angle B=90^{\circ}$. Point $D$ lies on the line $CB$ such that $B$ is between $D$ and $C$. Let $E$ be the midpoint of $AD$ and let $F$ be the second intersection point of the circumcircle of $\triangle ACD$ and the circumcircle of $\triangle BDE$. Prove that as $D$ varies, the line $EF$ passes through a fixed point.
+\end{exercise}
 
+\section{Forgotten Coaxiality Lemma}
+Another powerful result to show that a circle is coaxial with other two circles is the following.
+\begin{theorem}[Forgotten Coaxiality Lemma]
+    Given two circles $\omega_1$ and $\omega_2$ that intersect in $A$ and $B$. Then the locus of points $P$ such that 
+    \begin{align*}
+        \frac{\operatorname{Pow}_{\omega_1} (P)}{\operatorname{Pow}_{\omega_2} (P)} = k
+    \end{align*}
+    for a real constant $k$, is a circle that is passes through $A$ and $B$.
+\end{theorem}
+An equivalent way to state the above result is to consider the following situation
+\begin{example}
+    Given two circles $\omega_1$ and $\omega_2$ that intersect in $A$ and $B$. For some points $C$ and $D$ we would like to show that $A$, $B$, $C$ and $D$ are concyclic.
+\end{example}
+Using the forgotten coaxiality lemma, we can essentially ignore points $A$ and $B$ and the concyclicity would be immediately implied if
+\begin{align*}
+\frac{\operatorname{Pow}_{\omega_1} \left( C \right)}{\operatorname{Pow}_{\omega_2} \left( C \right)} = \frac{\operatorname{Pow}_{\omega_1} \left( D \right)}{\operatorname{Pow}_{\omega_2} \left( D \right)}
+\end{align*}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
 
-\newpage
+        pair A, B, C, D, X, Y;
+
+        B = (0, 0); A = (0, 3); X = (-5, 0); Y = (4, 0);
+        draw(circumcircle(A, B, X));
+        draw(circumcircle(A, B, Y));
+
+        C = (2, 0); D = (2, 3);
+        draw(circumcircle(A, B, C), heavygray+dashed);
+
+        dot("$A$", A, dir(170));
+        dot("$B$", B, dir(190));
+        dot("$C$", C, dir(320));
+        dot("$D$", D, dir(50));
+    \end{asy}
+\end{figure}
+\begin{proof}
+Suppose $AD$ intersects $\omega_1$ and $\omega_2$ at $D_1$ and $D_2$, and $BC$ intersects $\omega_1$ and $\omega_2$ at $C_1$ and $C_2$. Therefore,
+\begin{align*}
+    \frac{\operatorname{Pow}_{\omega_1} \left( C \right)}{\operatorname{Pow}_{\omega_2} \left( C \right)} = \frac{\overline{CB} \cdot \overline{CC_1}}{\overline{CB} \cdot \overline{CC_2}} = \frac{\overline{CC_1}}{\overline{CC_2}} 
+\end{align*}
+Similarly,
+\begin{align*}
+    \frac{\operatorname{Pow}_{\omega_1} \left( D \right)}{\operatorname{Pow}_{\omega_2} \left( D \right)} = \frac{\overline{DA} \cdot \overline{DD_1}}{\overline{DA} \cdot \overline{DD_2}} = \frac{\overline{DD_1}}{\overline{DD_2}} 
+\end{align*}
+However by reim's theorem, $\overline{C_1D_1} \parallel \overline{CD} \parallel \overline{C_2D_2}$. Hence,
+\begin{align*}
+\frac{\overline{CC_1}}{\overline{CC_2}} &= \frac{\overline{DD_1}}{\overline{DD_2}} \\
+\end{align*}
+which proves that,
+\begin{align*}
+    \frac{\operatorname{Pow}_{\omega_1} \left( C \right)}{\operatorname{Pow}_{\omega_2} \left( C \right)} &= \frac{\operatorname{Pow}_{\omega_1} \left( D \right)}{\operatorname{Pow}_{\omega_2} \left( D \right)} 
+\end{align*}
+\end{proof}
+
+\subsection{Examples}
+\begin{problem}[CGMO 2017]
+    Let the $ABCD$ be a cyclic quadrilateral with circumcircle $\omega_1$. Lines $AC$ and $BD$ intersect at point $E$, and lines $AD$, $BC$ intersect at point $F$. Circle $\omega_2$ is tangent to segments $EB$, $EC$ at points $M$, $N$ respectively, and intersects with circle $\omega_1$ at points $Q$, $R$. Lines $BC$, $AD$ intersect line $MN$ at $S$, $T$ respectively. Show that $Q$, $R$, $S$, $T$ are concyclic.
+\end{problem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(11cm); defaultpen(fontsize(11pt));pen med=mediummagenta;pen light=pink;pen deep=deepmagenta;pen org=magenta;pen heavy=heavymagenta;
+
+        pair O,A,B,C,D,E,F,G,M,N,S,T,Q,R;
+        O=(0,0); D=dir(15); A=dir(110); B=dir(205); C=dir(330); 
+        path w=circumcircle(A,B,C);
+        E=extension(A,C,B,D);
+        F=extension(A,D,B,C);
+        G=2.2*incenter(B,E,C)-1.2*E;
+        N=foot(G,E,C);
+        M=foot(G,E,B);
+        S=extension(B,C,N,M);
+        T=extension(A,D,N,M);
+        Q=intersectionpoints(circle(G,abs(G-M)),w)[0];
+        R=intersectionpoints(circle(G,abs(G-M)),w)[1];
+
+        draw(w);
+        draw(A--B--C--D--cycle);
+        draw(circle(G,abs(G-M)));
+        draw(circumcircle(Q,R,S), heavygray+dashed);
+        draw(D--T);draw(C--F);
+        draw(M--T);
+        draw(A--C);
+        draw(B--D);
+
+        clip((-1,1)--(3.5,1)--(3.5,-1.5)--(-1,-1.5)--cycle);
+
+        dot("$B$",B,dir(B));
+        dot("$C$",C,dir(300));
+        dot("$A$",A,dir(A));
+        dot("$D$",D,dir(55));
+        dot("$E$",E,dir(80));
+        dot("$F$",F,dir(70));
+        dot("$M$",M,dir(140));
+        dot("$N$",N,dir(60));
+        dot("$S$",S,dir(270));
+        dot("$T$",T,dir(60));
+        dot("$Q$",Q,dir(Q));
+        dot("$R$",R,dir(290));
+    \end{asy}
+\end{figure}
+\begin{proof}
+    We would like to show that $QRST$ is a cyclic quadrilateral. Since $\overline{QR}$ is the radical axis of $\odot(ABCD)$ and $\odot(MNQR)$ $\implies$ we need to show $QRST$ is coaxial with these two circles. Applying the forgotten coaxiality lemma, we want to show
+    \begin{align*}
+        \frac{\operatorname{Pow}_{\omega_1}(S)}{\operatorname{Pow}_{\omega_2}(S)} &= \frac{\operatorname{Pow}_{\omega_1}(T)}{\operatorname{Pow}_{\omega_2}(T)} \\ 
+        \Longleftrightarrow \frac{\overline{SB} \cdot \overline{SC}}{\overline{SM} \cdot \overline{SN}} &= \frac{\overline{TA} \cdot \overline{TD}}{\overline{TN} \cdot \overline{TM}}
+    \end{align*}    
+    Since $\triangle EMN$ is isosceles $\implies$ $\angle CNS$ $=$ $\angle ENM$ $=$ $\angle DMT$. And, $\angle ACB$ $=$ $\angle ADB$ $\implies$ $\angle NCS$ $=$ $\angle MDT$. Therefore by AA similarity criterion, we have $\triangle NCS$ $\sim$ $\triangle MDT$. Similarly, $\triangle BMS$ $\sim$ $\triangle ANT$. These two similar triangles imply
+    \begin{align*}
+        \frac{\overline{SC}}{\overline{SN}} = \frac{\overline{TD}}{\overline{TM}} \,\,\,\, \& \,\,\,\, \frac{\overline{SB}}{\overline{SM}} = \frac{\overline{TA}}{\overline{TN}}
+    \end{align*}
+    Multiplying these two equalities we get the desired result 
+    \begin{align*}
+        \frac{\overline{SB} \cdot \overline{SC}}{\overline{SM} \cdot \overline{SN}} = \frac{\overline{TA} \cdot \overline{TD}}{\overline{TN} \cdot \overline{TM}} \implies \frac{\operatorname{Pow}_{\omega_1}(S)}{\operatorname{Pow}_{\omega_2}(S)} = \frac{\operatorname{Pow}_{\omega_1}(T)}{\operatorname{Pow}_{\omega_2}(T)}
+    \end{align*}
+    Therefore, $QRST$ is coaxial with $\omega_1$ and $\omega_2$ $\implies$ $QRST$ is cyclic.
+\end{proof}
+
+\begin{problem}[IMO Shortlist 2005]
+    Let $\triangle ABC$ be an acute-angled triangle with $AB \not= AC$. Let $H$ be the orthocenter of triangle $ABC$, and let $M$ be the midpoint of the side $BC$. Let $D$ be a point on the side $AB$ and $E$ a point on the side $AC$ such that $AE=AD$ and the points $D$, $H$, $E$ are on the same line. Prove that the line $HM$ is perpendicular to the common chord of the circumscribed circles of triangle $\triangle ABC$ and triangle $\triangle ADE$.
+\end{problem}
+\begin{figure}[h]
+\centering
+\begin{asy}
+    import geometry;
+    size(7cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, H, D, E, X, Y, M;
+    A = dir(110);
+    B = dir(200);
+    C = dir(340);
+    H = A+B+C;
+    X = foot(B, A, C);
+    Y = foot(C, A, B);
+    D = extension(A, B, H, incenter(H,B,Y));
+    E = extension(A, C, H, incenter(H,C,X));
+    M = (B + C) / 2;
+    
+    draw(A--B--C--cycle^^D--E^^B--X^^C--Y);
+    draw(circumcircle(A, D, E)^^circumcircle(A, B, C));
+    draw(circumcircle(A, X, Y), dashed);
+
+    pair[] QQ = intersectionpoints(line(H, M), circumcircle(A, B, C));
+    
+    dot("$A$", A, dir(90));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$D$", D, dir(200));
+    dot("$E$", E, dir(30));
+    dot("$H$", H, dir(270));
+    dot("$X$", X, dir(0));
+    dot("$Y$", Y, dir(210));
+    dot("$M$", M, dir(310));
+    dot("$Q$", QQ[1], dir(140));
+    draw(M--QQ[1]); draw(A--QQ[1]); 
+    markrightangle(M, QQ[1], A, 7); markrightangle(B, X, C, 7); markrightangle(B, Y, C, 7);
+\end{asy}
+\end{figure}
+\begin{proof}
+    It's well known that if the ray $MH$ intersects $\odot(ABC)$ at $Q$, then $\overline{AQ}$ $\perp$ $\overline{HM}$. This suggests us that $Q$ must lie on $\odot(ADE)$. To show that $ADEQ$ is cyclic, we only need to show 
+    \begin{align*}
+        \frac{\operatorname{Pow}_{\odot(ABC)}(D)}{\operatorname{Pow}_{\odot(AH)}(D)} = \frac{\operatorname{Pow}_{\odot(ABC)}(E)}{\operatorname{Pow}_{\odot(AH)}(E)}
+    \end{align*}
+    Suppose $X$ and $Y$ are the feet of perpendicular from $B$ and $C$ onto $\overline{AC}$ and $\overline{AB}$. Then,
+    \begin{align*}
+        \frac{\operatorname{Pow}_{\odot(ABC)}(D)}{\operatorname{Pow}_{\odot(AH)}(D)} &= \frac{\operatorname{Pow}_{\odot(ABC)}(E)}{\operatorname{Pow}_{\odot(AH)}(E)} \\ 
+        \Longleftrightarrow \frac{\overline{DA} \cdot \overline{DB}}{\overline{DY} \cdot \overline{DA}} &= \frac{\overline{EA} \cdot \overline{EC}}{\overline{EX} \cdot \overline{EA}} \\ 
+        \Longleftrightarrow \frac{\overline{DB}}{\overline{DY}} &= \frac{\overline{EC}}{\overline{EX}}
+    \end{align*}
+    Since, $\angle YHB$ $=$ $\angle BAC$ and $\angle YHD$ $=$ $90^{\circ} - \angle YDH$ $=$ $\tfrac{1}{2} \angle BAC$. Therefore, $\overline{DH}$ is the angle bisector of $\angle YHB$ and similarly $\overline{HE}$ is the angle bisector of $\angle CHX$. Using the fact that $BYXC$ is a cyclic quadrilateral, we can write
+    \begin{align*}
+        \overline{HY} \cdot \overline{HC} &= \overline{HX} \cdot \overline{HB} \\ 
+        \implies \frac{\overline{HY}}{\overline{HB}} &= \frac{\overline{HX}}{\overline{HC}} \\ 
+        \implies \frac{\overline{DY}}{\overline{DB}} &= \frac{\overline{EX}}{\overline{EC}}
+    \end{align*}
+    Due to the forgotten coaxiality lemma, we have $AQDE$ is a cyclic quadrilateral $\implies$ $\overline{HM}$ is perpendicular to the radical axis of $\odot(ABC)$ and $\odot(ADE)$.
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}
+    In triangle $\triangle ABC$, let $E$ and $F$ be points on sides $AC$ and $AB$, respectively, such that $BFEC$ is cyclic. Let lines $BE$ and $CF$ intersect at point $P$, and $M$ and $N$ be the midpoints of $\overline{BF}$ and $\overline{CE}$, respectively. If $U$ is the foot of the perpendicular from $P$ to $BC$, and the circumcircles of triangles $\triangle BMU$ and $\triangle CNU$ intersect at second point $V$ different from $U$, prove that $A, P,$ and $V$ are collinear.
+\end{exercise}
+
+\begin{exercise}[European Mathematical Cup 2016]
+    Let $C_{1}$, $C_{2}$ be circles intersecting in $X$, $Y$ . Let $A$, $D$ be points on $C_{1}$ and $B$, $C$ on $C_2$ such that $A$, $X$, $C$ are collinear and $D$, $X$, $B$ are collinear. The tangent to circle $C_{1}$ at $D$ intersects $BC$ and the tangent to $C_{2}$ at $B$ in $P$, $R$ respectively. The tangent to $C_2$ at $C$ intersects $AD$ and tangent to $C_1$ at $A$, in $Q$, $S$ respectively. Let $W$ be the intersection of $AD$ with the tangent to $C_{2}$ at $B$ and $Z$ the intersection of $BC$ with the tangent to $C_1$ at $A$. Prove that the circumcircles of triangles $YWZ$, $RSY$ and $PQY$ have two points in common, or are tangent in the same point.
+\end{exercise}
+
 \section{Practice Problems}
+\begin{exercise}[Iran 2021]
+    Circle $\omega$ is inscribed in quadrilateral $ABCD$ and is tangent to segments $BC, AD$ at $E,F$ , respectively.$DE$ intersects $\omega$ for the second time at $X$. if the circumcircle of triangle $DFX$ is tangent to lines $AB$ and $CD$ , prove that quadrilateral $AFXC$ is cyclic.
+\end{exercise}
+
 \begin{exercise}[Romania TST 2017]
     Let $ABCD$ be a trapezium, $AD \parallel BC$, and let $E$ and $F$ be points on the sides $AB$ and $CD$, respectively. The circumcircle of $AEF$ meets $AD$ again at $A_1$, and the circumcircle of $CEF$ meets $BC$ again at $C_1$. Prove that $A_1C_1$, $BD$ and $EF$ are concurrent.
 \end{exercise}
 
 \begin{exercise}[IMO Shortlist 2017]
     Let $ABCC_1B_1A_1$ be a convex hexagon such that $AB=BC$, and suppose that the line segments $AA_1, BB_1$, and $CC_1$ have the same perpendicular bisector. Let the diagonals $AC_1$ and $A_1C$ meet at $D$, and denote by $\omega$ the circle $ABC$. Let $\omega$ intersect the circle $A_1BC_1$ again at $E \neq B$. Prove that the lines $BB_1$ and $DE$ intersect on $\omega$.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2012]
+    Let $ABC$ be a triangle with circumcircle $\omega$ and $\ell$ a line without common points with $\omega$. Denote by $P$ the foot of the perpendicular from the center of $\omega$ to $\ell$. The side-lines $BC,CA,AB$ intersect $\ell$ at the points $X,Y,Z$ different from $P$. Prove that the circumcircles of the triangles $AXP$, $BYP$ and $CZP$ have a common point different from $P$ or are mutually tangent at $P$.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2017]
+    A convex quadrilateral $ABCD$ has an inscribed circle with center $I$. Let $I_a, I_b, I_c$ and $I_d$ be the incenters of the triangles $DAB, ABC, BCD$ and $CDA$, respectively. Suppose that the common external tangents of the circles $AI_bI_d$ and $CI_bI_d$ meet at $X$, and the common external tangents of the circles $BI_aI_c$ and $DI_aI_c$ meet at $Y$. Prove that $\angle{XIY}=90^{\circ}$.
 \end{exercise}
 
 \end{document}

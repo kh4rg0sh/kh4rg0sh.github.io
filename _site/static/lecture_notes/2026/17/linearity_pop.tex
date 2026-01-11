@@ -1,0 +1,247 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+
+\begin{document}
+\title{Linearity of Power of a Point}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering In this article, we will learn about an advanced technique that exploits the linearity of the power of a point function.
+\end{abstract}
+
+\section{Background}
+Let's reiterate over the definition of the power of a point function.
+\begin{definition}
+    For a given circle $\omega$ centered at $O$ and radius $r$, and a point $P$, the \vocab{power of a point} is defined as 
+    \begin{align*}
+        \operatorname{Pow}_{\omega} \left( P \right) = \overline{OP}^2 - r^2
+    \end{align*}
+\end{definition}
+The big claim here is that the difference of power of a point computed against two circles is \emph{linear}. In mathematics, when we talk about \vocab{linear functions}, we mean functions that satisfy the following conditions
+\begin{align*}
+f\left( x + y \right) &= f(x) + f(y) \\ 
+f\left( \alpha x \right) &= \alpha f(x)
+\end{align*}
+In general, these conditions can be combined and written as
+\begin{align*}
+    f \left( \alpha x + (1 - \alpha) x \right) = \alpha f(x) + \left( 1 - \alpha \right) f(x)
+\end{align*}
+
+\section{Proving Linearity}
+\begin{theorem}[Linearity of Power of a Point]
+    Define a function $f : \mathbb{R}^2 \rightarrow \mathbb{R}$ as 
+    \begin{align*}
+        f \left( P \right) = \operatorname{Pow}_{\omega_1} \left( P \right) - \operatorname{Pow}_{\omega_2} \left( P \right)
+    \end{align*}
+    for two fixed circles $\omega_1$ and $\omega_2$. Then $f$ is linear.
+\end{theorem}
+\begin{proof}
+Suppose the centers of the circles $\omega_1$ and $\omega_2$ are $O_1$ and $O_2$, and their radii are $r_1$ and $r_2$ respectively. Pick two points $A$ and $B$ and choose point $C$ on $\overline{AB}$ such that
+\begin{align*}
+    \frac{\overline{AC}}{\overline{CB}} = \frac{k}{1 - k}
+\end{align*}
+We would like to show that 
+\begin{align*}
+f \left( C \right) = k f \left( A \right) + (1 - k) f \left( B \right)
+\end{align*}
+Simplifying the left hand side expression
+\begin{align*}
+f \left( C \right) &= \operatorname{Pow}_{\omega_1} \left( C \right) - \operatorname{Pow}_{\omega_2} \left( C \right) \\
+            &= \left( \overline{O_1C}^2 - r_1^2 \right) - \left( \overline{O_2C}^2 - r_2^2 \right) 
+\end{align*}
+Applying Stewart's Theorem on $\triangle ABO_1$ and $\triangle ABO_2$,
+\begin{align*}
+    &= \left( \overline{O_1C}^2 - r_1^2 \right)
+       - \left( \overline{O_2C}^2 - r_2^2 \right) \\[4pt]
+    &= \Bigg(
+          -k(1-k)\overline{AB}^2 + 
+            \left(
+              (1-k)\overline{O_1B}^2
+              + k\overline{O_1A}^2
+            \right)
+        \Bigg) \\[-2pt]
+    &\quad
+        - \Bigg(
+          -k(1-k)\overline{AB}^2 + 
+            \left(
+              (1-k)\overline{O_2B}^2
+              + k\overline{O_2A}^2
+            \right)
+        \Bigg) + r_2^2 - r_1^2 \\[4pt]
+    &= k \left( \overline{O_1A}^2 - \overline{O_2A}^2 \right) + (1 - k) \left( \overline{O_1B}^2 - \overline{O_2B}^2 \right) + r_2^2 - r_1^2 \\ 
+    &= k \left( \overline{O_1A}^2 - r_1^2 \right) - k \left( \overline{O_2A}^2 - r_2^2 \right) \\[-2pt]
+    &\quad + (1 - k) \left( \overline{O_1B}^2 - r_1^2 \right) - (1 - k) \left( \overline{O_2B}^2 - r_2^2 \right) \\[4pt]
+    &= k f(A) + (1 - k) f(B)
+\end{align*}
+thus proving the linearity.
+\end{proof}
+
+\section{Applications: Radical Axis}
+Linearity of power of a point turns out to be a good criteria to determine if a point lies on the radical axis of two circles. Since the radical axis is the locus of points having equal power, it essentially means that it's the locus of zeros of $f$.
+\begin{problem}[USA 2020]
+Let $O$ and $\Gamma$ denote the circumcenter and circumcircle, respectively, of scalene $\triangle ABC$. Furthermore, let $M$ be the midpoint of side $\overline{BC}$. The tangent to $\Gamma$ at $A$ intersects $BC$ and $OM$ at points $X$ and $Y$, respectively. If the circumcircle of $\triangle OXY$ intersects $\Gamma$ at two distinct points $P$ and $Q$, prove that $PQ$ bisects $\overline{AM}$.
+\end{problem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; 
+        size(9cm); defaultpen(fontsize(10pt));
+        
+        pair A,B,C,D,O,P,Q,X,Y,S,T,M;
+        
+        O = (0,0);
+        A = dir(120);
+        B = dir(210);
+        C = dir(330);
+        D = dir(60);
+        S = foot(O,A,D);
+        M = (B+C)/2;
+        T = (A+M)/2;
+        P = intersectionpoint(circumcircle(A,B,C),S--S+dir(T--S)*100);
+        Q = intersectionpoint(circumcircle(A,B,C),S--S+dir(S--T)*100);
+        Y = intersectionpoint(circumcircle(O,P,Q),O--O+dir(O--S)*100);
+        X = extension(A,Y,B,C);
+        
+        draw(A--B--C--cycle);
+        draw(circumcircle(O,X,Y));
+        draw(circumcircle(A,B,C));
+        draw(Y--X);
+        draw(A--M);
+        draw(Y--M);
+        draw(X--B);
+        
+        dot("$O$",O, dir(340));
+        dot("$A$",A,dir(120));
+        dot("$B$",B,dir(245));
+        dot("$C$",C,dir(-35));
+        dot("$M$",M,dir(-60));
+        dot("$X$",X,dir(-145));
+        dot("$Y$",Y,dir(45));
+        dot("$N$",T,dir(180));
+
+        markrightangle(O, M, X, 7); markrightangle(X, A, O, 7);
+        draw(A--O); draw(arc(circumcircle(A, O, M), -20, 200), heavygray+dashed);
+    \end{asy}
+\end{figure}
+\begin{proof}
+Suppose $N$ is the midpoint of $\overline{AM}$. We would like to show that $N$ lies on the radical axis of the circles $\odot(ABC)$ and $\odot(OXY)$. Suppose $f$ is defined as 
+\begin{align*}
+    f \left( P \right) = \operatorname{Pow}_{\odot(ABC)} \left( P \right) - \operatorname{Pow}_{\odot(OXY)} \left( P \right)
+\end{align*}
+Then we would like to show that
+\begin{align*}
+    f \left( N \right) = \frac{1}{2} \left( f(A) + f(M)\right) &= 0 \\
+\end{align*}
+Keeping in mind that the power of a point function is negative for points inside the circle,
+\begin{align*}
+f(A) + f(M) &= (0 - \left( - \overline{AX} \cdot \overline{AY} \right)) + \left( - \overline{BM} \cdot \overline{MC} - \overline{OM} \cdot \overline{MY} \right) \\ 
+            &= \overline{AX} \cdot \overline{AY} - \tfrac{1}{4} \overline{BC}^2 - \overline{OM} \cdot \overline{MY} \\ 
+            &= \overline{AX} \cdot \overline{AY} + \overline{OM}^2 - \overline{OB}^2 - \overline{OM} \cdot \overline{MY} \\ 
+            &= \overline{AX} \cdot \overline{AY} - \overline{OA}^2 - \overline{OM} \cdot \overline{OY} \\ 
+            &= \overline{AX} \cdot \overline{AY} + \overline{AY}^2 - \overline{OY}^2 - \overline{OM} \cdot \overline{OY} \\ 
+            &= \overline{AY} \cdot \overline{XY} - \overline{OY} \cdot \overline{MY} 
+\end{align*}
+Since $\angle OAX = \angle OMX = 90^{\circ}$ $\implies$ $AOMX$ is a cyclic quadrilateral. Therefore, 
+\begin{align*}
+    \overline{AY} \cdot \overline{XY} = \overline{YO} \cdot \overline{YM} \implies f(A) + f(M) = 0
+\end{align*}
+hence $f(N) = 0$, implying that the midpoint of $\overline{AM}$ lies on the radical axis $\overline{PQ}$.
+\end{proof}
+
+\section{Applications: Identifying Fixed Points}
+Often we would like to show that a circle passes through a fixed point. There are several ways to prove such results. One of the ways is to pick a fixed point on the secant through the desired fixed point and show that the power of point is constant.
+\begin{problem}[ELMO Shortlist 2013]
+    In $\triangle ABC$, a point $D$ lies on line $BC$. The circumcircle of $ABD$ meets $AC$ at $F$ (other than $A$), and the circumcircle of $ADC$ meets $AB$ at $E$ (other than $A$). Prove that as $D$ varies, the circumcircle of $AEF$ always passes through a fixed point other than $A$, and that this point lies on the median from $A$ to $BC$.
+\end{problem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, M, D, E, F;
+        A = dir(120); B = dir(210); C = dir(330);
+        M = (B + C) / 2; D = (0.7 * B + 0.3 * C);
+        pair[] EE = intersectionpoints(line(A, B), circumcircle(A, D, C));
+        pair[] FF = intersectionpoints(line(A, C), circumcircle(A, B, D));
+
+        dot("$A$", A, dir(120));
+        dot("$B$", B, dir(230));
+        dot("$C$", C, dir(310));
+        dot("$M$", M, dir(310));
+        dot("$D$", D, dir(265));
+        dot("$E$", EE[0], dir(190));
+        dot("$F$", FF[0], dir(40));
+
+        draw(A--B--C--cycle); 
+        draw(circumcircle(A, D, C), heavygray);
+        draw(circumcircle(A, D, B), heavygray);
+        draw(circumcircle(A, EE[0], FF[0]), heavygray+dashed);
+
+        pair[] XX = intersectionpoints(line(A, M), circumcircle(A, EE[0], FF[0]));
+        dot("$X$", XX[0], dir(250)); draw(A--M); draw(circumcircle(A, B, C));
+    \end{asy}
+\end{figure}
+\begin{proof}
+    If we can show that the power of $M$ with respect to $\odot(AEF)$ is constant, then that would mean $\odot(AEF)$ passes through a fixed point on $\overline{AM}$. Suppose $\overline{AM}$ $\cap$ $\odot(AEF)$ $=$ $X$. Define $f$ as 
+    \begin{align*}
+        f (P) = \operatorname{Pow}_{\odot(ABC)} \left( P \right) - \operatorname{Pow}_{\odot(AEF)} \left( P \right)
+    \end{align*}
+    Using the fact that $f$ is linear, we get 
+    \begin{align*}
+        f(M) &= \tfrac{1}{2} \left( f(B) + f(C) \right) \\ 
+            &= \tfrac{1}{2} \left( \left( 0 - \overline{BE} \cdot \overline{AB} \right) + \left( 0 - \overline{CF} \cdot \overline{AC} \right) \right) \\ 
+            &= -\tfrac{1}{2} \left( \overline{BE} \cdot \overline{AB} + \overline{CF} \cdot \overline{AC} \right) \\ 
+            &= -\tfrac{1}{2} \left( \overline{BD} \cdot \overline{BC} + \overline{CD} \cdot \overline{BC} \right) \\ 
+            &= -\tfrac{1}{2} \overline{BC}^2
+    \end{align*}
+    Since, 
+    \begin{align*}
+        f(M) &= \operatorname{Pow}_{\odot(ABC)} \left( M \right) - \operatorname{Pow}_{\odot(AEF)} \left( M \right) \\
+            &= - \overline{BM} \cdot \overline{MC} - \operatorname{Pow}_{\odot(AEF)} \left( M \right) \\ 
+            &= -\tfrac{1}{2} \overline{BC}^2
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \operatorname{Pow}_{\odot(AEF)} = \frac{1}{4} \overline{BC}^2
+    \end{align*}
+    which is a constant. This shows that the product $\overline{AM} \cdot \overline{MX}$ is a constant and thus $\odot(AEF)$ passes through the fixed point $X$.
+\end{proof}
+
+\section{Applications: Zero Radius Circle}
+\begin{problem}[USAMO 2013]
+    In triangle $ABC$, points $P$, $Q$, $R$ lie on sides $BC$, $CA$, $AB$ respectively. Let $\omega_A$, $\omega_B$, $\omega_C$ denote the circumcircles of triangles $AQR$, $BRP$, $CPQ$, respectively. Given the fact that segment $AP$ intersects $\omega_A$, $\omega_B$, $\omega_C$ again at $X$, $Y$, $Z$, respectively, prove that $YX/XZ=BP/PC$.
+\end{problem}
+
+
+
+
+\end{document}

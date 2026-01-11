@@ -1,9 +1,9 @@
-PWD /home/kh4rg0sh/work_dir/8th_sem/math-olympiads/handouts/lecture_notes/2026/11
+PWD /home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/11
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/kh4rg0sh/work_dir/8th_sem/math-olympiads/handouts/lecture_notes/2026/11/lec3.tex
+INPUT /home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/11/lec3.tex
 OUTPUT lec3.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/koma-script/scrartcl.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/koma-script/scrartcl.cls
@@ -512,6 +512,7 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/yhmath/yhcmex10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/rsfs/rsfs5.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx9.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
@@ -528,7 +529,6 @@ INPUT ./lec3-4.pdf
 INPUT ./lec3-4.pdf
 INPUT ./lec3-4.pdf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 OUTPUT lec3-5.asy
 INPUT ./lec3-5.pdf
 INPUT ./lec3-5.pdf

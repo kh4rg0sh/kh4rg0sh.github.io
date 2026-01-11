@@ -3,3 +3,6 @@
 \InputIfFileExists {\jobname -3.pre}{}{}
 \InputIfFileExists {\jobname -4.pre}{}{}
 \InputIfFileExists {\jobname -5.pre}{}{}
+\InputIfFileExists {\jobname -6.pre}{}{}
+\InputIfFileExists {\jobname -7.pre}{}{}
+\InputIfFileExists {\jobname -8.pre}{}{}

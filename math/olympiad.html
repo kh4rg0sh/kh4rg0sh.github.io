@@ -5,11 +5,39 @@ paginate: 10
 permalink: /math/olympiad
 ---
 
+<style>
+    .olympiad-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        max-width: 500px;
+        font-size: 0.95em;
+    }
+
+    .olympiad-links a {
+        padding: 0.6em 0.8em;
+        border-left: 4px solid #444;
+        background: #f7f7f7;
+        text-decoration: none;
+        color: #000;
+    }
+
+    .olympiad-links a:hover {
+        background: #eee;
+    }
+</style>
+
 <h1>Olympiad Math</h1>
 This page aims to collect my solutions to math olympiad problems. There are several math olympiads that feature beautiful problems on their tests. Here are the ones that I plan to do.
 
 <h2>International Olympiads</h2>
-<a href="{{ site.baseurl }}/math/olympiad/imo-shortlist">IMO Shortlist</a>
+<div class="olympiad-links">
+  <a href="{{ site.baseurl }}/math/olympiad/imo-shortlist">IMO Shortlist</a>
+  <a href="{{ site.baseurl }}/math/olympiad/egmo">
+    EGMO (European Girls Mathematical Olympiad)
+  </a>
+</div>
+
 
 <h2>National Olympiads</h2>
 
