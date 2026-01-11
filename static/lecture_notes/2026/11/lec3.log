@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.14)  11 JAN 2026 07:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.14)  11 JAN 2026 14:07
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1251,36 +1251,36 @@ Package pdftex.def Info: lec3-10.pdf  used on input line 600.
  [9 <./lec3-10.pdf>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 615.
+(hyperref)                removing `math shift' on input line 621.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 615.
+(hyperref)                removing `math shift' on input line 621.
 
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 616.
-Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 616.
+(mdframed)              on input line 622.
+Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 622.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 627.
+(mdframed)              on input line 633.
 \openout3 = `lec3-11.asy'.
 
-<lec3-11.pdf, id=278, 227.62239pt x 204.70778pt>
+<lec3-11.pdf, id=280, 227.62239pt x 204.70778pt>
 File: lec3-11.pdf Graphic file (type pdf)
 <use lec3-11.pdf>
-Package pdftex.def Info: lec3-11.pdf  used on input line 658.
+Package pdftex.def Info: lec3-11.pdf  used on input line 664.
 (pdftex.def)             Requested size: 227.62183pt x 204.70726pt.
 [10 <./lec3-11.pdf>]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 666.
+(mdframed)              on input line 672.
 \openout3 = `lec3-12.asy'.
 
-<lec3-12.pdf, id=299, 197.20375pt x 227.62239pt>
+<lec3-12.pdf, id=301, 197.20375pt x 227.62239pt>
 File: lec3-12.pdf Graphic file (type pdf)
 <use lec3-12.pdf>
-Package pdftex.def Info: lec3-12.pdf  used on input line 702.
+Package pdftex.def Info: lec3-12.pdf  used on input line 708.
 (pdftex.def)             Requested size: 197.20326pt x 227.62183pt.
  [11 <./lec3-12.pdf>] [12] (./lec3.aux)
  ***********
@@ -1291,18 +1291,18 @@ Package rerunfilecheck Info: File `lec3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 41144 strings out of 474222
- 862002 string characters out of 5748733
+ 41147 strings out of 474222
+ 862064 string characters out of 5748733
  1945975 words of memory out of 5000000
- 62432 multiletter control sequences out of 15000+600000
+ 62433 multiletter control sequences out of 15000+600000
  581839 words of font info for 198 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  123i,21n,128p,10995b,1204s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx1440.pfb>
-Output written on lec3.pdf (12 pages, 350498 bytes).
+Output written on lec3.pdf (12 pages, 350925 bytes).
 PDF statistics:
- 512 PDF objects out of 1000 (max. 8388607)
- 391 compressed objects within 4 object streams
- 112 named destinations out of 1000 (max. 500000)
+ 514 PDF objects out of 1000 (max. 8388607)
+ 393 compressed objects within 4 object streams
+ 114 named destinations out of 1000 (max. 500000)
  45353 words of extra memory for PDF output out of 51595 (max. 10000000)
 
