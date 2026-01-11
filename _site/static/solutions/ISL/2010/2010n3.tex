@@ -64,6 +64,26 @@ Find the smallest number $n$ such that there exist polynomials $f_1, f_2, \ldots
         \end{align*}
         which implies that $\max \left( \operatorname{deg} (f_1), \ldots, \operatorname{deg} (f_n) \right) = 1$. Hence, $\operatorname{deg} \left( f_i \right) \le 1$.
     \end{proof}
+    \begin{lemma}
+        For $r$ $\in$ $\mathbb{Q}$, with its simplest form $r = \tfrac{p}{q}$ for $p$, $q$ $\in$ $\mathbb{Z}$ and $q \neq 0$. If $pq$ is of the form $(8x + 7)$, then the equation
+        \begin{align*}
+            x^2 + y^2 + z^2 = r
+        \end{align*}
+        has no solutions in $\mathbb{Q}$.
+    \end{lemma}
+    \begin{proof}
+        Suppose for the sake of contradiction, there exists rational solutions to the equation
+        \begin{align*}
+            x^2 + y^2 + z^2 = r
+        \end{align*}
+        This could be re-written as, 
+        \begin{align*}
+            \left( \frac{a}{b} \right)^2 + \left( \frac{c}{d} \right)^2 + \left( \frac{e}{f} \right)^2 &= \frac{p}{q} \\ 
+        \Longleftrightarrow (qadf)^2 + (qcbf)^2 + (qbde)^2 &= pq (bdf)^2
+        \end{align*}
+        Since the quadratic residues $\pmod{8}$ are $\{ 0, 1, 4 \}$, we get that $pq(bdf)^2$ is of the form $4^k \left( 8\ell + 7\right)$ which has no integer solutions due to Legendre's three-square theorem, proving the claim.
+    \end{proof}
+
     We claim that $\boxed{n = 5}$ is the smallest number for which there exists such polynomials. Constructing the answer is easy. Consider,
     \begin{align*}
         \left( f_1, f_2, f_3, f_4, f_5 \right) = \left( x, 1, 1, 1, 2 \right)
@@ -96,7 +116,7 @@ Find the smallest number $n$ such that there exist polynomials $f_1, f_2, \ldots
         \begin{align*}
             7 = (-af + be + ch - dg)^2 + (-ag - bh + ce + df)^2 + (-ah + bg - cf + de)^2
         \end{align*}
-        which has no integer solutions due to Legendre's three-square theorem. This proves the claim that for $n \le 4$, we have no solutions.
+        which has no rational solutions due to the previously proven lemma. This proves that for $n \le 4$, we have no solutions.
     \end{proof}
 \end{proof}
 
