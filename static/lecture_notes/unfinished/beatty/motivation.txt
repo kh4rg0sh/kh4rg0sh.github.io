@@ -52,6 +52,3 @@ uses beatty theorem
 then i also found some arxiv paper relating primes and beatty sequence: https://arxiv.org/pdf/0708.1015
 talks about long's conjecture
 i dont even see the relevance of shit in that paper but still im curious how do beatty sequences even appear in that mess
-
-
-
