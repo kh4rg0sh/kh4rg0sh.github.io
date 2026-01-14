@@ -1,0 +1,42 @@
+\section{Jan 14, 2026}
+\subsection{Dirac Notation}
+For the simplicity of discussion, we assume that the dimension of the space is $2$. We first define two linearly independent vectors in space.
+\begin{equation*}
+    \ket{0} = \twovec{1}{0} \qquad
+    \ket{1} = \twovec{0}{1}
+\end{equation*}
+We can now define the \highlight{ket notation} and the \highlight{bra notation}.
+\begin{definition}
+    For a state $\psi$, the \vocab{ket notation} is defined as 
+    \begin{equation*}
+        \ket{\psi} = \psi_0 \ket{0} + \psi_1 \ket{1} = \twovec{\psi_0}{\psi_1}
+    \end{equation*}
+\end{definition}
+\begin{definition}
+For any given \emph{ket notation}, there exists a corresponding \emph{bra notation}. The \vocab{bra notation} is defined as the transpose of the complex conjugate of the ket notation.
+\begin{equation*}
+    \bra{\psi} = \tworow{\psi_0^{*}}{\psi_1^{*}}
+\end{equation*}
+\end{definition}
+\subsection{Inner product and Outer product}
+We introduce a few more operations with no real significance yet.
+\begin{definition}
+Suppose we have two states $\phi$ and $\psi$. The \vocab{inner product} of these two states is denoted and defined as
+\begin{align*}
+\braket{\phi}{\psi} &= \tworow{\phi_0^{*}}{\phi_1^{*}} \twovec{\psi_0}{\psi_1} \\ 
+        &= \phi_0^{*} \psi_0 + \phi_1^{*}\psi_1
+\end{align*}
+\end{definition}
+\begin{definition}
+Suppose we have two states $\phi$ and $\psi$. The \vocab{outer product} of these two states is denoted and defined as
+\begin{align*}
+\ket{\phi} \bra{\psi} &= \twovec{\phi_0}{\phi_1} \tworow{\psi_0^{*}}{\psi_1^{*}} \\ 
+                &= \twomat{\phi_0 \psi_0^{*}}{\phi_0 \psi_1^{*}}{\phi_1 \psi_0^{*}}{\phi_1 \psi_1^{*}}
+\end{align*}
+\end{definition}
+
+\subsection{Unitary Operator}
+A unitary operator $\hat{U}$ is said to be linear if its inverse $\hat{U}^{-1}$ is equal to its \vocab{Hermitian Adjoint}.
+\begin{equation*}
+    \hat{U} \hat{U}^{\dagger} = \hat{U}^{\dagger} \hat{U} = \hat{I} 
+\end{equation*}

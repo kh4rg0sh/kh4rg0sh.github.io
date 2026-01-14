@@ -24,15 +24,11 @@
 \usepackage[hidelinks]{hyperref}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-
-\theoremstyle{definition}
 \declaretheoremstyle[
 	headfont=\sffamily\bfseries\color{MidnightBlue},
 	headpunct={\\[3pt]},
 	postheadspace={0pt},
 ]{thmtheorem}
-
 
 \declaretheoremstyle[
 	headfont=\bfseries\color{RawSienna},
@@ -127,6 +123,8 @@
 
 \declaretheorem[name=Question,sibling=theorem,style=thmques]{ques}
 \tcolorboxenvironment{ques}{ques box}
+\declaretheorem[name=Definition,sibling=theorem,style=thmques]{definition}
+\tcolorboxenvironment{definition}{ques box}
 \declaretheorem[name=Exercise,sibling=theorem,style=thmques]{exercise}
 \tcolorboxenvironment{exercise}{ques box}
 \declaretheorem[name=Remark,sibling=theorem,style=thmremark]{remark}
@@ -135,3 +133,7 @@
 \tcolorboxenvironment{remark*}{remark box}
 \declaretheorem[name=Step,style=thmremark]{step}
 \tcolorboxenvironment{step}{remark box}
+
+\newenvironment{solution}
+{\par\noindent\textbf{Solution.}\ }
+{\hfill$\square$\par}
