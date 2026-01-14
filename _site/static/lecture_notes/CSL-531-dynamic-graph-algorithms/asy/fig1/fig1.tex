@@ -1,0 +1,48 @@
+\begin{asy}
+    import graph;
+    import geometry;
+    size(12cm);
+    
+    pen graphColor = rgb(0.3,0.5,0.7);
+    pen graphColor2 = rgb(0.2,0.4,0.6);
+    pen graphColor3 = rgb(0.3,0.9,1);
+    pen dataColor1 = rgb(0.5,0.7,0.3);
+    pen dataColor2 = rgb(0.4,0.6,0.2);
+    pen dataColor3 = rgb(0.5,1,0.5);
+    
+    pair G = (0,0);
+    pair Gp = (5,0);
+    pair Gpp = (10,0);
+    
+    pair D1 = (0,-3);
+    pair D2 = (5,-3);
+    pair D3 = (10,-3);
+    
+    filldraw(circle(G,1),graphColor);
+    label("\textbf{$G$}", G);
+    
+    filldraw(circle(Gp,1),graphColor2);
+    label("\textbf{$G'=G+U$}", Gp);
+    
+    filldraw(circle(Gpp,1),graphColor3);
+    label("\textbf{$G''$}", Gpp);
+    
+    filldraw(circle(D1,1.2),dataColor1);
+    label("\textbf{$S_1$}", D1);
+    
+    filldraw(circle(D2,1.2),dataColor2);
+    label("\textbf{$S_2$}", D2);
+    
+    filldraw(circle(D3,1.2),dataColor3);
+    label("\textbf{$S_3$}", D3);
+    
+    draw(G--Gp, Arrow(6));
+    draw(Gp--Gpp, Arrow(6));
+    draw(D1--D2, Arrow(6));
+    draw(D2--D3, Arrow(6));
+    draw(G--D1, Arrow(6));
+    draw(Gp--D2, Arrow(6));
+    draw(Gpp--D3, Arrow(6));
+    
+    
+\end{asy}

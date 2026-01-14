@@ -1,0 +1,145 @@
+\section{Jan 13, 2026}
+This course will be graded through the following components: 
+\begin{itemize}[itemsep=0.01em]
+    \item \textbf{MTE: } 30\%
+    \item \textbf{CWS: } 30\%
+    \item \textbf{ETE: } 40\%
+\end{itemize}
+Both the MTE and the ETE will be written examinations. The CWS component will be based on announced quizzes, tutorial session and a course project. The goal of the course is:
+\begin{enumerate}[itemsep=0.01em]
+    \item to be able to \highlight{Design} dynamic graph algorithms using standard design techniques and \highlight{prove} its correctness.
+    \item to be able to \highlight{Analyze} dynamic graph algorithms using standard analysis techniques and \highlight{prove} its tightness.
+    \item to be able to \highlight{Prove} the hardness of a given dynamic graph problem by \highlight{reducing} it to a standard hard problem.
+\end{enumerate}
+The syllabus for this course outlines the following content to be taught.
+\begin{enumerate}[itemsep=0.01em]
+    \item \textbf{Introduction:} Terminology, definitions, models, classical problems.
+    \item \textbf{Amortization Techniques:} Doubling, monotonicity, bounded potential. \textit{Case studies:} Partially dynamic MIS, BFS, incremental connectivity, reachability.
+    \item \textbf{Randomization Techniques:} Random sampling, hitting sets, probability tools. \textit{Case studies:} Dynamic matching, decremental connectivity, fully dynamic MIS.
+    \item \textbf{Hierarchical Decomposition Techniques:} Decomposition, multilevel decomposition. \textit{Case studies:} Dynamic matching, fully dynamic connectivity, shortest paths.
+    \item \textbf{Primal Dual Techniques:} Definition, applications in approximation algorithms. \textit{Case studies:} Dynamic vertex cover, fractional matching, coloring.
+    \item \textbf{Fine Grained Complexity:} SETH, polynomial complexity conjectures, reductions. \textit{Case studies:} Shortest paths, connectivity, reachability, matching, diameter.
+    \item \textbf{Miscellaneous Topics:} State of the art in DFS trees, maximal independent sets.
+\end{enumerate}
+The class strength for this course is only 6 students! You need to perform well and meet the expectations of the instructor to fare well in this course.
+
+\subsection{Introduction to Dynamic Graph Algorithms}
+\begin{definition}
+    \RaggedRight
+    \vocab{Dynamic Graphs} are graphs that \emph{change} with time. A \emph{change} in a graph refers to \highlight{graph updates}, that are \emph{online} sequences of insertion or deletion of edges or vertices.
+\end{definition}
+
+Therefore we can model a dynamic graph as a sequence of updates on a static graph. Formally, we can view this as
+\[
+    G_0 \overset{\Delta_1}{\longrightarrow} G_1 \overset{\Delta_2}{\longrightarrow} G_2 \overset{\Delta_3}{\longrightarrow} \ldots
+\]
+where each $\Delta_i$ is an update to the graph. Suppose we are interested in computing some quantity $\mathcal{X}$ of the graph $G$ for which there exists a known static graph algorithm $\mathbf{X}$. Upon each update $\Delta_i$ to $G$, we can trivially compute $\mathcal{X}$ for the new graph $G'$ by updating $G$ and running $\mathbf{X}$ on it. The goal of a \highlight{dynamic graph algorithm} is to reuse previous computations to update the quantity $\mathcal{X}$ \emph{much faster} than a static graph algorithm.
+
+Most graphs in real world are dynamic. The sizes of parameters for these graphs are significantly large and thus, recomputing solutions on such graphs from scratch is impractical. This motivates us to look for dynamic variants of static graph algorithms. However, we are only interested in dynamic graph algorithms that perform \emph{better} than the best static graph algorithms that exist for the problem.
+
+\subsection{Classification of DGAs}
+Dynamic Graph Algorithms (DGAs) can be classified into
+\begin{enumerate}
+    \item \vocab{Incremental} (only insertions)
+    \item \vocab{Decremental} (only deletions)
+    \item \vocab{Fully Dynamic} (both insertions and deletions)
+\end{enumerate}
+It is worth mentioning that in case of weighted graphs, we might want to consider incrementing and decrementing the weights as graph updates too. However, any increment or decrement to the weight of an edge could be modelled as a deletion followed by an insertion. Therefore, we limit the definition of graph updates to
+\begin{definition}
+A dynamic graph $G (V, E)$ supports the following \vocab{graph updates}
+\begin{multicols}{2}
+    \begin{itemize}
+        \item Insertion of edges
+        \item Insertion of vertices
+        \item Deletion of edges
+        \item Deletion of vertices
+    \end{itemize}
+\end{multicols}
+\end{definition}
+
+To analyse the performance of algorithms, we need to equip ourselves with some theory on time complexity analysis.
+
+\subsection{Time Complexity Analysis}
+Some key notations on time complexities.
+\begin{definition}
+    For functions $f$ and $g$, we have
+    \begin{enumerate}
+        \item $f(n) = \mathcal{O} \left( g(n) \right)$, if there exists positive real numbers $M$ and $n_0$ such that,
+        \begin{equation*}
+            \left\lvert f(n) \right\rvert \le M g(n), \qquad \forall n \geq n_0
+        \end{equation*}
+        \item $f(n) = o \left( g(n) \right)$, if for every positive real number $M$, there exists $n_0$ such that,
+        \begin{equation*}
+            \left\lvert f(n) \right\rvert \le M g(n), \qquad \forall n \geq n_0
+        \end{equation*}
+        \item $f(n) = \Omega \left( g(n) \right)$, if there exists positive real numbers $M$ and $n_0$ such that,
+        \begin{equation*}
+            \left\lvert f(n) \right\rvert \geq M g(n), \qquad \forall n \geq n_0
+        \end{equation*}
+        \item $f(n) = \omega \left( g(n) \right)$, if for every positive real number $M$, there exists $n_0$ such that,
+        \begin{equation*}
+            \left\lvert f(n) \right\rvert \geq M g(n), \qquad \forall n \geq n_0
+        \end{equation*}
+        \item $f(n) = \Theta \left( g(n) \right)$, if there exists positive real numbers $M_1$, $M_2$ and $n_0$ such that,
+        \begin{equation*}
+            M_1 g(n) \le \left\lvert f(n) \right\rvert \le M_2 g(n), \qquad \forall n \geq n_0
+        \end{equation*}
+    \end{enumerate}
+\end{definition}
+
+A common way to establish a tight bound while analysing an algorithm is to find a worst-case example, which helps us establish a lower bound. In dynamic graphs, we commonly deal with the following.
+\begin{enumerate}[itemsep=0.02em]
+    \item \vocab{Preprocessing Time}: Initial time to preprocess the graph.
+    \item \vocab{Update Time}: Time taken after each update to reconstruct the data structure.
+    \item \vocab{Query Time}: Time taken to answer query on the updated structure.
+\end{enumerate}
+
+\subsection{Update-Query Tradeoff}
+There is often a trade-off between how fast updates are processed with how fast queries can be answered. Suppose a static algorithm has time complexity $\mathcal{O}(T)$. The extremes of the update-query tradeoff occur when we adopt the following approaches.
+\begin{multicols}{2}
+\begin{itemize}
+    \item \highlight{Eager Approach}
+    \begin{itemize}
+        \item $\mathcal{O} (T)$ update time.
+        \item $\mathcal{O} (1)$ query time.
+    \end{itemize}
+    \item \highlight{Lazy Approach}
+    \begin{itemize}
+        \item $\mathcal{O} (1)$ update time.
+        \item $\mathcal{O} (T)$ query time.
+    \end{itemize}
+\end{itemize}
+\end{multicols}
+The above approaches are feasible when queries are more frequent, and when updates are more frequent, respectively. Usually when we design an algorithm, we aim to find a sweet spot between these extremes depending on the constraints and requirements of the problem. At times, even when the worst-case bound is proven to be tight, improving the amortized bound is still considered an improvement.
+
+\begin{example}
+    DSU (\vocab{Disjoin Set Union}) is a popular example of a dynamic graph algorithm. It supports two operations, \highlight{Join} and \highlight{Find}, both of which achieve an amortized time complexity of $\mathcal{O} \left( \alpha (n) \right)$. Here, $\alpha (n)$ is the \highlight{inverse ackermann function}. Suppose we consider an incremental dynamic graph model that has $m$ edge updates. One might think that the total time complexity of this algorithm would be $\mathcal{O} \left( m \alpha (n)\right)$. However, we can only have $n - 1$ edges in the final graph. Therefore, the total time complexity must be $\mathcal{O} \left( n \alpha (n) \right)$ and the amortized time complexity achieved per update is
+    \[
+        \mathcal{O} \left( \frac{n \alpha (n)}{m} \right)
+    \]
+\end{example}
+
+\subsection{Time Complexity Bounds}
+We previously gave an informal discussion about the ideal performance a dynamic algorithm. Now, we consider various scenarios and analyse this in detail.
+
+Consider a problem $\mathcal{P}$ having a best static algorithm $T_s(n)$. Now consider a dynamic algorithm $T_d(n)$ for the problem $\mathcal{P}$.
+\subsubsection{Upper Bound on $T_d(n)$}
+Since we cannot have $T_d(n)$ perform worse than $T_s(n)$, hence we have
+\begin{equation*}
+    T_d(n) = \mathcal{O} \left( T_s(n) \right)
+\end{equation*}
+
+\subsubsection{Lower Bound on $T_d(n)$}
+\begin{enumerate}
+    \item If $T_d(n)$ is an incremental algorithm, then consider a graph with size $\mathcal{O} \left( n \right)$ constructed with $m$ incremental updates. Applying $T_d(n)$ at every incremental update and summing up, we get
+    \begin{equation*}
+        m T_d (n) = \Omega (T_s(n)) \implies T_d(n) = \Omega \left( \frac{T_s(n)}{m} \right)
+    \end{equation*}
+    \item If $T_d(n)$ is a decremental algorithm, 
+    \item If $T_d(n)$ is fully dynamic,
+\end{enumerate}
+
+\begin{ques}
+    Does there exist a dynamic algorithm for an \highlight{NP-complete} problem that lies in $\mathbf{P}$?
+\end{ques}
+    
