@@ -11,17 +11,17 @@ Both the MTE and the ETE will be written examinations. The CWS component will be
     \item to be able to \highlight{Analyze} dynamic graph algorithms using standard analysis techniques and \highlight{prove} its tightness.
     \item to be able to \highlight{Prove} the hardness of a given dynamic graph problem by \highlight{reducing} it to a standard hard problem.
 \end{enumerate}
-The syllabus for this course outlines the following content to be taught.
-\begin{enumerate}[itemsep=0.01em]
-    \item \textbf{Introduction:} Terminology, definitions, models, classical problems.
-    \item \textbf{Amortization Techniques:} Doubling, monotonicity, bounded potential. \textit{Case studies:} Partially dynamic MIS, BFS, incremental connectivity, reachability.
-    \item \textbf{Randomization Techniques:} Random sampling, hitting sets, probability tools. \textit{Case studies:} Dynamic matching, decremental connectivity, fully dynamic MIS.
-    \item \textbf{Hierarchical Decomposition Techniques:} Decomposition, multilevel decomposition. \textit{Case studies:} Dynamic matching, fully dynamic connectivity, shortest paths.
-    \item \textbf{Primal Dual Techniques:} Definition, applications in approximation algorithms. \textit{Case studies:} Dynamic vertex cover, fractional matching, coloring.
-    \item \textbf{Fine Grained Complexity:} SETH, polynomial complexity conjectures, reductions. \textit{Case studies:} Shortest paths, connectivity, reachability, matching, diameter.
-    \item \textbf{Miscellaneous Topics:} State of the art in DFS trees, maximal independent sets.
-\end{enumerate}
-The class strength for this course is only 6 students! You need to perform well and meet the expectations of the instructor to fare well in this course.
+% The syllabus for this course outlines the following content to be taught.
+% \begin{enumerate}[itemsep=0.01em]
+%     \item \textbf{Introduction:} Terminology, definitions, models, classical problems.
+%     \item \textbf{Amortization Techniques:} Doubling, monotonicity, bounded potential. \textit{Case studies:} Partially dynamic MIS, BFS, incremental connectivity, reachability.
+%     \item \textbf{Randomization Techniques:} Random sampling, hitting sets, probability tools. \textit{Case studies:} Dynamic matching, decremental connectivity, fully dynamic MIS.
+%     \item \textbf{Hierarchical Decomposition Techniques:} Decomposition, multilevel decomposition. \textit{Case studies:} Dynamic matching, fully dynamic connectivity, shortest paths.
+%     \item \textbf{Primal Dual Techniques:} Definition, applications in approximation algorithms. \textit{Case studies:} Dynamic vertex cover, fractional matching, coloring.
+%     \item \textbf{Fine Grained Complexity:} SETH, polynomial complexity conjectures, reductions. \textit{Case studies:} Shortest paths, connectivity, reachability, matching, diameter.
+%     \item \textbf{Miscellaneous Topics:} State of the art in DFS trees, maximal independent sets.
+% \end{enumerate}
+% The class strength for this course is only 6 students! You need to perform well and meet the expectations of the instructor to fare well in this course.
 
 \subsection{Introduction to Dynamic Graph Algorithms}
 \begin{definition}
@@ -120,11 +120,11 @@ The above approaches are feasible when queries are more frequent, and when updat
 \end{example}
 
 \subsection{Time Complexity Bounds}
-We previously gave an informal discussion about the ideal performance a dynamic algorithm. Now, we consider various scenarios and analyse this in detail.
+So far, we have given an informal discussion of the ideal performance of a dynamic algorithm. Now we consider various scenarios and analyse them in detail.
 
 Consider a problem $\mathcal{P}$ having a best static algorithm $T_s(n)$. Now consider a dynamic algorithm $T_d(n)$ for the problem $\mathcal{P}$.
 \subsubsection{Upper Bound on $T_d(n)$}
-Since we cannot have $T_d(n)$ perform worse than $T_s(n)$, hence we have
+Since we cannot have $T_d(n)$ perform worse than $T_s(n)$, therefore
 \begin{equation*}
     T_d(n) = \mathcal{O} \left( T_s(n) \right)
 \end{equation*}
@@ -140,10 +140,10 @@ Since we cannot have $T_d(n)$ perform worse than $T_s(n)$, hence we have
 \end{enumerate}
 
 \begin{ques}
-    Think about the lower bound on $T_d(n)$ in the case of a decremental and fully dynamic algorithm.
+    Think about the lower bound on $T_d(n)$ in the case of a decremental, and fully dynamic algorithm.
 \end{ques}
 
 \begin{ques}
-    Does there exist a dynamic algorithm for an \highlight{NP-complete} problem that lies in $\mathbf{P}$?
+    Does there exist a dynamic algorithm for an \highlight{NP-hard} problem that lies in $\mathbf{P}$?
 \end{ques}
     

@@ -1,0 +1,152 @@
+\section{Jan 14, 2026}
+In this lecture, we elaborate on our discussion of the lower bounds of $T_d(n)$.
+
+Here is the premise of our discussion. Given a problem $\mathcal{P}$ and the best known static algorithm to solve $\mathcal{P}$ called $T_s(n)$, we wish to analyse the time complexity of a dynamic algorithm $T_d(n)$ for solving $\mathcal{P}$.
+\begin{lemma}[Upper Bound on $T_d(n)$]\label{sec:lemma1}
+    For any problem $\mathcal{P}$, it always holds that 
+    \[
+        T_d(n) = \mathcal{O}\!\left(T_s(n)\right)
+    \]
+\end{lemma}
+\begin{proof}
+    If the time complexity of the dynamic algorithm $T_d(n)$ exceeds that of the static algorithm $T_s(n)$, then there is no use in developing the dynamic algorithm. In such a case, one could simply use $T_s(n)$ to recompute the desired quantity after every update.
+\end{proof}
+
+\subsection{$T_d(n)$ is Incremental}
+Suppose $T_d(n)$ is an incremental dynamic algorithm for $\mathcal{P}$, meaning that $T_d(n)$ only supports incremental updates. We consider the following two types of incremental updates.
+
+\subsubsection{Edge Updates}\label{sec:inc_edge_updates}
+Let $G(n, m)$ be a graph on $n$ vertices and $m$ edges. We would like to analyse the bounds on $T_d(n)$ when considering \highlight{edge insertions} to $G$.
+
+\begin{enumerate}
+    \item \emph{Upper Bound}. By \hyperref[sec:lemma1]{lemma 2.1}, we immediately obtain an upper bound on $T_d(n)$ given by 
+        \[
+            \boxed{T_d(n) = \mathcal{O}\!\left(T_s(n)\right)}
+        \]
+    \item \emph{Lower Bound}. Consider a graph with $n$ vertices and no edges. Constructing this graph takes $\mathcal{O}(1)$ time, and we assume that computing $\mathcal{P}$ on this graph also takes $\mathcal{O}(1)$ time. To obtain the target graph $G$, we must perform $m$ edge insertions. Applying the dynamic algorithm $T_d(n)$ after each edge update yields a valid \emph{static} algorithm to compute $\mathcal{P}$. Since $T_s(n)$ is the best known algorithm for static computation of $\mathcal{P}$ on $G$, therefore we must have
+        \[
+            \mathcal{O}(1) + m T_d(n) = \Omega\!\left(T_s(n)\right)
+        \]
+        which implies
+        \[
+            \boxed{T_d(n) = \Omega\!\left(\frac{T_s(n)}{m}\right)}
+        \]
+\end{enumerate} 
+
+\subsubsection{Vertex Updates}
+Let $G(n, m)$ be a graph on $n$ vertices and $m$ edges. Now we would like to analyse the bounds on $T_d(n)$ when considering \highlight{vertex insertions} to $G$. 
+
+\begin{enumerate}
+    \item \emph{Upper Bound}. By \hyperref[sec:lemma1]{lemma 2.1}, we have
+        \[
+            \boxed{T_d(n) = \mathcal{O}\!\left(T_s(n)\right)}
+        \]
+    \item \emph{Lower Bound}. If each update on $G$ inserts a singleton vertex \emph{without} any edges, then assuming that no nontrivial recomputation is required for $\mathcal{P}$, we obtain the lower bound
+        \[
+            \boxed{T_d(n) = \Omega(1)}
+        \]
+    If instead, each update on $G$ adds a singleton vertex \emph{with} edges, then computing the lower bound for $T_d(n)$ in a similar fashion to that for \hyperref[sec:inc_edge_updates]{edge insertions}, we obtain
+        \[
+            \mathcal{O}(1) + n T_d(n) = \Omega\!\left(T_s(n)\right)
+        \]
+        which implies
+        \[
+            \boxed{T_d(n) = \Omega\!\left(\frac{T_s(n)}{n}\right)}
+        \]
+\end{enumerate}
+
+\subsection{$T_d(n)$ is Decremental}
+We now assume that $T_d(n)$ is a decremental algorithm for $\mathcal{P}$. We first want to solve the problem on a trivial case and then apply a sequence of graph updates to obtain the given graph. 
+
+For incremental algorithms, we started with an empty graph. Similarly, for decremental algorithms, we would require a graph from which we could perform a sequence of decremental graph updates and obtain the given graph. A \highlight{complete graph} is a suitable choice since, every graph on $n$ vertices is a subgraph of the complete graph on $n$ vertices.
+
+Suppose that we can solve $\mathcal{P}$ on a complete graph trivially, in $\mathcal{O}(1)$ time. If the update operation consists of \highlight{edge deletions}, then constructing the complete graph requires $\mathcal{O} (n^2)$ time, and we would require $\mathcal{O}(n^2)$ edge deletions to transform it to $G$. This implies that
+\[
+\mathcal{O}(n^2) + \mathcal{O}(n^2) T_d(n) = \Omega\!\left(T_s(n)\right)
+\]
+From here, we can derive lower bounds on $T_d(n)$ depending upon $T_s(n)$. For example, 
+\[
+    T_s(n) = \mathcal{O}(n^2) \implies T_d(n) = \Omega(1)
+\]
+and,
+\[
+    T_s(n) = \omega(n^2) \implies T_d(n) = \Omega\!\left(\frac{T_s(n)}{n^2}\right)
+\]  
+However, solving $\mathcal{P}$ on a complete graph is not always trivial. For example, the \vocab{Traveling Salesman Problem} is exponential on a complete graph. Hence, a general treatment of the time complexity of decremental algorithms is difficult, and we instead analyse specific problems to obtain more meaningful bounds.
+
+\subsubsection{Decremental MST (Minimum Spanning Tree)}
+Let $T_d(n)$ be a decremental algorithm for computing the \vocab{Minimum Spanning Tree} of a graph $G$ on $n$ vertices, and let $T_s(n)$ be the best known static algorithm to compute the MST.
+
+\begin{definition}
+The \highlight{Minimum Spanning Tree} of a connected, weighted, undirected graph $G$ is a subset of edges that connects all the vertices of $G$ and has the minimum sum of weights. 
+\end{definition}
+
+Suppose we consider \highlight{edge deletions} for our algorithm. We could obtain a lower bound on $T_d(n)$ by the following method. Introduce a dummy vertex $v'$ and connect it to every vertex $v$ $\in$ $G$ with edges of extremely small weights. Let the resulting graph be $G'$. To construct $G'$ from $G$, we require $\mathcal{O} (n)$ time. The minimum spanning tree of $G'$ is trivial because it contains all the edges connecting $v'$. Deleting these $n$ edges recovers $G$, and we obtain
+\[
+    \mathcal{O}(n) + n T_d(n) = \Omega\!\left(T_s(n)\right)
+\]
+and hence
+\[
+    \boxed{T_d(n) = \Omega\!\left(\frac{T_s(n)}{n}\right)}
+\]
+If instead we considered \highlight{vertex deletions} for our algorithm, then
+\[
+    \mathcal{O}(n) + T_d(n) = \Omega\!\left(T_s(n)\right)
+\]
+which implies
+\[
+    T_d(n) = \Omega\!\left(T_s(n)\right)
+\]
+Using \hyperref[sec:lemma1]{lemma 2.1}, we obtain
+\[
+    \boxed{T_d(n) = \Theta\!\left(T_s(n)\right)}
+\]
+This tells us that the we have a tight bound and there is no asymptotic benefit in designing a decremental algorithm for computing the MST that supports only vertex deletions.
+
+\subsubsection{Decremental BFS Tree}
+Let $T_d(n)$ be a decremental algorithm to compute the \vocab{BFS Tree} on a graph $G$ with $n$ vertices, and $T_s(n)$ be the best known static algorithm to compute the BFS Tree.
+
+\begin{definition}
+    The \highlight{BFS Tree} of an unweighted graph $G$ is the spanning tree produced by running the BFS algorithm on $G$.
+\end{definition}
+
+Let's say we allow \highlight{edge deletions}. Observe that we can trivially compute the BFS Tree on a complete graph in $\mathcal{O} (n)$ time. Hence, we could add dummy edges to $G$ to transform it to a complete graph on $n$ vertices in $\mathcal{O} (n^2)$ time. Moreover, we require $\mathcal{O} \left( n^2 \right)$ edge deletions to transform the complete graph back to $G$. Therefore
+\[
+    \mathcal{O}(n^2) + \mathcal{O}(n^2) T_d(n) = \Omega\!\left(T_s(n)\right)
+\]
+and hence
+\[
+    \boxed{T_d(n) = \Omega\!\left(\frac{T_s(n)}{n^2}\right)}
+\]
+
+\subsubsection{Decremental Traveling Salesman Problem}
+Let $T_d(n)$ be a decremental algorithm to compute the \vocab{Traveling Salesman Problem} on a graph $G$ with $n$ vertices, and $T_s(n)$ be the best known algorithm to compute this problem.
+
+\begin{definition}
+    Given a complete, weighted, undirected graph $G$ and a source vertex $s$, the \highlight{Traveling Salesman Problem} asks for a minimum weight cycle starting and ending on $s$ that visits all the vertices in graph $G$, exactly once.
+\end{definition}
+
+Suppose we allow \highlight{vertex deletions} for our algorithm. Add $n$ dummy vertices to the graph $G$ and for each dummy vertex $v$, connect all the vertices in $G$ to $v$ with extremely small weights. Let the resulting graph be $G'$. In this graph, computing the minimum weight cycle that visits all the vertices is trivial. It is just a cycle that alternates between each vertex of $G$ and the dummy vertices. Constructing $G'$ takes $\mathcal{O} (n^2)$ time, and computing the minimum weight cycle requires $\mathcal{O} (n)$ time. Further, we require $n$ vertex deletions to transform $G'$ to $G$. Hence
+\[
+    \mathcal{O}(n^2) + n T_d(n) = \Omega\!\left(T_s(n)\right)
+\]
+and therefore
+\[
+    \boxed{T_d(n) = \Omega\!\left(\frac{T_s(n)}{n}\right)}
+\]
+
+If instead we allow \highlight{edge deletions} for our algorithm, then we would have to relax the constraint on the Traveling Salesman Problem for $G$ to be a complete graph, so that every edge deletion results in valid subproblem. We construct graph $G'$ again, but in this case we require $\mathcal{O} (n^2)$ edge deletions to transform $G'$ to $G$. Therefore
+\[
+    \mathcal{O}(n^2) + \mathcal{O}(n^2) T_d(n) = \Omega\!\left(T_s(n)\right),
+\]
+and hence
+\[
+    \boxed{T_d(n) = \Omega\!\left(\frac{T_s(n)}{n^2}\right)}.
+\]
+
+\subsection{$T_d(n)$ is Fully Dynamic}
+For fully dynamic algorithms, it is difficult to make general statements. However, since incremental and decremental algorithms are special cases of fully dynamic algorithms, any lower bound for these special cases also yields a (possibly weaker) lower bound for fully dynamic algorithms.
+
+\begin{remark}
+There cannot exist a polynomial time dynamic algorithm for an \highlight{NP-hard} problem, because if such an algorithm existed then we could apply it in an incremental fashion to obtain a polynomial time static algorithm to solve the problem, contradicting NP-hardness.
+\end{remark}
