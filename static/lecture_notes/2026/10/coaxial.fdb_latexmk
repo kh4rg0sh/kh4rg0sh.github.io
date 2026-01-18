@@ -1,48 +1,48 @@
 # Fdb version 4
-["cusdep asy pdf coaxial-1"] 0 "coaxial-1.asy" "coaxial-1.pdf" "coaxial-1" 1768713521.34334 -1
-  "coaxial-1.asy" 1768713520.69763 2336 1d8d60aacc2ff46c0248344dbd082ceb "pdflatex"
+["cusdep asy pdf coaxial-1"] 0 "coaxial-1.asy" "coaxial-1.pdf" "coaxial-1" 1768738844.90614 -1
+  "coaxial-1.asy" 1768738844.19701 2336 1d8d60aacc2ff46c0248344dbd082ceb "pdflatex"
   (generated)
   "coaxial-1.pdf"
   (rewritten before read)
-["cusdep asy pdf coaxial-2"] 0 "coaxial-2.asy" "coaxial-2.pdf" "coaxial-2" 1768713521.3433 -1
-  "coaxial-2.asy" 1768713520.84962 2344 2d5ab914fb3c0d91432f81f5eb29aa7e "pdflatex"
+["cusdep asy pdf coaxial-2"] 0 "coaxial-2.asy" "coaxial-2.pdf" "coaxial-2" 1768738844.90598 -1
+  "coaxial-2.asy" 1768738844.34301 2344 2d5ab914fb3c0d91432f81f5eb29aa7e "pdflatex"
   (generated)
   "coaxial-2.pdf"
   (rewritten before read)
-["cusdep asy pdf coaxial-3"] 0 "coaxial-3.asy" "coaxial-3.pdf" "coaxial-3" 1768713521.34325 -1
-  "coaxial-3.asy" 1768713520.88349 2350 4fe94c67d795b49d274575373597d2a9 "pdflatex"
+["cusdep asy pdf coaxial-3"] 0 "coaxial-3.asy" "coaxial-3.pdf" "coaxial-3" 1768738844.90584 -1
+  "coaxial-3.asy" 1768738844.37601 2350 4fe94c67d795b49d274575373597d2a9 "pdflatex"
   (generated)
   "coaxial-3.pdf"
   (rewritten before read)
-["cusdep asy pdf coaxial-4"] 0 "coaxial-4.asy" "coaxial-4.pdf" "coaxial-4" 1768713521.34319 -1
-  "coaxial-4.asy" 1768713520.93359 2735 3bcf5023bb6f0b859d7ea2c05448efe6 "pdflatex"
+["cusdep asy pdf coaxial-4"] 0 "coaxial-4.asy" "coaxial-4.pdf" "coaxial-4" 1768738844.90571 -1
+  "coaxial-4.asy" 1768738844.42601 2735 3bcf5023bb6f0b859d7ea2c05448efe6 "pdflatex"
   (generated)
   "coaxial-4.pdf"
   (rewritten before read)
-["cusdep asy pdf coaxial-5"] 0 "coaxial-5.asy" "coaxial-5.pdf" "coaxial-5" 1768713521.34314 -1
-  "coaxial-5.asy" 1768713520.97058 2540 ec05f42b52db2d58c507117e526d8dc3 "pdflatex"
+["cusdep asy pdf coaxial-5"] 0 "coaxial-5.asy" "coaxial-5.pdf" "coaxial-5" 1768738844.90558 -1
+  "coaxial-5.asy" 1768738844.46416 2540 ec05f42b52db2d58c507117e526d8dc3 "pdflatex"
   (generated)
   "coaxial-5.pdf"
   (rewritten before read)
-["cusdep asy pdf coaxial-6"] 0 "coaxial-6.asy" "coaxial-6.pdf" "coaxial-6" 1768713521.34309 -1
-  "coaxial-6.asy" 1768713521.06538 2089 42d4a8202eb8446d8a63885f75ce6628 "pdflatex"
+["cusdep asy pdf coaxial-6"] 0 "coaxial-6.asy" "coaxial-6.pdf" "coaxial-6" 1768738844.90544 -1
+  "coaxial-6.asy" 1768738844.55701 2089 42d4a8202eb8446d8a63885f75ce6628 "pdflatex"
   (generated)
   "coaxial-6.pdf"
   (rewritten before read)
-["cusdep asy pdf coaxial-7"] 0 "coaxial-7.asy" "coaxial-7.pdf" "coaxial-7" 1768713521.34301 -1
-  "coaxial-7.asy" 1768713521.10995 2728 925fd9aa95d9c6822f34fa403276df82 "pdflatex"
+["cusdep asy pdf coaxial-7"] 0 "coaxial-7.asy" "coaxial-7.pdf" "coaxial-7" 1768738844.90528 -1
+  "coaxial-7.asy" 1768738844.60449 2728 925fd9aa95d9c6822f34fa403276df82 "pdflatex"
   (generated)
   "coaxial-7.pdf"
   (rewritten before read)
-["cusdep asy pdf coaxial-8"] 0 "coaxial-8.asy" "coaxial-8.pdf" "coaxial-8" 1768713521.34284 -1
-  "coaxial-8.asy" 1768713521.15349 2577 2932286bc9f1d23bfccc8a87d2b5e5ad "pdflatex"
+["cusdep asy pdf coaxial-8"] 0 "coaxial-8.asy" "coaxial-8.pdf" "coaxial-8" 1768738844.90493 -1
+  "coaxial-8.asy" 1768738844.65034 2577 2932286bc9f1d23bfccc8a87d2b5e5ad "pdflatex"
   (generated)
   "coaxial-8.pdf"
   (rewritten before read)
-["pdflatex"] 1768713517.65478 "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/10/coaxial.tex" "coaxial.pdf" "coaxial" 1768713521.34339 0
+["pdflatex"] 1768738840.57674 "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/10/coaxial.tex" "coaxial.pdf" "coaxial" 1768738844.90626 0
   "/etc/texmf/web2c/texmf.cnf" 1735619042.2153 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/kh4rg0sh/texmf/tex/latex/evan/evan.sty" 1768628727.51232 30068 8acd06035a3280a1fe97f38db63943c7 ""
-  "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/10/coaxial.tex" 1768713514.70721 26607 463b10adb21f9570df0514974bc48ca4 ""
+  "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/10/coaxial.tex" 1768738840.19523 26541 4b6e318440652c40d76001fc8848db10 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcsx1200.tfm" 1136768653 1536 af648657788fd77239d1f9e0a2b79b39 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcsx1440.tfm" 1136768653 1536 d4501080e094848097ac9de5c88222ce ""
@@ -315,10 +315,10 @@
   "coaxial-6.pdf" 1768073745.98512 16102 4263b2e4ec833b5fece3c71edf469a0c "cusdep asy pdf coaxial-6"
   "coaxial-7.pdf" 1768073744.61113 17108 7190cdee80f505e6d989be135c614dc0 "cusdep asy pdf coaxial-7"
   "coaxial-8.pdf" 1768074260.44397 18373 c0986d385bb59cdfc87ac7abd10fb18c "cusdep asy pdf coaxial-8"
-  "coaxial.aux" 1768713521.19653 6964 f79999d88a53016bf1e462bcfc79d32c "pdflatex"
-  "coaxial.out" 1768713520.51813 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "coaxial.pre" 1768713521.18453 328 65f081867360aab4aec7243163decdac "pdflatex"
-  "coaxial.tex" 1768713514.70721 26607 463b10adb21f9570df0514974bc48ca4 ""
+  "coaxial.aux" 1768738844.69801 6964 f79999d88a53016bf1e462bcfc79d32c "pdflatex"
+  "coaxial.out" 1768738844.01661 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "coaxial.pre" 1768738844.68501 328 65f081867360aab4aec7243163decdac "pdflatex"
+  "coaxial.tex" 1768738840.19523 26541 4b6e318440652c40d76001fc8848db10 ""
   (generated)
   "coaxial-1.asy"
   "coaxial-2.asy"
