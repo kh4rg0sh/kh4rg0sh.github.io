@@ -1,19 +1,20 @@
 # Fdb version 4
-["cusdep asy pdf linearity_pop-1"] 1768053976.28334 "linearity_pop-1.asy" "linearity_pop-1.pdf" "linearity_pop-1" 1768055427.11726 0
-  "linearity_pop-1.asy" 1768055426.9061 2587 65aa3a7fc5822830af61449e1ec9421b "pdflatex"
+["cusdep asy pdf linearity_pop-1"] 0 "linearity_pop-1.asy" "linearity_pop-1.pdf" "linearity_pop-1" 1768572599.09494 -1
+  "linearity_pop-1.asy" 1768572598.67553 2587 65aa3a7fc5822830af61449e1ec9421b "pdflatex"
   (generated)
   "linearity_pop-1.pdf"
   (rewritten before read)
-["cusdep asy pdf linearity_pop-2"] 1768053819.88363 "linearity_pop-2.asy" "linearity_pop-2.pdf" "linearity_pop-2" 1768055427.11711 0
-  "linearity_pop-2.asy" 1768055426.9501 2523 c3dcc35b1c8736fdb5a149099c3ab8c1 "pdflatex"
+["cusdep asy pdf linearity_pop-2"] 0 "linearity_pop-2.asy" "linearity_pop-2.pdf" "linearity_pop-2" 1768572599.09472 -1
+  "linearity_pop-2.asy" 1768572598.75795 2523 c3dcc35b1c8736fdb5a149099c3ab8c1 "pdflatex"
   (generated)
   "linearity_pop-2.pdf"
   (rewritten before read)
-["pdflatex"] 1768055424.61998 "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/9/linearity_pop.tex" "linearity_pop.pdf" "linearity_pop" 1768055427.11732 0
+["pdflatex"] 1768572595.49912 "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/17/linearity_pop.tex" "linearity_pop.pdf" "linearity_pop" 1768572599.09503 0
   "/etc/texmf/web2c/texmf.cnf" 1735619042.2153 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/kh4rg0sh/texmf/tex/latex/evan/evan.sty" 1767785472.98259 30028 3bc85681eb8a2ee4ab02c1ed05e4da22 ""
-  "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/9/linearity_pop.tex" 1768055421.94252 11359 6f59fb4e96f68bb64f8af75b9bf6b19c ""
+  "/home/kh4rg0sh/work_dir/kh4rg0sh.github.io/static/lecture_notes/2026/17/linearity_pop.tex" 1768572593.18762 15871 54648db5941eb589e905c3a358c15b88 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcsx1200.tfm" 1136768653 1536 af648657788fd77239d1f9e0a2b79b39 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcsx1440.tfm" 1136768653 1536 d4501080e094848097ac9de5c88222ce ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -275,6 +276,7 @@
   "/usr/share/texlive/texmf-dist/tex/latex/zref/zref-base.sty" 1694723124 20785 f7d1133a287929598a897c93f8f4c44b ""
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1636152094 2900 1537cc8184ad1792082cd229ecc269f4 ""
+  "/usr/share/texmf/fonts/type1/public/cm-super/sfsx1200.pfb" 1747213734.19956 148436 6a185415b8a1b77c58fee2272f3574e2 ""
   "/usr/share/texmf/fonts/type1/public/cm-super/sfsx1440.pfb" 1747213734.20056 148301 cb90e68db88ca98c49afbaaab3ac1967 ""
   "/usr/share/texmf/tex/latex/asymptote/asymptote.sty" 1711949084 9836 ef83d0c83cb4d644a8142eca52e46963 ""
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
@@ -282,10 +284,10 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1747213758 8212562 4c305ec569e0631bfecb6c256302e771 ""
   "linearity_pop-1.pdf" 1768053977.12477 18730 bd756b75a31fe8800afb979ee89f456b "cusdep asy pdf linearity_pop-1"
   "linearity_pop-2.pdf" 1768053820.61832 19457 460422c8dcfe734a5a8a31eb944488b8 "cusdep asy pdf linearity_pop-2"
-  "linearity_pop.aux" 1768055426.9971 3629 838f193aaad667b48f5cff578b86e7b7 "pdflatex"
-  "linearity_pop.out" 1768055426.62314 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "linearity_pop.pre" 1768055426.9891 82 2085988704c78000e4a8d1b1c9ada1e4 "pdflatex"
-  "linearity_pop.tex" 1768055421.94252 11359 6f59fb4e96f68bb64f8af75b9bf6b19c ""
+  "linearity_pop.aux" 1768572598.91353 6749 108c043777d007e404712060edb7b14e "pdflatex"
+  "linearity_pop.out" 1768572598.32263 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "linearity_pop.pre" 1768572598.90053 82 2085988704c78000e4a8d1b1c9ada1e4 "pdflatex"
+  "linearity_pop.tex" 1768572593.18762 15871 54648db5941eb589e905c3a358c15b88 ""
   (generated)
   "linearity_pop-1.asy"
   "linearity_pop-2.asy"

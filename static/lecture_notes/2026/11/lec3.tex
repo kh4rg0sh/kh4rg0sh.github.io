@@ -27,7 +27,7 @@
 \usepackage{asymptote}
 
 \begin{document}
-\title{Lecture Notes (11th Jan, 2026)}
+\title{Lecture Notes (18th Jan, 2026)}
 \date{\today}
 \maketitle
 
@@ -269,6 +269,10 @@ As it turns out, this is a powerful tool that can be used to prove that a quadri
   \begin{align*}
     \overline{OH}^2 = R^2 \left( 1 - 8\cos A \cos B \cos C\right)
   \end{align*}
+\end{exercise}
+
+\begin{exercise}[RMO 2016]
+  Let $ABC$ be a triangle with centroid $G$. Let the circumcircle of triangle $AGB$ intersect the line $BC$ in $X$ different from $B$; and the circucircle of triangle $AGC$ intersect the line $BC$ in $Y$ different from $C$. Prove that $G$ is the centroid of triangle $AXY$.
 \end{exercise}
 
 \begin{exercise}[USA Math Olympiad 2023]
@@ -604,6 +608,10 @@ Again, the result is easy to prove, but it appears frequently in geometric confi
 \end{proof}
 
 \subsection{Exercises}
+\begin{exercise}[RMO 2016]
+  Two circles $C_1$ and $C_2$ intersect each other at points $A$ and $B$. Their external common tangent (closer to $B$) touches $C_1$ at $P$ and $C_2$ at $Q$. Let $C$ be the reflection of $B$ in line $PQ$. Prove that $\angle CAP=\angle BAQ$.
+\end{exercise}
+
 \begin{exercise}[APMO 1999]
     Let $\Gamma_1$ and $\Gamma_2$ be two circles intersecting at $P$ and $Q$. The common tangent, closer to $P$, of $\Gamma_1$ and $\Gamma_2$ touches $\Gamma_1$ at $A$ and $\Gamma_2$ at $B$. The tangent of $\Gamma_1$ at $P$ meets $\Gamma_2$ at $C$, which is different from $P$, and the extension of $AP$ meets $BC$ at $R$. Prove that the circumcircle of triangle $PQR$ is tangent to $BP$ and $BR$.
 \end{exercise}
@@ -616,8 +624,6 @@ Again, the result is easy to prove, but it appears frequently in geometric confi
 
 \section{Applications: Orthic Axis}
 There is a very special line related to the orthocenter configuration, that naturally appears as a radical axis of two circles. We shall study the \vocab{Orthic Axis} in this section. Let's begin with the some definitions.
-
-\newpage
 \subsection{The Trilinear Polar of $H$}
 \begin{proposition}[Trilinear Polar of a point]
 Given a $\triangle ABC$ and a point $P$ inside it. Suppose $\triangle DEF$ is the cevian triangle of $P$. Let the line $EF$ intersect $BC$ at $X$ and similarly, define $Y$ and $Z$. Then, the points $X$, $Y$ and $Z$ are collinear, and this line is called the \vocab{Trilinear Polar of $P$}.
@@ -669,7 +675,7 @@ An even more remarkable property of the orthic axis is that it is the radical ax
 
 Let's take a look at an application of this result.
 \subsection{Examples}
-\begin{problem}[Greece IMO TST 2019]
+\begin{problem}
     $\triangle ABC$ is inscribed in a circle $(C)$. Let $G$ the centroid of $\triangle ABC$. We draw the altitudes $AD$, $BE$, $CF$ of the given triangle. Rays $AG$ and $GD$ meet $(C)$ at $M$ and $N$. Prove that points $F$, $E$, $M$, $N$ are concyclic.
 \end{problem}
 \begin{figure}[h]
@@ -747,6 +753,10 @@ Let's take a look at an application of this result.
 \begin{exercise}[USA TSTST 2011]
     Acute triangle $ABC$ is inscribed in circle $\omega$. Let $H$ and $O$ denote its orthocenter and circumcenter, respectively. Let $M$ and $N$ be the midpoints of sides $AB$ and $AC$, respectively. Rays $MH$ and $NH$ meet $\omega$ at $P$ and $Q$, respectively. Lines $MN$ and $PQ$ meet at $R$. Prove that $OA\perp RA$.
 \end{exercise}
+
+\begin{exercise}[IMO Shortlist 2021]
+  Let $ABCD$ be a parallelogram with $AC=BC.$ A point $P$ is chosen on the extension of ray $AB$ past $B.$ The circumcircle of $ACD$ meets the segment $PD$ again at $Q.$ The circumcircle of triangle $APQ$ meets the segment $PC$ at $R.$ Prove that lines $CD,AQ,BR$ are concurrent.
+\end{exercise}
   
 \begin{exercise}[IMO 2009]
     Let $ ABC$ be a triangle with circumcentre $ O$. The points $P$ and $Q$ are interior points of the sides $ CA$ and $ AB$ respectively. Let $ K,L$ and $ M$ be the midpoints of the segments $ BP,CQ$ and $ PQ$. respectively, and let $ \Gamma$ be the circle passing through $ K,L$ and $ M$. Suppose that the line $ PQ$ is tangent to the circle $ \Gamma$. Prove that $ OP = OQ.$
@@ -754,6 +764,14 @@ Let's take a look at an application of this result.
 
 \begin{exercise}[USA TSTST 2016]
     Let $ABC$ be a scalene triangle with orthocenter $H$ and circumcenter $O$. Denote by $M$, $N$ the midpoints of $\overline{AH}$, $\overline{BC}$. Suppose the circle $\gamma$ with diameter $\overline{AH}$ meets the circumcircle of $ABC$ at $G \neq A$, and meets line $AN$ at a point $Q \neq A$. The tangent to $\gamma$ at $G$ meets line $OM$ at $P$. Show that the circumcircles of $\triangle GNQ$ and $\triangle MBC$ intersect at a point $T$ on $\overline{PN}$.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2012]
+  In an acute triangle $ABC$ the points $D,E$ and $F$ are the feet of the altitudes through $A,B$ and $C$ respectively. The incenters of the triangles $AEF$ and $BDF$ are $I_1$ and $I_2$ respectively; the circumcenters of the triangles $ACI_1$ and $BCI_2$ are $O_1$ and $O_2$ respectively. Prove that $I_1I_2$ and $O_1O_2$ are parallel.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2011]
+  Let $ABC$ be an acute triangle with circumcircle $\Omega$. Let $B_0$ be the midpoint of $AC$ and let $C_0$ be the midpoint of $AB$. Let $D$ be the foot of the altitude from $A$ and let $G$ be the centroid of the triangle $ABC$. Let $\omega$ be a circle through $B_0$ and $C_0$ that is tangent to the circle $\Omega$ at a point $X\not= A$. Prove that the points $D,G$ and $X$ are collinear.
 \end{exercise}
 
 \end{document}

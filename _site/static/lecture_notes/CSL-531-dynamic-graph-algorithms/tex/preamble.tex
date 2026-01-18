@@ -24,15 +24,11 @@
 \usepackage[hidelinks]{hyperref}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-
-\theoremstyle{definition}
 \declaretheoremstyle[
 	headfont=\sffamily\bfseries\color{MidnightBlue},
 	headpunct={\\[3pt]},
 	postheadspace={0pt},
 ]{thmtheorem}
-
 
 \declaretheoremstyle[
 	headfont=\bfseries\color{RawSienna},
@@ -90,6 +86,19 @@
 		sharp corners,
 		before skip=8pt,
 		after skip=12pt,
+		borderline west={3pt}{0pt}{ForestGreen},
+		colback=RedViolet!5!gray!5,
+		breakable,
+		left=10pt,
+		right=10pt
+	},
+	defn box/.style={
+		boxrule=0pt,
+		frame hidden,
+		enhanced,
+		sharp corners,
+		before skip=8pt,
+		after skip=12pt,
 		borderline west={3pt}{0pt}{black},
 		colback=RedViolet!5!gray!5,
 		breakable,
@@ -127,6 +136,8 @@
 
 \declaretheorem[name=Question,sibling=theorem,style=thmques]{ques}
 \tcolorboxenvironment{ques}{ques box}
+\declaretheorem[name=Definition,sibling=theorem,style=thmques]{definition}
+\tcolorboxenvironment{definition}{defn box}
 \declaretheorem[name=Exercise,sibling=theorem,style=thmques]{exercise}
 \tcolorboxenvironment{exercise}{ques box}
 \declaretheorem[name=Remark,sibling=theorem,style=thmremark]{remark}

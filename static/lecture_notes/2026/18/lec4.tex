@@ -1,0 +1,535 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+
+\begin{document}
+\title{Lecture Notes (25th Jan, 2026)}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering In this lecture, we study the properties of tangent circles.
+\end{abstract}
+
+\section{Internally Tangent Circles}
+We would like to study about configurations that deal with tangent circles. When we say two circles are tangent, it means that these circles only have one point in common. A pair of circles could be either \vocab{internally} tangent or \vocab{externally} tangent.
+\begin{definition}
+  A pair of circles $\Gamma$ and $\omega$ are
+  \begin{enumerate}
+    \item \highlight{internally tangent}, if and only if $\Gamma$ and $\omega$ share a single point and the center of the smaller circle is contained inside the larger circle.
+    \item \highlight{externally tangent}, if and only if $\Gamma$ and $\omega$ share a single point and the center of either of the circles lie outside the other circle. 
+  \end{enumerate}
+\end{definition}
+
+We would like to focus on pair of circles that are internally tangent for now and study their properties. Let's start with the simplest configuration with two internaly tangent circles.
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(5cm); defaultpen(fontsize(10pt));
+
+    pair O1, O2;
+    real r, R;
+    R = 5; r = 1.5;
+  
+    O1 = origin; O2 = O1 + (R - r) * dir(60);
+    draw(circle(O1, R));
+    draw(circle(O2, r));
+
+    dot("$O_1$", O1, dir(135));
+    dot("$O_2$", O2, dir(135));
+  \end{asy}
+\end{figure}
+
+Let $\Gamma$ and $\omega$ be two circles centered at $O_1$ and $O_2$, with radius $R$ and $r$, where $R > r$. Suppose that $\Gamma$ and $\omega$ are internally tangent to each other.
+\subsection{Homothetic Mapping}
+\begin{proposition}
+  Suppose $T$ is the internal tangency point of $\Gamma$ and $\omega$, then the points $O_1$, $O_2$ and $T$ are collinear.
+\end{proposition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(5cm); defaultpen(fontsize(10pt));
+
+    pair O1, O2, T;
+    real r, R;
+    R = 5; r = 1.5;
+  
+    O1 = origin; O2 = O1 + (R - r) * dir(60); T = O2 + r * dir(60);
+    draw(circle(O1, R));
+    draw(circle(O2, r));
+
+    dot("$O_1$", O1, dir(135));
+    dot("$O_2$", O2, dir(135));
+    dot("$T$", T, dir(45));
+
+    draw(O1--T, heavygray+dashed);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Consider a homothety at point $T$ that maps $\omega$ to $\Gamma$. Observe that under this homothetic transformation, we map the point $O_2$ to $O_1$. Hence, the points $O_1$, $O_2$ and $T$ must be collinear.
+\end{proof}
+
+As a consequence of the homothetic mapping, we have the following result
+
+\begin{proposition}
+    Choose a point $B$ on $\omega$. Suppose $TB$ meets $\Gamma$ again at $A$. Then $\overline{O_1A} \parallel \overline{O_2B}$.
+\end{proposition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(5cm); defaultpen(fontsize(10pt));
+
+    pair O1, O2, T;
+    real r, R;
+    R = 5; r = 1.5;
+  
+    O1 = origin; O2 = O1 + (R - r) * dir(60); T = O2 + r * dir(60);
+    draw(circle(O1, R));
+    draw(circle(O2, r));
+
+    dot("$O_1$", O1, dir(135));
+    dot("$O_2$", O2, dir(135));
+    dot("$T$", T, dir(45));
+
+    draw(O1--T);
+
+    pair A, B;
+    B = O2 + r * dir(290);
+    A = O1 + R * dir(290);
+
+    dot("$A$", A, dir(320));
+    dot("$B$", B, dir(320));
+    draw(A--T); draw(A--O1); draw(B--O2);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Consider a homothety at point $T$ that maps $\omega$ to $\Gamma$. Under this homothety, the point $B$ is mapped to $A$. Hence, $\triangle TO_2B$ $\sim$ $\triangle TO_1A$ $\implies$ $\angle TBO_2$ $=$ $\angle TAO_1$ $\implies$ $\overline{O_1A}$ $\parallel$ $\overline{O_2B}$. 
+\end{proof}
+
+\begin{corollary}
+  Let $T$ be the point of internal tangency of two circles $\Gamma$ and $\omega$ with radii $R$ and $r$, where $R$ $>$ $r$. Choose a point $B$ on $\omega$ and let $TB$ meet $\Gamma$ at $A$. Then
+  \begin{align*}
+    \frac{\overline{TB}}{\overline{TA}} = \frac{r}{R}
+  \end{align*}
+\end{corollary}
+
+The proof for the above result immediately follows from the fact that $\triangle TO_2B$ $\sim$ $\triangle TO_1A$. Now, we move onto a very celebrated result by Archimedes which appears very frequently in geometry configurations.
+
+\subsection{Archimedes' Lemma}
+
+\begin{theorem}[Archimedes' Lemma]
+  Let $\Gamma$ and $\omega$ be two circles centered at $O_1$ and $O_2$. Suppose that these circles are internally tangent at the point $T$. Let $\overline{XY}$ be the chord of $\Gamma$ such that $\overline{XY}$ is tangent to $\omega$ at point $B$. Let $A$ be the midpoint of the arc $XY$ that does not contain $T$. Then
+  \begin{enumerate}[itemsep=0.01em]
+    \item points $T$, $B$ and $A$ are collinear.
+    \item $\overline{AB} \cdot \overline{AT} = \overline{AX}^2 = \overline{AY}^2$
+  \end{enumerate}
+\end{theorem}
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+
+    pair O1, O2, T;
+    real r, R;
+    R = 5; r = 1.5;
+  
+    O1 = origin; O2 = O1 + (R - r) * dir(60); T = O2 + r * dir(60);
+    draw(circle(O1, R));
+    draw(circle(O2, r));
+
+    dot("$O_1$", O1, dir(210));
+    dot("$O_2$", O2, dir(135));
+    dot("$T$", T, dir(45));
+
+    draw(O1--T);
+
+    pair A, B;
+    B = O2 + r * dir(290);
+    A = O1 + R * dir(290);
+
+    dot("$A$", A, dir(320));
+    dot("$B$", B, dir(320));
+    draw(A--T, heavygray+dashed); draw(A--O1); draw(B--O2);
+
+    pair P1 = B - rotate(90) * (O2 - B);
+    pair P2 = B + rotate(90) * (O2 - B);
+    pair[] XX = intersectionpoints(line(P1, P2), circle(O1, R));
+    dot("$X$", XX[1], dir(210));
+    dot("$Y$", XX[0], dir(40));
+
+    draw(XX[0]--XX[1]);
+    markrightangle(XX[0], B, O2, 7);
+
+    draw(A--XX[0]); draw(A--XX[1]);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Consider a homothety at point $T$ that sends $\omega$ to $\Gamma$. Suppose that this homothety sends point $B$ to $A'$, where $A'$ lies on $\Gamma$. Since $\overline{XY}$ is tangent to $\omega$ at $B$, therefore this homothety maps $XY$ to a line $\ell$ passing through $A'$ that is tangent to $\Gamma$. Since $\ell$ is the image under a homothetic transformation of $XY$ $\implies$ $\overline{XY}$ $\parallel$ $\ell$. Therefore,
+  \begin{align*}
+  \angle YXA' = \angle \left( \overline{A'X}, \ell \right) = \angle XYA'
+  \end{align*} 
+  This implies that $\triangle XYA'$ is isosceles $\implies$ $A'$ is the midpoint of the arc $XY$ not containing $T$. Thus $A \equiv A'$, proving that $T$, $B$ and $A$ are collinear. 
+
+  For the second part, we shall show that $\overline{AX}$ is tangent to $\odot(TBX)$ at $X$. This is easy to establish since, 
+  \begin{align*}
+    \angle XTB = \angle XTA = \angle XYA = \angle AXY = \angle AXB
+  \end{align*}
+  Using the power of a point theorem, we get that 
+  \begin{align*}
+    \overline{AX}^2 = \overline{AB} \cdot \overline{AT}
+  \end{align*}
+  Since $\overline{AX} = \overline{AY}$, which implies the relation.
+\end{proof}
+
+\begin{exercise}[Russia 2001]
+  In the above configuration, show that the circumradius of $\triangle ABY$ is a constant that does not depend upon the position of point $B$.
+\end{exercise}
+
+Let's look at some nice results that revolve around the \vocab{Archimedes' Lemma}.
+\subsection{Examples}
+\begin{problem}
+  Let $h$ be a semicircle with diameter $AB$. The two circles $k_1$ and $k_2$, $k_1 \ne k_2$, touch the segment $AB$ at the points $C$ and $D$, respectively, and the semicircle $h$ fom the inside at the points $E$ and $F$, respectively. Prove that the four points $C$, $D$, $E$ and $F$ lie on a circle.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+
+    pair O1, O2, O;
+    real R, r1, r2;
+    R = 4; r1 = R / 3; r2 = R / 2.414;
+
+    O = origin; O1 = O + (R - r1) * dir(150); O2 = O + (R - r2) * dir(45);
+    dot("$O$", O, dir(225)); dot("$O_1$", O1, dir(60)); dot("$O_2$", O2, dir(130));
+    
+    draw(circle(O, R));
+    draw(circle(O1, r1)); draw(circle(O2, r2));
+
+    pair A, B; A = (-4, 0); B = (4, 0);
+    dot("$A$", A, dir(180)); dot("$B$", B, dir(0)); draw(A--B);
+
+    pair C, D; 
+    C = O1 + r1 * dir(270); D = O2 + r2 * dir(270);
+
+    pair E, F;
+    E = O1 + r1 * dir(150); F = O2 + r2 * dir(45);
+
+    dot("$C$", C, dir(225)); dot("$D$", D, dir(315));
+    dot("$E$", E, dir(135)); dot("$F$", F, dir(45));
+
+    draw(E--O, heavygray); draw(F--O, heavygray);
+
+    pair X = O + R * dir(270);
+    dot("$X$", X, dir(225));
+
+    draw(E--X, gray); draw(F--X, gray);
+    draw(circumcircle(E, C, D), heavygray+dashed); draw(O--X); markrightangle(X, O, B, 7);
+    draw(O1--C); draw(O2--D); markrightangle(O, C, O1, 6); markrightangle(O2, D, O, 6);
+  \end{asy} 
+\end{figure}
+\begin{proof}
+Suppose $X$ is the midpoint of arc $AB$ not containing $E$. Then $X$ lies on lines $EC$ and $FD$ by archimedes' lemma. Since,
+\begin{align*}
+  \overline{XC} \cdot \overline{XE} = \overline{AX}^2 = \overline{XD} \cdot \overline{XF} 
+\end{align*}
+Therefore, by the converse of power of a point theorem $\implies$ points $C$, $D$, $E$ and $F$ lie on a circle. 
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}[INMO 2019]
+  Let $AB$ be the diameter of a circle $\Gamma$ and let $C$ be a point on $\Gamma$ different from $A$ and $B$. Let $D$ be the foot of perpendicular from $C$ on to $AB$.Let $K$ be a point on the segment $CD$ such that $AC$ is equal to the semi perimeter of $ADK$.Show that the excircle of $ADK$ opposite $A$ is tangent to $\Gamma$.
+\end{exercise}
+
+\begin{exercise}[RMO 2019]
+  Given a circle $\tau$, let $P$ be a point in its interior, and let $l$ be a line through $P$. Construct with proof using ruler and compass, all circles which pass through $P$, are tangent to $\tau$ and whose center lies on line $l$.
+\end{exercise}
+
+\begin{exercise}[RMO 2017]
+  Let \(\Omega\) be a circle with a chord \(AB\) which is not a diameter. \(\Gamma_{1}\) be a circle on one side of \(AB\) such that it is tangent to \(AB\) at \(C\) and internally tangent to \(\Omega\) at \(D\). Likewise, let \(\Gamma_{2}\) be a circle on the other side of \(AB\) such that it is tangent to \(AB\) at \(E\) and internally tangent to \(\Omega\) at \(F\). Suppose the line \(DC\) intersects \(\Omega\) at \(X \neq D\) and the line \(FE\) intersects \(\Omega\) at \(Y \neq F\). Prove that \(XY\) is a diameter of \(\Omega\) .
+\end{exercise}
+
+\section{Curvilinear Incircles}
+
+Let's move to something more complicated and miraculous. 
+\begin{definition}
+  Given $\triangle ABC$ and a point $D$ on $\overline{BC}$, a circle $\omega$ is called the \vocab{curvilinear incircle} of $\triangle ABC$ if $\omega$ is tangent to sides $\overline{AD}$ and $\overline{BC}$, and is internally tangent to $\odot(ABC)$. 
+\end{definition}
+Curvilinear incircles are a natural extension of the archimedes' lemma. Essentially, we are choosing another point on the outer circle and adding more tangents.
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+
+    pair O, O1;
+    real R, r;
+    R = 4; r = 2.2;
+
+    O = origin; O1 = O + (R - r) * dir(45);
+    draw(circle(O, R)); draw(circle(O1, r));
+
+    pair K = O1 + r * dir(270); dot("$K$", K, dir(305));
+    pair P1 = K - rotate(90) * (O1 - K);
+    pair P2 = K + rotate(90) * (O1 - K);
+
+    pair[] AA = intersectionpoints(line(P1, P2), circle(O, R));
+    dot("$B$", AA[0], dir(225)); dot("$C$", AA[1], dir(315));
+    
+    pair A = R * dir(98); dot("$A$", A, dir(100));
+    pair T = O1 + r * dir(45); dot("$T$", T, dir(45));
+    pair M = O + R * dir(270); 
+
+    pair I = incenter(A, AA[0], AA[1]);
+
+    pair[] LL = intersectionpoints(line(K, I), circle(O1, r));
+    dot("$L$", LL[0], dir(150));
+
+    pair D = extension(A, LL[0], AA[0], AA[1]);
+    dot("$D$", D, dir(225)); 
+    
+    draw(A--AA[0]--AA[1]--cycle); draw(A--D);
+  \end{asy}
+\end{figure}
+
+Let's look at some properties of the \highlight{curvilinear incircles}.
+
+\subsection{More Circles!}
+\begin{proposition}
+  Given $\triangle ABC$ and a point $D$ on the $\overline{BC}$. Suppose $\omega$ is the curvilinear incircle of $\triangle ABC$ tangent to $\overline{AD}$ and $\overline{BC}$ at $L$ and $K$, and tangent to $\odot(ABC)$ at $T$. Let $M$ be the midpoint of arc $BC$ not containing $A$. Suppose $\overline{AM}$ intersects $\overline{KL}$ at $X$. Then the points $A$, $L$, $X$ and $T$ are concyclic. 
+\end{proposition}
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+
+    pair O, O1;
+    real R, r;
+    R = 4; r = 2.2;
+
+    O = origin; O1 = O + (R - r) * dir(45);
+    draw(circle(O, R)); draw(circle(O1, r));
+
+    pair K = O1 + r * dir(270); dot("$K$", K, dir(305));
+    pair P1 = K - rotate(90) * (O1 - K);
+    pair P2 = K + rotate(90) * (O1 - K);
+
+    pair[] AA = intersectionpoints(line(P1, P2), circle(O, R));
+    dot("$B$", AA[0], dir(225)); dot("$C$", AA[1], dir(315));
+    
+    pair A = R * dir(98); dot("$A$", A, dir(100));
+    pair T = O1 + r * dir(45); dot("$T$", T, dir(45));
+    pair M = O + R * dir(270); dot("$M$", M, dir(225)); 
+
+    pair I = incenter(A, AA[0], AA[1]);
+    dot("$X$", I, dir(50));
+
+    pair[] LL = intersectionpoints(line(K, I), circle(O1, r));
+    dot("$L$", LL[0], dir(150));
+
+    pair D = extension(A, LL[0], AA[0], AA[1]);
+    dot("$D$", D, dir(225)); 
+    
+    draw(M--T);
+    draw(A--AA[0]--AA[1]--cycle); 
+    draw(A--M, heavygray);
+    draw(A--D); 
+    draw(K--LL[0], heavygray);
+
+    draw(circumcircle(A, T, I), heavygray+dashed);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  By archimedes' lemma, we know that $M$ lies on $\overline{KT}$. To show that the points $A$, $L$, $X$ and $T$ are concyclic, we just need to angle chase
+  \begin{align*}
+    \angle XLT = \angle KLT = \angle CKT = \angle MBT = \angle MAT = \angle XAT
+  \end{align*}
+  where, $\angle CKT = \angle MBT$ holds because, $\overline{TM}$ is the angle bisector of $\angle BTC$ $\implies$ $\triangle TBM$ $\sim$ $\triangle TKC$. Therefore, $\angle XLT$ $=$ $\angle XAT$, which implies that the four points are concyclic.
+\end{proof}
+
+\begin{proposition}
+  Given $\triangle ABC$ and a point $D$ on the $\overline{BC}$. Suppose $\omega$ is the curvilinear incircle of $\triangle ABC$ tangent to $\overline{AD}$ and $\overline{BC}$ at $L$ and $K$, and tangent to $\odot(ABC)$ at $T$. Let $M$ be the midpoint of arc $BC$ not containing $A$. Suppose $\overline{AM}$ intersects $\overline{KL}$ at $X$. Then, $\overline{MX}$ is tangent to $\odot(XKT)$ at point $X$.
+\end{proposition}
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+
+    pair O, O1;
+    real R, r;
+    R = 4; r = 2.2;
+
+    O = origin; O1 = O + (R - r) * dir(45);
+    draw(circle(O, R)); draw(circle(O1, r));
+
+    pair K = O1 + r * dir(270); dot("$K$", K, dir(305));
+    pair P1 = K - rotate(90) * (O1 - K);
+    pair P2 = K + rotate(90) * (O1 - K);
+
+    pair[] AA = intersectionpoints(line(P1, P2), circle(O, R));
+    dot("$B$", AA[0], dir(225)); dot("$C$", AA[1], dir(315));
+    
+    pair A = R * dir(98); dot("$A$", A, dir(100));
+    pair T = O1 + r * dir(45); dot("$T$", T, dir(45));
+    pair M = O + R * dir(270); dot("$M$", M, dir(225)); 
+
+    pair I = incenter(A, AA[0], AA[1]);
+    dot("$X$", I, dir(50));
+
+    pair[] LL = intersectionpoints(line(K, I), circle(O1, r));
+    dot("$L$", LL[0], dir(150));
+
+    pair D = extension(A, LL[0], AA[0], AA[1]);
+    dot("$D$", D, dir(225)); 
+    
+    draw(M--T);
+    draw(A--AA[0]--AA[1]--cycle);
+    draw(A--M);
+    draw(A--D);
+    draw(K--LL[0]);
+
+    draw(circumcircle(A, T, I), gray);
+    draw(circumcircle(K, I, T), heavygray+dashed);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Effectively, we just want to show that $\angle MXK$ $=$ $\angle MTX$. Fortunately, this is just straightforward angle chasing
+  \begin{align*}
+    \angle MTX = \angle MTL - \angle XTL = \angle DLK - \angle XAL = \angle AXL = \angle MKX
+  \end{align*}
+  which proves that $\overline{MX}$ is tangent to $\odot(XKT)$ at $X$.
+\end{proof}
+
+\subsection{Introducing the Incenter}
+\begin{proposition}[Sawayama's Theorem]
+  Show that the point $X$ is the \vocab{Incenter} of $\triangle ABC$.
+\end{proposition}
+\begin{proof}
+Observe that $\overline{MB}$ $=$ $\overline{MC}$ $\implies$ $\overline{AM}$ is the angle bisector of $\angle BAC$. Since,
+\begin{align*}
+  \overline{MX}^2 = \overline{MK} \cdot \overline{MT} = \overline{MB}^2 = \overline{MC}^2
+\end{align*}
+Hence by the incenter/excenter lemma, we get that $X$ is the incenter of $\triangle ABC$.
+\end{proof}
+
+It's very surprising how the incenter appears in this configuration. Something even more interesting occurs when we add the other curvilinear incircle of the cevian $\overline{AD}$ to the diagram, which leads to a reknowned result by \emph{Victor Thébault}.
+
+\subsection{Thébault's Theorem}
+\begin{theorem}[Thébault's Theorem]
+  Given $\triangle ABC$ and a point $D$ on $\overline{BC}$, let $\omega_1$ and $\omega_2$ be the two curvilinear incircles of $\triangle ABC$ tangent to the cevian $\overline{AD}$. Suppose $O_1$ and $O_2$ are the centers of the two curvilinear incircles and $I$ is the incenter of $\triangle ABC$, then points $O_1$, $I$ and $O_2$ are collinear.
+\end{theorem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+
+    pair O, O1;
+    real R, r;
+    R = 4; r = 2.2;
+
+    O = origin; O1 = O + (R - r) * dir(45);
+    draw(circle(O, R)); draw(circle(O1, r), blue);
+
+    pair K = O1 + r * dir(270); dot("$K$", K, dir(305));
+    pair P1 = K - rotate(90) * (O1 - K);
+    pair P2 = K + rotate(90) * (O1 - K);
+
+    pair[] AA = intersectionpoints(line(P1, P2), circle(O, R));
+    dot("$B$", AA[0], dir(225)); dot("$C$", AA[1], dir(315));
+    
+    pair A = R * dir(98); dot("$A$", A, dir(100));
+    pair T = O1 + r * dir(45); dot("$T$", T, dir(45));
+    pair M = O + R * dir(270); dot("$M$", M, dir(225)); 
+
+    pair I = incenter(A, AA[0], AA[1]);
+    dot("$I$", I, dir(50));
+
+    pair[] LL = intersectionpoints(line(K, I), circle(O1, r));
+    dot("$L$", LL[0], dir(150));
+
+    pair D = extension(A, LL[0], AA[0], AA[1]);
+    dot("$D$", D, dir(225)); 
+    
+    draw(M--T, blue);
+    draw(A--AA[0]--AA[1]--cycle);
+    draw(A--M);
+    draw(A--D);
+    draw(K--LL[0]);
+
+    pair I1 = I + rotate(90) * (K - I);
+    pair P = intersectionpoint(line(A, D), line(I, I1));
+    pair Q = extension(I, P, AA[0], AA[1]);
+
+    dot("$Q$", P, dir(170)); dot("$P$", Q, dir(225));
+    pair[] UU = intersectionpoints(line(Q, M), circumcircle(A, AA[0], AA[1]));
+    dot("$U$", UU[1], dir(135)); draw(circumcircle(UU[1], P, Q), red);
+    draw(M--UU[1], red); draw(Q--I);
+
+    pair O2 = circumcenter(UU[1], P, Q);
+    dot("$O_2$", O1, dir(100)); dot("$O_1$", O2, dir(120));
+    draw(O2--O1, heavygray+dashed);
+    
+    draw(O2--Q); draw(O1--K);
+    draw(O1--D); draw(O2--D);
+  \end{asy}
+\end{figure}
+\begin{proof}
+
+\end{proof}
+
+
+\subsection{Examples}
+
+\subsection{Exercises}
+\begin{exercise}[IMO Shortlist 1992]
+  Two circles touch externally at a point $ I$. The two circles lie inside a large circle and both touch it. The chord $ BC$ of the large circle touches both smaller circles (not at $ I$). The common tangent to the two smaller circles at the point $ I$ meets the large circle at a point $ A$, where the points $ A$ and $ I$ are on the same side of the chord $ BC$. Show that the point $ I$ is the incenter of triangle $ ABC$.
+\end{exercise}
+
+
+
+\newpage
+\section{Mixtilinear Incircles}
+
+\begin{problem}[EGMO 2013]
+  Let $\Omega$ be the circumcircle of the triangle $ABC$. The circle $\omega$ is tangent to the sides $AC$ and $BC$, and it is internally tangent to the circle $\Omega$ at the point $P$. A line parallel to $AB$ intersecting the interior of triangle $ABC$ is tangent to $\omega$ at $Q$. Prove that $\angle ACP = \angle QCB$.
+\end{problem}
+
+\end{document}

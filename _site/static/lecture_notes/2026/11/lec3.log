@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.14)  11 JAN 2026 14:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.14)  18 JAN 2026 09:54
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -451,7 +451,7 @@ Package: thm-restate 2023/05/04 v0.76
 Package: thm-amsthm 2023/05/04 v0.76
 \thmt@style@headstyle=\toks33
 ))
-Package hyperref Info: Option `hypertexnames' set `false' on input line 397.
+Package hyperref Info: Option `hypertexnames' set `false' on input line 398.
  (/usr/share/texlive/texmf-dist/tex/latex/mdframed/mdframed.sty
 Package: mdframed 2013/07/01 1.9b: mdframed
  (/usr/share/texlive/texmf-dist/tex/latex/zref/zref-abspage.sty
@@ -742,20 +742,20 @@ File: pgflibraryfadings.code.tex 2023-01-15 v3.1.10 (3.1.10)
 Package thmtools Info: Key `mdframed' (with value `style=mdbluebox')
 (thmtools)             is not a known style key.
 (thmtools)             Will pass this to every \declaretheorem
-(thmtools)             that uses `style=thmbluebox' on input line 432.
+(thmtools)             that uses `style=thmbluebox' on input line 433.
 Package thmtools Info: Key `mdframed' (with value `style=mdredbox')
 (thmtools)             is not a known style key.
 (thmtools)             Will pass this to every \declaretheorem
-(thmtools)             that uses `style=thmredbox' on input line 452.
+(thmtools)             that uses `style=thmredbox' on input line 453.
 Package thmtools Info: Key `mdframed' (with value `style=mdgreenbox')
 (thmtools)             is not a known style key.
 (thmtools)             Will pass this to every \declaretheorem
-(thmtools)             that uses `style=thmgreenbox' on input line 470.
+(thmtools)             that uses `style=thmgreenbox' on input line 471.
 Package thmtools Info: Key `mdframed' (with value `style=mdblackbox')
 (thmtools)             is not a known style key.
 (thmtools)             Will pass this to every \declaretheorem
-(thmtools)             that uses `style=thmblackbox' on input line 488.
-Package thmtools Info: Automatically pulling in `thmdef-mdframed' on input line 519.
+(thmtools)             that uses `style=thmblackbox' on input line 489.
+Package thmtools Info: Automatically pulling in `thmdef-mdframed' on input line 520.
  (/usr/share/texlive/texmf-dist/tex/latex/thmtools/thmdef-mdframed.sty
 Package: thmdef-mdframed 2023/05/04 v0.76
 )
@@ -1177,112 +1177,108 @@ Package hyperref Info: bookmark level for unknown exercise defaults to 0 on inpu
  [4 <./lec3-4.pdf>]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 285.
+(mdframed)              on input line 289.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 293.
-Package hyperref Info: bookmark level for unknown corollary defaults to 0 on input line 293.
+(mdframed)              on input line 297.
+Package hyperref Info: bookmark level for unknown corollary defaults to 0 on input line 297.
 \openout3 = `lec3-5.asy'.
 
 <lec3-5.pdf, id=146, 170.7168pt x 108.00551pt>
 File: lec3-5.pdf Graphic file (type pdf)
 <use lec3-5.pdf>
-Package pdftex.def Info: lec3-5.pdf  used on input line 315.
+Package pdftex.def Info: lec3-5.pdf  used on input line 319.
 (pdftex.def)             Requested size: 170.71637pt x 108.00523pt.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 319.
+(mdframed)              on input line 323.
 \openout3 = `lec3-6.asy'.
 
 <lec3-6.pdf, id=147, 165.50633pt x 170.7168pt>
 File: lec3-6.pdf Graphic file (type pdf)
 <use lec3-6.pdf>
-Package pdftex.def Info: lec3-6.pdf  used on input line 349.
+Package pdftex.def Info: lec3-6.pdf  used on input line 353.
 (pdftex.def)             Requested size: 165.5059pt x 170.71637pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[5 <./lec3-5.pdf>]
+ [5 <./lec3-5.pdf>]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 355.
+(mdframed)              on input line 359.
 \openout3 = `lec3-7.asy'.
 
-<lec3-7.pdf, id=174, 227.62239pt x 205.79987pt>
+<lec3-7.pdf, id=176, 227.62239pt x 205.79987pt>
 File: lec3-7.pdf Graphic file (type pdf)
 <use lec3-7.pdf>
-Package pdftex.def Info: lec3-7.pdf  used on input line 388.
+Package pdftex.def Info: lec3-7.pdf  used on input line 392.
 (pdftex.def)             Requested size: 227.62183pt x 205.79936pt.
+ [6 <./lec3-6.pdf> <./lec3-7.pdf>]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 400.
- [6 <./lec3-6.pdf> <./lec3-7.pdf>]
+(mdframed)              on input line 404.
 \openout3 = `lec3-8.asy'.
 
-<lec3-8.pdf, id=204, 210.3087pt x 227.62239pt>
+<lec3-8.pdf, id=206, 210.3087pt x 227.62239pt>
 File: lec3-8.pdf Graphic file (type pdf)
 <use lec3-8.pdf>
-Package pdftex.def Info: lec3-8.pdf  used on input line 462.
+Package pdftex.def Info: lec3-8.pdf  used on input line 466.
 (pdftex.def)             Requested size: 210.30818pt x 227.62183pt.
  [7 <./lec3-8.pdf>]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 499.
-Package hyperref Info: bookmark level for unknown example defaults to 0 on input line 499.
+(mdframed)              on input line 503.
+Package hyperref Info: bookmark level for unknown example defaults to 0 on input line 503.
 \openout3 = `lec3-9.asy'.
 
-<lec3-9.pdf, id=235, 227.62239pt x 172.7283pt>
+<lec3-9.pdf, id=234, 227.62239pt x 172.7283pt>
 File: lec3-9.pdf Graphic file (type pdf)
 <use lec3-9.pdf>
-Package pdftex.def Info: lec3-9.pdf  used on input line 529.
+Package pdftex.def Info: lec3-9.pdf  used on input line 533.
 (pdftex.def)             Requested size: 227.62183pt x 172.72787pt.
  [8 <./lec3-9.pdf>]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 541.
+(mdframed)              on input line 545.
 \openout3 = `lec3-10.asy'.
 
-<lec3-10.pdf, id=257, 227.62239pt x 186.04205pt>
+<lec3-10.pdf, id=259, 227.62239pt x 186.04205pt>
 File: lec3-10.pdf Graphic file (type pdf)
 <use lec3-10.pdf>
-Package pdftex.def Info: lec3-10.pdf  used on input line 600.
+Package pdftex.def Info: lec3-10.pdf  used on input line 604.
 (pdftex.def)             Requested size: 227.62183pt x 186.04158pt.
  [9 <./lec3-10.pdf>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 621.
+(hyperref)                removing `math shift' on input line 627.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 621.
+(hyperref)                removing `math shift' on input line 627.
 
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 622.
-Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 622.
+(mdframed)              on input line 628.
+Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 628.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 633.
+(mdframed)              on input line 639.
 \openout3 = `lec3-11.asy'.
 
-<lec3-11.pdf, id=280, 227.62239pt x 204.70778pt>
+<lec3-11.pdf, id=283, 227.62239pt x 204.70778pt>
 File: lec3-11.pdf Graphic file (type pdf)
 <use lec3-11.pdf>
-Package pdftex.def Info: lec3-11.pdf  used on input line 664.
+Package pdftex.def Info: lec3-11.pdf  used on input line 670.
 (pdftex.def)             Requested size: 227.62183pt x 204.70726pt.
 [10 <./lec3-11.pdf>]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 672.
+(mdframed)              on input line 679.
 \openout3 = `lec3-12.asy'.
 
-<lec3-12.pdf, id=301, 197.20375pt x 227.62239pt>
+<lec3-12.pdf, id=306, 197.20375pt x 227.62239pt>
 File: lec3-12.pdf Graphic file (type pdf)
 <use lec3-12.pdf>
-Package pdftex.def Info: lec3-12.pdf  used on input line 708.
+Package pdftex.def Info: lec3-12.pdf  used on input line 714.
 (pdftex.def)             Requested size: 197.20326pt x 227.62183pt.
- [11 <./lec3-12.pdf>] [12] (./lec3.aux)
+ [11 <./lec3-12.pdf>] [12] [13] (./lec3.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
@@ -1291,18 +1287,18 @@ Package rerunfilecheck Info: File `lec3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 41147 strings out of 474222
- 862064 string characters out of 5748733
- 1945975 words of memory out of 5000000
- 62433 multiletter control sequences out of 15000+600000
- 581839 words of font info for 198 fonts, out of 8000000 for 9000
+ 41167 strings out of 474222
+ 862334 string characters out of 5748733
+ 1946975 words of memory out of 5000000
+ 62436 multiletter control sequences out of 15000+600000
+ 582019 words of font info for 201 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  123i,21n,128p,10995b,1204s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx1440.pfb>
-Output written on lec3.pdf (12 pages, 350925 bytes).
+Output written on lec3.pdf (13 pages, 355092 bytes).
 PDF statistics:
- 514 PDF objects out of 1000 (max. 8388607)
- 393 compressed objects within 4 object streams
- 114 named destinations out of 1000 (max. 500000)
+ 532 PDF objects out of 1000 (max. 8388607)
+ 409 compressed objects within 5 object streams
+ 125 named destinations out of 1000 (max. 500000)
  45353 words of extra memory for PDF output out of 51595 (max. 10000000)
 
