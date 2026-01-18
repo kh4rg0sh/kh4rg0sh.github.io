@@ -1,3 +1,0 @@
-\contentsline {section}{\numberline {1}Problem}{1}{section.2}%
-\contentsline {section}{\numberline {2}Solution 1 (Using Legendre's Three-Square Theorem)}{1}{section.4}%
-\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
