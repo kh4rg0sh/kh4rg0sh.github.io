@@ -1,0 +1,182 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+
+\begin{document}
+\title{IMO Shortlist 2021 G1}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering https://artofproblemsolving.com/community/c6h2882542p25627509
+\end{abstract}
+
+\tableofcontents
+
+\section{Problem}
+\begin{problem*}[IMO Shortlist 2021 G1]
+    Let $ABCD$ be a parallelogram with $AC=BC.$ A point $P$ is chosen on the extension of ray $AB$ past $B.$ The circumcircle of $ACD$ meets the segment $PD$ again at $Q.$ The circumcircle of triangle $APQ$ meets the segment $PC$ at $R.$ Prove that lines $CD,AQ,BR$ are concurrent.
+\end{problem*}
+
+\section{Solution 1 (Using Angle Chasing)}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+        
+        pair A, B, C, D, E, P, Q, R, S, T;
+        A = (0, 0); B = (3, 0); P = (4.3, 0); C = (1.5, 3.8); D = C + (A - B);
+        pair[] QQ = intersectionpoints(line(D, P), circumcircle(A, C, D));
+        pair[] RR = intersectionpoints(line(C, P), circumcircle(A, QQ[0], P));
+        
+        T = extension(C, D, A, QQ[0]);
+
+        draw(A--B--C--D--cycle);
+        draw(B--P); draw(A--RR[1]); 
+        draw(P--D); draw(A--C);
+        draw(C--T); draw(A--T);
+        draw(P--C); draw(B--T, gray+dashed); draw(C--QQ[0], gray);
+        draw(circumcircle(A, P, QQ[0])); draw(circumcircle(A, C, D));
+
+        dot("$A$", A, dir(210)); dot("$B$", B, dir(315));
+        dot("$C$", C, dir(105)); dot("$D$", D, dir(135));
+        dot("$P$", P, dir(330)); dot("$Q$", QQ[0], dir(295));
+        dot("$T$", T, dir(45)); dot("$R$", RR[1], dir(0));
+
+        draw(circumcircle(A, B, C), heavygray+dashed);
+        draw(circumcircle(C, T, RR[1]), heavygray+dashed);
+    \end{asy}
+\end{figure}
+\begin{proof}
+    Define $CD$ $\cap$ $AQ$ as $T$. We want to show that $BR$ passes through $T$ too.
+    \begin{claim}\label{claim:1}
+        Quadrilateral $CABR$ is cyclic.
+    \end{claim}
+    \begin{proof}
+        This is just angle chasing.
+        \begin{align*}
+            \angle CRA &= \angle CRQ + \angle QRA \\ 
+                        &= \angle QAP + \angle QPA \\ 
+                        &= \angle QAP + \angle QDC \\ 
+                        &= \angle QAP + \angle QAC \\ 
+                        &= \angle CAB = \angle ABC
+        \end{align*}
+        This implies that $CABR$ is a cyclic quadrilateral.
+    \end{proof}
+    
+    \begin{claim}
+        Quadrilateral $CQRT$ is cyclic.
+    \end{claim}
+    \begin{proof}
+        Again we use angle chasing to prove this.
+        \begin{align*}
+            \angle CRQ &= \angle QAP \\
+                        &= \angle QTC
+        \end{align*}
+        which implies that $CQRT$ is a cyclic quadrilateral.
+    \end{proof}
+    As a result, we have
+    \begin{align*}
+        \angle CRB + \angle CRT &= 180^{\circ} - \angle CAB + \angle CQT \\ 
+                            &= 180^{\circ} - \angle CBA + \angle CDA \\
+                            &= 180^{\circ}
+    \end{align*}
+    Therefore, points $B$, $R$ and $T$ are collinear.
+\end{proof}
+
+\section{Solution 2 (Using Radical Axis Theorem)}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+        
+        pair A, B, C, D, E, P, Q, R, S, T;
+        A = (0, 0); B = (3, 0); P = (4.3, 0); C = (1.5, 3.8); D = C + (A - B);
+        pair[] QQ = intersectionpoints(line(D, P), circumcircle(A, C, D));
+        pair[] RR = intersectionpoints(line(C, P), circumcircle(A, QQ[0], P));
+        
+        T = extension(C, D, A, QQ[0]);
+
+        draw(A--B--C--D--cycle);
+        draw(B--P); draw(A--RR[1]); 
+        draw(P--D); draw(A--C);
+        draw(C--T); draw(A--T);
+        draw(P--C); draw(B--T, gray+dashed); draw(C--QQ[0], gray);
+        draw(circumcircle(A, P, QQ[0])); draw(circumcircle(A, C, D));
+
+        dot("$A$", A, dir(210)); dot("$B$", B, dir(315));
+        dot("$C$", C, dir(105)); dot("$D$", D, dir(135));
+        dot("$P$", P, dir(330)); dot("$Q$", QQ[0], dir(295));
+        dot("$T$", T, dir(45)); dot("$R$", RR[1], dir(0));
+
+        draw(circumcircle(A, B, C), heavygray+dashed);
+        
+        pair X = extension(A, D, B, RR[1]);
+        draw(circumcircle(C, D, X), heavygray+dashed);
+        dot("$X$", X, dir(245)); draw(A--X); draw(X--RR[1]);
+    \end{asy}
+\end{figure}
+\begin{proof}
+    Define $BR$ $\cap$ $\odot(AQP)$ $=$ $X$.
+    \begin{claim}
+        Quadrilateral $CABR$ is cyclic.
+    \end{claim}
+    \begin{proof}
+        Same as \hyperref[claim:1]{Claim 1.1}.
+    \end{proof}
+
+    \begin{claim}
+        $X$ lies on the line $AD$.
+    \end{claim}
+    \begin{proof}
+        To prove the collinearity, we simply angle chase.
+        \begin{align*}
+            \angle DAB + \angle XAB &= 180^{\circ} - \angle ABC + \angle XRP \\
+                                    &= 180^{\circ} - \angle CAB + \angle CAB \\
+                                    &= 180^{\circ} 
+        \end{align*}
+        This implies that $X$ lies on $AD$.
+    \end{proof}
+
+    \begin{claim}
+        Quadrilateral $CDXR$ is cyclic.
+    \end{claim}
+    \begin{proof}
+        This is again angle chasing.
+        \begin{align*}
+            \angle CDX = \angle CBA = \angle CAB = 180^{\circ} - \angle CRB
+        \end{align*}
+        which implies that $CDXR$ is a cyclic quadrilateral.
+    \end{proof}
+
+    Applying the radical axis theorem on $\odot(AQCD)$, $\odot(AQRP)$ and $\odot(CDXR)$, we get that $CD$, $AQ$ and $BR$ are concurrent.
+\end{proof}
+\end{document}
