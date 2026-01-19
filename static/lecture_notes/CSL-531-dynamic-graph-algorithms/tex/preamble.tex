@@ -20,7 +20,12 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
+
 \usepackage{thmtools}
+\usepackage{cancel}
 \usepackage[hidelinks]{hyperref}
 
 \theoremstyle{definition}
@@ -43,6 +48,17 @@
 		outer arc=10pt,
 		colframe=blue,
 		colback=TealBlue!5,
+		boxrule=1pt,
+		before skip=12pt,
+		after skip=14pt,
+		left=10pt,
+		right=10pt
+	}, problem box/.style={
+		enhanced,
+		arc=9pt,
+		outer arc=10pt,
+		colframe=RawSienna,
+		colback=Salmon!5,
 		boxrule=1pt,
 		before skip=12pt,
 		after skip=14pt,
@@ -109,6 +125,8 @@
 
 \declaretheorem[style=thmtheorem,name=Theorem,numberwithin=section]{theorem}
 \tcolorboxenvironment{theorem}{theorem box}
+\declaretheorem[style=thmtheorem,name=Problem,numberwithin=section]{problem}
+\tcolorboxenvironment{problem}{problem box}
 \declaretheorem[style=thmtheorem,name=Lemma,sibling=theorem]{lemma}
 \tcolorboxenvironment{lemma}{theorem box}
 \declaretheorem[style=thmtheorem,name=Proposition,sibling=theorem]{proposition}
