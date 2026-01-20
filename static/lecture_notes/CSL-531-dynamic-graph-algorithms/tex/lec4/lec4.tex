@@ -1,0 +1,161 @@
+\section{Jan 20, 2026}
+We discuss some methods to compute the amortized time of an algorithm.
+
+\subsection{Amortized Analysis}
+\begin{enumerate}
+    \item \highlight{Aggregate Method}. Compute the total cost of $n$ updates and divide it by $n$.
+    \item \highlight{Accounting Method}. Assign an extra credit to each operation to pay for expensive operations later on.
+    \begin{align*}
+        \text{Amortized Cost} = \text{Assigned Cost} + \text{Extra Credit}
+    \end{align*}
+    \item \highlight{Potential Method}. Assign a potential function and compute the credit in the form of a potential.
+    \begin{align*}
+        \text{Amortized Cost} = \text{Actual Cost} + \text{Change in Potential}
+    \end{align*} 
+\end{enumerate}
+
+To see how these methods are used, we consider a sample problem and compute its amortized time using the above methods.
+\subsection{Bit Counter}
+\begin{problem}
+    Consider the binary representation of the numbers. Incrementing by one unit, several bits may change in the binary representation. Compute the average number of bits flipped per increment.
+\end{problem}
+
+Define $T(n)$ as the number of bits flips after $n$ increments. The amortized cost is $$\le \frac{T(n)}{n}$$
+\subsubsection{Aggregate Method}
+For a number $n$, the number of bits in its binary representation are exactly
+\[
+    1 + \lfloor \log_2 n \rfloor
+\]
+Observe that each increment flips the lowest significant bit of $n$. The next significant bit is flipped atmost $\lfloor \tfrac{n}{2} \rfloor$ and so on. Using induction we can prove that for the $i$th significant bit of $n$, the number of times this bit is flipped in the $n$ increments is 
+\[
+    \left\lfloor \frac{n}{2^{i - 1}} \right\rfloor
+\]
+Therefore, the total cost of $n$ increments can be computed as
+
+\begin{align*}
+\# (\text{Total Cost}) &= n + \left\lfloor \frac{n}{2} \right\rfloor + \left\lfloor \frac{n}{4} \right\rfloor + \ldots + \left\lfloor \frac{n}{2^{\lfloor \log_2 n \rfloor}} \right\rfloor \\ 
+                    &< n \left( 1 + \frac{1}{2} + \frac{1}{4} + \ldots \right) \\ 
+                    &= 2n
+\end{align*}
+Finally, the amortized time complexity $T(n)$ is calculated as 
+\begin{align*}
+    \frac{\# (\text{Total Cost})}{n} = 2
+\end{align*}
+
+\subsubsection{Accounting Method}
+We observe that every operation flips the least significant bit. So let's assign the cost of each operation as $1$. Since we will need to flip the second LSB once in two times, the third LSB once in four times and so on $\implies$ thus we could store an extra credit of 
+\begin{align*}
+    \frac{1}{2} + \frac{1}{4} + \ldots + \frac{1}{2^{\lfloor \log_2 n \rfloor}}
+\end{align*}
+for every operation. Therefore, the amortized cost amounts to 
+\begin{align*}
+    1 + \frac{1}{2} + \frac{1}{4} + \ldots + \frac{1}{2^{\lfloor \log_2 n \rfloor}}
+    < 1 + \frac{1}{2} + \frac{1}{4} + \ldots = 2
+\end{align*}
+
+\subsubsection{Potential Method}
+Define a potential function $\phi$ as the number of ones in the binary representation of the number.
+\begin{lemma}
+    For a number $n$, suppose $W$ is the cost of incrementing $n$. Then
+    \begin{align*}
+        W + \Delta \phi = W + \phi (n + 1) - \phi (n) = 2
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    Suppose $n$ has $k$ consecutive least significant set bits. The cost of incrementing $n$ is $(k + 1)$. Since, $\phi(n)$ $=$ $T + k$ and $\phi(n + 1)$ $=$ $T + 1$, where $T$ is the remaining set bits. Hence,
+    \begin{align*}
+        W + \Delta \phi = (k + 1) + \left( T + 1 - (T + k) \right) = 2
+    \end{align*}
+\end{proof}
+Suppose $W_i$ corresponds to the actual cost of incrementing in the $i$th update. Then
+\begin{align*} 
+    \sum_{i = 1}^n \left(W_i + \Delta \phi \right) = \phi(n) - \phi(0) + \sum_{i = 1}^n W_i = 2n
+\end{align*}
+which can be written as
+\begin{align*}
+    \left( \frac{W_1 + W_2 + \ldots + W_n}{n}\right) + \left( \frac{\phi(n) - \phi(0)}{n} \right) \le 2
+\end{align*}
+Since by definition of $\phi$, we have $\phi(n) > \phi(0)$. Hence
+\begin{align*}
+\text{Amortized Cost} = \left( \frac{W_1 + W_2 + \ldots + W_n}{n} \right) \le 2
+\end{align*} 
+
+\subsubsection{Properties of Potential Functions}
+To see why the potential method works, observe that
+\begin{align*}
+    w_1 + \phi_1 - \phi_0 &\le k \\
+    w_2 + \phi_2 - \phi_1 &\le k \\
+    &\ \vdots \\
+    w_n + \phi_n - \phi_{n-1} &\le k
+\end{align*}
+Summing up all the inequalities, we have
+\begin{align*}
+(w_1 + w_2 + \ldots + w_n) + \phi_n - \phi_0 &\le nk \\ 
+\Longleftrightarrow \left( \frac{w_1 + w_2 + \ldots + w_n}{n} \right) &\le  k - \left( \frac{\phi_n - \phi_0}{n} \right)
+\end{align*}
+The choice for $\phi$ is made such that
+\begin{enumerate}
+    \item $\phi_i \geq 0$
+    \item $\left( \tfrac{\phi_0}{n} \right)$ is negligible compared to $k$
+\end{enumerate}
+
+\begin{homework}
+    Compute the average number of digit changes per increment for a \highlight{digit counter}. Generalise the result for a \highlight{B-ary counter}.
+\end{homework}
+
+\subsection{Multi-Pop Stack}
+\begin{problem}
+    Consider a stack that supports the following operations.
+    \begin{enumerate}[itemsep=0.01em]
+        \item \textsc{Push(x)}: Push $x$ to the top of the stack.
+        \item \textsc{Pop(k)}: Pop $k$ elements from the stack. 
+    \end{enumerate}
+    Compute the amortized time complexity of the data structure.
+\end{problem}
+\subsubsection{Aggregate Method}
+Suppose $T$ is the total cost of operations. Then
+\begin{align*}
+T = \# \left( \text{Push Cost} \right) + \# \left( \text{Pop Cost} \right)
+\end{align*}
+Since each element that is pushed can be either popped once or choose to stay in the stack, hence
+\begin{align*}
+    \# \left( \text{Pop Cost} \right) \le \# \left( \text{Push Cost} \right)
+\end{align*}
+Therefore, we can write the amortized time as
+\begin{align*}
+    \text{Amortized Time} &= \frac{\# \left( \text{Push Cost} \right) + \# \left( \text{Pop Cost} \right)}{n} \\
+                        &\le \frac{2}{n} \left( \# \left( \text{Push Cost} \right) \right) \\ 
+                        &\le \frac{2n}{n} = 2
+\end{align*}
+
+\subsubsection{Accounting Method}
+For a push operation, we assign a cost of one unit and an extra credit of one unit for a future pop for this element. The pop operation cost thus assigned is zero, because the operation cost is already accounted in the extra credit stored for the element when it was pushed. Thus,
+\begin{align*}
+    \text{Amortized Time} = 1 + 1 = 2
+\end{align*}
+
+\subsubsection{Potential Method}
+Define the potential function $\phi$ as the number of elements in the stack. Then for a push operation
+\begin{align*}
+    W + \Delta \phi = 1 + 1 \le 2
+\end{align*}
+and for a pop operation
+\begin{align*}
+    W + \Delta \phi = k - k = 0 \le 2
+\end{align*}
+Hence, we can claim that
+\begin{align*}
+\text{Amortized Time} = 2
+\end{align*}
+
+\begin{homework}
+    Implement a queue using two stacks. Design a formal data structure, state the algorithm and show that the amortized time of operation is $\mathcal{O}(1)$.
+\end{homework}
+
+\begin{remark}
+    \highlight{Amortized analysis} can be used to compute not only the average time complexity, but also the best case time and worst case time complexity. Consider
+    \begin{align*}
+        \text{Amortized Time} = W + \phi
+    \end{align*}
+    The expression results in best case time complexity when $\phi$ is maximised and a worst case time complexity when $\phi$ is minimised.
+\end{remark}

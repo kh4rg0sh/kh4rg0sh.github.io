@@ -82,7 +82,7 @@ Initially, all entries of $R$ are set to $0$. After computing the reachability t
     \end{algorithmic}
 \end{algorithm}
 \begin{remark}
-    Since we use a DFS/BFS, it takes \(O(n+m)\) time for the algorithm to complete and each reachability query can be answered in \(O(1)\) time. The algorithm uses \(O(n)\) additional space for the array \(R\).
+    Since we use a DFS/BFS, it takes \(\mathcal{O}(n+m)\) time for the algorithm to complete and each reachability query can be answered in \(\mathcal{O}(1)\) time. The algorithm uses \(\mathcal{O}(n)\) additional space for the array \(R\).
 \end{remark}
 
 \subsection{Incremental Single Source Reachability}
@@ -173,17 +173,17 @@ This contradicts our assumption that \(w\) is not computed by the algorithm. Hen
 \subsubsection{Time Complexity Analysis}
 For \vocab{\hyperref[alg:incremental-reachability]{Algorithm 3}}, we show that the
 \begin{enumerate}
-    \item \highlight{Worst-case time complexity} is $\mathcal{O} \left( m + n \right)$.
+    \item \highlight{Worst-case time complexity} is $\mathcal{O}\!\left( m + n \right)$.
     \begin{proof}
         If a vertex $u$ is newly reachable, then we perform $\left( 1 + \deg  u \right)$ operations on it. Thus, the total running time of the algorithm is
         \begin{align*}
-            \sum_{u \in Q} \left( 1 + \deg u \right) = \mathcal{O} \left( m + n \right)
+            \sum_{u \in Q} \left( 1 + \deg u \right) = \mathcal{O}\!\left( m + n \right)
         \end{align*}
         where $Q$ is the set of newly reachable vertices.
     \end{proof}
-    \item \highlight{Amortized time complexity} is $\mathcal{O} \left( 1 \right)$.
+    \item \highlight{Amortized time complexity} is $\mathcal{O}\!\left( 1 \right)$.
     \begin{proof}
-        Since the algorithm reduces edges $e(u, v)$ of the form $$\left( R[u] = 1, R[v] = 0\right) \mapsto \left( R[u] = 1, R[v] = 1\right)$$ hence, each edge could be reduced \emph{atmost once}. Thus, the number of operations are bounded by $m$ and the amortized time complexity turns out to be
+        Since the algorithm reduces edges $e(u, v)$ of the form $$\left( R[u] = 1, R[v] = 0\right) \mapsto \left( R[u] = 1, R[v] = 1\right)$$ Hence, each edge could be reduced \emph{atmost once}. Thus, the number of operations are bounded by $m$ and the amortized time complexity turns out to be
         \[
             \frac{1}{m}
             \sum_{\substack{v \in V \\ R[v]=1}}
@@ -193,4 +193,3 @@ For \vocab{\hyperref[alg:incremental-reachability]{Algorithm 3}}, we show that t
         \]
     \end{proof}
 \end{enumerate}
-
