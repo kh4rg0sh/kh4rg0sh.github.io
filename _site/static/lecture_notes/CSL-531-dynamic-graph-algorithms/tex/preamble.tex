@@ -20,7 +20,12 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
+
 \usepackage{thmtools}
+\usepackage{cancel}
 \usepackage[hidelinks]{hyperref}
 
 \theoremstyle{definition}
@@ -43,6 +48,17 @@
 		outer arc=10pt,
 		colframe=blue,
 		colback=TealBlue!5,
+		boxrule=1pt,
+		before skip=12pt,
+		after skip=14pt,
+		left=10pt,
+		right=10pt
+	}, problem box/.style={
+		enhanced,
+		arc=9pt,
+		outer arc=10pt,
+		colframe=RawSienna,
+		colback=Salmon!5,
 		boxrule=1pt,
 		before skip=12pt,
 		after skip=14pt,
@@ -104,11 +120,28 @@
 		breakable,
 		left=10pt,
 		right=10pt
+	},
+	hwproblem box/.style={
+		enhanced,
+		breakable,
+		sharp corners,
+		boxrule=0pt,
+		frame hidden,
+		borderline west={4pt}{0pt}{RoyalBlue},
+		colback=RoyalBlue!4,
+		before skip=12pt,
+		after skip=14pt,
+		left=12pt,
+		right=10pt,
+		top=8pt,
+		bottom=8pt,
 	}
 }
 
 \declaretheorem[style=thmtheorem,name=Theorem,numberwithin=section]{theorem}
 \tcolorboxenvironment{theorem}{theorem box}
+\declaretheorem[style=thmtheorem,name=Problem,numberwithin=section]{problem}
+\tcolorboxenvironment{problem}{problem box}
 \declaretheorem[style=thmtheorem,name=Lemma,sibling=theorem]{lemma}
 \tcolorboxenvironment{lemma}{theorem box}
 \declaretheorem[style=thmtheorem,name=Proposition,sibling=theorem]{proposition}
@@ -146,3 +179,12 @@
 \tcolorboxenvironment{remark*}{remark box}
 \declaretheorem[name=Step,style=thmremark]{step}
 \tcolorboxenvironment{step}{remark box}
+
+\declaretheorem[
+    name=Homework,
+    sibling=theorem,
+    style=thmques
+]{homework}
+
+\tcolorboxenvironment{homework}{hwproblem box}
+

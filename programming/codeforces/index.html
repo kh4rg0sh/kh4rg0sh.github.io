@@ -1,0 +1,45 @@
+---
+layout: default
+title: Codeforces Problems
+permalink: /programming/codeforces/
+---
+
+<h1>Codeforces Problems</h1>
+
+<div class="cf-grid">
+    {% assign sorted_problems = site.codeforces | sort: "contest" | reverse %}
+    {% for problem in sorted_problems %}
+      <a href="{{ problem.url }}" class="cf-card">
+        <h3>{{ problem.contest }}{{ problem.index }}</h3>
+        <p>{{ problem.title }}</p>
+        <span class="rating">{{ problem.rating }}</span>
+      </a>
+    {% endfor %}
+  </div>
+  
+
+<style>
+    .cf-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+    }
+
+    .cf-card {
+        padding: 1rem;
+        border-radius: 8px;
+        background: #f8f8f8;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.15s ease;
+    }
+
+    .cf-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .rating {
+        font-size: 1.0em;
+        color: #666;
+    }
+</style>

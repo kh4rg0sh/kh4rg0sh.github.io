@@ -25,6 +25,12 @@ version:          2.1.0
 github:
   repo:           https://github.com/poole/hyde
 
+# _config.yml
+collections:
+  codeforces:
+    output: true
+    permalink: /programming/codeforces/:name/
+
 plugins:
   - jekyll-paginate
   - jekyll-gist

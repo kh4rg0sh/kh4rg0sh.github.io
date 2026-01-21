@@ -1,7 +1,5 @@
-\section{Jan 14, 2026}
-In this lecture, we elaborate on our discussion of the lower bounds of $T_d(n)$.
-
-Here is the premise of our discussion. Given a problem $\mathcal{P}$ and the best known static algorithm to solve $\mathcal{P}$ called $T_s(n)$, we wish to analyse the time complexity of a dynamic algorithm $T_d(n)$ for solving $\mathcal{P}$.
+\section{[Lecture] Jan 14, 2026}
+In this lecture, we elaborate on our discussion of the lower bounds of $T_d(n)$. Here is the premise of our discussion. Given a problem $\mathcal{P}$ and the best known static algorithm to solve $\mathcal{P}$ called $T_s(n)$, we wish to analyse the time complexity of a dynamic algorithm $T_d(n)$ for solving $\mathcal{P}$.
 \begin{lemma}[Upper Bound on $T_d(n)$]\label{sec:lemma1}
     For any problem $\mathcal{P}$, it always holds that 
     \[
@@ -19,7 +17,7 @@ Suppose $T_d(n)$ is an incremental dynamic algorithm for $\mathcal{P}$, meaning 
 Let $G(n, m)$ be a graph on $n$ vertices and $m$ edges. We would like to analyse the bounds on $T_d(n)$ when considering \highlight{edge insertions} to $G$.
 
 \begin{enumerate}
-    \item \emph{Upper Bound}. By \hyperref[sec:lemma1]{lemma 2.1}, we immediately obtain an upper bound on $T_d(n)$ given by 
+    \item \emph{Upper Bound}. By \vocab{\hyperref[sec:lemma1]{lemma 2.1}}, we immediately obtain an upper bound on $T_d(n)$ given by 
         \[
             \boxed{T_d(n) = \mathcal{O}\!\left(T_s(n)\right)}
         \]
@@ -37,7 +35,7 @@ Let $G(n, m)$ be a graph on $n$ vertices and $m$ edges. We would like to analyse
 Let $G(n, m)$ be a graph on $n$ vertices and $m$ edges. Now we would like to analyse the bounds on $T_d(n)$ when considering \highlight{vertex insertions} to $G$. 
 
 \begin{enumerate}
-    \item \emph{Upper Bound}. By \hyperref[sec:lemma1]{lemma 2.1}, we have
+    \item \emph{Upper Bound}. By \vocab{\hyperref[sec:lemma1]{lemma 2.1}}, we have
         \[
             \boxed{T_d(n) = \mathcal{O}\!\left(T_s(n)\right)}
         \]
@@ -45,7 +43,8 @@ Let $G(n, m)$ be a graph on $n$ vertices and $m$ edges. Now we would like to ana
         \[
             \boxed{T_d(n) = \Omega(1)}
         \]
-    If instead, each update on $G$ adds a singleton vertex \emph{with} edges, then computing the lower bound for $T_d(n)$ in a similar fashion to that for \hyperref[sec:inc_edge_updates]{edge insertions}, we obtain
+
+        If instead, each update on $G$ adds a singleton vertex \emph{with} edges, then computing the lower bound for $T_d(n)$ in a similar fashion to that for \vocab{\hyperref[sec:inc_edge_updates]{edge insertions}}, we obtain
         \[
             \mathcal{O}(1) + n T_d(n) = \Omega\!\left(T_s(n)\right)
         \]
@@ -97,7 +96,7 @@ which implies
 \[
     T_d(n) = \Omega\!\left(T_s(n)\right)
 \]
-Using \hyperref[sec:lemma1]{lemma 2.1}, we obtain
+Using \vocab{\hyperref[sec:lemma1]{lemma 2.1}}, we obtain
 \[
     \boxed{T_d(n) = \Theta\!\left(T_s(n)\right)}
 \]
