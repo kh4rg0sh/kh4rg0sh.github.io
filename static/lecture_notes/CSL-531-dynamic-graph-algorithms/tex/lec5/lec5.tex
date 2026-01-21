@@ -1,0 +1,75 @@
+\section{Jan 21, 2026}
+
+Today's discussion is very important from an analysis standpoint.
+\subsection{Analysis of Algorithms}
+When we talk about analysing the complexity, it could be of either three entities.
+
+\begin{enumerate}
+    \item \vocab{Problems}. Consider a problem $\mathcal{P}$. There could be multiple algorithms to solve this problem:
+    \begin{align*}
+        \mathcal{A}_1, \mathcal{A}_2, \ldots ,\mathcal{A}_n
+    \end{align*}
+    each with a time complexity
+    \begin{align*}
+        T_1, T_2, \ldots ,T_n
+    \end{align*}
+    \begin{definition}
+        The \highlight{complexity of a problem} is defined as the lowest running time among all the existing algorithms, assuming no other extra constraint on the problem.
+    \end{definition}
+    \begin{example}
+        For example, consider the problem of \highlight{sorting}. There are several well known algorithms for sorting that run in $\mathcal{O}(n^2)$ (such as the \vocab{Bubble Sort}) and even in $\mathcal{O}(n\log n)$ (such as the \vocab{Merge Sort}). Since there may be more efficient ways to solve a problem than the existing algorithms. Hence, we say that the existence of algorithms to a problem gives an upper bound on the complexity of the problem. 
+
+        However in case of \highlight{sorting}, we can show that there \emph{cannot} exist a comparison-based sorting algorithm that runs in time complexity faster than $\Omega \left( n\log n\right)$. Thus, this establishes a tight bound on the \highlight{complexity of the sorting problem}
+        \begin{align*}
+            \boxed{\Theta \left( n\log n \right)}
+        \end{align*}
+    \end{example}
+
+    \item \vocab{Algorithms}. Consider an algorithm $\mathcal{A}$. An algorithm performs a sequence of instructions on an input and produces an output. Thus, the parameter that varies in this process is the \emph{input} to the algorithm. So when we talk about the \highlight{complexity} of an algorithm, we are possibly talking about either the
+    \begin{enumerate}
+        \item \emph{Best case time complexity}.
+        \item \emph{Average time complexity}.
+        \item \emph{Worst case time complexity}.
+    \end{enumerate}
+    The best case time complexity is the running time corresponding to the best case input. Similarly, the worst case time complexity is the running time corresponding to the worst case input. The average time complexity of an algorithm is the expected running time over all inputs. We could either assume each input occurs equiprobably or consider a probability distribution.
+    \begin{example}
+        For example, consider \vocab{Quick Sort}. It has a worst case time complexity of $\mathcal{O}(n^2)$ when the array is reverse sorted and a best case time complexity of $\mathcal{O}(n)$ when the array is sorted. The average time complexity of the algorithm is $\mathcal{O}(n\log n)$ that is resulted when the average is taken over all permutations of the input array, assuming that each permutation is equally likely.
+    \end{example}
+    \item \vocab{Functions}. A mathematical function has a lower bound and an upper bound and thus, we can define the complexity of a mathematical function too.
+\end{enumerate}
+
+\subsection{Estimating Algorithms}
+An algorithm performs differently for different inputs. Overall, we have the following
+\begin{enumerate}
+    \item \highlight{Best Case} is the fastest performance for any input.
+    \item \highlight{Average Case} is the average performance for all inputs.
+    \item \highlight{Worst Case} is the slowest performance for any input.
+\end{enumerate}
+To establish the \vocab{best case bound} for an algorithm, we need to find the \highlight{best case} example and show that for all other inputs, we cannot achieve a better running time. It's worth mentioning that the running time of a particular input yields an upper bound on the best case bound and to establish a lower bound on the same, we resort to analysis techniques.
+
+Similarly, to establish the \vocab{worst case bound} for an algorithm, we need to find the \highlight{worst case} example and show that for all other inputs, we cannot achieve a worse running time. Again, the running time of a particular input yields a lower bound on the worst case bound and to establish an upper bound on the same, we resort to analysis techniques.
+
+For example, consider the \vocab{Euclid's gcd Algorithm}. It is an algorithm that is used to compute the greatest common divisor of two natural numbers and it can be shown that the worst case time complexity of the algorithm is $\mathcal{O}(\log n)$. The worst case input is 
+\[
+(a, b) = (f_n, f_{n - 1})
+\]
+where $f_i$ is the $i$th fibonacci number, for which the algorithm has the worst case running time.
+
+\begin{algorithm}[H]
+    \caption{Euclid's gcd Algorithm}
+    \begin{algorithmic}[1]
+        \Function{gcd}{$a,b$}
+            \If{$a > b$}
+                \State \Return \Call{gcd}{$b,a$}
+            \ElsIf{$a = 0$}
+                \State \Return $b$
+            \Else
+                \State \Return \Call{gcd}{$b \bmod a, a$}
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\subsection{Incremental All Pairs Reachability}
+
+
