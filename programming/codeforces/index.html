@@ -9,13 +9,18 @@ permalink: /programming/codeforces/
 <div class="cf-grid">
     {% assign sorted_problems = site.codeforces | sort: "contest" | reverse %}
     {% for problem in sorted_problems %}
-      <a href="{{ problem.url }}" class="cf-card">
-        <h3>{{ problem.contest }}{{ problem.index }}</h3>
-        <p>{{ problem.title }}</p>
+    <a href="{{ problem.url }}"
+       class="cf-card {% if problem.solved %}solved{% endif %}">
+       
+      <h3>{{ problem.contest }}{{ problem.index }}</h3>
+      <p>{{ problem.title }}</p>
+
+      {% if problem.rating %}
         <span class="rating">{{ problem.rating }}</span>
-      </a>
-    {% endfor %}
-  </div>
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>
   
 
 <style>
@@ -42,4 +47,35 @@ permalink: /programming/codeforces/
         font-size: 1.0em;
         color: #666;
     }
+
+    .cf-card {
+        padding: 1rem;
+        border-radius: 10px;
+        background: #f8f8f8;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        border: 2px solid transparent;
+    }
+
+    /* Hover */
+    .cf-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    /* Solved problems */
+    .cf-card.solved {
+        background: #e8f7ec;
+        border-color: #2ecc71;
+    }
+
+    /* Optional solved badge */
+    .cf-card.solved::after {
+        content: "✓ Solved";
+        font-size: 0.75em;
+        color: #2ecc71;
+        float: right;
+    }
+
 </style>
