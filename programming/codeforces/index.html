@@ -7,11 +7,11 @@ permalink: /programming/codeforces/
 <h1>Codeforces Problems</h1>
 
 <div class="cf-grid">
-    {% assign sorted_problems = site.codeforces | sort: "contest" | reverse %}
-    {% for problem in sorted_problems %}
-    <a href="{{ problem.url }}"
-       class="cf-card {% if problem.solved %}solved{% endif %}">
-       
+  {% assign sorted_problems = site.codeforces | sort: "contest" | reverse %}
+  {% for problem in sorted_problems %}
+
+  <div class="cf-card {% if problem.solved %}solved{% endif %}">
+    <a href="{{ problem.url }}" class="cf-main-link">
       <h3>{{ problem.contest }}{{ problem.index }}</h3>
       <p>{{ problem.title }}</p>
 
@@ -19,8 +19,19 @@ permalink: /programming/codeforces/
         <span class="rating">{{ problem.rating }}</span>
       {% endif %}
     </a>
+    <a
+      href="https://codeforces.com/problemset/problem/{{ problem.contest }}/{{ problem.index }}"
+      class="cf-external"
+      target="_blank"
+      title="Open on Codeforces">
+      CF ↗
+    </a>
+
+  </div>
+
   {% endfor %}
 </div>
+
   
 
 <style>
@@ -28,19 +39,6 @@ permalink: /programming/codeforces/
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
         gap: 1rem;
-    }
-
-    .cf-card {
-        padding: 1rem;
-        border-radius: 8px;
-        background: #f8f8f8;
-        text-decoration: none;
-        color: inherit;
-        transition: transform 0.15s ease;
-    }
-
-    .cf-card:hover {
-        transform: translateY(-4px);
     }
 
     .rating {
@@ -77,5 +75,38 @@ permalink: /programming/codeforces/
         color: #2ecc71;
         float: right;
     }
+
+    .cf-card {
+        position: relative;
+    }
+
+    /* Main clickable area */
+    .cf-main-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* External CF button */
+    .cf-external {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 0.75em;
+        padding: 4px 6px;
+        border-radius: 6px;
+        background: #1f8dd6;
+        color: white;
+        text-decoration: none;
+        opacity: 0.85;
+        transition: opacity 0.15s ease, transform 0.15s ease;
+        z-index: 2;
+    }
+
+    .cf-external:hover {
+        opacity: 1;
+        transform: translateY(-1px);
+    }
+
 
 </style>
