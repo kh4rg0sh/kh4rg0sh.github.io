@@ -6,33 +6,61 @@ permalink: /programming/codeforces/
 
 <h1>Codeforces Problems</h1>
 
+<div class="cf-filters">
+  <!-- Rating filter -->
+  <input type="number" id="minRatingFilter" class="rating-filter" placeholder="Min Rating">
+  <input type="number" id="maxRatingFilter" class="rating-filter" placeholder="Max Rating">
+
+  <!-- Name search -->
+  <input
+    type="text"
+    id="nameFilter"
+    placeholder="Search by problem name"
+  />
+
+  <!-- Code search -->
+  <input
+    type="text"
+    id="codeFilter"
+    placeholder="Search by code (e.g. 2182B)"
+  />
+
+  <label class="solved-toggle">
+    <input type="checkbox" id="solvedOnlyToggle">
+    Solved
+  </label>
+</div>
+
 <div class="cf-grid">
   {% assign sorted_problems = site.codeforces | sort: "contest" | reverse %}
+
   {% for problem in sorted_problems %}
+    {% if problem.rating %}
 
-  <div class="cf-card {% if problem.solved %}solved{% endif %}">
-    <a href="{{ problem.url }}" class="cf-main-link">
-      <h3>{{ problem.contest }}{{ problem.index }}</h3>
-      <p>{{ problem.title }}</p>
-
-      {% if problem.rating %}
+    <div
+      class="cf-card {% if problem.solved %}solved{% endif %}"
+      data-rating="{{ problem.rating }}"
+      data-title="{{ problem.title | downcase }}"
+      data-code="{{ problem.contest }}{{ problem.index }}"
+    >
+      <a href="{{ problem.url }}" class="cf-main-link">
+        <h3>{{ problem.contest }}{{ problem.index }}</h3>
+        <p>{{ problem.title }}</p>
         <span class="rating">{{ problem.rating }}</span>
-      {% endif %}
-    </a>
-    <a
-      href="https://codeforces.com/problemset/problem/{{ problem.contest }}/{{ problem.index }}"
-      class="cf-external"
-      target="_blank"
-      title="Open on Codeforces">
-      CF ↗
-    </a>
+      </a>
 
-  </div>
+      <a
+        href="https://codeforces.com/problemset/problem/{{ problem.contest }}/{{ problem.index }}"
+        class="cf-external"
+        target="_blank">
+        CF ↗
+      </a>
+    </div>
 
+    {% endif %}
   {% endfor %}
 </div>
 
-  
 
 <style>
     .cf-grid {
@@ -108,5 +136,99 @@ permalink: /programming/codeforces/
         transform: translateY(-1px);
     }
 
+    .cf-filters {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: nowrap;   /* ⬅ keep everything on one line */
+      margin-bottom: 1.5rem;
+    }
+
+    /* Rating inputs: ~1/3 size */
+    .rating-filter {
+      width: 90px;
+    }
+
+    /* Text search boxes */
+    .cf-filters input[type="text"] {
+      width: 220px;
+    }
+
+    /* Checkbox alignment */
+    .solved-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    /* Generic input styling */
+    .cf-filters input {
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    @media (max-width: 700px) {
+      .cf-filters {
+        flex-wrap: wrap;
+      }
+    }
 
 </style>
+
+<script>
+  const solvedOnlyToggle = document.getElementById("solvedOnlyToggle");
+  const minRating = document.getElementById("minRatingFilter");
+  const maxRating = document.getElementById("maxRatingFilter");
+  const nameFilter = document.getElementById("nameFilter");
+  const codeFilter = document.getElementById("codeFilter");
+
+  const cards = document.querySelectorAll(".cf-card");
+
+  function applyFilters() {
+    const minVal = parseInt(minRating.value);
+    const maxVal = parseInt(maxRating.value);
+    const nameQuery = nameFilter.value.toLowerCase();
+    const codeQuery = codeFilter.value.toLowerCase();
+
+    cards.forEach(card => {
+      const ratingStr = card.dataset.rating;
+      const rating = ratingStr ? parseInt(ratingStr) : null;
+      const title = card.dataset.title;
+      const code = card.dataset.code.toLowerCase();
+
+      let visible = true;
+
+      /* Rating filter (ignore unrated problems) */
+      if (rating !== null) {
+        if (!isNaN(minVal) && rating < minVal) visible = false;
+        if (!isNaN(maxVal) && rating > maxVal) visible = false;
+      }
+
+      /* Solved-only filter */
+      if (solvedOnlyToggle.checked && !card.classList.contains("solved")) {
+        visible = false;
+      }
+
+      /* Name filter */
+      if (nameQuery && !title.includes(nameQuery)) {
+        visible = false;
+      }
+
+      /* Code filter */
+      if (codeQuery && !code.includes(codeQuery)) {
+        visible = false;
+      }
+
+      card.style.display = visible ? "" : "none";
+    });
+  }
+
+  minRating.addEventListener("input", applyFilters);
+  maxRating.addEventListener("input", applyFilters);
+  nameFilter.addEventListener("input", applyFilters);
+  codeFilter.addEventListener("input", applyFilters);
+  solvedOnlyToggle.addEventListener("change", applyFilters);
+</script>
