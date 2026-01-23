@@ -51,7 +51,8 @@
 \maketitle
 \begin{abstract}
     \centering
-    \url{https://codeforces.com/problemset/problem/1166/E}
+    \url{https://codeforces.com/problemset/problem/1166/E} \\ 
+    \textbf{Accepted}: \url{https://codeforces.com/contest/1166/submission/359193366}
 \end{abstract}
 
 \section{Solution}
@@ -89,8 +90,17 @@
     But $D_j \subseteq S_i$ $\implies$ $D_i \subseteq S_j$ $\implies$ $\lcm(D_i) \le \lcm(S_j)$, contradicting the problem statement.
 \end{proof}
 
-\paragraph{Back to the Problem}
-Now we show that the above condition is the only sufficient condition for the problem condition to hold true.
+\paragraph{Back to the Problem} 
+
+Now we show that the above condition is the only sufficient condition for the problem condition to hold true. Consider $m$ distinct primes 
+\begin{align*}
+    p_1, p_2, \ldots, p_m
+\end{align*}
+and define $a_i$ as the product 
+\begin{align*}
+    a_i = \prod_{j \in D} p_j
+\end{align*}
+where $D$ is the set of days on which dora visits the $i$th store. Consider the $i$th day. Suppose $D_i$ is the set of stores that dora visits and $S_i$ is the store that swiper visits. Then we have $p_i$ does not divide $\lcm(S_i)$ because dora doesnt visit these stores on the $i$th day. However, for any $j$ we will always have $p_j$ divides $\lcm(D_i)$ because $D_i$ $\cap$ $D_j$ $\neq$ $\phi$. Hence $\lcm(D_i)$ $>$ $\lcm(S_i)$.
 
 \subsection{Code}
 
@@ -99,6 +109,7 @@ void solve() {
     ll m, n;
     std::cin >> m >> n;
 
+    // 1. inputs
     std::vector<ll> a[m + 1];
     for (ll i = 1; i <= m; i++) {
         ll x;
@@ -112,6 +123,7 @@ void solve() {
         }
     }
 
+    // 2. O(nm^2) algorithm to check every D_i, D_j have non-empty intersection
     bool ans = true;
     for (ll i = 1; i <= m; i++) {
         for (ll j = i + 1; j <= m; j++) {
