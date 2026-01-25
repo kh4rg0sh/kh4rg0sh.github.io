@@ -1,6 +1,6 @@
 if(!settings.multipleView) settings.batchView=false;
 settings.tex="pdflatex";
-defaultfilename="lec4-9";
+defaultfilename="lec4-10";
 if(settings.render < 0) settings.render=4;
 settings.outformat="";
 settings.inlineimage=true;
@@ -54,59 +54,53 @@ return g;
 import geometry;
 size(8cm); defaultpen(fontsize(10pt));
 
-pair O, O1;
-real R, r;
-R = 4; r = 2.2;
+pair A, B, C, O;
+A = (-3, 0); B = (3, 0);
+O = (1.3, 0); C = (A + B) / 2;
 
-O = origin; O1 = O + (R - r) * dir(45);
-draw(circle(O, R)); draw(circle(O1, r), blue);
+pair O1 = rotate(90, O) * A;
+pair[] PP = intersectionpoints(line(O, O1), circle(C, abs(A - C)));
 
-pair K = O1 + r * dir(270); dot("$K$", K, dir(305));
-pair P1 = K - rotate(90) * (O1 - K);
-pair P2 = K + rotate(90) * (O1 - K);
+dot("$A$", A, dir(225));
+dot("$B$", B, dir(315));
+dot("$O$", O, dir(225));
+dot("$P$", PP[0], dir(45));
 
-pair[] AA = intersectionpoints(line(P1, P2), circle(O, R));
-dot("$B$", AA[0], dir(225)); dot("$C$", AA[1], dir(315));
+draw(A--B);
+draw(circumcircle(A, B, PP[0]));
 
-pair A = R * dir(98); dot("$A$", A, dir(100));
-pair T = O1 + r * dir(45); dot("$T$", T, dir(45));
-pair M = O + R * dir(270); dot("$M$", M, dir(225));
+pair I = incenter(A, B, PP[0]);
+pair M = dir(270) * 3; dot("$I$", I, dir(150));
 
-pair I = incenter(A, AA[0], AA[1]);
-dot("$I$", I, dir(50));
+pair X = O + 3 * (unit(A - O) + unit(PP[0] - O));
+pair Y = O + 3 * (unit(B - O) + unit(PP[0] - O));
 
-pair[] LL = intersectionpoints(line(K, I), circle(O1, r));
-dot("$L$", LL[0], dir(150));
+pair I1 = I + (Y - O);
+pair I2 = I + (X - O);
+pair R = extension(I, I1, A, B);
+dot("$R$", R, dir(225));
 
-pair D = extension(A, LL[0], AA[0], AA[1]);
-dot("$D$", D, dir(225));
+pair S = extension(I, I2, A, B);
+dot("$S$", S, dir(315));
 
-draw(M--T, blue);
-draw(A--AA[0]--AA[1]--cycle);
-draw(A--M);
-draw(A--D);
-draw(K--LL[0]);
+pair U = extension(I, I1, PP[0], O);
+pair V = extension(I, I2, PP[0], O);
+dot("$U$", U, dir(150));
+dot("$V$", V, dir(30));
 
-pair I1 = I + rotate(90) * (K - I);
-pair P = intersectionpoint(line(A, D), line(I, I1));
-pair Q = extension(I, P, AA[0], AA[1]);
+draw(R--U); draw(S--I); draw(PP[0]--O);
+draw(A--B--PP[0]--cycle);
 
-dot("$Q$", P, dir(140)); dot("$P$", Q, dir(225));
-pair[] UU = intersectionpoints(line(Q, M), circumcircle(A, AA[0], AA[1]));
-dot("$U$", UU[1], dir(135)); draw(circumcircle(UU[1], P, Q), red);
-draw(M--UU[1], red); draw(Q--I);
+pair O1 = R + (U - O);
+pair O2 = S + (V - O);
 
-pair O2 = circumcenter(UU[1], P, Q);
-dot("$O_2$", O1, dir(100)); dot("$O_1$", O2, dir(120));
-draw(O2--O1, heavygray+dashed);
+dot("$O_1$", O1, dir(220));
+dot("$O_2$", O2, dir(90));
 
-draw(O2--Q); draw(O1--K);
-draw(O1--D); draw(O2--D);
+draw(circle(O1, abs(O1 - R)));
+draw(circle(O2, abs(O2 - S)));
 
-pair R, S;
-R = extension(O2, D, P, Q);
-S = extension(O1, D, K, LL[0]);
+draw(R--PP[0]--S, red);
 
-dot("$R$", R, dir(180));
-dot("$S$", S, dir(0));
-draw(O2--P); draw(O1--LL[0]);
+draw(arc(circumcircle(PP[0], A, R), -130, 10), blue+dashed);
+draw(arc(circumcircle(PP[0], B, S), -240, -60), blue+dashed);
