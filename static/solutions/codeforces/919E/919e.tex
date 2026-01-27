@@ -1,0 +1,147 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\usepackage{listings}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code listing setup for C++ (or Python)
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    frame=single,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{orange}
+}
+
+% Optional: caption color
+\usepackage[labelfont=bf,labelsep=colon]{caption}
+\usepackage{tikz} % for diagrams if needed
+
+\title{Codeforces 919E (2100)}
+\author{Mmukul Khedekar}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    \centering
+    \url{https://codeforces.com/problemset/problem/919/E} \\ 
+    \highlight{Accepted}: \url{https://codeforces.com/contest/919/submission/360194638}
+\end{abstract}
+
+\section{Solution}
+
+\subsection{Explanation}
+
+\begin{lemma}
+    For $k \neq 0 \pmod{p}$, the map
+    \begin{align*}
+        x \mapsto kx \pmod{p}
+    \end{align*} 
+    is a bijection.
+\end{lemma}
+If we iterate on remainders of $n$ modulo $(p - 1)$, let's say
+\begin{align*}
+    n \equiv i \pmod{p - 1}
+\end{align*}
+then we have, 
+\begin{align*}
+    n a^n \equiv b \pmod {p} \implies n \equiv b a^{-i} \equiv j \pmod{p}
+\end{align*}
+So for each $i$, we have the system of congruence equations
+\begin{align*}
+    n &\equiv j \pmod{p} \\ 
+    n &\equiv i \pmod{p - 1}
+\end{align*}
+where $j \equiv ba^{-i} \pmod{p}$. Using the chinese remainder theorem, we get
+\begin{align*}
+    n \equiv{}&
+    ip \Bigl(p^{-1} \bmod (p-1)\Bigr)
+    +
+    j(p-1) \Bigl((p-1)^{-1} \bmod p\Bigr)
+    \pmod{p(p-1)} \\[0.4em]
+    \equiv{}&
+    i\,p - j\,(p-1)
+    \pmod{p(p-1)} 
+    \equiv{}
+    y
+    \pmod{p(p-1)}
+\end{align*}
+To count the number of solutions in the range $[1, x]$, we just need to compute
+\begin{align*}
+    \left\lfloor \frac{x}{p(p - 1)} \right\rfloor + [y \le x \bmod{(p(p - 1))}]
+\end{align*}
+Thus the algorithm terminates in $\mathcal{O}(p)$ time.
+
+\subsection{Code}
+
+\begin{lstlisting}[language=C++]
+ll binpow(ll x, ll y, ll m) {
+    x %= m;
+    ll result = 1;
+
+    while (y > 0) {
+        if (y & 1) result = result * x % m;
+        x = x * x % m;
+        y >>= 1;
+    }
+
+    result %= m;
+    return result;
+}
+
+ll modinv(ll x, ll p) {
+    return binpow(x, p - 2, p);
+}
+
+void solve() {
+    ll a, b, p, x;
+    std::cin >> a >> b >> p >> x;
+
+    ll ans = 0;
+    ll val = 1;
+    for (ll i = 0; i < p - 1; i++, val = (val * a) % p) {
+        ll j = (b * modinv(val, p)) % p;
+        ll n = -j * (p - 1) + i * p;
+        if (n < 0) {
+            n += p * (p - 1);
+        }
+
+        ans += (x / (p * (p - 1)));
+        if (n <= (x % (p * (p - 1)))) {
+            ans++;
+        }
+    }
+
+    std::cout << ans << '\n';
+}  
+\end{lstlisting}
+
+
+\end{document}
