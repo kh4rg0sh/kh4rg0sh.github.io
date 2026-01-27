@@ -1,0 +1,142 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\usepackage{listings}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code listing setup for C++ (or Python)
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    frame=single,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{orange}
+}
+
+% Optional: caption color
+\usepackage[labelfont=bf,labelsep=colon]{caption}
+\usepackage{tikz} % for diagrams if needed
+
+\title{Codeforces }
+\author{Mmukul Khedekar}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    \centering
+    \url{https://codeforces.com/problemset/problem/702/B} \\ 
+    \highlight{Accepted}: \url{https://codeforces.com/contest/702/submission/360122626}
+\end{abstract}
+
+\section{Solution}
+
+\subsection{Explanation}
+\begin{lemma}
+    There are only $30$ powers of two under $2 \times 10^9$.
+\end{lemma}
+
+Let's call this set as $\mathbb{P}$. Since we want to compute 
+\begin{align*}
+    \sum_{i = 1}^{n} \sum_{j = i + 1}^{n} [a_i + a_j \in \mathbb{P}] 
+\end{align*}
+This could be written as 
+\begin{align*}
+    \frac{1}{2} \left(\sum_{1 \le i, j \le n} [a_i + a_j \in \mathbb{P}] - \sum_{1 \le i \le n} [2 \cdot a_i \in \mathbb{P}] \right)
+\end{align*}
+Iterating over $i, j$ would explode to $\mathcal{O}(n^2)$. However instead, if we iterated over $i$ and powers of two in $\mathbb{P}$ and check if that exists in $a$ then that would be $\mathcal{O}(30n\log n)$.
+
+\subsection{Code}
+
+\begin{lstlisting}[language=C++]
+void solve() {
+    ll n;
+    std::cin >> n;
+
+    std::vector<ll> a(n + 1);
+    std::map<ll, ll> mp;
+    for (ll i = 1; i <= n; i++) {
+        std::cin >> a[i];
+        mp[a[i]]++;
+    }
+
+    std::vector<ll> powers;
+    for (ll i = 2; i <= 2 * 1e9; i *= 2) {
+        powers.push_back(i);
+    }
+
+    ll ans = 0;
+    for (ll i = 1; i <= n; i++) {
+        for (auto sum: powers) {
+            if (mp.count(sum - a[i])) {
+                ans += mp[sum - a[i]];
+                if (sum == 2 * a[i]) {
+                    ans--;
+                }
+            }
+        }
+    }
+
+    ans /= 2;
+    std::cout << ans << '\n';
+}   
+\end{lstlisting}
+
+\subsection{Performance Optimizations}
+If instead of 
+\begin{lstlisting}[language=C++]
+    if (mp.count(sum - a[i])) {
+        ans += mp[sum - a[i]];
+        if (sum == 2 * a[i]) {
+            ans--;
+        }
+    }
+\end{lstlisting}
+we had 
+\begin{lstlisting}[language=C++]
+    ans += mp[sum - a[i]];
+    if (sum == 2 * a[i]) {
+        ans--;
+    }
+\end{lstlisting}
+then that leads to a 10x slower running time. This is because of \href{https://gcc.gnu.org/onlinedocs/gcc-4.8.5/libstdc++/api/a00632.html#a4a4a9f95131baf0713596d672ec36b5f}{how} the [] operator works on ordered maps. 
+\begin{quote}
+    If the key does not exist, a pair with that key is created using default values, which is then returned.
+\end{quote}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{image.png}
+    \caption{performance of both the submissions}
+    \label{fig:example}
+\end{figure}
+
+
+
+\end{document}
