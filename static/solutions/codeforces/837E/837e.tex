@@ -1,0 +1,125 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\usepackage{listings}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code listing setup for C++ (or Python)
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    frame=single,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{orange}
+}
+
+% Optional: caption color
+\usepackage[labelfont=bf,labelsep=colon]{caption}
+\usepackage{tikz} % for diagrams if needed
+
+\title{Codeforces }
+\author{Mmukul Khedekar}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    \centering
+    \url{https://codeforces.com/problemset/problem/837/E} \\ 
+    \highlight{Accepted}: \url{https://codeforces.com/contest/837/submission/360157274}
+\end{abstract}
+
+\section{Solution}
+
+\subsection{Explanation}
+
+\begin{lemma}
+    For any two natural numbers $a$ and $b$, 
+    \begin{align*}
+        \gcd(a, b) \mid \left( b - k\gcd(a, b)\right)
+    \end{align*}
+    for any $k$ $\in$ $\mathbb{Z}^{+}$
+\end{lemma}
+However, it is not true that for all $k$
+\begin{align*}
+    \gcd(b - k \gcd(a, b)) = \gcd(a, b)
+\end{align*}
+So we need to compute this extra factor in the gcd of $\left( b - k\gcd(a, b) \right)$ and $a$. Or in other words, we need to find the minimum $k$ such that, 
+\begin{align*}
+    \gcd \left( \frac{a}{\gcd(a, b)}, \frac{b}{\gcd(a, b)} - k \right) > 1
+\end{align*}
+However we know that,
+\begin{align*}
+    \gcd \left( \frac{a}{\gcd(a, b)}, \frac{b}{\gcd(a, b)} - k \right) \mid \frac{a}{\gcd(a, b)}
+\end{align*}
+Therefore we could iterate over the divisors of $$\frac{a}{\gcd(a, b)}$$ and take the minimum $k$. Iterating over divisors should take $\mathcal{O}\left(\sqrt{a}\right)$ time and we will do this atmost $\mathcal{O}\left( \log a\right)$ times. Therefore, the total time complexity of this algorithm is $\mathcal{O} \left( \sqrt{a} \log a\right)$
+
+\subsection{Code}
+
+\begin{lstlisting}[language=C++]
+void solve() {
+    ll a, b;
+    std::cin >> a >> b;
+
+    ll ans = 0;
+    while (b > 0) {
+        ll d = std::gcd(a, b);
+
+        a /= d;
+        b /= d;
+
+        if (a == 1) {
+            ans += b;
+            break;
+        }
+
+        ll best = LLONG_MAX;
+        for (ll i = 1; i * i <= a; i++) {
+            if (a % i == 0) {
+                if (i > 1) {
+                    best = std::min(best, b % i);
+                }
+
+                if (i * i != a) {
+                    best = std::min(best, b % (a / i));
+                }
+            }
+        }
+
+        ans += best;
+        b -= best;
+    }
+
+    std::cout << ans << '\n';
+}     
+
+\end{lstlisting}
+
+
+\end{document}
