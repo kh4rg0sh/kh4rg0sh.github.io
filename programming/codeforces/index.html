@@ -6,6 +6,20 @@ permalink: /programming/codeforces/
 
 <h1>Codeforces Problems</h1>
 
+{% assign all_tags = "" | split: "" %}
+
+{% for problem in site.codeforces %}
+  {% if problem.tags %}
+    {% for tag in problem.tags %}
+      {% unless all_tags contains tag %}
+        {% assign all_tags = all_tags | push: tag %}
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+{% assign all_tags = all_tags | sort %}
+
 <div class="cf-filters">
   <!-- Rating filter -->
   <input type="number" id="minRatingFilter" class="rating-filter" placeholder="Min Rating">
@@ -25,6 +39,21 @@ permalink: /programming/codeforces/
     placeholder="Search by code (e.g. 2182B)"
   />
 
+  <div class="tag-dropdown">
+    <button type="button" id="tagDropdownBtn">
+      Tags
+    </button>
+  
+    <div class="tag-menu" id="tagMenu">
+      {% for tag in all_tags %}
+        <label class="tag-option">
+          <input type="checkbox" value="{{ tag }}">
+          {{ tag }}
+        </label>
+      {% endfor %}
+    </div>
+  </div>
+
   <label class="solved-toggle">
     <input type="checkbox" id="solvedOnlyToggle">
     Solved
@@ -42,7 +71,9 @@ permalink: /programming/codeforces/
       data-rating="{{ problem.rating }}"
       data-title="{{ problem.title | downcase }}"
       data-code="{{ problem.contest }}{{ problem.index }}"
+      data-tags="{{ problem.tags | join: ',' | downcase }}"
     >
+
       <a href="{{ problem.url }}" class="cf-main-link">
         <h3>{{ problem.contest }}{{ problem.index }}</h3>
         <p>{{ problem.title }}</p>
@@ -176,6 +207,49 @@ permalink: /programming/codeforces/
       }
     }
 
+    .tag-dropdown {
+      position: relative;
+    }
+
+    #tagDropdownBtn {
+      padding: 0.4rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+    }
+
+    .tag-menu {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      z-index: 10;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 0.4rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+
+      display: none;
+      max-height: 220px;
+      overflow-y: auto;
+      min-width: 180px;
+    }
+
+    .tag-option {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.4rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tag-option:hover {
+      background: #f3f3f3;
+    }
+
+
 </style>
 
 <script>
@@ -184,8 +258,21 @@ permalink: /programming/codeforces/
   const maxRating = document.getElementById("maxRatingFilter");
   const nameFilter = document.getElementById("nameFilter");
   const codeFilter = document.getElementById("codeFilter");
+  const tagDropdownBtn = document.getElementById("tagDropdownBtn");
+  const tagMenu = document.getElementById("tagMenu");
+  const tagCheckboxes = tagMenu.querySelectorAll("input[type=checkbox]");
 
   const cards = document.querySelectorAll(".cf-card");
+
+  tagDropdownBtn.addEventListener("click", () => {
+    tagMenu.style.display = tagMenu.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".tag-dropdown")) {
+      tagMenu.style.display = "none";
+    }
+  });
 
   function applyFilters() {
     const minVal = parseInt(minRating.value);
@@ -222,9 +309,44 @@ permalink: /programming/codeforces/
         visible = false;
       }
 
+      /* Tag filter (OR logic) */
+      const selectedTags = Array.from(tagCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value.toLowerCase());
+
+      if (selectedTags.length > 0) {
+        const problemTags = card.dataset.tags
+          ? card.dataset.tags.split(",")
+          : [];
+
+        const hasAnyTag = selectedTags.some(tag =>
+          problemTags.includes(tag)
+        );
+
+        if (!hasAnyTag) visible = false;
+      }
+
+
       card.style.display = visible ? "" : "none";
     });
   }
+
+  tagCheckboxes.forEach(cb =>
+    cb.addEventListener("change", applyFilters)
+  );
+
+  function updateTagButtonLabel() {
+    const selected = Array.from(tagCheckboxes).filter(cb => cb.checked);
+    tagDropdownBtn.textContent =
+      selected.length === 0
+        ? "Tags"
+        : `Tags (${selected.length})`;
+  }
+
+  tagCheckboxes.forEach(cb =>
+    cb.addEventListener("change", updateTagButtonLabel)
+  );
+
 
   minRating.addEventListener("input", applyFilters);
   maxRating.addEventListener("input", applyFilters);

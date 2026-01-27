@@ -459,7 +459,7 @@ It's very surprising how the incenter appears in this configuration. Something e
   \centering
   \begin{asy}
     import geometry;
-    size(6cm); defaultpen(fontsize(10pt));
+    size(8cm); defaultpen(fontsize(10pt));
 
     pair O, O1;
     real R, r;
@@ -498,7 +498,7 @@ It's very surprising how the incenter appears in this configuration. Something e
     pair P = intersectionpoint(line(A, D), line(I, I1));
     pair Q = extension(I, P, AA[0], AA[1]);
 
-    dot("$Q$", P, dir(170)); dot("$P$", Q, dir(225));
+    dot("$Q$", P, dir(140)); dot("$P$", Q, dir(225));
     pair[] UU = intersectionpoints(line(Q, M), circumcircle(A, AA[0], AA[1]));
     dot("$U$", UU[1], dir(135)); draw(circumcircle(UU[1], P, Q), red);
     draw(M--UU[1], red); draw(Q--I);
@@ -509,27 +509,925 @@ It's very surprising how the incenter appears in this configuration. Something e
     
     draw(O2--Q); draw(O1--K);
     draw(O1--D); draw(O2--D);
+
+    pair R, S;
+    R = extension(O2, D, P, Q);
+    S = extension(O1, D, K, LL[0]);
+
+    dot("$R$", R, dir(180));
+    dot("$S$", S, dir(0));
+    draw(O2--P); draw(O1--LL[0]);
   \end{asy}
 \end{figure}
 \begin{proof}
+  Suppose $\odot(O_1)$ touches $\overline{BC}$ at $P$ and $\overline{AD}$ at $Q$, and $\odot(O_2)$ touches $\overline{BC}$ at $K$ and $\overline{AD}$ at $L$. Let $\overline{PQ}$ intersect $\overline{O_1D}$ at $R$ and $\overline{KL}$ intersect $\overline{O_2D}$ at $S$.
 
+  Since $\odot(O_1)$ and $\odot(O_2)$ are the $A$-curvilinear incircles of cevian $\overline{AD}$, hence $PQ$ intersects $LK$ at $I$. It's easy to that the quadrilaterals $PO_1QD$ and $LDO_2K$ are kites, which is because, 
+  \begin{align*}
+    \angle O_1PD = \angle O_1QD = 90^{\circ} \text{ \& } \angle O_2LD = \angle O_2KD = 90^{\circ}
+  \end{align*}
+  and $DP$ $=$ $QD$, $DK$ $=$ $DL$. Further, this implies that $DO_1$ and $DO_2$ are the angle bisectors of $\angle PDQ$ and $\angle KDL$. Therefore,
+  \begin{align*}
+    \angle O_1DO_2 = \angle O_1DQ + \angle LDO_2 = \frac{1}{2} \left( \angle PDQ + \angle KDL \right) = 90^{\circ}
+  \end{align*}
+  Since, $PQ \perp O_1D$ and $KL \perp O_2D$ $\implies$ $\overline{PQ}$ $\parallel$ $\overline{O_2D}$ and $\overline{KL}$ $\parallel$ $\overline{O_1D}$. Hence, $RDSI$ is a rectangle and $\angle PIK$ $=$ $90^{\circ}$. Suppose $\angle DO_2K = \alpha$, then
+  \begin{align*}
+    \angle O_1PQ = \angle O_1DP = \angle DKL = \angle DO_2K = \alpha    
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \frac{O_1R}{RI} &= \frac{O_1P\sin \alpha}{DS} = \frac{O_1D \sin^2 \alpha}{DS} \\
+    &= \frac{O_1D \sin^2 \alpha}{DK \sin \alpha} = \frac{O_1D \sin^2 \alpha}{O_2D \sin^2 \alpha} = \frac{O_1D}{O_2D} 
+  \end{align*}
+  and as a result, we have $\triangle O_1RI$ $\sim$ $\triangle O_1DO_2$ $\implies$ $I$ lies on $\overline{O_1O_2}$.
+\end{proof}
+
+\subsection{Examples}
+\begin{problem}
+  Let $O$ be any point on the diameter $AB$ of a circle $\omega$. Let the perpendicular to $AB$ at $O$ meet $\omega$ at $P$. Suppose that the incircles of the curvilinear triangles $AOP$ and $BOP$ meet $AB$ at $R$ and $S$ respectively. Prove that $\angle{RPS}$ is independent of the position of $O$.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+
+    pair  A, B, C, O;
+    A = (-3, 0); B = (3, 0);
+    O = (1.3, 0); C = (A + B) / 2;
+
+    pair O1 = rotate(90, O) * A;
+    pair[] PP = intersectionpoints(line(O, O1), circle(C, abs(A - C)));
+
+    dot("$A$", A, dir(225));
+    dot("$B$", B, dir(315));
+    dot("$O$", O, dir(225));
+    dot("$P$", PP[0], dir(45));
+
+    draw(A--B);
+    draw(circumcircle(A, B, PP[0]));
+
+    pair I = incenter(A, B, PP[0]);
+    pair M = dir(270) * 3; dot("$I$", I, dir(150));
+
+    pair X = O + 3 * (unit(A - O) + unit(PP[0] - O));
+    pair Y = O + 3 * (unit(B - O) + unit(PP[0] - O));
+
+    pair I1 = I + (Y - O);
+    pair I2 = I + (X - O);
+    pair R = extension(I, I1, A, B);
+    dot("$R$", R, dir(225));
+
+    pair S = extension(I, I2, A, B);
+    dot("$S$", S, dir(315));
+
+    pair U = extension(I, I1, PP[0], O);
+    pair V = extension(I, I2, PP[0], O);
+    dot("$U$", U, dir(150));
+    dot("$V$", V, dir(30));
+
+    draw(R--U); draw(S--I); draw(PP[0]--O);
+    draw(A--B--PP[0]--cycle);
+
+    pair O1 = R + (U - O);
+    pair O2 = S + (V - O);
+
+    dot("$O_1$", O1, dir(220));
+    dot("$O_2$", O2, dir(90));
+
+    draw(circle(O1, abs(O1 - R)));
+    draw(circle(O2, abs(O2 - S)));
+
+    draw(R--PP[0]--S, red);
+
+    draw(arc(circumcircle(PP[0], A, R), -130, 10), blue+dashed);
+    draw(arc(circumcircle(PP[0], B, S), -240, -60), blue+dashed);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Since $\overline{IR}$ and $\overline{IS}$ are parallel to the angle bisectors of $\angle PAO = 90^{\circ}$ which means that $\triangle IRS$ is right-angled isosceles. Since $\angle API$ $=$ $\angle BPI$ $=$ $45^{\circ}$ $\implies$ $PARI$ and $BSIP$ are cyclic quadrilaterals. Hence,
+  \begin{align*}
+    \angle RPS &= 180^{\circ} - \angle PRS - \angle PSR \\ 
+          &= 90^{\circ} - \angle PRI - \angle PSI \\ 
+          &= 90^{\circ} - \tfrac{1}{2} \left( \angle PAB + \angle PBA \right) \\ 
+          &= 45{^\circ}
+  \end{align*}
+  which is independent of the position of $O$.
+\end{proof}
+
+\begin{problem}[Romania TST 2006]
+  Let $ABC$ be an acute triangle with $AB \neq AC$. Let $D$ be the foot of the altitude from $A$ and $\omega$ the circumcircle of the triangle. Let $\omega_1$ be the circle tangent to $AD$, $BD$ and $\omega$. Let $\omega_2$ be the circle tangent to $AD$, $CD$ and $\omega$. Let $\ell$ be the interior common tangent to both $\omega_1$ and $\omega_2$, different from $AD$. Prove that $\ell$ passes through the midpoint of $BC$ if and only if $2BC = AB + AC$.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, D;
+    A = dir(105);
+    B = dir(210);
+    C = dir(330);
+    D = foot(A, B, C);
+
+    draw(A--B--C--cycle);
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$D$", D, dir(225));
+
+    pair I = incenter(A, B, C);
+    dot("$I$", I, dir(60));
+
+    pair X = D + 3 * (unit(B - D) + unit(A - D));
+    pair Y = D + 3 * (unit(C - D) + unit(A - D));
+
+    pair I1 = I + (Y - D);
+    pair I2 = I + (X - D);
+    pair R = extension(I, I1, B, C);
+    dot("$T_1$", R, dir(225));
+
+    pair S = extension(I, I2, B, C);
+    dot("$T_2$", S, dir(315));
+
+    pair U = extension(I, I1, A, D);
+    pair V = extension(I, I2, A, D);
+    dot("$S_1$", U, dir(165));
+    dot("$S_2$", V, dir(30));
+
+    draw(circumcircle(A, B, C));
+    draw(R--I); draw(S--V);
+
+    pair O1 = R + (U - D);
+    pair O2 = S + (V - D);
+    dot("$O_1$", O1, dir(120));
+    dot("$O_2$", O2, dir(60));
+
+    draw(circle(O1, abs(O1 - R)));
+    draw(circle(O2, abs(O2 - S)));
+
+    draw(A--D);
+
+    pair M = (B + C) / 2;
+    dot("$M$", M, dir(225));
+
+    draw(O1--O2);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Suppose $I$ is the incenter of $\triangle ABC$, $O_1$, $O_2$ are the centers of $\omega_1$ and $\omega_2$ and they touch $\overline{BC}$ and $\overline{AD}$ at points $T_1$, $S_1$ and $T_2$, $S_2$ respectively. Let $M$ be the midpoint of $\overline{BC}$.
+
+  By sawayama's theorem, we know that $T_1S_1$ and $T_2S_2$ pass through $I$ and they are parallel to angle bisectors of $\angle ADB$. Since $\angle ADB$ $=$ $90^{\circ}$ $\implies$ $\triangle IT_1T_2$ is right-angled isosceles. Let the internal common tangent of $\omega_1$ and $\omega_2$ meet $\overline{BC}$ at $P$. Since, $\angle O_1DO_2$ $=$ $90^{\circ}$ and $\angle O_1PO_2$ $=$ $90^{\circ}$, we get that $O_1DPO_2$ is cyclic. By thebault's theorem, we get that $I$ lies on $\overline{O_1O_2}$. Since $\triangle IT_1T_2$ is right-angled isosceles, hence if the incircle touches $\overline{BC}$ at $X$, then $X$ must be the midpoint of $\overline{T_1T_2}$ $\implies$ $I$ must be the midpoint of $\overline{O_1O_2}$. Since $\angle O_1DO_2$ $=$ $90^{\circ}$ $\implies$ $I$ is the center of $\odot(O_1DPO_2)$ $\implies$ $X$ is the midpoint of $\overline{DP}$ $\implies$ $\overline{DT_1}$ $=$ $\overline{PT_2}$. Using the fact that $\cos \left( \tfrac{B}{2} \right) = \sqrt{\tfrac{s(s-b)}{ca}}$, and
+  \begin{align*}
+    \overline{DX} = (s - b) - c \cos B \text{ \& } \overline{XP} = (s - c) - \tfrac{a}{2}
+  \end{align*}
+  we get $P$ is the midpoint of $\overline{BC}$ if and only if $2a = b + c$.
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}
+  Two circles $\Omega$ and $\Gamma$ are internally tangent at the point $B$. The chord $AC$ of $\Gamma$ is tangent to $\Omega$ at the point $L$, and the segments $AB$ and $BC$ intersect $\Omega$ at the points $M$ and $N$. Let $M_1$ and $N_1$ be the reflections of $M$ and $N$ about the line $BL$; and let $M_2$ and $N_2$ be the reflections of $M$ and $N$ about the line $AC$. The lines $M_1M_2$ and $N_1N_2$ intersect at the point $K$. Prove that the lines $BK$ and $AC$ are perpendicular.
+\end{exercise}
+
+\begin{exercise}[Bulgaria 2005]
+  Consider two circles $k_{1},k_{2}$ touching externally at point $T$. a line touches $k_{2}$ at point $X$ and intersects $k_{1}$ at points $A$ and $B$. Let $S$ be the second intersection point of $k_{1}$ with the line $XT$ . On the arc $\widehat{TS}$ not containing $A$ and $B$ is chosen a point $C$ . Let $\ CY$ be the tangent line to $k_{2}$ with $Y\in k_{2}$ , such that the segment $CY$ does not intersect the segment $ST$ . If $I=XY\cap SC$ . Prove that :
+  \begin{enumerate}
+    \item the points $C,T,Y,I$ are concyclic.
+    \item $I$ is the excenter of triangle $ABC$ with respect to the side $BC$.
+  \end{enumerate}
+\end{exercise}
+
+\section{Mixtilinear Incircles}
+In the previous section, we looked at circles tangent to cevians called the curvilinear incircles. A special case arises when the point $D$ coincides with a vertex of the triangle.
+\begin{definition}
+    Given $\triangle ABC$, the circle internally tangent to $\odot(ABC)$ and sides $\overline{AB}$ and $\overline{AC}$ is known as the $A$-\vocab{mixtilinear incircle} of $\triangle ABC$.
+\end{definition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O, N, I;
+    O = origin; A = dir(120); B = dir(210);
+    C = dir(330); N = dir(90); I = incenter(A, B, C);
+
+    pair A1 = rotate(90, I) * A;
+    pair B1 = extension(I, A1, A, B);
+    pair C1 = extension(I, A1, A, C);
+   
+    pair[] TT = intersectionpoints(line(N, I), circumcircle(A, B, C));
+    pair T = TT[0];
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$T$", T, dir(250));
+    dot("$B_1$", B1, dir(150));
+    dot("$C_1$", C1, dir(30));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(T, B1, C1));
+  \end{asy}
+\end{figure}
+
+In a triangle, there are three mixtilinear incircles. Each opposite to a vertex of the triangle. Since mixtilinear incircles are a special case of curvilinear incircles, hence the properties discussed in the previous sections apply to the mixtilinear incircles too!
+
+\subsection{Immediate Properties}
+\begin{proposition}
+  Given $\triangle ABC$ and the $A$-mixtilinear incircle $\omega_A$ that touches the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$, and the circle $\odot(ABC)$ at $T$. Suppose $E$ and $F$ are the midpoints of the arc $AC$ not containing $B$ and arc $AB$ not containing $C$, then the points
+  \begin{enumerate}
+    \item $T$, $B_1$, $F$ are collinear.
+    \item $T$, $C_1$, $E$ are collinear.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+Immediate application of archimedes' lemma.
+\end{proof}
+
+\begin{proposition}[Verrier's Lemma]
+  Given $\triangle ABC$ and the $A$-mixtilinear incircle $\omega_A$ that touches the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$, and the circle $\odot(ABC)$ at $T$. If $I$ is the incenter of $\triangle ABC$ then $I$ lies on the line $\overline{B_1C_1}$.
+\end{proposition}
+\begin{proof}
+  Since $\omega_A$ is also the $C$-curvilinear incircle of the cevian $\overline{CA}$, hence the result follows from sawayama's theorem.
+\end{proof}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O, N, I, E, F;
+    O = origin; A = dir(120); B = dir(210);
+    C = dir(330); N = dir(90); I = incenter(A, B, C);
+    E = dir(45); F = dir(165);
+
+    pair A1 = rotate(90, I) * A;
+    pair B1 = extension(I, A1, A, B);
+    pair C1 = extension(I, A1, A, C);
+   
+    pair[] TT = intersectionpoints(line(N, I), circumcircle(A, B, C));
+    pair T = TT[0];
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$T$", T, dir(250));
+    dot("$B_1$", B1, dir(150));
+    dot("$C_1$", C1, dir(5));
+    dot("$I$", I, dir(150));
+    dot("$E$", E, dir(45));
+    dot("$F$", F, dir(135));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(T, B1, C1));
+    draw(T--E); draw(T--F); draw(B1--C1, gray); 
+    draw(A--I); draw(E--F, gray); markrightangle(C1, I, A, 7);
+
+    draw(B--E, gray+dashed); draw(C--F, gray+dashed);
+  \end{asy}
+\end{figure}
+\newpage
+\subsection{Some More Properties}
+\begin{proposition}
+  Given $\triangle ABC$ and the $A$-mixtilinear incircle $\omega_A$ that touches the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$, and the circle $\odot(ABC)$ at $T$. Let $I$ be the incenter of $\triangle ABC$. Then $IB_1BT$ and $IC_1CT$ are cyclic quadrilaterals.
+\end{proposition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(7cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O, N, I, E, F;
+    O = origin; A = dir(120); B = dir(210);
+    C = dir(330); N = dir(90); I = incenter(A, B, C);
+    E = dir(45); F = dir(165);
+
+    pair A1 = rotate(90, I) * A;
+    pair B1 = extension(I, A1, A, B);
+    pair C1 = extension(I, A1, A, C);
+   
+    pair[] TT = intersectionpoints(line(N, I), circumcircle(A, B, C));
+    pair T = TT[0];
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$T$", T, dir(250));
+    dot("$B_1$", B1, dir(150));
+    dot("$C_1$", C1, dir(5));
+    dot("$I$", I, dir(270));
+    dot("$E$", E, dir(45));
+    dot("$F$", F, dir(135));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(T, B1, C1));
+    draw(T--E); draw(T--F); draw(B1--C1, gray); 
+    draw(A--I); draw(E--F, gray); markrightangle(C1, I, A, 7);
+
+    draw(B--E, gray); draw(C--F, gray);
+    draw(circumcircle(T, B, I), heavygray+dashed);
+    draw(circumcircle(T, C, I), heavygray+dashed);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Converse of reim's theorem applied on $\overline{B_1I}$ $\parallel$ $\overline{EF}$ and $\overline{C_1I}$ $\parallel$ $\overline{EF}$ implies that $IB_1BT$ and $IC_1CT$ are cyclic.
+\end{proof}
+
+\begin{proposition}
+  Given $\triangle ABC$ and the $A$-mixtilinear incircle $\omega_A$ that touches the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$, and the circle $\odot(ABC)$ at $T$. Let $I$ be the incenter of $\triangle ABC$. Suppose $N$ is the midpoint of arc $BAC$, then $TI$ passes through $N$.
+\end{proposition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(7cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O, N, I, E, F;
+    O = origin; A = dir(120); B = dir(210);
+    C = dir(330); N = dir(90); I = incenter(A, B, C);
+    E = dir(45); F = dir(165);
+
+    pair A1 = rotate(90, I) * A;
+    pair B1 = extension(I, A1, A, B);
+    pair C1 = extension(I, A1, A, C);
+   
+    pair[] TT = intersectionpoints(line(N, I), circumcircle(A, B, C));
+    pair T = TT[0];
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$T$", T, dir(250));
+    dot("$B_1$", B1, dir(150));
+    dot("$C_1$", C1, dir(5));
+    dot("$I$", I, dir(300));
+    dot("$E$", E, dir(45));
+    dot("$F$", F, dir(135));
+    dot("$N$", N, dir(90));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(T, B1, C1));
+    draw(T--E); draw(T--F); draw(B1--C1, gray); 
+    draw(A--I); draw(E--F, gray); markrightangle(C1, I, A, 7);
+
+    draw(B--E, gray); draw(C--F, gray);
+    draw(circumcircle(T, B, I), heavygray);
+    draw(circumcircle(T, C, I), heavygray);
+
+    draw(T--N, heavygray+dashed);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Since $AB_1$ and $AC_1$ are tangents drawn from $A$ to $\omega_A$ $\implies$ $\triangle AB_1C_1$ is isosceles. Hence,
+  \begin{align*}
+    \angle BTI = \angle AB_1I = \angle AC_1I = \angle ITC
+  \end{align*}
+  So $\overline{TI}$ is the angle bisector of $\angle BTC$ $\implies$ $TI$ passes through the midpoint of the arc $BAC$.
+\end{proof}
+\begin{remark}
+  There are lot of angle bisectors in this configuration. For example,
+  \begin{enumerate}
+    \item $\overline{TB_1}$ is the $T$-angle bisector of $\triangle ATB$.
+    \item $\overline{TC_1}$ is the $T$-angle bisector of $\triangle ATC$.
+  \end{enumerate}
+  Also $\overline{TA}$ is the $T$-symmedian in $\triangle TB_1C_1$. All of this makes the configuration a really nice treasure trove for angle bisector theorem and ratio lemma applications.
+\end{remark}
+
+\subsection{Isogonal Lines}
+\begin{proposition}
+  Given $\triangle ABC$ and the $A$-mixtilinear incircle $\omega_A$ that touches the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$, and the circle $\odot(ABC)$ at $T$. Let $I$ be the incenter of $\triangle ABC$. Then lines $TA$ and $TI$ are isogonal with respect to $\angle FTE$.
+\end{proposition}
+\begin{proof}
+  Effectively, we want to show that $\angle ATF$ $=$ $\angle ITE$. However,
+  \begin{align*}
+    \angle ATF = \angle ACF = \angle ICC_1 = \angle ITC_1 = \angle ITE
+  \end{align*}
+  which implies the isogonal condition.
+\end{proof}
+
+\begin{proposition}
+  Given $\triangle ABC$ and the $A$-mixtilinear incircle $\omega_A$ that touches the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$, and the circle $\odot(ABC)$ at $T$. Let $I$ be the incenter of $\triangle ABC$ and $X$ be the point where the $A$-excircle touches $\overline{BC}$. Then $\overline{AX}$ and $\overline{AT}$ are isogonal with respect to $\angle BAC$.
+\end{proposition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(7cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O, N, I, E, F, IA;
+    O = origin; A = dir(120); B = dir(210);
+    C = dir(330); N = dir(90); I = incenter(A, B, C);
+    E = dir(45); F = dir(165); IA = excenter(C, B, A);
+
+    pair A1 = rotate(90, I) * A;
+    pair B1 = extension(I, A1, A, B);
+    pair C1 = extension(I, A1, A, C);
+   
+    pair[] TT = intersectionpoints(line(N, I), circumcircle(A, B, C));
+    pair T = TT[0];
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$T$", T, dir(250));
+    dot("$B_1$", B1, dir(150));
+    dot("$C_1$", C1, dir(5));
+    dot("$I$", I, dir(300));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(T, B1, C1));
+    draw(B1--C1, gray); draw(A--T); 
+    draw(T--B); draw(T--B1, gray);
+    draw(A--I); markrightangle(C1, I, A, 7);
+
+    pair X = foot(IA, B, C);
+    dot("$X$", X, dir(270));
+    draw(A--X);
+
+  \end{asy}
+\end{figure}
+\begin{proof}
+  We will show that $\triangle ATB$ $\sim$ $\triangle ACX$. We already have that $\angle ATB$ $=$ $\angle ACX$. Hence it only remains to establish that,
+  \begin{align*}
+    \frac{\overline{AT}}{\overline{TB}} = \frac{\overline{AC}}{\overline{CX}}
+  \end{align*}
+  Using the relation $\cos \left( \tfrac{A}{2} \right) = \sqrt{\tfrac{s(s-a)}{bc}}$, we get
+  \begin{align*}
+    \frac{\overline{AT}}{\overline{TB}} &= \frac{\overline{BB_1}}{\overline{AB_1}} = \frac{\overline{AB} - \overline{AB_1}}{\overline{AB_1}} \\ 
+                &= \frac{\overline{AB}}{\overline{AB_1}} - 1 = \frac{c \cos^2 \left( \tfrac{A}{2} \right)}{s - a} - 1 \\ 
+                &= \frac{c \left( \frac{s(s-a)}{bc} \right)}{s(s-a)} - 1 = \frac{s - b}{b} = \frac{\overline{AC}}{\overline{CX}}
+  \end{align*}
+  and thus, $\triangle ATB$ $\sim$ $\triangle ACX$ $\implies$ $AT$ and $AX$ are isogonal with respect to $\angle BAC$.
+\end{proof}
+
+\begin{proposition}
+  Given $\triangle ABC$ and the $A$-mixtilinear incircle $\omega_A$ that touches the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$, and the circle $\odot(ABC)$ at $T$. Let $I$ be the incenter of $\triangle ABC$ and $D$ be the point where the incircle of $\triangle ABC$ touches $\overline{BC}$. Then $TA$ and $TD$ are isogonal with respect to $\angle BTC$.
+\end{proposition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(7cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O, N, I, E, F;
+    O = origin; A = dir(120); B = dir(210);
+    C = dir(330); N = dir(90); I = incenter(A, B, C);
+    E = dir(45); F = dir(165);
+
+    pair A1 = rotate(90, I) * A;
+    pair B1 = extension(I, A1, A, B);
+    pair C1 = extension(I, A1, A, C);
+   
+    pair[] TT = intersectionpoints(line(N, I), circumcircle(A, B, C));
+    pair T = TT[0];
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$T$", T, dir(250));
+    dot("$B_1$", B1, dir(150));
+    dot("$C_1$", C1, dir(5));
+    dot("$I$", I, dir(300));
+    dot("$N$", N, dir(90));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(T, B1, C1));
+    draw(B1--C1, gray); 
+    draw(A--I); markrightangle(C1, I, A, 7);
+
+    pair D = foot(I, B, C); draw(I--D);
+    dot("$D$", D, dir(315)); markrightangle(C, D, I, 7);
+
+    draw(T--N, heavygray); draw(B--T); draw(C--T);
+    draw(A--T); draw(D--T);
+  \end{asy}
+\end{figure}
+\begin{proof}
+Suppose $X$ is the point where the $A$-excircle touches $\overline{BC}$. Since $\angle BAX$ $=$ $\angle TAC$ $\implies$ $\triangle ATC$ $\sim$ $\triangle ABX$. So, we have 
+\begin{align*}
+  \frac{\overline{AT}}{\overline{TC}} = \frac{\overline{AB}}{\overline{BX}} = \frac{\overline{AB}}{\overline{CD}}
+\end{align*}
+This can be written as
+\begin{align*}
+  \frac{\overline{AT}}{\overline{AB}} = \frac{\overline{TC}}{\overline{CD}} 
+\end{align*}
+and using the fact that $\angle BAT$ $=$ $\angle DCT$, we can claim by the SAS similarity criterion that $\triangle ATB$ $\sim$ $\triangle CTD$. This implies that 
+\begin{align*}
+  \angle BTA = \angle DTC
+\end{align*}
+or in other words, lines $TA$ and $TD$ are isogonal with respect to $\angle BTC$.
+\end{proof}
+
+\begin{proposition}
+  Given $\triangle ABC$ and the $A$-mixtilinear incircle $\omega_A$ that touches the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$, and the circle $\odot(ABC)$ at $T$. Let $I$ be the incenter of $\triangle ABC$ and $P$ be the intersection of $\overline{AT}$ and $\overline{B_1C_1}$. Then
+  \begin{align*}
+    \angle BPB_1 = \angle CPC_1
+  \end{align*}
+\end{proposition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(7cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O, N, I, E, F;
+    O = origin; A = dir(120); B = dir(210);
+    C = dir(330); N = dir(90); I = incenter(A, B, C);
+    E = dir(45); F = dir(165);
+
+    pair A1 = rotate(90, I) * A;
+    pair B1 = extension(I, A1, A, B);
+    pair C1 = extension(I, A1, A, C);
+   
+    pair[] TT = intersectionpoints(line(N, I), circumcircle(A, B, C));
+    pair T = TT[0];
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$T$", T, dir(250));
+    dot("$B_1$", B1, dir(150));
+    dot("$C_1$", C1, dir(5));
+    dot("$I$", I, dir(300));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(T, B1, C1));
+    draw(B1--C1, gray); 
+    draw(A--I); markrightangle(C1, I, A, 7);
+    draw(B--T); draw(C--T); draw(A--T);
+
+    pair P = extension(A, T, B1, C1);
+
+    dot("$P$", P, dir(130));
+    draw(B--P); draw(C--P);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  We will show that $\triangle BPB_1$ $\sim$ $\triangle CPC_1$. Since,
+  \begin{align*}
+    \frac{\overline{B_1P}}{\overline{C_1P}} &= \frac{\sin \angle BAT}{\sin \angle CAT}
+    = \frac{\overline{BT}}{\overline{CT}} = \frac{\tfrac{\overline{BB_1}}{\overline{AB_1}}\cdot \overline{AT}}
+    {\tfrac{\overline{CC_1}}{\overline{C_1A}} \cdot \overline{AT}}
+    = \frac{\overline{BB_1}}{\overline{CC_1}}
+  \end{align*}
+  Since $\angle BB_1P = \angle CC_1P$ $\implies$ $\triangle BPB_1$ $\sim$ $\triangle CPC_1$ by SAS similarity criterion.
+\end{proof}
+
+\subsubsection{Exercises}
+\begin{exercise}
+  In \vocab{Proposition 3.10}, if $CP$ is extended to intersect $AB$ at $Q$ and $BP$ is extended to intersect $AC$ at $R$, then $BQRC$ is cyclic.
+\end{exercise}
+
+\begin{exercise}
+  Given $\triangle ABC$, let $D$ be the point where the incircle of $\triangle ABC$ touches $\overline{BC}$ and $T$ be the point where the $A$-mixtilinear incircle touches $\odot(ABC)$. Suppose the tangent to $\odot(ABC)$ at $A$ intersects $\overline{BC}$ at $X$, then show that $AXTD$ is a cyclic quadrilateral.
+\end{exercise}
+
+\begin{exercise}
+  Given $\triangle ABC$ and its $A$-mixtilinear incircle $\omega_A$. Suppose $\omega_A$ touches $\odot(ABC)$ at $T$ and sides $\overline{AB}$, $\overline{AC}$ at $B_1$, $C_1$. Let $M$ be the midpoint of arc $BC$ not containing $A$. Show that $B_1C_1$, $BC$ and $TM$ are concurrent.
+\end{exercise}
+
+\begin{exercise}
+  Given $\triangle ABC$, its incenter $I$ and its $A$-mixtilinear incircle $\omega_A$. Let the incircle touch $\overline{BC}$ at $D$ and $\omega_A$ touch $\odot(ABC)$ at $T$ and the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$. Suppose the angle bisector of $\angle BAC$ intersects $\overline{BC}$ and $\odot(ABC)$ at $K$ and $M$. Then show that $KDTM$ is a cyclic quadrilateral. 
+\end{exercise}
+
+\begin{exercise}
+  Given $\triangle ABC$, its incenter $I$ and its $A$-mixtilinear incircle $\omega_A$. Let the incircle touch $\overline{BC}$ at $D$ and $\omega_A$ touch $\odot(ABC)$ at $T$ and the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$. Suppose $B_1C_1$ intersects $BC$ at $X$, then show that $IXTD$ is a cyclic quadrilateral.
+\end{exercise}
+
+\begin{exercise}
+  Given $\triangle ABC$, its incenter $I$ and its $A$-mixtilinear incircle $\omega_A$. Let the incircle touch $\overline{BC}$ at $D$ and $\omega_A$ touch $\odot(ABC)$ at $T$ and the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$. Suppose $B_1C_1$ intersects $BC$ at $X$, $AT$ intersects $\overline{B_1C_1}$ at $P$ and $\overline{TI}$ intersects $\overline{BC}$ at $Q$. Then show that $IPQD$ and $PXTQ$ are cyclic quadrilaterals.
+\end{exercise}
+
+\begin{exercise}
+  Given $\triangle ABC$, its incenter $I$ and its $A$-mixtilinear incircle $\omega_A$. Let the incircle touch $\overline{BC}$ at $D$ and $\omega_A$ touch $\odot(ABC)$ at $T$ and the sides $\overline{AB}$ and $\overline{AC}$ at $B_1$ and $C_1$. Suppose the tangent to $\odot(ABC)$ at $T$ intersects $BC$ at $Y$, $AT$ intersects $\overline{B_1C_1}$ at $P$ and $\overline{TI}$ intersects $\overline{BC}$ at $Q$. Then show that $YPDT$ is cyclic and $Y$ is the center of $\odot(PQT)$.
+\end{exercise}
+
+\subsection{Multiple Mixtilinear Incircles}
+Now let's add multiple mixtilinear incircles to the configuration. We use the notation $\omega_X$ to denote the $X$-mixtilinear incircle (the mixtilinear incircle opposite to vertex $X$).
+
+\begin{proposition}
+  Given $\triangle ABC$ and its incenter $I$, let the incircle touche $\overline{BC}$ at $D$, $M$ be the midpoint of arc $BC$ not containing $A$ and $N$ be midpoint of $\overline{ID}$. Then $MN$ is the radical axis of $\omega_B$ and $\omega_C$. 
+\end{proposition}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+  
+    pair A, B, C, I, D, E, F, G, M;
+    A = dir(120); B = dir(210); C = dir(330);
+    I = incenter(A, B, C); M = dir(270);
+
+    pair B1 = rotate(90, I) * B;
+    pair C1 = rotate(90, I) * C;
+    D = extension(I, C1, B, C);
+    E = extension(I, B1, B, C);
+    F = extension(I, C1, A, C);
+    G = extension(I, B1, A, B);
+
+    pair[] TC = intersectionpoints(line(M, D), circumcircle(A, B, C));
+    pair[] TB = intersectionpoints(line(M, E), circumcircle(A, B, C));
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$P$", D, dir(225));
+    dot("$R$", E, dir(315));
+    dot("$Q$", F, dir(45));
+    dot("$S$", G, dir(135));
+    dot("$M$", M, dir(225));
+    dot("$T_C$", TC[1], dir(150));
+    dot("$T_B$", TB[1], dir(30));
+    dot("$I$", I, dir(0));
+
+    draw(A--B--C--cycle); draw(circumcircle(A, B, C));
+    draw(circumcircle(TC[1], D, F), red);
+    draw(circumcircle(TB[1], E, G), blue);
+
+    draw(M--TC[1]); draw(M--TB[1]);
+    draw(D--F, red); draw(E--G, blue);
+
+    pair A1, B1, C1;
+    A1 = foot(I, B, C); B1 = foot(I, C, A); C1 = foot(I, A, B); 
+    dot("$D$", A1, dir(225)); dot("$E$", B1, dir(45)); dot("$F$", C1, dir(135));
+    draw(circumcircle(A1, B1, C1)); draw(I--A1, heavygray); draw(I--B1, heavygray); draw(I--C1, heavygray);
+    markrightangle(C, A1, I, 7);
+
+    pair N = (I + A1) / 2;
+    dot("$N$", N, dir(20));
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Suppose the incircle touches the sides $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$ at $D$, $E$ and $F$, and $\omega_B$ touches the sides $\overline{BC}$ and $\overline{AB}$ at $R$ and $S$, and $\omega_C$ touches the sides $\overline{BC}$ and $\overline{AC}$ at $P$ and $Q$. Due to archimedes' lemma, we have that $T_CP$ and $T_BR$ pass through $M$ and 
+  \begin{align*}
+    \overline{MP} \cdot \overline{MT_C} = \overline{MB}^2 =  \overline{MR} \cdot \overline{MT_B}
+  \end{align*}
+  Hence, $M$ has an equal power with respect to both the circles $\omega_B$ and $\omega_C$. Since the points $P$, $D$, $E$ and $Q$ are the tangency points of common tangents of the incircle and $\omega_C$ $\implies$ their radical axis is the midline of the isosceles trapezium $PQED$ and hence passes through $N$. Similarly, the radical axis of the incircle and $\omega_B$ passes through $N$ $\implies$ $N$ is the radical center of $\omega_B$, $\omega_C$ and incircle and thus, $N$ also has an equal power with respect to $\omega_B$ and $\omega_C$, implying that $MN$ is indeed the radical axis of $\omega_B$ and $\omega_C$. 
+\end{proof}
+
+\subsubsection{Exercises}
+\begin{exercise}
+  Suppose $\omega_A$ touches $\odot(ABC)$ at $T_A$ and $\omega_B$ and $\omega_C$ touch $\overline{BC}$ at $D$ and $E$ and $\odot(ABC)$ at $T_B$ and $T_C$. If $M$ is the midpoint of arc $BC$ not containing $A$, then 
+  \begin{enumerate}
+    \item $T_CDET_B$ is a cyclic quadrilateral.
+    If $T_AM$ intersects $BC$ at $T$,
+    \item $\overline{IT_A}$ $\perp$ $\overline{TM}$.
+    \item $\overline{TI}$ $\perp$ $\overline{AM}$.
+    \item $T_CTT_AD$ is a cyclic quadrilateral.
+    \item $EDTM$ is a cyclic quadrilateral.
+  \end{enumerate}
+\end{exercise}
+
+\subsection{Examples}
+\begin{problem}[EGMO 2013]
+  Let $\Omega$ be the circumcircle of the triangle $ABC$. The circle $\omega$ is tangent to the sides $AC$ and $BC$, and it is internally tangent to the circle $\Omega$ at the point $P$. A line parallel to $AB$ intersecting the interior of triangle $ABC$ is tangent to $\omega$ at $Q$. Prove that $\angle ACP = \angle QCB$.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O, N, I, E, F, IA;
+    O = origin; A = dir(120); B = dir(210);
+    C = dir(330); N = dir(90); I = incenter(A, B, C);
+    E = dir(45); F = dir(165); IA = excenter(C, B, A);
+
+    pair A1 = rotate(90, I) * A;
+    pair B1 = extension(I, A1, A, B);
+    pair C1 = extension(I, A1, A, C);
+   
+    pair[] TT = intersectionpoints(line(N, I), circumcircle(A, B, C));
+    pair T = TT[0];
+
+    dot("$C$", A, dir(89));
+    dot("$A$", B, dir(225));
+    dot("$B$", C, dir(315));
+    dot("$P$", T, dir(250));
+    dot("$I$", I, dir(180));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(T, B1, C1));
+
+    pair X = foot(IA, B, C);
+    dot("$X$", X, dir(270));
+    draw(A--T);
+
+    dot("$N$", N, dir(115));
+    pair[] QQ = intersectionpoints(line(A, X), circumcircle(T, B1, C1));
+    dot("$Q$", QQ[1], dir(35)); draw(T--N, heavygray+dashed); draw(A--X, heavygray+dashed);
+
+    pair M = dir(270);
+    dot("$M$", M, dir(225));
+    draw(A--M);
+
+    pair I1 = circumcenter(T, B1, C1);
+    dot("$I_1$", I1, dir(20));
+    draw(arc(circumcircle(T, A, I1), -90, 90), gray+dashed);
+    draw(I1--QQ[1], gray); draw(M--N, gray);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Since $Q$ lies such that the tangent to $\omega$ at $Q$ is parallel to $\overline{AB}$, hence there exists a homothety at $P$ that maps $\omega$ to $\Omega$ under which $Q$ is mapped to the midpoint of arc $ACB$, let's say $N$. Also suppose $I$ is the incenter, $I_1$ is center of $\omega$ and $M$ is the midpoint of arc $AB$ not containing $C$.
+
+  We know that $I_1$ lies on the line $\overline{CIM}$. Since $\overline{I_1Q}$ $\parallel$ $\overline{MN}$, therefore by converse of reim's theorem $\implies$ $PI_1QC$ is cyclic. Since, $\overline{PI_1}$ $=$ $\overline{QI_1}$ $\implies$ $\overline{CI_1}$ is the angle bisector of $\angle PCQ$, or in other words $\angle PCI$ $=$ $\angle QCI$ $\implies$ $\angle ACP$ $=$ $\angle QCB$.
+\end{proof}
+
+\begin{problem}[IMO 2019]
+  Let $I$ be the incentre of acute triangle $ABC$ with $AB\neq AC$. The incircle $\omega$ of $ABC$ is tangent to sides $BC, CA$, and $AB$ at $D, E,$ and $F$, respectively. The line through $D$ perpendicular to $EF$ meets $\omega$ at $R$. Line $AR$ meets $\omega$ again at $P$. The circumcircles of triangle $PCE$ and $PBF$ meet again at $Q$. Prove that lines $DI$ and $PQ$ meet on the line through $A$ perpendicular to $AI$.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(12cm); defaultpen(fontsize(12pt));
+
+    pair A, B, C, I;
+
+    A = dir(130);
+    B = dir(200);
+    C = dir(340);
+    I = incenter(A, B, C);
+
+    pair D, E, F;
+    D = foot(I, B, C);
+    E = foot(I, C, A);
+    F = foot(I, A, B);
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$D$", D, dir(225));
+    dot("$E$", E, dir(45));
+    dot("$F$", F, dir(135));
+    dot("$I$", I, dir(0));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+    draw(circumcircle(D, E, F));
+
+    pair DD = 2 * I - D;
+    dot("$D'$", DD, dir(45));
+
+    pair M = dir(90);
+    dot("$M$", M, dir(70));
+
+    pair HH = orthocenter(D, E, F);
+    pair R = reflect(E, F) * HH;
+    dot("$R$", R, dir(130));
+
+    pair[] PP = intersectionpoints(line(A, R), circumcircle(D, E, F));
+    pair P = PP[0]; dot("$P$", P, dir(225));
+
+    pair[] TT = intersectionpoints(line(A, R), circumcircle(A, B, C));
+    pair T = TT[0]; dot("$T$", T, dir(225));
+
+    pair K = 2 * T - I;
+    dot("$K$", K, dir(225));
+
+    draw(arc(circumcircle(B, I, C), 20, 220), heavygray+dashed);
+
+    pair S = extension(D, I, A, M); dot("$S$", S, dir(120));
+    pair[] QQ = intersectionpoints(line(K, P), circumcircle(B, F, P));
+    pair Q = QQ[1]; dot("$Q'$", Q, dir(30));
+
+    draw(circumcircle(B, F, P), heavygray);
+    draw(circumcircle(C, E, P), heavygray);
+    draw(K--S, blue); draw(I--D); draw(I--S, gray+dashed);
+    draw(A--M); draw(K--M); draw(D--E--F--cycle, gray); draw(A--T, red); draw(D--R, gray);
+
+    pair N = dir(270);
+    dot("$N$", N, dir(315));
+    draw(A--N);
+    draw(N--M);
+
+    draw(circumcircle(A, D, S), gray+dashed);
+    draw(arc(circumcircle(A, I, D), -60, 40), gray+dashed);
+    draw(arc(circumcircle(R, I, D), -70, 80), gray+dashed);
+
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Let $T$ be the $A$-mixtilinear touch point with $\odot(ABC)$.
+  \begin{claim}
+    $T$ lies on the line $AR$.
+  \end{claim}
+  \begin{proof}
+    Suppose $\overline{AT}$ cuts the incircle at $P'$ and $R'$ where $P'$ is closer to $T$ than $R'$. Since $\overline{TA}$ and $\overline{TD}$ are isogonal with respect to $\angle BTC$ and $\overline{BI}$ is the angle bisector of $\angle BTC$ $\implies$ $P'$ is the reflection of $D$ over $\overline{TI}$. Let $M$ be the midpoint of arc $BAC$ and $N$ be the midpoint of arc $BC$ not containing $A$. Then
+    \begin{align*}
+      \angle DR'P' = \tfrac{1}{2} \angle PID = \angle DIT = \angle NMT = \angle IAT
+    \end{align*}
+    Hence, $\overline{R'D}$ $\parallel$ $\overline{AI}$. But $\overline{AI}$ $\perp$ $\overline{EF}$ $\implies$ $\overline{R'D}$ $\perp$ $\overline{EF}$ $\implies$ $R' = R$ and $P' = P$.
+  \end{proof}
+
+  Define $S$ as the intersection of $DI$ and $AM$. We want to show that $PQ$ passes through $S$ to solve the problem. Suppose $D'$ is the reflection of $D$ over $I$. Since $\overline{DR}$ and $\overline{DD'}$ are isogonal with respect to $\angle EDF$ $\implies$ $\overline{RD'}$ $\parallel$ $\overline{EF}$ $\parallel$ $\overline{AM}$. Therefore, by converse of reim's theorem we get that $ASDP$ is a cyclic quadrilateral. We can further show that $RIDT$ is a cyclic quadrilateral too.
+  \begin{align*}
+    \angle RTI = \angle ATM = \angle ANM = \angle DIM = \angle RDI
+  \end{align*}
+  which implies that $RIDT$ is a cyclic quadrilateral. Now, define $K$ as the intersection of line $TI$ with $\odot(BIC)$.
+  \begin{claim}
+    $AIDK$ is a cyclic quadrilateral.
+  \end{claim}
+  \begin{proof}
+    Since $\angle ITN$ $=$ $90^{\circ}$ and using the fact that $N$ is the center of $\odot(BIC)$, we get that $T$ is the midpoint of $\overline{IK}$. Suppose $I_A$ is the $A$-excenter of $\triangle ABC$ $\implies$ $\overline{II_A}$ is the diameter of $\odot(BIC)$ and therefore, $\angle IKI_A$ $=$ $90^{\circ}$ $=$ $\angle I_AAM$ $\implies$ $AMI_AK$ is cyclic too. Applying radical axis theorem on $\odot(AMI_AK)$, $\odot(ABC)$ and $\odot(BIC)$, we get that $MA$, $BC$ and $I_AK$ are concurrent. Hence, $AIDK$ is a cyclic quadrilateral.
+  \end{proof}
+
+  Using the fact that $\overline{TK}$ $=$ $\overline{TI}$ and previously established angle relation $\angle DIT$ $=$ $\angle IAT$, we get that
+  \begin{align*}
+    \overline{TP} \cdot \overline{TA} = \overline{TI}^2 = \overline{TK}^2
+  \end{align*}
+  Hence $\overline{TK}$ is tangent to $\odot(APK)$ at $K$. This implies that
+  \begin{align*}
+    \angle KPT = \angle AKT = \angle ADI = \angle ADS = \angle APS
+  \end{align*}
+  which implies that $K$ lies on $PS$. The final claim is showing that $Q$ lies on the line $\overline{KPS}$ too. Suppose $Q'$ is the intersection of $\overline{SK}$ and $\odot(BIC)$. Then,
+  \begin{align*}
+    \angle BFP = \angle FEP = \angle FED - \angle PED = \angle BID - \angle KID = \angle BIK = \angle BQ'P
+  \end{align*}
+  So $BFQ'P$ is cyclic and similarly, $CEQ'P$ is cyclic too. Therefore $Q'$ must be $Q$ and we get $Q$ lies on $\overline{SP}$
 \end{proof}
 
 
-\subsection{Examples}
-
 \subsection{Exercises}
+\begin{exercise}[USA TST 2016]
+  Let $ABC$ be a scalene triangle with circumcircle $\Omega$, and suppose the incircle of $ABC$ touches $BC$ at $D$. The angle bisector of $\angle A$ meets $BC$ and $\Omega$ at $E$ and $F$. The circumcircle of $\triangle DEF$ intersects the $A$-excircle at $S_1$, $S_2$, and $\Omega$ at $T \neq F$. Prove that line $AT$ passes through either $S_1$ or $S_2$.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 1999]
+  Given a triangle $ABC$. The points $A$, $B$, $C$ divide the circumcircle $\Omega$ of the triangle $ABC$ into three arcs $BC$, $CA$, $AB$. Let $X$ be a variable point on the arc $AB$, and let $O_{1}$ and $O_{2}$ be the incenters of the triangles $CAX$ and $CBX$. Prove that the circumcircle of the triangle $XO_{1}O_{2}$ intersects the circle $\Omega$ in a fixed point.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2016]
+  Let $ABC$ be a triangle with circumcircle $\Gamma$ and incenter $I$ and let $M$ be the midpoint of $\overline{BC}$. The points $D$, $E$, $F$ are selected on sides $\overline{BC}$, $\overline{CA}$, $\overline{AB}$ such that $\overline{ID} \perp \overline{BC}$, $\overline{IE}\perp \overline{AI}$, and $\overline{IF}\perp \overline{AI}$. Suppose that the circumcircle of $\triangle AEF$ intersects $\Gamma$ at a point $X$ other than $A$. Prove that lines $XD$ and $AM$ meet on $\Gamma$.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2017]
+  In triangle $ABC$, let $\omega$ be the excircle opposite to $A$. Let $D, E$ and $F$ be the points where $\omega$ is tangent to $BC, CA$, and $AB$, respectively. The circle $AEF$ intersects line $BC$ at $P$ and $Q$. Let $M$ be the midpoint of $AD$. Prove that the circle $MPQ$ is tangent to $\omega$.
+\end{exercise}
+
+\section{Practice Problems}
+\begin{exercise}[Japan 2009]
+  Let $ \Gamma$ be a circumcircle. A circle with center $ O$ touches to line segment $ BC$ at $ P$ and touches the arc $ BC$ of $ \Gamma$ which doesn't have $ A$ at $ Q$. If $ \angle {BAO} = \angle {CAO}$, then prove that $ \angle {PAO} = \angle {QAO}$.
+\end{exercise}
+
+\begin{exercise}[ELMO Shortlist 2012]
+  Circles $\Omega$ and $\omega$ are internally tangent at point $C$. Chord $AB$ of $\Omega$ is tangent to $\omega$ at $E$, where $E$ is the midpoint of $AB$. Another circle, $\omega_1$ is tangent to $\Omega, \omega,$ and $AB$ at $D,Z,$ and $F$ respectively. Rays $CD$ and $AB$ meet at $P$. If $M$ is the midpoint of major arc $AB$, show that $\tan \angle ZEP = \tfrac{PE}{CM}$.
+\end{exercise}
+
+\begin{exercise}[EGMO 2018]
+  Let $\Gamma $ be the circumcircle of triangle $ABC$. A circle $\Omega$ is tangent to the line segment $AB$ and is tangent to $\Gamma$ at a point lying on the same side of the line $AB$ as $C$. The angle bisector of $\angle BCA$ intersects $\Omega$ at two different points $P$ and $Q$. Prove that $\angle ABP = \angle QBC$.
+\end{exercise}
+
 \begin{exercise}[IMO Shortlist 1992]
   Two circles touch externally at a point $ I$. The two circles lie inside a large circle and both touch it. The chord $ BC$ of the large circle touches both smaller circles (not at $ I$). The common tangent to the two smaller circles at the point $ I$ meets the large circle at a point $ A$, where the points $ A$ and $ I$ are on the same side of the chord $ BC$. Show that the point $ I$ is the incenter of triangle $ ABC$.
 \end{exercise}
 
+\begin{exercise}[Romania 1997]
+  Let $ABC$ be a triangle, $D$ be a point on side $BC$, and let $\mathcal{O}$ be the circumcircle of triangle $ABC$. Show that the circles tangent to $\mathcal{O},AD,BD$ and to $\mathcal{O},AD,DC$ are tangent to each other if and only if $\angle BAD=\angle CAD$.
+\end{exercise}
+
+\begin{exercise}[USAMO 2017]
+  Let $ABC$ be a scalene triangle with circumcircle $\Omega$ and incenter $I$. Ray $AI$ meets $\overline{BC}$ at $D$ and meets $\Omega$ again at $M$; the circle with diameter $\overline{DM}$ cuts $\Omega$ again at $K$. Lines $MK$ and $BC$ meet at $S$, and $N$ is the midpoint of $\overline{IS}$. The circumcircles of $\triangle KID$ and $\triangle MAN$ intersect at points $L_1$ and $L_2$. Prove that $\Omega$ passes through the midpoint of either $\overline{IL_1}$ or $\overline{IL_2}$.
+\end{exercise}
+
+\begin{exercise}[ELMO Shortlist 2017]
+  Let $ABC$ be an acute triangle with incenter $I$ and circumcircle $\omega$. Suppose a circle $\omega_B$ is tangent to $BA,BC$, and internally tangent to $\omega$ at $B_1$, while a circle $\omega_C$ is tangent to $CA, CB$, and internally tangent to $\omega$ at $C_1$. If $B_2, C_2$ are the points opposite to $B,C$ on $\omega$, respectively, and $X$ denotes the intersection of $B_1C_2, B_2C_1$, prove that $XA=XI$.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 1999]
+  Two circles $\Omega_{1}$ and $\Omega_{2}$ touch internally the circle $\Omega$ in M and N and the center of $\Omega_{2}$ is on $\Omega_{1}$. The common chord of the circles $\Omega_{1}$ and $\Omega_{2}$ intersects $\Omega$ in $A$ and $B$. $MA$ and $MB$ intersects $\Omega_{1}$ in $C$ and $D$. Prove that $\Omega_{2}$ is tangent to $CD$.
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2014]
+  Let $ABC$ be a triangle with circumcircle $\Omega$ and incentre $I$. Let the line passing through $I$ and perpendicular to $CI$ intersect the segment $BC$ and the arc $BC$ (not containing $A$) of $\Omega$ at points $U$ and $V$ , respectively. Let the line passing through $U$ and parallel to $AI$ intersect $AV$ at $X$, and let the line passing through $V$ and parallel to $AI$ intersect $AB$ at $Y$ . Let $W$ and $Z$ be the midpoints of $AX$ and $BC$, respectively. Prove that if the points $I, X,$ and $Y$ are collinear, then the points $I, W ,$ and $Z$ are also collinear.
+\end{exercise}
+
+\begin{exercise}[Taiwan TST 2014]
+  Let $M$ be any point on the circumcircle of triangle $ABC$. Suppose the tangents from $M$ to the incircle meet $BC$ at two points $X_1$ and $X_2$. Prove that the circumcircle of triangle $MX_1X_2$ intersects the circumcircle of $ABC$ again at the tangency point of the $A$-mixtilinear incircle.
+\end{exercise}
+
+\begin{exercise}[Taiwan TST 2015]
+  Let $O$ be the circumcircle of the triangle $ABC$. Two circles $O_1,O_2$ are tangent to each of the circle $O$ and the rays $\overrightarrow{AB},\overrightarrow{AC}$, with $O_1$ interior to $O$, $O_2$ exterior to $O$. The common tangent of $O,O_1$ and the common tangent of $O,O_2$ intersect at the point $X$. Let $M$ be the midpoint of the arc $BC$ (not containing the point $A$) on the circle $O$, and the segment $\overline{AA'}$ be the diameter of $O$. Prove that $X,M$, and $A'$ are collinear.
+\end{exercise}
+
+\begin{exercise}[Sharygin 2021]
+  Let $ABC$ be a scalene triangle, $AM$ be the median through $A$, and $\omega$ be the incircle. Let $\omega$ touch $BC$ at point $T$ and segment $AT$ meet $\omega$ for the second time at point $S$. Let $\delta$ be the triangle formed by lines $AM$ and $BC$ and the tangent to $\omega$ at $S$. Prove that the incircle of triangle $\delta$ is tangent to the circumcircle of triangle $ABC$.
+\end{exercise}
+
+\begin{exercise}
+  Let $ABC$ be an acute scalene triangle with orthocentre $H$ and circumcircle $\Gamma$. Let $M$ be the midpoint of $BC$. Lines $BH$ and $CH$ meet sides $AC$ and $AB$ at points $B_1$ and $C_1$ respectively. The lines through $M$ perpendicular to $AB$ and $AC$ respectively meet line $B_1C_1$ at points $B_2$ and $C_2$ respectively. The perpendicular bisectors of $BC$ and $B_2C_2$ meet at point $T$. Prove that lines $TA$ and $MH$ meet at a point on $\Gamma$.
+\end{exercise}
 
 
-\newpage
-\section{Mixtilinear Incircles}
 
-\begin{problem}[EGMO 2013]
-  Let $\Omega$ be the circumcircle of the triangle $ABC$. The circle $\omega$ is tangent to the sides $AC$ and $BC$, and it is internally tangent to the circle $\Omega$ at the point $P$. A line parallel to $AB$ intersecting the interior of triangle $ABC$ is tangent to $\omega$ at $Q$. Prove that $\angle ACP = \angle QCB$.
-\end{problem}
 
 \end{document}

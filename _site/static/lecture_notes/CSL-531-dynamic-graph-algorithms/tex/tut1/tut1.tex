@@ -1,0 +1,100 @@
+\section{[Tutorial] Jan 23, 2026}
+Some problems on \emph{Amortized Analysis}.
+
+\subsection{Problem 1: Tall Buildings}
+\begin{problem}
+    Chicago has many tall buildings, but only some of them have a clear view of Lake Michigan. Suppose we are given an array $A[1 \ldots n]$ that stores the height of $n$ buildings on a city block, indexed from west to east. Building $i$ has a good view of Lake Michigan if and only if every building to the east of $i$ is shorter than $i$. Use a stack to design an algorithm that computes which buildings have a good view of Lake Michigan in $\mathcal{O}(n)$ total time.
+\end{problem}
+
+We use a \emph{stack} to solve this problem. The stack $S$ would maintain the sequence of buildings that have a good view of Lake Michigan among the buildings processed. The outline of the algorithm is as follows: iterate on the array $A$ from left to right, and insert the current building to the stack while removing those that have their view disturbed due to the current added building.
+\begin{algorithm}[H]
+    \begin{algorithmic}[1]
+    \Function{insert}{$x$}
+        \While{$\text{top}(S) \le x$}
+            \State pop($S$)
+        \EndWhile
+        \State push($x, S$)
+    \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+The property that we claim is invariant in the above algorithm is that stack $S$ ensures a sequence of buildings sorted in descending order. Now we prove the correctness of the algorithm and show that it does not violate the invariant, thus satisfying it.
+    
+\subsubsection*{Correctness Proof.}
+\par
+\begin{lemma}
+    $x \not\in S$ (or in other words, $x$ is removed from stack $S$) $\Longleftrightarrow$ $\exists$ $y$ to the right of $x$ such that $x$ $\le$ $y$. 
+\end{lemma}
+\begin{proof}
+    Observe that every element is present in the stack at some point of time. If $x$ is removed from the stack, then it must have been popped from the stack while processing a $y$ which must have occurred after $x$, so $y$ is on the right of $x$. If $\exists$ $y$ to the right of $x$ such that $x \le y$ and $x$ $\in$ $S$, then while processing $y$ the while loop will pop off $x$ implying $x$ $\not\in$ $S$.
+\end{proof}
+
+This implies that the stack $S$ is sorted in decreasing order, because if there exists $x$ and $y$ in the stack such that $x \le y$ and $y$ is on the right of $x$ $\implies$ $x$ $\not\in$ $S$. Therefore the algorithm correctly computes a sequence of buildings in decreasing order of height. If there exists a building $x$ such that all buildings to its right are smaller than it, then by the above lemma it can never be popped and hence must exist in $S$ $\implies$ algorithm does not leave out any building in the longest decreasing sequence.
+
+\subsubsection*{Time Complexity Analysis.}
+The algorithm is similar to a multi-pop single-push stack which has an amortized time complexity of $\mathcal{O}(n)$, and hence so does our algorithm.
+
+\subsection{Problem 2: Queue using two Stacks}
+\begin{problem}
+    Queues and Stacks are two commonly used data structures, queues implement First In First Out policy and stacks implement Last In First Out Policy. Describe an implementation of the \emph{push} and \emph{pop} operations of a queue, using two stacks where the operations of stacks are used as a black box. Show that the queue takes $\mathcal{O}(1)$ amortized time per operation.
+\end{problem}
+We use two stacks, label them as $S_1$ and $S_2$. $S_1$ is the stack used to contain elements that are pushed into the queue and $S_2$ is the stack used to contain elements that will answer the pop operations. Everytime we push $x$ in the queue, we push $x$ to $S_1$. If want to pop from the queue, we check if $S_2$ is non-empty. If it is non-empty, then the top most element of $S_2$ is popped off. If it empty, then we empty $S_1$ into $S_2$ in the reverse order and the top most element of $S_2$ is popped off.
+
+\begin{algorithm}[H]
+    \begin{algorithmic}[1]
+    \Function{QueuePush}{$x$}
+        \State \Call{Push}{$x, S_1$}
+    \EndFunction
+    
+    \Function{QueuePop}{$ $}
+        \If{\textbf{not} $S_2.\Call{empty}{$$}$}
+            \State \Return \Call{Pop}{$S_2$}
+        \Else
+            \While{\textbf{not} $S_1.\Call{empty}{$$}$}
+                \State $x \gets$ \Call{Pop}{$S_1$}
+                \State \Call{Push}{$x, S_2$}
+            \EndWhile
+            \State \Return \Call{Pop}{$S_2$}
+        \EndIf
+    \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{proposition}
+    We claim that the above algorithm maintains the following invariants.
+    \begin{enumerate}
+        \item Elements in $S_1$ are in descending order of their time of arrivals.
+        \item Elements in $S_2$ are in increasing order of their time of arrivals.
+        \item Earliest time in $S_1$ is $>$ Latest time in $S_2$.
+    \end{enumerate}
+\end{proposition}
+
+We will first establish the correctness of the algorithm, which is that it correctly pops off the first element that was pushed to the queue, and show that the algorithm does not violate the stated invariant.
+\subsubsection*{Correctness Proof.}
+\begin{lemma}
+    first element pushed to the queue $\Longleftrightarrow$ popped first from the queue.
+\end{lemma}
+\begin{proof}
+    Suppose $x$ and $y$ are pushed to the queue such that $x$ was pushed before $y$. If $x$ and $y$ are in $S_1$, then $x$ occurs below $y$ in the stack $S_1$ because $y$ was pushed later. Otherwise, $x$ occurs in $S_2$ when $y$ was pushed and definitely $x$ will be popped before $y$. If the pop operation is applied when $x$ and $y$ occur in $S_1$, then the contents of $S_1$ are moved to $S_2$ in reverse direction so $x$ occurs above $y$ in $S_2$ and thus $x$ will get popped before $y$. This implies that the first element pushed to the queue is popped first from the queue. 
+
+    Consider the element $x$ which was popped from the queue and another element $y$ in the queue. Then $x$ and $y$ must be in stack $S_2$ before $x$ was popped and $x$ must have been above $y$ in the stack. So when $x$ and $y$ were moved to $S_2$ due to a pop operation, hence $x$ lied below $y$ in $S_1$ $\implies$ $x$ was pushed to the queue before $y$ was pushed, which proves the other direction too.
+\end{proof}
+
+This implies that the algorithm correctly computes the elements to be popped. We can further show that the algorithm maintains the previously stated invariant.
+
+\subsubsection*{Time Complexity Analysis.}
+``Very rough writeup. Need to write it in a better way, as soon as i get some free time''
+
+Accounting Method => assign an extra credit of $3$. Hence amortized time complexity is $\mathcal{O}(n)$.
+
+Potential Method => number of elements in the stack $S_1$.
+
+\subsection{Problem 3: Dynamic Arrays}
+Space Complexity => $\mathcal{O}(n)$ due to the bound $n \le k \le 4n$.
+
+Time Complexity => 
+Accounting Method: assign +2 to insertion, +1 to deletion
+Potential Method: use the potential function $\phi = \max (2n - k, \tfrac{k}{2} - n)$
+Aggregate Method: $2^k \le t \le 2^{k + 1}$. Insertion is $t + 2 \cdot \left( 2^{k} - 1\right) = \mathcal{O}(t)$. Similarly, for deletions too.
+
+    

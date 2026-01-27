@@ -52,7 +52,7 @@ return g;
 }
 
 import geometry;
-size(6cm); defaultpen(fontsize(10pt));
+size(8cm); defaultpen(fontsize(10pt));
 
 pair O, O1;
 real R, r;
@@ -91,7 +91,7 @@ pair I1 = I + rotate(90) * (K - I);
 pair P = intersectionpoint(line(A, D), line(I, I1));
 pair Q = extension(I, P, AA[0], AA[1]);
 
-dot("$Q$", P, dir(170)); dot("$P$", Q, dir(225));
+dot("$Q$", P, dir(140)); dot("$P$", Q, dir(225));
 pair[] UU = intersectionpoints(line(Q, M), circumcircle(A, AA[0], AA[1]));
 dot("$U$", UU[1], dir(135)); draw(circumcircle(UU[1], P, Q), red);
 draw(M--UU[1], red); draw(Q--I);
@@ -102,3 +102,11 @@ draw(O2--O1, heavygray+dashed);
 
 draw(O2--Q); draw(O1--K);
 draw(O1--D); draw(O2--D);
+
+pair R, S;
+R = extension(O2, D, P, Q);
+S = extension(O1, D, K, LL[0]);
+
+dot("$R$", R, dir(180));
+dot("$S$", S, dir(0));
+draw(O2--P); draw(O1--LL[0]);

@@ -1,0 +1,123 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\usepackage{listings}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code listing setup for C++ (or Python)
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    frame=single,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{orange}
+}
+
+% Optional: caption color
+\usepackage[labelfont=bf,labelsep=colon]{caption}
+\usepackage{tikz} % for diagrams if needed
+
+\title{Codeforces 803C (1900)}
+\author{Mmukul Khedekar}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    \centering
+    \url{https://codeforces.com/problemset/problem/803/C} \\ 
+    \highlight{Accepted}: \url{https://codeforces.com/contest/803/submission/360178477}
+\end{abstract}
+
+\section{Solution}
+
+\subsection{Explanation}
+
+\begin{lemma}
+    For an increasing sequence of length $k$ of positive integers that sum up to $n$, we must have 
+    \begin{align*}
+        \frac{k (k + 1)}{2} \le n
+    \end{align*}
+\end{lemma}
+The first observation is that if $d$ is the gcd of the $k$ integers, then $k$ divides $n$. Hence we can iterate on the divisors of $n$ and check if there exists an increasing sequence of lenth $k$ that sums upto $n$ and has a gcd equal to that divisor. Using the lemma, we will have a solution if 
+\begin{align*}
+    \frac{k(k + 1)}{2} \le \frac{n}{d}
+\end{align*}
+and the maximum such $d$ will be the answer. Construction for a valid $d$ is simple. 
+\begin{align*}
+\left( d, 2d, 3d, \cdots , (k - 1)d, \left(n -  \tfrac{k(k - 1)}{2}\right) d\right)
+\end{align*}
+
+\subsection{Code}
+
+\begin{lstlisting}[language=C++]
+void solve() {
+    ll n, k;
+    std::cin >> n >> k;
+
+    ll ans = -1;
+    if (k > 1e6) {
+        std::cout << -1 << '\n';
+        return;
+    }
+    
+    if ((k * (k + 1)) / 2 > n) {
+        std::cout << -1 << '\n';
+        return;
+    }
+    
+    for (ll i = 1; i * i <= n; i++) {
+        if (n % i == 0) {
+            if ((k * (k + 1)) / 2 <= (n / i)) {
+                ans = std::max(ans, i);
+            }
+
+            if (i * i != n) {
+                if ((k * (k + 1)) / 2 <= i) {
+                    ans = std::max(ans, n / i);
+                }
+            }
+        }
+    }
+
+    if (ans == -1) {
+        std::cout << -1 << '\n';
+    } else {
+        ll sum = 0;
+        for (ll i = 1; i < k; i++) {
+            sum += i * ans;
+            std::cout << i * ans << ' ';
+        }
+        std::cout << n - sum << '\n';
+    }
+}    
+\end{lstlisting}
+
+
+\end{document}

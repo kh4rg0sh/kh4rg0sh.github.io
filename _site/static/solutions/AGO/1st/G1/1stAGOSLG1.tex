@@ -1,0 +1,93 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+
+\begin{document}
+\title{1st AGO Shortlist G1}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering https://artofproblemsolving.com/community/c6h3352519p31104706
+\end{abstract}
+
+\section{Problem}
+\begin{problem*}[1st AGO Shortlist G1]
+    Let $ABC$ be a triangle and $D$ a point on side $BC$. Points $M$ and $N$ are midpoints of sides $AB$ and $AC$, respectively.$P$ and $Q$ are points such that $ABPD$ and $ACQD$ are parallelograms. Prove that lines $BC, PN$ and $QM$ concur.
+\end{problem*}
+\section{Solution}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(10cm); defaultpen(fontsize(12pt));
+
+        pair A = dir(120);
+        pair B = dir(200);
+        pair C = dir(340);
+
+        real r = 0.32;
+        pair D = B + (C - B) * r;
+
+        pair M = (A + B) / 2; pair N = (A + C) / 2;
+        pair G = (A + D) / 2; pair F = 2 * G - M;
+        pair E = 2 * G - N; pair P = B + D - A; 
+        pair Q = D + C - A; pair R = extension(M, Q, B, C);
+
+        dot("$A$", A, dir(130));
+        dot("$B$", B, dir(225));
+        dot("$C$", C, dir(315));
+        dot("$D$", D, dir(225));
+        dot("$E$", E, dir(135));
+        dot("$N$", N, dir(45));
+        dot("$P$", P, dir(225));
+        dot("$Q$", Q, dir(315));
+        dot("$R$", R, dir(315));
+        dot("$M$", M, dir(135));
+        dot("$G$", G, dir(45));
+        dot("$F$", F, dir(45));
+
+        draw(A--B--C--cycle);
+        draw(B--P); draw(P--F);
+        draw(Q--E); draw(Q--M);
+        draw(M--D); draw(A--D); draw(A--F);
+        draw(C--Q); draw(P--N, gray+dashed);
+        draw(E--N); draw(P--Q);
+
+    \end{asy}
+\end{figure}
+\begin{proof}
+    Suppose $PD$ intersects $MN$ at $F$. Then $\overline{DF}$ $=$ $\overline{BM}$ $=$ $\overline{AM}$. Thus $AMDF$ is a parallelogram. Let $G$ be the midpoint of $\overline{MF}$ and $E$ be the reflection of $N$ over $G$. Since $\overline{AG}$ $=$ $\overline{GD}$ and $\overline{GN}$ $=$ $\overline{GE}$ $\implies$ $ANDE$ is a parallelogram. But $\overline{DQ}$ $\parallel$ $\overline{AC}$, thus $E$ lies on $DQ$. Let $QM$ intersect $BC$ at $R$, then
+    \begin{align*}
+    \frac{\overline{DR}}{\overline{FN}} = \frac{\overline{DR}}{\overline{EM}} = \frac{\overline{DQ}}{\overline{EQ}} = \frac{1}{\tfrac{\overline{EQ}}{\overline{DQ}}} = \frac{1}{1 + \tfrac{\overline{ED}}{\overline{DQ}}} = \frac{1}{1 + \tfrac{\overline{FD}}{\overline{DP}}} = \frac{1}{\tfrac{\overline{FP}}{\overline{DP}}} = \frac{\overline{DP}}{\overline{FP}}
+    \end{align*}
+    which implies that $\triangle PDR$ $\sim$ $\triangle PFN$ $\implies$ $R$ lies on $\overline{PN}$. In other words, $\overline{PN}$, $\overline{QM}$ and $\overline{BC}$ are concurrent at $R$.
+\end{proof}
+
+\end{document}

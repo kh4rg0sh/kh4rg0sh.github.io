@@ -4,7 +4,7 @@
  <title>kh4rg0sh Blog!</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2026-01-22T08:25:07+05:30</updated>
+ <updated>2026-01-27T22:03:46+05:30</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Mmukul Khedekar</name>
@@ -59,9 +59,7 @@ document.addEventListener(&quot;click&quot;, e =&gt; {
 &lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=hashing_frenzy_writeup.md&quot;&gt; &lt;/script&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;
-&lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=a_complex_shamir_writeup.md&quot;&gt; &lt;/script&gt;
-
+&lt;p&gt;true&lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=a_complex_shamir_writeup.md&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 </content>
  </entry>
  
