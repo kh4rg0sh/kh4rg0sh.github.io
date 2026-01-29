@@ -1,0 +1,65 @@
+\section{[Lecture] Jan 28, 2026}
+
+In this lecture we discuss about the incremental versions of the connectivity problem. By definition, the connectivity problem is defined for undirected graphs.
+\begin{definition}
+    In a graph $G = (V, E)$, we say that $u$ is \vocab{connected} to $v$ if there exists a path of edges from $u$ to $v$ for $u, v \in V$.
+\end{definition}
+\subsection{Incremental Single Source Connectivity}
+\begin{problem}[Incremental Single Source Connectivity]
+    Given an undirected graph $G = (V, E)$ and a source vertex $s$, maintain the set of vertices connected to $s$ under edge additions.
+\end{problem}
+
+Since an undirected graph can be modelled as a directed graph, therefore algorithms that can compute the \highlight{Incremental Single Source Reachability} can also be used here. This leads to 
+\begin{quote}
+    \centering
+    Worst case time = $\mathcal{O}(m)$, and Amortized time = $\mathcal{O}(1)$
+\end{quote}
+
+\subsection{Incremental All Pairs Connectivity}
+\begin{problem}[Incremental All Pairs Connectivity]
+    Given an undirected graph $G = (V, E)$, maintain the sets of vertices connected to each $x$ $\in$ $V$ under edge additions.
+\end{problem}
+We maintain a two-dimensional array $R[n][n]$, where
+\begin{align*}
+    R[u][v] = \begin{cases}
+        1, \qquad \text{if v is connected to u} \\ 
+        0, \qquad \text{otherwise}
+    \end{cases}
+\end{align*}
+Following a similar algorithm to \highlight{Incremental Single Source Reachability} and updating the data structure for all vertices $u$ $\in$ $V$, we end up with 
+\begin{quote}
+    \centering
+    Worst case time = $\mathcal{O}(mn)$, and Amortized time = $\mathcal{O}(n)$
+\end{quote}
+
+\subsection{Disjoint Set Union}
+Another data structure that could be used to solve the \highlight{Incremental All Pairs Connectivity} problem is \vocab{Disjoint Set Union}. It is a data structure that supports 
+\begin{enumerate}
+    \item \textsc{Find}: identify the component an element belongs to.
+    \item \textsc{Union}: merge two components.
+\end{enumerate}
+
+With this data structure, we can propose an algorithm to solve the \highlight{Incremental All Pairs Connectivity} problem.
+\begin{algorithm}
+    \begin{algorithmic}[1]
+        \Function{Update}{$x, y$}
+            \State Add $e(x, y)$ to $E$
+            \State \Call{Merge}{$x, y$}
+        \EndFunction
+
+        \Function{Query}{$x, y$}
+            \State \Return \Call{Find}{$x$} $==$ \Call{Find}{$y$}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+So now we focus on improving the time complexity of this data structure.
+
+\subsubsection{DSU using Lists and Arrays}
+We use two data structures here.
+\begin{enumerate}
+    \item List $L[i]$ that stores all elements in a component $c_i$.
+    \item Array $A[i]$ that stores the component index for each $i$.
+\end{enumerate}
+
+
