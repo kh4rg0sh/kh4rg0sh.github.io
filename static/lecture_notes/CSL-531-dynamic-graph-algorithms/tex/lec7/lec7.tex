@@ -92,4 +92,15 @@ and
         \item $\psi(x) \in [\,0, \alpha(n)\times x.\text{rank}\,]$
     \end{enumerate}
 \end{proposition}
+\begin{proof} Consider a fixed node $x$ in the tree.
+\begin{enumerate}
+    \item Since, $$\operatorname{par}(x).\text{rank} \le n \implies \operatorname{level}(x) \le \alpha(n)$$
+    \item Since, 
+    \begin{align*}
+        A_{\operatorname{level}(x)}^{i} \left( x.\text{rank}\right) &\le \operatorname{par}(x).\text{rank} \\ 
+            &< A_{\operatorname{level}(x) + 1}\left( x.\text{rank} \right) = A_{\operatorname{level}(x)}^{x.\text{rank} + 1} \left( x.\text{rank} \right) \\ 
+            &\implies i \le x.\text{rank}
+    \end{align*}
+\end{enumerate}
+\end{proof}
 
