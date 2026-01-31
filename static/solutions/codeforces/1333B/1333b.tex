@@ -1,0 +1,111 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\usepackage{listings}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code listing setup for C++ (or Python)
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    frame=single,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{orange}
+}
+
+% Optional: caption color
+\usepackage[labelfont=bf,labelsep=colon]{caption}
+\usepackage{tikz} % for diagrams if needed
+
+\title{Codeforces }
+\author{Mmukul Khedekar}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    \centering
+    \url{https://codeforces.com/contest/1333/problem/B} \\ 
+    \highlight{Accepted}: \url{https://codeforces.com/contest/1333/submission/360843204}
+\end{abstract}
+
+\section{Solution}
+
+\subsection{Explanation}
+
+% Describe the idea and approach here
+% Example: Greedy approach, DP, Graph traversal, etc.
+
+\subsection{Code}
+
+\begin{lstlisting}[language=C++]
+void solve() {
+    int n;
+    std::cin >> n;
+
+    std::vector<ll> a(n + 1), b(n + 1);
+    ll ones = 0, neg = 0;
+    for (ll i = 1; i <= n; i++) {
+        std::cin >> a[i];
+        if (a[i] == 1) ones++;
+        else if (a[i] == -1) neg++;
+    }
+
+    for (ll i = 1; i <= n; i++) {
+        std::cin >> b[i];
+    }
+
+    bool yes = true;
+    for (ll i = n; i > 0; i--) {
+        if (a[i] == 1) ones--;
+        else if (a[i] == -1) neg--;
+        if (a[i] ==  b[i]) continue;
+        if (a[i] < b[i]) {
+            if (ones == 0) {
+                yes = false;
+                break;
+            }
+        } else {
+            if (neg == 0) {
+                yes = false;
+                break;
+            }
+        }
+    }
+
+    if (yes) {
+        std::cout << "YES\n";
+    } else {
+        std::cout << "NO\n";
+    }
+}
+\end{lstlisting}
+
+
+\end{document}

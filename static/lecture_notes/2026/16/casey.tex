@@ -35,11 +35,306 @@
 \maketitle
 
 \begin{abstract}
-    \centering In this article, we learn about casey's theorem.
+    \centering In this article we study Casey's Theorem and its applications.
 \end{abstract}
-
-\section{Ptolemy's Theorem}
-
 \section{Casey's Theorem}
+Casey's Theorem is a result on lengths in the configuration of tangent circles. However, this theorem is also applicable to point circles making it a much more powerful result.
+\begin{theorem}[Casey's Theorem]
+  Given a circle $\Omega$ and four circles $\omega_1$, $\omega_2$, $\omega_3$, $\omega_4$ internally tangent to $\Omega$ at $A$, $B$, $C$ and $D$ such that $ABCD$ is a convex quadrilateral. Let $\delta_{ij}$ denote the length of the external common tangent between circles $\omega_i$ and $\omega_j$, then
+  \begin{align*}
+    \delta_{12} \cdot \delta_{34} + \delta_{23} \cdot \delta_{14} = \delta_{13} \cdot \delta_{24}
+  \end{align*}
+\end{theorem}
+
+Infact the converse of this theorem holds too!
+\begin{theorem}[Converse of Casey's Theorem]
+    Given four circles $\omega_1$, $\omega_2$, $\omega_3$ and $\omega_4$ that satisfy
+    \begin{align*}
+      \pm \delta_{12} \cdot \delta_{34} \pm \delta_{23} \cdot \delta_{14} \pm \delta_{13} \cdot \delta_{24} = 0
+    \end{align*}
+    where $\delta_{ij}$ is the length of external common tangent of circles $\omega_i$ and $\omega_j$ then there exists a circle that is tangent to all the four circles.
+\end{theorem}
+Since the proof of this result is challenging, we shall omit it here. Instead, let's learn how to use this result on problems.
+
+\section{Point Circles!}
+\vocab{Point circles} refer to circles with zero radius. They are circles that precisely collapse to a singular point. Such circles are also known as \highlight{degenerate circles}. Interestingly, Casey's Theorem is also applicable to point circles! And when we consider all the four circles in Casey's Theorem to be degenerate, the condition boils down to a very famous result in the literature of geometry known as \vocab{Ptolemy's Theorem}. In other words, Casey's Theorem can also be understood as a generalisation of Ptolemy's Theorem.
+\subsection{Ptolemy's Theorem}
+\begin{theorem}[Ptolemy's Theorem]
+  For four points $A$, $B$, $C$ and $D$ in a plane, $ABCD$ is a cyclic quadrilateral if and only if, 
+  \begin{align*}
+    \overline{AB} \cdot \overline{CD} + \overline{AD} \cdot \overline{BC} = \overline{AC} \cdot \overline{BD}
+  \end{align*}
+\end{theorem}
+Notice how this is occurs exactly when the four circles in Casey's Theorem are chosen to be point circles at $A$, $B$, $C$ and $D$. Since we have mentioned Ptolemy's Theorem, it's also worth mentioning the following result.
+\begin{theorem}[Ptolemy's Inequality]
+  For four points $A$, $B$, $C$ and $D$ in a plane, we always have 
+  \begin{align*}
+    \overline{AB} \cdot \overline{CD} + \overline{AD} \cdot \overline{BC} \geq \overline{AC} \cdot \overline{BD}
+  \end{align*}
+  Equality holds if and only if $ABCD$ is a cyclic quadrilateral.
+\end{theorem}
+
+\subsection{Examples}
+\begin{problem}[IMO Shortlist 1997]
+  The lengths of the sides of a convex hexagon $ ABCDEF$ satisfy $ AB = BC$, $ CD = DE$, $ EF = FA$. Prove that
+  \[ \frac {BC}{BE} + \frac {DE}{DA} + \frac {FA}{FC} \geq \frac {3}{2}.
+  \]
+\end{problem}
+\begin{proof}
+  Applying ptolemy's inequality on the quadrilateral $ABCE$, we have that 
+  \begin{align*}
+    \overline{CE} \cdot \overline{AB} + \overline{AE} \cdot \overline{BC} &\geq \overline{AC} \cdot \overline{BE} \\ 
+    \implies \frac{\overline{BC}}{\overline{BE}} &\geq \frac{\overline{AC}}{\overline{CE} + \overline{AE}}
+  \end{align*}
+  Similarly,
+  \begin{align*}
+    \frac{\overline{DE}}{\overline{DA}} \geq \frac{\overline{CE}}{\overline{AE} + \overline{AC}} \text{  and  } \frac{\overline{FA}}{\overline{FC}} \geq \frac{\overline{AE}}{\overline{AC} + \overline{CE}}
+  \end{align*}
+  However, it is well known that
+  \begin{align*}
+  \frac{x}{y + z} + \frac{y}{z + x} + \frac{z}{x + y} \geq \frac{3}{2}
+  \end{align*}
+  Hence,
+  \begin{align*}
+    \frac {BC}{BE} + \frac {DE}{DA} + \frac {FA}{FC} \geq \frac {3}{2}
+  \end{align*}
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}[RMO 2024]
+  Let $ABCD$ be a cyclic quadrilateral such that $AB \parallel CD$. Let $O$ be the circumcenter of $ABCD$ and $L$ be the point on $AD$ such that $OL$ is perpendicular to $AD$. Prove that
+\[ OB\cdot(AB+CD) = OL\cdot(AC + BD).\]
+\end{exercise}
+
+\begin{exercise}[IMO 1995]
+  Let $ ABCDEF$ be a convex hexagon with $ AB = BC = CD$ and $ DE = EF = FA$, such that $ \angle BCD = \angle EFA = \frac {\pi}{3}$. Suppose $ G$ and $ H$ are points in the interior of the hexagon such that $ \angle AGB = \angle DHE = \frac {2\pi}{3}$. Prove that $ AG + GB + GH + DH + HE \geq CF$.
+\end{exercise}
+
+\section{Feuerbach's Theorem}
+\vocab{Feuerbach's Theorem} is an extremely beautiful and celebrated result in Euclidean Geometry. Here is the statement for the theorem.
+\begin{theorem}[Feuerbach's Theorem]
+    The \vocab{Nine-Point Circle} of a triangle is \emph{internally tangent} to the \vocab{Incircle} and \emph{externally tangent} to the three \vocab{Excircles}. The points of tangencies are the interior and three exterior \vocab{Feuerbach Points}. 
+\end{theorem}
+It's difficult to prove this theorem with synthetic geometry, however we can easily prove this using Casey's Theorem.
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+      import geometry; 
+      size(10cm); defaultpen(fontsize(10pt));
+
+      pair A, B, C, I, O, I_A, I_B, I_C, M_A, M_B, M_C;
+      A = dir(110); B = dir(185); C = dir(355);
+
+      O = origin; I = incenter(A, B, C);
+      I_A = excenter(B, C, A); I_B = excenter(C, A, B); I_C = excenter(A, B, C);
+      M_A = (B + C) / 2; M_B = (C + A) / 2; M_C = (A + B) / 2;
+      
+      dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+      
+      draw(A--B--C--cycle);
+      draw(incircle(A, B, C), red);
+      draw(circumcircle(M_A, M_B, M_C));
+
+      pair X_1, X_2, X_3, X_4, X_5, X_6;
+      X_1 = foot(I_A, A, B); X_2 = foot(I_A, A, C);
+      X_3 = foot(I_B, B, C); X_4 = foot(I_B, A, B);
+      X_5 = foot(I_C, A, C); X_6 = foot(I_C, B, C);
+      
+      pair D = foot(I, B, C); pair Dp = reflect(A, I) * D;
+      pair FF[] = intersectionpoints(line(M_A, Dp), circumcircle(M_A, M_B, M_C));
+      
+      dot("$Fe$", FF[1], dir(45));
+      pair E = foot(I, A, C); pair F = foot(I, A, B);
+      dot("$D$", D, 2*dir(225));
+      dot("$E$", E, dir(45));
+      dot("$F$", F, 2*dir(135));
+      dot("$I$", I, dir(45));
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Apply converse of Casey's Theorem on the incircle $\odot(I)$ and the point circles $\odot(M_A)$, $\odot(M_B)$ and $\odot(M_C)$,
+  \begin{align*}
+    \begin{cases} 
+      \delta_{DE} \cdot \delta_{FI} = \tfrac{c}{2} \left| \tfrac{b - a}{2} \right| \\ 
+      \delta_{EF} \cdot \delta_{DI} = \tfrac{a}{2} \left| \tfrac{b - c}{2} \right| \\ 
+      \delta_{DF} \cdot \delta_{EI} = \tfrac{b}{2} \left| \tfrac{c - a}{2} \right| \\ 
+    \end{cases}
+    \end{align*}
+    which is easy to show that satisfies
+    \begin{align*}
+      \pm \delta_{DE} \cdot \delta_{FI} \pm \delta_{EF} \cdot \delta_{DI} \pm \delta_{DF} \cdot \delta_{EI} = 0
+    \end{align*}
+    Therefore, $\odot(DEF)$ which is the nine point circle is tangent to $\odot(I)$ which is the incircle. Similarly, we can show that the incircle is tangent to all the three excircles.
+\end{proof}
+
+\section{Sawayama's Theorem}
+We can even produce a short proof of \vocab{Sawayama's Theorem} using Casey's Theorem.
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+
+    pair O, O1;
+    real R, r;
+    R = 4; r = 2.2;
+
+    O = origin; O1 = O + (R - r) * dir(45);
+    draw(circle(O, R)); draw(circle(O1, r));
+
+    pair K = O1 + r * dir(270); dot("$K$", K, dir(305));
+    pair P1 = K - rotate(90) * (O1 - K);
+    pair P2 = K + rotate(90) * (O1 - K);
+
+    pair[] AA = intersectionpoints(line(P1, P2), circle(O, R));
+    dot("$B$", AA[0], dir(225)); dot("$C$", AA[1], dir(315));
+    
+    pair A = R * dir(98); dot("$A$", A, dir(100));
+    pair T = O1 + r * dir(45); dot("$T$", T, dir(45));
+    pair M = O + R * dir(270); 
+
+    pair I = incenter(A, AA[0], AA[1]);
+
+    pair[] LL = intersectionpoints(line(K, I), circle(O1, r));
+    dot("$L$", LL[0], dir(150));
+
+    pair D = extension(A, LL[0], AA[0], AA[1]);
+    dot("$D$", D, dir(225)); 
+    
+    draw(A--AA[0]--AA[1]--cycle); draw(A--D);
+
+    dot("$I$", I, dir(45));
+
+    pair E = extension(A, I, AA[0], AA[1]);
+    dot("$E$", E, dir(225));
+
+    draw(K--LL[0], heavygray+dashed);
+    draw(A--E);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  We want to show that the points $L$, $I$ and $K$ are collinear so applying menelaus' theorem on $\triangle ADE$, we get
+  \begin{align*}
+    \frac{AL}{LD} \cdot \frac{DK}{KE} \cdot \frac{EI}{IA} = 1
+  \end{align*}
+  However $\overline{DL}$ $=$ $\overline{DK}$, so we just want to show that 
+  \begin{align*}
+    \frac{AL}{KE} \cdot \frac{EI}{IA} = 1
+  \end{align*}
+  Applying Casey's Theorem on $\odot(TLK)$, and point circles $\odot(A)$, $\odot(B)$ and $\odot(C)$ we get 
+  \begin{align*}
+    \overline{AL} \cdot \overline{BC} + \overline{CK} \cdot \overline{AB} = \overline{BK} \cdot \overline{AC}
+  \end{align*}
+  this implies that
+  \begin{align*}
+    \frac{AL}{KE} = \frac{b + c}{a}
+  \end{align*}
+  but using angle bisector theorem, we already know that $\tfrac{AI}{IE} = \tfrac{b + c}{a}$ $\implies$ $\tfrac{AL}{KE} \cdot \tfrac{EI}{IA} = 1$, thus proving the result.
+\end{proof}
+
+\section{Examples}
+\begin{problem}[IMO Shortlist 2017]
+  In triangle $ABC$, let $\omega$ be the excircle opposite to $A$. Let $D, E$ and $F$ be the points where $\omega$ is tangent to $BC, CA$, and $AB$, respectively. The circle $AEF$ intersects line $BC$ at $P$ and $Q$. Let $M$ be the midpoint of $AD$. Prove that the circle $MPQ$ is tangent to $\omega$.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(9cm); defaultpen(fontsize(11pt));
+
+    pair A, B, C, I, Ia, E, F, D, M, O;
+
+    A = dir(120);
+    B = dir(220);
+    C = dir(320);
+
+    I = incenter(A, B, C);
+    Ia = excenter(B, C, A);
+    D = foot(Ia, B, C);
+    E = foot(Ia, A, B);
+    F = foot(Ia, A, C);
+    M = (A + D) / 2;
+    O = (A + Ia) / 2;
+
+    pair[] PP = intersectionpoints(line(B, C), circumcircle(A, E, F));
+    pair P = PP[0]; pair Q = PP[1];
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$D$", D, dir(225));
+    dot("$E$", E, dir(215));
+    dot("$F$", F, dir(315));
+    dot("$I_A$", Ia, dir(315));
+    dot("$M$", M, dir(45));
+    dot("$O$", O, dir(225));
+    dot("$P$", P, dir(225));
+    dot("$Q$", Q, dir(315));
+
+    draw(A--B--C--cycle);
+    draw(B--E); draw(C--F);
+    draw(A--D); draw(A--Ia);
+    draw(Ia--E); draw(Ia--F);
+    draw(Ia--D); draw(O--M);
+    draw(M--P); draw(M--Q);
+    draw(P--B); draw(C--Q);
+    draw(A--P); draw(P--Ia);
+    draw(A--Q); draw(Q--Ia);
+
+    draw(circumcircle(A, E, F));
+    draw(arc(circumcircle(M, P, Q), 0, 180), heavygray+dashed);
+    markrightangle(Ia, E, A, 7);
+    markrightangle(A, F, Ia, 7);
+    markrightangle(Ia, D, C, 7);
+    markrightangle(Ia, P, A, 7);
+    markrightangle(A, Q, Ia, 7);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Let $O$ be the center of $\odot(AEF)$. Since $\odot(AEF)$ passes through the $A$-excenter and $\angle AEI_A$ $=$ $90^{\circ}$ $\implies$ $O$ is the midpoint of $\overline{AI_A}$. Since, $\overline{I_AD}$ $\perp$ $\overline{BC}$ and $\overline{OM}$ $\parallel$ $\overline{I_AD}$ by midpoint theorem $\implies$ $\overline{OM}$ $\perp$ $\overline{BC}$. Since $O$ is the center of $\odot(AEF)$ $\implies$ $\overline{MP}$ $=$ $\overline{MQ}$. Since
+  \begin{align*}
+    \overline{PQ}^2 \cdot (\overline{MI_A}^2 - \overline{DI_A}^2) &= \left(\overline{MP} \cdot \overline{QD} + \overline{MQ} \cdot \overline{PD} \right)^2 \\ 
+    \Longleftrightarrow \overline{PQ}^2 \cdot (\overline{MI_A}^2 - \overline{DI_A}^2) &= \overline{MP}^2 \cdot \overline{PQ}^2 \\ 
+    \Longleftrightarrow \overline{MI_A}^2 - \overline{DI_A}^2 &= \overline{MP}^2 \\ 
+    \Longleftrightarrow \overline{MI_A}^2 - \overline{MP}^2 &= \overline{DI_A}^2 \\ 
+    \Longleftrightarrow \frac{1}{4} \left( 2\overline{AI}^2 + 2\overline{DI_A}^2 - \overline{AD}^2 \right) - \frac{1}{4} \left( 2\overline{PD}^2 + 2\overline{AP}^2 - \overline{AD}^2 \right) &= \overline{DI_A}^2 \\ 
+    \Longleftrightarrow \frac{1}{2} \left( \overline{AI_A}^2 - \overline{PD}^2 - \overline{AP}^2 + \overline{DI_A}^2 \right) &= \overline{DI_A}^2
+  \end{align*}
+  which is true due to pythagoras' theorem on $\triangle API_A$ and $\triangle PDI_A$. Therefore using the converse of Casey's Theorem on $\odot(DEF)$ and point circles $\odot(M)$, $\odot(P)$ and $\odot(Q)$, we have shown that $\odot(MPQ)$ is tangent to $\odot(DEF)$. 
+\end{proof}
+
+
+\section{Practice Problems}
+\begin{exercise}
+  Let $ABCD$ be a cyclic quadrilateral. Prove that,
+$$\frac{AC}{BD}= \frac{AB\cdot AD + CB\cdot CD}{BA\cdot BC + DA\cdot DC}$$
+\end{exercise}
+
+\begin{exercise}[USA 1997]
+  Let $Q$ be a quadrilateral whose side lengths are $a, b, c, d$ in that order. Show that the area of $Q$ does not exceed $\frac{ac + bd}{2}.$
+\end{exercise}
+
+\begin{exercise}[APMO 2014]
+  Circles $\omega$ and $\Omega$ meet at points $A$ and $B$. Let $M$ be the midpoint of the arc $AB$ of circle $\omega$ ($M$ lies inside $\Omega$). A chord $MP$ of circle $\omega$ intersects $\Omega$ at $Q$ ($Q$ lies inside $\omega$). Let $\ell_P$ be the tangent line to $\omega$ at $P$, and let $\ell_Q$ be the tangent line to $\Omega$ at $Q$. Prove that the circumcircle of the triangle formed by the lines $\ell_P$, $\ell_Q$ and $AB$ is tangent to $\Omega$.
+\end{exercise}
+
+\begin{exercise}[IMO 1997]
+  It is known that $ \angle BAC$ is the smallest angle in the triangle $ ABC$. The points $ B$ and $ C$ divide the circumcircle of the triangle into two arcs. Let $ U$ be an interior point of the arc between $ B$ and $ C$ which does not contain $ A$. The perpendicular bisectors of $ AB$ and $ AC$ meet the line $ AU$ at $ V$ and $ W$, respectively. The lines $ BV$ and $ CW$ meet at $ T$. Show that $ AU = TB + TC$.
+\end{exercise}
+
+\begin{exercise}
+  Let $ABC$ be a triangle with centroid $G$, incenter $I$, incircle $\omega$, and nine-point circle $\Gamma$. Let the line $IG$ meet $BC$ at $P$ and let the common tangent $\omega$ and $\Gamma$ meet $BC$ at $Q$. Prove that the midpoint of $BC$ is also the midpoint of $PQ$ .
+\end{exercise}
+
+\begin{exercise}
+  Let $D, E, F$ be points on sides $BC, CA, AB$ of triangle $ABC$ respectively such that lines $AD, BE, CF$ concur. Let $\Omega$ be the circumcircle of triangle $ABC$ and let $\omega_{A}$ be the circle internally tangent to $\Omega$ and tangent to $BC$ at $D$. Define circle $\omega_{B}$ and $\omega_{C}$ similarly. Show that there exists a circle tangent to circles $\omega_{A}, \omega_{B}, \omega_{C}$ that is also tangent to the incircle of triangle of $ABC$.
+\end{exercise}
+
+\begin{exercise}[IMO 2001]
+  Let $a > b > c > d$ be positive integers and suppose that\[ ac + bd = (b+d+a-c)(b+d-a+c).  \]Prove that $ab + cd$ is not prime.
+\end{exercise}
+
+
 
 \end{document}
