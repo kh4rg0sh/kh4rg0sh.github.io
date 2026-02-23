@@ -1,0 +1,221 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\usepackage{listings}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code listing setup for C++ (or Python)
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    frame=single,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{orange}
+}
+
+% Optional: caption color
+\usepackage[labelfont=bf,labelsep=colon]{caption}
+\usepackage{tikz} % for diagrams if needed
+
+\title{USACO Gold: Digit DP}
+\author{Mmukul Khedekar}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\newpage
+\section{Focus Problem: Odometer}
+
+\begin{problem}[\href{https://usaco.org/index.php?page=viewproblem2&cpid=435}{USACO 2014 US Open (Silver) --- Problem 3, Odometer}]
+Farmer John's cows are on a road trip! The odometer on their car displays
+an integer mileage value, starting at $X$ ($100 \le X \le 10^{18}$) miles
+at the beginning of the trip and ending at $Y$ ($X \le Y \le 10^{18}$)
+miles at the end.
+
+Whenever the odometer displays an \emph{interesting} number (including
+at the start and end of the trip), the cows will moo.
+
+A number is called \emph{interesting} if, when considering all its digits
+(excluding leading zeros), at least half of the digits are the same.
+For example, the numbers $3223$ and $110$ are interesting, while
+$97791$ and $123$ are not.
+
+Your task is to determine how many times the cows will moo during the
+trip.
+
+\subsubsection*{Input}
+The first line contains two integers $X$ and $Y$.
+
+\subsubsection*{Output}
+Output a single integer: the number of times the cows moo.
+
+\subsubsection*{Sample Input}
+\begin{verbatim}
+110 133
+\end{verbatim}
+
+\subsubsection*{Sample Output}
+\begin{verbatim}
+14
+\end{verbatim}
+
+\subsubsection*{Explanation}
+The cows moo when the odometer reads:
+\[
+110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 121, 122, 131, 133.
+\]
+\end{problem}
+
+Let's start with a brute force approach. The straightforward brute force is to iterate over all numbers in the range $X$ to $Y$ and for each number check if it is \emph{interesting}. To check if a number is interesting, we just iterate over its digits and maintain a frequency array. The total time complexity should be 
+\begin{align*}
+    \mathcal{O} \left( (Y - X) \log Y\right)
+\end{align*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\section{General Resources}
+\subsection{DP-book Chapter 5}
+The important thing is motivating the dp states for digit dp. From what I could understand, if we scan a number from left to right then we can compute the required property for the current number prefix using the already computed property for the number prefixes. For example, let's do the following problem.
+
+\begin{problem}
+    There are two integers $n$, $m$ where $1 \le n \le m \le 10^{18}$. Find the number of integers between $n$ and $m$ inclusive such that contain exactly $k$ digits $d$ where $1 \le d \le 9$ and $k \geq 0$.
+\end{problem}
+The main idea is that if we know the count of numbers such that on a prefix the digit $d$ appears $j$ times, then 
+\begin{align*}
+    dp[i][j][d] &\stackrel{d' = d}{\longleftarrow} dp[i - 1][j - 1][d] \\ 
+    dp[i][j][d] &\stackrel{d' \neq d}{\longleftarrow} dp[i - 1][j][d]
+\end{align*}
+So the three states we need to keep track of are
+\begin{itemize}
+    \item $i$, the length of the prefix of the number we have scanned
+    \item $j$, the frequency of the digit $d$
+    \item \text{(above)}, if the number is greater than the target number. This last state could be $0$, $1$ or $2$ depending upon
+    \begin{itemize}
+        \item $0$, count of numbers strictly smaller than the target value.
+        \item $1$, count of numbers exactly equal to the target value.
+        \item $2$, count of numbers greater than the target value.
+    \end{itemize}
+    Therefore, if
+    \begin{itemize}
+        \item \text{(above)} is $0$, adding any number will make the prefix still smaller that the target number $\implies$ \text{(above)} remains $0$.
+        \item \text{(above)} is $1$, adding a number can make the prefix either smaller, equal or greater. This can be computed using
+        \begin{align*}
+            (d' \geq i^{\text{th}}\text{ digit}) + (d' > i^{\text{th}}\text{ digit})
+        \end{align*}
+        \item \text{(above)} is $2$, adding any number will make the prefix still greater than the target number $\implies$ \text{(above)} remains $2$.
+    \end{itemize}
+\end{itemize}
+We don't need to worry about leading zeroes in this problem, otherwise we will need another boolean state to keep track if the number has leading zeroes or not. For the base case, initialise the entire dp table by $0$. The final answer is computed by 
+\begin{align*}
+    \boxed{dp[0][k][0] + dp[0][k][1]}
+\end{align*}
+
+\subsubsection*{Code}
+\begin{lstlisting}[language=C++]
+Answer checker(i64 m, i64 k, i64 d) {
+    i64 dp[20][20][3];
+    std::fill(&dp[0][0][0], &dp[0][0][0] + 20*20*3, 0LL);
+
+    int digit = (m / pow10[18]) % 10;
+    for (int D = 0; D <= 9; D++) {
+        dp[18][(d == D)][(D >= digit) + (D > digit)] += 1;
+    }
+
+    for (int i = 18; i > 0; i--) {
+        int digit = (m / pow10[i - 1]) % 10;
+        for (int j = 0; j <= 19; j++) {
+            for (int D = 0; D <= 9; D++) {
+                dp[i - 1][j + (d == D)][(D >= digit) + (D > digit)]
+                    += dp[i][j][1];
+                
+                dp[i - 1][j + (d == D)][0]
+                    += dp[i][j][0];
+
+                dp[i - 1][j + (d == D)][2]
+                    += dp[i][j][2];
+            }
+        }
+    }
+
+    return { dp[0][k][0] + dp[0][k][1] };
+}
+
+void solve() {
+    i64 n, m, k, d;
+    std::cin >> n >> m >> k >> d;
+
+    i64 answer = checker(m, k, d).answer;
+    if (n > 0) answer -= checker(n - 1, k, d).answer;
+
+    std::cout <<  answer << '\n';
+}    
+\end{lstlisting}
+
+Now we will solve a slightly harder variant of this problem. We need to account for leading zeroes for this one.
+\begin{problem}
+    There are two integers $n$, $m$ where $0 \le n \le m \le 10^{18}$. Find the number of integers between $n$ and $m$ inclusive such that contain exactly $k$ digits $d$ where $0 \le d \le 9$ and $k \geq 0$.
+\end{problem}
+
+
+
+\newpage
+\subsection{Geeksforgeeks Digit DP}
+
+\subsection{Introduction to Digit DP by Kartik Arora}
+
+\subsection{Digit DP Codeforces Blog}
+
+\section{Problems}
+\subsection{Codeforces 100886G}
+
+\subsection{SPOJ Digit Sum}
+
+\subsection{Codeforces 628D}
+
+\section{USACO}
+\subsection{USACO 2023 Feb, Gold --- Problem 3, Piling Papers}
+
+\subsection{USACO 2021 Feb, Gold --- Problem 3, Count the Cows}
+
+
+\end{document}
