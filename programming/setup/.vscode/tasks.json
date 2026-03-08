@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "bundle",
+            "type": "shell",
+            "command": "oj-bundle main.cpp > submit.cpp && code -r submit.cpp",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "panel": "shared",
+                "close": true
+            }
+        },
+        {
+            "label": "run-tests",
+            "type": "shell",
+            "command": "g++ -o submit submit.cpp  && ./submit < input.txt > output.txt",
+            "presentation": {
+                "panel": "shared",
+                "close": true
+            }
+        }
+    ]
+}
