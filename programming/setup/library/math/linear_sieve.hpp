@@ -6,7 +6,7 @@ using i64 = long long;
 using i128 = __int128;
 
 const i64 SIEVE_MAX = 1e9;
-const i64 SIEVE_SQRT = 1e7;
+const i64 SIEVE_SQRT = 1e6;
  
 i64 lp[SIEVE_SQRT + 1];
 std::vector<i64> prs;
