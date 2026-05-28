@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-I'm currently a final year student at the Indian Institute of Technology, Roorkee and I'm pursuing a Bachelor of Technology in Computer Science and Engineering. I love mathematics and programming and over the past few years of my programming journey, I've developed a very keen interest for algorithms, software development and low-level systems programming, and cybersecurity. 
+I completed my Bachelor of Technology in Computer Science and Engineering from Indian Institute of Technology, Roorkee. I love mathematics and programming and over the past few years of my programming journey, I've developed a very keen interest for algorithms, software development and low-level systems programming, and cybersecurity. 
 
 ## Socials
 Here are the links to my socials!
@@ -69,6 +69,12 @@ I was hired as a *Software Developer Intern* at Goldman Sachs for Summer 2025.
 During my internship, I built and optimized MongoDB views, developed API endpoints using Spring Boot Web with strong unit and integration test coverage (JUnit 5 and Mockito), and integrated the new APIs into the UI using React.js and Redux Toolkit.
 
 I also participated in a coding competition organized for all interns across the Bangalore and Hyderabad offices at Goldman Sachs, where I won second place and an iPad.
+
+## Mentoring Students in Geometry [Jan, 2026]
+I'm passionate about solving geometry problems and I mentored several students in geometry preparing for the Indian Math Olympiads in early January 2026. I organized weekly teaching sessions that combined problem-solving practice and homework assignments. You can check out all the work <a href="{{ site.baseurl }}/geometry" target="_blank">here</a>.
+
+## New Grad at Stripe [June, 2026]
+I am hired as a New Grad Software Engineer at Stripe, Bangalore.
 
 <!-- ## Math Olympiads [2017 to 2020]
 I was involved with Math Olympiads during my highschool years. Here are some of my achievements from back then!

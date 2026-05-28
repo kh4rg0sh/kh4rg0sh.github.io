@@ -1,4 +1,8 @@
 static/docs/
+static/book/
+static/lecture_notes/
+static/solutions/
+static/work/
 
 .log
 .dropbox
