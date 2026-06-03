@@ -752,7 +752,7 @@
             const res = await fetch(path);
             if (!res.ok) {
               noteContent.innerHTML =
-                "No markdown found for this day. Create one at <code>" + path + "</code>.";
+                "No markdown found for this day.";
               return;
             }
             noteContent.innerHTML = marked.parse(await res.text());

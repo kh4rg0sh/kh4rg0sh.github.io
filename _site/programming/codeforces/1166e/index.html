@@ -135,6 +135,168 @@
   <h1 class="page-title">The LCMs Must be Large</h1>
   <p><a href="/static/solutions/codeforces/1166e.pdf" target="_blank">Codeforces 1166E Solution</a></p>
 
+<h2 id="explanation">Explanation</h2>
+
+<p><strong>Lemma 1.</strong> Consider two sets of natural numbers $A_1$ and $A_2$. If $A_1 \subseteq A_2$, then</p>
+
+\[\operatorname{lcm}(A_1) \le \operatorname{lcm}(A_2).\]
+
+<p><strong>Proof.</strong> This follows immediately by induction on the size of the set.</p>
+
+<p><strong>Lemma 2.</strong> Suppose the sets of shop indices visited by Dora are</p>
+
+\[D_1, D_2, \ldots, D_m.\]
+
+<p>If the condition in the problem statement is true, then for any $i \ne j$ we must have</p>
+
+\[D_i \cap D_j \neq \varnothing.\]
+
+<p><strong>Proof.</strong></p>
+
+<p>Let</p>
+
+\[S_1, S_2, \ldots, S_m\]
+
+<p>denote the sets of shop indices visited by Swiper.</p>
+
+<p>For each day $i$, the sets $D_i$ and $S_i$ form disjoint partitions of the set of shops.</p>
+
+<p>Suppose for contradiction that</p>
+
+\[D_i \cap D_j = \varnothing.\]
+
+<p>Then</p>
+
+\[D_j \subseteq S_i.\]
+
+<p>Using Lemma 1,</p>
+
+\[\operatorname{lcm}(S_j)
+&lt;
+\operatorname{lcm}(D_j)
+\le
+\operatorname{lcm}(S_i)
+&lt;
+\operatorname{lcm}(D_i).\]
+
+<p>Since</p>
+
+\[D_j \subseteq S_i,\]
+
+<p>we also have</p>
+
+\[D_i \subseteq S_j,\]
+
+<p>which implies</p>
+
+\[\operatorname{lcm}(D_i)
+\le
+\operatorname{lcm}(S_j).\]
+
+<p>This is a contradiction. Therefore,</p>
+
+\[D_i \cap D_j \neq \varnothing\]
+
+<p>for every pair of distinct days.</p>
+
+<h3 id="back-to-the-problem">Back to the Problem</h3>
+
+<p>We now show that the above condition is also sufficient.</p>
+
+<p>Choose $m$ distinct primes</p>
+
+\[p_1, p_2, \ldots, p_m.\]
+
+<p>For each store $i$, define</p>
+
+\[a_i = \prod_{j \in D} p_j,\]
+
+<p>where $D$ is the set of days on which Dora visits the $i$-th store.</p>
+
+<p>Now consider day $i$. Let $D_i$ be the set of stores visited by Dora and $S_i$ the set visited by Swiper.</p>
+
+<p>The prime $p_i$ does not divide</p>
+
+\[\operatorname{lcm}(S_i),\]
+
+<p>because Dora does not visit any of those stores on day $i$.</p>
+
+<p>However, for every $j$, the condition</p>
+
+\[D_i \cap D_j \neq \varnothing\]
+
+<p>guarantees that some store visited on day $i$ also contains the prime factor $p_j$. Therefore,</p>
+
+\[p_j \mid \operatorname{lcm}(D_i)\]
+
+<p>for all $j$.</p>
+
+<p>Hence,</p>
+
+\[\operatorname{lcm}(D_i)
+&gt;
+\operatorname{lcm}(S_i),\]
+
+<p>which proves that the pairwise-intersection condition is sufficient.</p>
+
+<p>Therefore, the problem reduces to checking whether every pair of Dora’s day-sets has a non-empty intersection.</p>
+
+<h2 id="code">Code</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ll</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">m</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ll</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ll</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ll</span> <span class="n">y</span><span class="p">;</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">y</span><span class="p">;</span>
+
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">ans</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ll</span><span class="o">&gt;</span> <span class="n">val</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">u</span> <span class="o">:</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">val</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">u</span> <span class="o">:</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">val</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="kt">bool</span> <span class="n">check</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">check</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">check</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ans</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"possible</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"impossible</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 </div>
 
     </div>

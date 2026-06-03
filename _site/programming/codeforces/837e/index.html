@@ -135,6 +135,92 @@
   <h1 class="page-title">Vasya's Function</h1>
   <p><a href="/static/solutions/codeforces/837e.pdf" target="_blank">Codeforces 837E Solution</a></p>
 
+<h2 id="explanation">Explanation</h2>
+
+<p><strong>Lemma.</strong> For any two natural numbers $a$ and $b$,</p>
+
+\[\gcd(a,b) \mid \left(b-k\gcd(a,b)\right)\]
+
+<p>for every $k \in \mathbb{Z}^+$</p>
+
+<p>However, it is not necessarily true that</p>
+
+\[\gcd\left(a,\, b-k\gcd(a,b)\right)=\gcd(a,b)\]
+
+<p>for all $k$.</p>
+
+<p>Therefore, we need to determine when the GCD gains an additional factor. Equivalently, we seek the minimum $k$ such that</p>
+
+\[\gcd\left(
+\frac{a}{\gcd(a,b)},
+\frac{b}{\gcd(a,b)}-k
+\right) &gt; 1\]
+
+<p>Observe that</p>
+
+\[\gcd\left(
+\frac{a}{\gcd(a,b)},
+\frac{b}{\gcd(a,b)}-k
+\right)
+\mid
+\frac{a}{\gcd(a,b)}\]
+
+<p>Hence, any extra factor must be a divisor of</p>
+
+\[\frac{a}{\gcd(a,b)}\]
+
+<p>We can therefore iterate over all divisors of</p>
+
+\[\frac{a}{\gcd(a,b)}\]
+
+<p>and determine the smallest valid value of $k$.</p>
+
+<p>Enumerating divisors takes $\mathcal{O}(\sqrt{a})$ time, and the process repeats at most $\mathcal{O}(\log a)$ times because the value of $a$ decreases whenever a new factor is extracted.</p>
+
+<p>Therefore, the overall complexity is</p>
+
+\[\mathcal{O}(\sqrt{a}\log a).\]
+
+<h2 id="code">Code</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ll</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">;</span>
+
+    <span class="n">ll</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ll</span> <span class="n">d</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+
+        <span class="n">a</span> <span class="o">/=</span> <span class="n">d</span><span class="p">;</span>
+        <span class="n">b</span> <span class="o">/=</span> <span class="n">d</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">b</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">ll</span> <span class="n">best</span> <span class="o">=</span> <span class="n">LLONG_MAX</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">best</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">b</span> <span class="o">%</span> <span class="n">i</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">best</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">b</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">i</span><span class="p">));</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">ans</span> <span class="o">+=</span> <span class="n">best</span><span class="p">;</span>
+        <span class="n">b</span> <span class="o">-=</span> <span class="n">best</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 </div>
 

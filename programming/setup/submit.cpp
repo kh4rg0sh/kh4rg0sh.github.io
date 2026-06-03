@@ -1219,37 +1219,11 @@ struct LCA {
 };
 
 void solve() {
-    i64 n, k; cin >> n >> k;
-    vector<i64> a(n + 1);
-    for (int i = 1; i <= n; i++) cin >> a[i];
-    sort(a.begin() + 1, a.end());
+    i64 n; cin >> n;
+    string s; cin >> s;
 
-    const i64 N = 1e5 + 1;
-    z1 fact[N + 1], invfact[N + 1];
-    fact[0] = 1; invfact[0] = 1;
-    for (int i = 1; i <= N; i++) {
-        fact[i] = fact[i - 1] * i;
-    }
-
-    invfact[N] = 1 / fact[N];
-    for (int i = N - 1; i > 0; i--) {
-        invfact[i] = invfact[i + 1] * (i + 1);
-    }
-
-    auto coeff = [&] (i64 x, i64 y) -> z1 {
-        if (x < y || y < 0 || x < 0) return 0;
-        z1 ans = fact[x] * invfact[y] * invfact[x - y];
-        return ans;    
-    };
-
-    z1 ans = 0;
-    for (int i = k; i <= n; i++) {
-        ans += a[i] * coeff(i - 1, k - 1);
-    }
-    for (int i = 1; i <= n; i++) {
-        ans -= a[i] * coeff(n - i, k - 1);
-    }
-    cout << ans << '\n';
+    bool found = false;
+    
 }
 
 int main() {
