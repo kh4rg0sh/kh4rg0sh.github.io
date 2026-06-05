@@ -133,7 +133,63 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">Chimpanzini Bananini</h1>
-  
+  <p>the idea is to maintain both forward order and reverse order in a deque and maintain the required value and total sum under operation 1 and 3. when operation 2 occurs, we just flip reporting value from forward order to reverse order and vice versa.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i64</span> <span class="n">q</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">q</span><span class="p">;</span>
+    <span class="n">deque</span><span class="o">&lt;</span><span class="n">i64</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">,</span> <span class="n">rev</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">turn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">i64</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">q</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">i64</span> <span class="n">s</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">s</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">turn</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">i64</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">rev</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+                <span class="n">rev</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+                <span class="n">rev</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
+                <span class="n">rval</span> <span class="o">+=</span> <span class="n">sum</span> <span class="o">-</span> <span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">*</span> <span class="n">elem</span><span class="p">;</span> 
+
+                <span class="n">elem</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+                <span class="n">arr</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+                <span class="n">arr</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
+                <span class="n">val</span> <span class="o">-=</span> <span class="n">sum</span><span class="p">;</span>
+                <span class="n">val</span> <span class="o">+=</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">i64</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+                <span class="n">arr</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+                <span class="n">arr</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
+                <span class="n">val</span> <span class="o">+=</span> <span class="n">sum</span> <span class="o">-</span> <span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">*</span> <span class="n">elem</span><span class="p">;</span>
+
+                <span class="n">elem</span> <span class="o">=</span> <span class="n">rev</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+                <span class="n">rev</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+                <span class="n">rev</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
+                <span class="n">rval</span> <span class="o">-=</span> <span class="n">sum</span><span class="p">;</span>
+                <span class="n">rval</span> <span class="o">+=</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">turn</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">turn</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">i64</span> <span class="n">k</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">k</span><span class="p">;</span>
+            <span class="n">sum</span> <span class="o">+=</span> <span class="n">k</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">turn</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">rev</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+                <span class="n">arr</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+                <span class="n">rval</span> <span class="o">+=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+                <span class="n">val</span> <span class="o">+=</span> <span class="n">sum</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">arr</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+                <span class="n">rev</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+                <span class="n">val</span> <span class="o">+=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+                <span class="n">rval</span> <span class="o">+=</span> <span class="n">sum</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">turn</span><span class="p">)</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rval</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+        <span class="k">else</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">val</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 
 </div>
 

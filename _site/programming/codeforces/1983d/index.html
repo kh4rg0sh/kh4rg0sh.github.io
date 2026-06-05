@@ -133,7 +133,108 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">Swap Dilemma</h1>
-  
+  <h2 id="explanation">Explanation</h2>
+
+<p><strong>Lemma 1.</strong> If it is possible to transform both arrays into the same array, then it is possible to transform both arrays into their sorted order.</p>
+
+<p><strong>Proof.</strong></p>
+
+<p>The allowed operation only swaps elements within an array, so it preserves the multiset of values.</p>
+
+<p>Therefore, if both arrays can be transformed into some common array, they must contain exactly the same multiset of elements. Consequently, both arrays can be transformed into the unique sorted arrangement of that multiset.</p>
+
+<p>Hence it is sufficient to determine whether both arrays can be transformed into their sorted order.</p>
+
+<hr />
+
+<p><strong>Lemma 2.</strong> Every swap changes the parity of the inversion count.</p>
+
+<p><strong>Proof.</strong></p>
+
+<p>A swap can be decomposed into an odd number of adjacent swaps. Since each adjacent swap changes the inversion count by exactly one, every swap flips the parity of the inversion count.</p>
+
+<p>Therefore, the parity of the number of swaps required to reach the sorted array is exactly the parity of the inversion count.</p>
+
+<hr />
+
+<p><strong>Lemma 3.</strong> If the arrays contain the same multiset of values and their inversion parities are equal, then both arrays can be transformed into their sorted order.</p>
+
+<p><strong>Proof.</strong></p>
+
+<p>Let</p>
+
+\[p_A\]
+
+<p>denote the parity of the inversion count of array $A$, and similarly define</p>
+
+\[p_B.\]
+
+<p>The parity of the number of swaps needed to sort an array is equal to its inversion parity.</p>
+
+<p>If</p>
+
+\[p_A = p_B,\]
+
+<p>then both arrays require swap sequences of the same parity to reach the sorted array. Therefore, both arrays can be transformed into the same sorted arrangement.</p>
+
+<p>Conversely, if the parities differ, then one array requires an even number of swaps while the other requires an odd number, making it impossible for both transformation sequences to be compatible.</p>
+
+<p>Thus equality of inversion parity is both necessary and sufficient.</p>
+
+<h3 id="algorithm">Algorithm</h3>
+
+<ol>
+  <li>Sort both arrays.</li>
+  <li>If the sorted arrays are different, output <code class="language-plaintext highlighter-rouge">NO</code>.</li>
+  <li>Otherwise compute the inversion parity of both arrays.</li>
+  <li>If the parities are equal, output <code class="language-plaintext highlighter-rouge">YES</code>; otherwise output <code class="language-plaintext highlighter-rouge">NO</code>.</li>
+</ol>
+
+<p>The inversion count can be computed in $\mathcal{O}(n \log n)$ using an order-statistics tree.</p>
+
+<h2 id="code">Code</h2>
+
+<p>```cpp
+void solve() {
+    i64 n;
+    cin » n;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector&lt;i64&gt; a(n + 1), b(n + 1);
+
+for (int i = 1; i &lt;= n; i++) cin &gt;&gt; a[i];
+for (int i = 1; i &lt;= n; i++) cin &gt;&gt; b[i];
+
+vector&lt;i64&gt; A = a, B = b;
+
+sort(A.begin() + 1, A.end());
+sort(B.begin() + 1, B.end());
+
+if (A != B) {
+    cout &lt;&lt; "NO\n";
+} else {
+    i64 p1 = 0, p2 = 0;
+
+    ordered_set_64 tree;
+
+    for (int i = 1; i &lt;= n; i++) {
+        p1 += tree.size() - tree.order_of_key(a[i] + 1);
+        tree.insert(a[i]);
+    }
+
+    tree.clear();
+
+    for (int i = 1; i &lt;= n; i++) {
+        p2 += tree.size() - tree.order_of_key(b[i] + 1);
+        tree.insert(b[i]);
+    }
+
+    if ((p1 % 2) == (p2 % 2)) {
+        cout &lt;&lt; "YES\n";
+    } else {
+        cout &lt;&lt; "NO\n";
+    }
+} }
+</code></pre></div></div>
 
 </div>
 

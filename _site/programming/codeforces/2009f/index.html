@@ -133,7 +133,63 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">Firefly's Queries</h1>
-  
+  <p>lets divide the array into n arrays of cyclic shifts. if we can tell that the left &amp; right boundary starts from what element and what subarray, we can answer the sum of subarray by using the precomputed prefix sums.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i64</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">q</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">i64</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">pref</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">pref</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pref</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">q</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">i64</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">l</span> <span class="o">&gt;&gt;</span> <span class="n">r</span><span class="p">;</span>
+        <span class="c1">// l = cn + d</span>
+        <span class="n">i64</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span><span class="p">;</span> <span class="n">d</span><span class="o">++</span><span class="p">;</span>
+        <span class="c1">// r = en + f;</span>
+        <span class="n">i64</span> <span class="n">e</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span><span class="p">;</span> <span class="n">f</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">i64</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">pref</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="mi">0LL</span><span class="p">,</span> <span class="n">e</span> <span class="o">-</span> <span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">e</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">i64</span> <span class="n">left</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span> 
+            <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">)</span> <span class="n">left</span> <span class="o">-=</span> <span class="n">n</span><span class="p">;</span>
+            <span class="n">i64</span> <span class="n">right</span> <span class="o">=</span> <span class="n">f</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">)</span> <span class="n">right</span> <span class="o">-=</span> <span class="n">n</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">pref</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">pref</span><span class="p">[</span><span class="n">left</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">pref</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">pref</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">pref</span><span class="p">[</span><span class="n">left</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]);</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">-=</span> <span class="n">pref</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">pref</span><span class="p">[</span><span class="n">right</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">-=</span> <span class="n">pref</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">pref</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">pref</span><span class="p">[</span><span class="n">right</span><span class="p">]);</span>
+            <span class="p">}</span>
+
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">i64</span> <span class="n">left</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">)</span> <span class="n">left</span> <span class="o">-=</span> <span class="n">n</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">pref</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">pref</span><span class="p">[</span><span class="n">left</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">pref</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">pref</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">pref</span><span class="p">[</span><span class="n">left</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]);</span>
+            <span class="p">}</span>
+
+            <span class="n">i64</span> <span class="n">right</span> <span class="o">=</span> <span class="n">f</span> <span class="o">+</span> <span class="n">e</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">)</span> <span class="n">right</span> <span class="o">-=</span> <span class="n">n</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&lt;=</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pref</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">pref</span><span class="p">[</span><span class="n">e</span><span class="p">])</span> <span class="o">+</span> <span class="n">pref</span><span class="p">[</span><span class="n">right</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">pref</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">-</span> <span class="n">pref</span><span class="p">[</span><span class="n">e</span><span class="p">];</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">sum</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 
 </div>
 

@@ -133,7 +133,263 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">BattleCows</h1>
-  
+  <h2 id="explanation">Explanation</h2>
+
+<p>Construct a complete binary tree whose leaves correspond to the cows. Every internal node represents a battle between its two children.</p>
+
+<p>For a node representing an interval $[l,r]$, let</p>
+
+\[m = \frac{l+r}{2}.\]
+
+<p>The left child represents $[l,m]$ and the right child represents $[m+1,r]$.</p>
+
+<p>Define</p>
+
+\[\text{winner}(v)=
+\begin{cases}
+0 &amp; \text{if the left child wins},\\
+1 &amp; \text{if the right child wins}.
+\end{cases}\]
+
+<p>This naturally induces a binary string on the path from the root to any leaf.</p>
+
+<hr />
+
+<h3 id="position-encoding">Position Encoding</h3>
+
+<p><strong>Lemma 1.</strong> Let a node be at depth $i$ (root has depth $0$). If the winner of that node is the child containing a given cow, then the cow moves above all cows contained in the opposite subtree.</p>
+
+<p>The number of cows in the opposite subtree equals</p>
+
+\[2^{n-i-1}.\]
+
+<p>Therefore choosing the winning child at depth $i$ contributes an offset of</p>
+
+\[2^{n-i-1}\]
+
+<p>to the final position of the cow.</p>
+
+<p><strong>Proof.</strong></p>
+
+<p>Every internal node corresponds to a tournament bracket. If the cow belongs to the winning half of a node, then it is ranked above every cow in the losing half.</p>
+
+<p>Since the subtree size at depth $i$ equals</p>
+
+\[2^{n-i},\]
+
+<p>each child contains</p>
+
+\[2^{n-i-1}\]
+
+<p>cows.</p>
+
+<p>Hence the cow is placed above exactly</p>
+
+\[2^{n-i-1}\]
+
+<p>additional cows whenever its side wins at that level.
+$\square$</p>
+
+<hr />
+
+<p><strong>Lemma 2.</strong> Let $b_i \in {0,1}$ denote whether the cow belongs to the winning child at depth $i$. Then the number of cows ranked below it is</p>
+
+\[\sum_i b_i 2^{n-i-1}.\]
+
+<p>Consequently its $1$-indexed position equals</p>
+
+\[1 + \sum_i b_i 2^{n-i-1}.\]
+
+<p><strong>Proof.</strong></p>
+
+<p>By Lemma 1, each level contributes independently to the number of cows below the current cow.</p>
+
+<p>Summing all contributions over the path from the leaf to the root gives the total number of cows ranked below it.</p>
+
+<p>Adding one converts this quantity into a $1$-indexed position.
+$\square$</p>
+
+<p>Therefore the position of any cow can be computed by walking from its leaf to the root and accumulating the corresponding offsets.</p>
+
+<p>Since the height of the tree is $n$, this requires $\mathcal{O}(n)$ time.</p>
+
+<hr />
+
+<h3 id="processing-queries">Processing Queries</h3>
+
+<p>Suppose cow $b$ changes value from</p>
+
+\[a_b\]
+
+<p>to</p>
+
+\[c.\]
+
+<p>Observe that only battles on the path from leaf $b$ to the root can change.</p>
+
+<p>Every other node depends only on segments whose XOR values remain unchanged.</p>
+
+<hr />
+
+<p><strong>Lemma 3.</strong> After modifying cow $b$, only ancestors of leaf $b$ can change their winner.</p>
+
+<p><strong>Proof.</strong></p>
+
+<p>The value of a battle depends only on the XOR of the two halves represented by that node.</p>
+
+<p>Changing $a_b$ affects exactly those segments containing index $b$.</p>
+
+<p>These segments are precisely the ancestors of leaf $b$.</p>
+
+<p>Hence all other nodes keep the same winner.
+$\square$</p>
+
+<p>For every ancestor we recompute the winner after applying the XOR difference</p>
+
+\[a_b \oplus c.\]
+
+<p>If the new winner coincides with the side containing cow $b$, then the cow gains the offset associated with that node.</p>
+
+<p>Otherwise it gains nothing.</p>
+
+<p>Summing these contributions over all ancestors yields the number of cows that will be ranked above the modified cow.</p>
+
+<p>Since the root-to-leaf path contains exactly $n$ nodes, each query requires only $\mathcal{O}(n)$ time.</p>
+
+<hr />
+
+<h3 id="complexity">Complexity</h3>
+
+<p>Building the tournament tree takes</p>
+
+\[\mathcal{O}(2^n).\]
+
+<p>Each query traverses a single root-to-leaf path and performs constant work per level, giving</p>
+
+\[\mathcal{O}(n)\]
+
+<p>time per query.</p>
+
+<p>Therefore the total complexity is</p>
+
+\[\mathcal{O}(2^n + qn).\]
+
+<h2 id="code">Code</h2>
+
+<p>```cpp
+void solve() {
+    i64 n, q; cin » n » q;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector&lt;i64&gt; a((1LL &lt;&lt; n) + 1);
+for (int i = 1; i &lt;= (1LL &lt;&lt; n); i++) {
+    cin &gt;&gt; a[i];
+}
+
+vector&lt;i64&gt; pref((1LL &lt;&lt; n) + 1);
+for (int i = 1; i &lt;= (1LL &lt;&lt; n); i++) {
+    pref[i] = pref[i - 1] ^ a[i];
+}
+
+struct BinaryNode {
+    i64 l, r;
+    i64 better, offset;
+    BinaryNode *left, *right, *parent;
+};
+
+BinaryNode root = {
+    .l = 1,
+    .r = (1LL &lt;&lt; n),
+    .offset = (1LL &lt;&lt; n) / 2
+};
+
+auto battle = [&amp;] (i64 l, i64 mid, i64 r) -&gt; i64 {
+    i64 first = pref[mid] ^ pref[l - 1];
+    i64 second = pref[r] ^ pref[mid];
+
+    if (first &gt;= second) return 0;
+    return 1;
+};
+
+map&lt;i64, BinaryNode*&gt; mp;
+
+auto dfs = [&amp;] (auto&amp;&amp; self, BinaryNode&amp; cur) -&gt; void {
+    i64 l = cur.l;
+    i64 r = cur.r;
+
+    if (l == r) {
+        mp[l] = &amp;cur;
+        return;
+    }
+
+    i64 len = (r - l + 1) / 2;
+    i64 mid = l + len - 1;
+
+    BinaryNode* left = new BinaryNode;
+    BinaryNode* right = new BinaryNode;
+
+    left-&gt;l = l;
+    left-&gt;r = mid;
+
+    right-&gt;l = mid + 1;
+    right-&gt;r = r;
+
+    cur.better = battle(l, mid, r);
+
+    cur.left = left;
+    cur.right = right;
+
+    left-&gt;parent = &amp;cur;
+    right-&gt;parent = &amp;cur;
+
+    left-&gt;offset = cur.offset / 2;
+    right-&gt;offset = left-&gt;offset;
+
+    self(self, *left);
+    self(self, *right);
+};
+
+dfs(dfs, root);
+
+while (q--) {
+    i64 b, c;
+    cin &gt;&gt; b &gt;&gt; c;
+
+    i64 offset = 0;
+    BinaryNode* cur = mp[b];
+
+    while (cur-&gt;parent != nullptr) {
+        BinaryNode* parent = cur-&gt;parent;
+
+        i64 side = (parent-&gt;right == cur);
+
+        i64 l = parent-&gt;l;
+        i64 r = parent-&gt;r;
+
+        i64 len = (r - l + 1) / 2;
+        i64 mid = l + len - 1;
+
+        i64 first = pref[mid] ^ pref[l - 1];
+        i64 second = pref[r] ^ pref[mid];
+
+        if (side) {
+            second ^= (a[b] ^ c);
+        } else {
+            first ^= (a[b] ^ c);
+        }
+
+        i64 new_val = (first &lt; second);
+
+        if (new_val != side) {
+            offset += parent-&gt;offset;
+        }
+
+        cur = parent;
+    }
+
+    cout &lt;&lt; offset &lt;&lt; '\n';
+} }
+</code></pre></div></div>
+
 
 </div>
 

@@ -188,7 +188,7 @@ document.addEventListener("click", e => {
 <p>and hence the problem.</p>
 
 <div class="gist-collapsed">
-<noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v1.py"> </script>
+true<script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v1.py"> </script>
 </div>
 
 <h2 id="mini_rsa_v2-77-solves">mini_RSA_v2 [77 solves]</h2>
@@ -196,7 +196,7 @@ document.addEventListener("click", e => {
 <p>I kinda overlooked the small size of the public exponent <code class="language-plaintext highlighter-rouge">e</code> in the RSA encryption that lead to the unintended small exponent attack on the problem. since that wasn’t the intended solve, we rolled out the ver2 of the problem with a larger public exponent (<code class="language-plaintext highlighter-rouge">e = 65537</code>). Now the intended way to solve this calculate the euler totient function of the public modulus using the extra leaked info (<code class="language-plaintext highlighter-rouge">s + t = p + q</code>).</p>
 
 <div class="gist-collapsed">
-<noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v2.py"> </script>
+true<script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v2.py"> </script>
 </div>
 
 <h2 id="prsa-70-solves">PRSA [70 solves]</h2>
@@ -214,7 +214,7 @@ document.addEventListener("click", e => {
 <p>There was an unintended solve, where you brute force over the degree of the polynomials to reverse engineer the original polynomial degree (since the degrees were small). I had realised that there could be this unintended solve when I wrote this challenge, but I let it slip since I wanted this to be more about reading and writing sage codes.</p>
 
 <div class="gist-collapsed">
-<noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=prsa.py"> </script>
+true<script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=prsa.py"> </script>
 </div>
 
 <h2 id="rebellious-16-solves">Rebellious [16 solves]</h2>
@@ -234,7 +234,7 @@ document.addEventListener("click", e => {
 <p>Now transform the problem to this prime field and solve the DLOG. I purposely chose <code class="language-plaintext highlighter-rouge">p</code> to be an unsafe prime so that people choose this approach.</p>
 
 <div class="gist-collapsed">
-<noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=rebellious.py"> </script>
+true<script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=rebellious.py"> </script>
 </div>
 
 <h2 id="secure-matrix-transmissions-20-solves">Secure Matrix Transmissions [20 solves]</h2>
@@ -242,11 +242,11 @@ document.addEventListener("click", e => {
 <p>I was motivated by the result that the diagonal matrix in the matrix diagonalization contains the eigenvalues of the matrix and thus this challenge. I chose a small dimension <code class="language-plaintext highlighter-rouge">N = 6</code> so that this becomes the intended approach as even a naive brute would require \((N! \times N!)\) operations and thats not too much.</p>
 
 <div class="gist-collapsed">
-<noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1.py"> </script>
+true<script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1.py"> </script>
 </div>
 <p><br /></p>
 <div class="gist-collapsed">
-<noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1_intercepted_text.txt"> </script>
+true<script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1_intercepted_text.txt"> </script>
 </div>
 
 <h2 id="secure-matrix-transmissions-v2-1-solve">Secure Matrix Transmissions v2 [1 solve]</h2>
@@ -256,11 +256,11 @@ document.addEventListener("click", e => {
 <p>To break this system, one may implement the <code class="language-plaintext highlighter-rouge">Linear Algebra</code> attack of solving simultaneous systems of equations as described in the paper. Otherwise, as pointed out by <code class="language-plaintext highlighter-rouge">Neobeo</code> <a href="https://discord.com/channels/916568950375059476/916693278701781103/1187542230345470052">here</a> we may lift the group from \(\mathbb{F}_{p}\) to \(\mathbb{F}_{p^{10}}\) to diagonalise and solve for the shared secret as all the eigenvalues of the given matrices exist in the latter.</p>
 
 <div class="gist-collapsed">
-<noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2.py"> </script>
+true<script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2.py"> </script>
 </div>
 <p><br /></p>
 <div class="gist-collapsed">
-<noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2_intercepted_text.txt"> </script>
+true<script src="https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2_intercepted_text.txt"> </script>
 </div>
 
 </div>

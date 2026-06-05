@@ -133,7 +133,98 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">khba Loves to Sleep!</h1>
-  
+  <h2 id="explanation">Explanation</h2>
+<p>Let $d(p)$ denote the distance from position $p$ to its nearest shop.</p>
+
+<p>We first sort all shop positions. Consider any interval between two consecutive shops $[L, R]$. For every position inside this interval,</p>
+
+\[d(p) = \min(p - L, R - p).\]
+
+<p>Therefore, the positions with maximum value of $d(p)$ are precisely the middle positions of the interval. If the interval length is even, there is a unique middle position. Otherwise, there are two middle positions and both attain the same optimal value.</p>
+
+<p>For every interval, we insert its middle position(s) into a priority queue. For a position $p$, we also store the endpoint of the interval that is nearest to it. Let this endpoint be denoted by $near$.</p>
+
+<p>Observe that once a middle position is chosen, the remaining positions of that interval appear in decreasing order of distance as we move away from the center. More precisely, if $p$ is generated from endpoint $near$, then the next best ungenerated position on the same side is:</p>
+
+<ul>
+  <li>$p - 1$ if $p &gt; near$,</li>
+  <li>$p + 1$ if $p &lt; near$.</li>
+</ul>
+
+<p>Its distance decreases by exactly one:</p>
+
+\[d(p \pm 1) = d(p) - 1.\]
+
+<p>Hence every interval generates a sequence of positions sorted by decreasing distance to the nearest shop:</p>
+
+\[m,; m-1,; m+1,; m-2,; m+2,;\ldots\]
+
+<p>where $m$ denotes a middle position of the interval. One of the directions may be absent near the boundaries.</p>
+
+<p>The priority queue always stores the largest currently available distance from every interval. Whenever we extract a position, we immediately insert the next position from the same sequence. Thus, each interval behaves like a sorted list of candidate positions ordered by decreasing value of $d(p)$.</p>
+
+<p>The priority queue therefore performs a $k$-way merge of these sorted lists. Consequently, positions are extracted globally in non-increasing order of distance to the nearest shop.</p>
+
+<p>Therefore, after selecting the first $k$ distinct extracted positions, we obtain exactly the $k$ positions having the largest possible values of $d(p)$. This maximizes the distance from every chosen pole to its nearest shop, proving the correctness of the greedy algorithm.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i64</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">x</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">k</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">i64</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+
+    <span class="k">using</span> <span class="n">T</span> <span class="o">=</span> <span class="n">array</span><span class="o">&lt;</span><span class="n">i64</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">priority_queue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">pq</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]});</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">i64</span> <span class="n">len</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">i64</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">abs</span><span class="p">(</span><span class="n">mid</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">mid</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]});</span>
+                <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">abs</span><span class="p">(</span><span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]});</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">i64</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">abs</span><span class="p">(</span><span class="n">mid</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">mid</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]});</span>
+                <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">abs</span><span class="p">(</span><span class="n">mid</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">mid</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]});</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">n</span><span class="p">]),</span> <span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">n</span><span class="p">]});</span>
+
+    <span class="n">i64</span> <span class="n">ans</span> <span class="o">=</span> <span class="mf">1e18</span><span class="p">;</span>
+    <span class="n">map</span><span class="o">&lt;</span><span class="n">i64</span><span class="p">,</span> <span class="kt">bool</span><span class="o">&gt;</span> <span class="n">vis</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">pq</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="p">[</span><span class="n">val</span><span class="p">,</span> <span class="n">tel</span><span class="p">,</span> <span class="n">near</span><span class="p">]</span> <span class="o">=</span> <span class="n">pq</span><span class="p">.</span><span class="n">top</span><span class="p">();</span> <span class="n">pq</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vis</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">tel</span><span class="p">))</span> <span class="n">k</span><span class="o">--</span><span class="p">;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
+        <span class="n">vis</span><span class="p">[</span><span class="n">tel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">tel</span> <span class="o">&gt;</span> <span class="n">near</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">tel</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">near</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">abs</span><span class="p">(</span><span class="n">tel</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">near</span><span class="p">),</span> <span class="n">tel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">near</span><span class="p">});</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tel</span> <span class="o">&lt;</span> <span class="n">near</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">near</span> <span class="o">-</span> <span class="n">tel</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">abs</span><span class="p">(</span><span class="n">near</span> <span class="o">-</span> <span class="n">tel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">tel</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">near</span><span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="sc">' '</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="p">[</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span><span class="o">:</span> <span class="n">vis</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">u</span> <span class="o">&lt;&lt;</span> <span class="sc">' '</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 
 </div>
 

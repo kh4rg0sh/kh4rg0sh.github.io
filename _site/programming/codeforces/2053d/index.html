@@ -133,7 +133,217 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">Refined Product Optimality</h1>
-  
+  <h2 id="explanation">Explanation</h2>
+
+<p>Let</p>
+
+\[P = \prod_{i=1}^{n} \min(a_i,b_i).\]
+
+<p>After every update, we are allowed to rearrange both arrays arbitrarily before computing the product. Therefore, the first question is how to maximize $P$ for fixed arrays.</p>
+
+<p><strong>Lemma 1.</strong> The maximum value of</p>
+
+\[\prod_{i=1}^{n}\min(a_i,b_i)\]
+
+<p>is obtained by sorting both arrays in non-decreasing order and pairing equal ranks together.</p>
+
+<p><strong>Proof.</strong></p>
+
+<p>Since multiplication is commutative, we may sort array $a$ without loss of generality.</p>
+
+<p>Suppose we want to choose which element of $b$ is paired with the largest element $a_n$. Let $b_i$ be the largest unused element of $b$, and suppose an optimal solution instead pairs $a_n$ with some smaller element $b_j$.</p>
+
+<p>If $b_i \le a_n$, then</p>
+
+\[\min(a_n,b_i)=b_i \ge b_j=\min(a_n,b_j).\]
+
+<p>If $b_i &gt; a_n$, then</p>
+
+\[\min(a_n,b_i)=a_n \ge \min(a_n,b_j).\]
+
+<p>Hence replacing $b_j$ by $b_i$ never decreases the contribution of the last position. By an exchange argument, the largest remaining element of $b$ should always be paired with the largest remaining element of $a$.</p>
+
+<p>Repeating this argument inductively proves that sorting both arrays and pairing equal ranks is optimal.</p>
+
+<p>Therefore</p>
+
+\[P
+=
+
+\prod_{i=1}^{n}
+\min(A_i,B_i),\]
+
+<p>where $A$ and $B$ denote the sorted versions of $a$ and $b$.</p>
+
+<p>Computing this from scratch requires $\mathcal{O}(n \log n)$ time.</p>
+
+<p>However, doing this after every update leads to an $\mathcal{O}(qn\log n)$ solution, which is too slow.</p>
+
+<h3 id="maintaining-the-product">Maintaining the Product</h3>
+
+<p>Suppose we have two operations:</p>
+
+<ol>
+  <li>Given an original position, determine its current value in the sorted array.</li>
+  <li>Given a value in one sorted array, determine the largest value paired with it in the other sorted array.</li>
+</ol>
+
+<p>Let these operations be denoted by $F$ and $G$ respectively.</p>
+
+<p>Consider an update that increments some value from $v$ to $v+1$ in array $a$.</p>
+
+<p>Let</p>
+
+\[B = G(v)\]
+
+<p>be the value currently paired with it.</p>
+
+<p>Only one factor of the product changes:</p>
+
+\[\min(v,B)
+\longrightarrow
+\min(v+1,B).\]
+
+<p>Hence</p>
+
+\[P
+=
+
+P
+\cdot
+\frac{\min(v+1,B)}
+{\min(v,B)}.\]
+
+<p>So if we can maintain the sorted arrays dynamically, each update can be processed in constant time apart from maintaining the ordering information.</p>
+
+<h3 id="data-structure">Data Structure</h3>
+
+<p>Store:</p>
+
+<ul>
+  <li>the original arrays <code class="language-plaintext highlighter-rouge">a</code> and <code class="language-plaintext highlighter-rouge">b</code>,</li>
+  <li>sorted copies <code class="language-plaintext highlighter-rouge">A</code> and <code class="language-plaintext highlighter-rouge">B</code>,</li>
+  <li>for every value, the first and last position where it occurs in the sorted arrays.</li>
+</ul>
+
+<p>Specifically,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A1[value] = first occurrence in A
+A2[value] = last occurrence in A
+
+B1[value] = first occurrence in B
+B2[value] = last occurrence in B
+</code></pre></div></div>
+
+<p>When a value <code class="language-plaintext highlighter-rouge">v</code> is incremented:</p>
+
+<ul>
+  <li>move the last occurrence of <code class="language-plaintext highlighter-rouge">v</code> into the block of value <code class="language-plaintext highlighter-rouge">v + 1</code>,</li>
+  <li>update the first/last occurrence maps,</li>
+  <li>modify exactly one factor of the product.</li>
+</ul>
+
+<p>All updates therefore take $\mathcal{O}(\log n)$ due to map operations.</p>
+
+<h2 id="code">Code</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i64</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">q</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">i64</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">b</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">i64</span><span class="o">&gt;</span> <span class="n">A</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">i64</span><span class="o">&gt;</span> <span class="n">B</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+
+    <span class="n">sort</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">A</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">B</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">B</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+
+    <span class="n">z2</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ans</span> <span class="o">*=</span> <span class="n">min</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="sc">' '</span><span class="p">;</span>
+
+    <span class="n">map</span><span class="o">&lt;</span><span class="n">i64</span><span class="p">,</span> <span class="n">i64</span><span class="o">&gt;</span> <span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">,</span> <span class="n">B1</span><span class="p">,</span> <span class="n">B2</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">A1</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="n">A2</span><span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">A1</span><span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+            <span class="n">A2</span><span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">B1</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="n">B2</span><span class="p">[</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">B1</span><span class="p">[</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+            <span class="n">B2</span><span class="p">[</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">q</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">i64</span> <span class="n">o</span><span class="p">,</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">o</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">o</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">i64</span> <span class="n">val</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+
+            <span class="n">i64</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">A2</span><span class="p">[</span><span class="n">val</span><span class="p">]];</span>
+
+            <span class="n">ans</span> <span class="o">*=</span> <span class="n">min</span><span class="p">(</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">largest</span><span class="p">);</span>
+            <span class="n">ans</span> <span class="o">/=</span> <span class="n">min</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">largest</span><span class="p">);</span>
+
+            <span class="n">A1</span><span class="p">[</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A2</span><span class="p">[</span><span class="n">val</span><span class="p">];</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">A2</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">A2</span><span class="p">[</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A1</span><span class="p">[</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="p">}</span>
+
+            <span class="n">A</span><span class="p">[</span><span class="n">A1</span><span class="p">[</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+
+            <span class="n">A2</span><span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">A2</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">A1</span><span class="p">[</span><span class="n">val</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">A1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+                <span class="n">A2</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">i64</span> <span class="n">val</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+            <span class="n">b</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+
+            <span class="n">i64</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">B2</span><span class="p">[</span><span class="n">val</span><span class="p">]];</span>
+
+            <span class="n">ans</span> <span class="o">*=</span> <span class="n">min</span><span class="p">(</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">largest</span><span class="p">);</span>
+            <span class="n">ans</span> <span class="o">/=</span> <span class="n">min</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">largest</span><span class="p">);</span>
+
+            <span class="n">B1</span><span class="p">[</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">B2</span><span class="p">[</span><span class="n">val</span><span class="p">];</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">B2</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">B2</span><span class="p">[</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">B1</span><span class="p">[</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="p">}</span>
+
+            <span class="n">B</span><span class="p">[</span><span class="n">B1</span><span class="p">[</span><span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+
+            <span class="n">B2</span><span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">B2</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">B1</span><span class="p">[</span><span class="n">val</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">B1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+                <span class="n">B2</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="sc">' '</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 
 </div>
 
