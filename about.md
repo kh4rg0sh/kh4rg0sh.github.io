@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-I completed my Bachelor of Technology in Computer Science and Engineering from Indian Institute of Technology, Roorkee. I love mathematics and programming and over the past few years of my programming journey, I've developed a very keen interest for algorithms, software development and low-level systems programming, and cybersecurity. 
+Hi, my name is Mmukul Khedekar. I completed my Bachelor of Technology in Computer Science and Engineering from Indian Institute of Technology, Roorkee. I love mathematics and programming and over the past few years of my programming journey, I've developed a very keen interest for algorithms, software development and low-level systems programming, and cybersecurity. 
 
 ## Socials
 Here are the links to my socials!
