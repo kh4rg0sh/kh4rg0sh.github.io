@@ -4,7 +4,7 @@ static/lecture_notes/
 static/solutions/
 static/work/
 
-calendar/entries/
+calendar/entries/copy-*.md
 
 .log
 .dropbox
