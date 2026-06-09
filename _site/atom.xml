@@ -4,7 +4,7 @@
  <title>kh4rg0sh Blog!</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2026-06-05T09:35:12+05:30</updated>
+ <updated>2026-06-09T14:18:58+05:30</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Mmukul Khedekar</name>
@@ -56,9 +56,12 @@ document.addEventListener(&quot;click&quot;, e =&gt; {
 
 &lt;p&gt;For this year’s Backdoor CTF, I proposed two challenges. Both of these challenges were based on Lattice attacks (as that is the area I am currently working on for my lab based project on post-quantum cryptography). The challenges and their writeups are uploaded on &lt;a href=&quot;https://gist.github.com/kh4rg0sh/e377ee63eecfa7060c72e887429fb510&quot; target=&quot;_blank&quot;&gt;Github Gist&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;true&lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=hashing_frenzy_writeup.md&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=hashing_frenzy_writeup.md&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;true&lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=a_complex_shamir_writeup.md&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/e377ee63eecfa7060c72e887429fb510.js?file=a_complex_shamir_writeup.md&quot;&gt; &lt;/script&gt;
+
 </content>
  </entry>
  
@@ -1026,7 +1029,7 @@ document.addEventListener(&quot;click&quot;, e =&gt; {
 &lt;p&gt;and hence the problem.&lt;/p&gt;
 
 &lt;div class=&quot;gist-collapsed&quot;&gt;
-true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v1.py&quot;&gt; &lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v1.py&quot;&gt; &lt;/script&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;mini_rsa_v2-77-solves&quot;&gt;mini_RSA_v2 [77 solves]&lt;/h2&gt;
@@ -1034,7 +1037,7 @@ true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c74199429
 &lt;p&gt;I kinda overlooked the small size of the public exponent &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e&lt;/code&gt; in the RSA encryption that lead to the unintended small exponent attack on the problem. since that wasn’t the intended solve, we rolled out the ver2 of the problem with a larger public exponent (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e = 65537&lt;/code&gt;). Now the intended way to solve this calculate the euler totient function of the public modulus using the extra leaked info (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s + t = p + q&lt;/code&gt;).&lt;/p&gt;
 
 &lt;div class=&quot;gist-collapsed&quot;&gt;
-true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v2.py&quot;&gt; &lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=mini_rsa_v2.py&quot;&gt; &lt;/script&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;prsa-70-solves&quot;&gt;PRSA [70 solves]&lt;/h2&gt;
@@ -1052,7 +1055,7 @@ true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c74199429
 &lt;p&gt;There was an unintended solve, where you brute force over the degree of the polynomials to reverse engineer the original polynomial degree (since the degrees were small). I had realised that there could be this unintended solve when I wrote this challenge, but I let it slip since I wanted this to be more about reading and writing sage codes.&lt;/p&gt;
 
 &lt;div class=&quot;gist-collapsed&quot;&gt;
-true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=prsa.py&quot;&gt; &lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=prsa.py&quot;&gt; &lt;/script&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;rebellious-16-solves&quot;&gt;Rebellious [16 solves]&lt;/h2&gt;
@@ -1072,7 +1075,7 @@ true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c74199429
 &lt;p&gt;Now transform the problem to this prime field and solve the DLOG. I purposely chose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt; to be an unsafe prime so that people choose this approach.&lt;/p&gt;
 
 &lt;div class=&quot;gist-collapsed&quot;&gt;
-true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=rebellious.py&quot;&gt; &lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=rebellious.py&quot;&gt; &lt;/script&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;secure-matrix-transmissions-20-solves&quot;&gt;Secure Matrix Transmissions [20 solves]&lt;/h2&gt;
@@ -1080,11 +1083,11 @@ true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c74199429
 &lt;p&gt;I was motivated by the result that the diagonal matrix in the matrix diagonalization contains the eigenvalues of the matrix and thus this challenge. I chose a small dimension &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;N = 6&lt;/code&gt; so that this becomes the intended approach as even a naive brute would require \((N! \times N!)\) operations and thats not too much.&lt;/p&gt;
 
 &lt;div class=&quot;gist-collapsed&quot;&gt;
-true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1.py&quot;&gt; &lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1.py&quot;&gt; &lt;/script&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;div class=&quot;gist-collapsed&quot;&gt;
-true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1_intercepted_text.txt&quot;&gt; &lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v1_intercepted_text.txt&quot;&gt; &lt;/script&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;secure-matrix-transmissions-v2-1-solve&quot;&gt;Secure Matrix Transmissions v2 [1 solve]&lt;/h2&gt;
@@ -1094,11 +1097,11 @@ true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c74199429
 &lt;p&gt;To break this system, one may implement the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Linear Algebra&lt;/code&gt; attack of solving simultaneous systems of equations as described in the paper. Otherwise, as pointed out by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Neobeo&lt;/code&gt; &lt;a href=&quot;https://discord.com/channels/916568950375059476/916693278701781103/1187542230345470052&quot;&gt;here&lt;/a&gt; we may lift the group from \(\mathbb{F}_{p}\) to \(\mathbb{F}_{p^{10}}\) to diagonalise and solve for the shared secret as all the eigenvalues of the given matrices exist in the latter.&lt;/p&gt;
 
 &lt;div class=&quot;gist-collapsed&quot;&gt;
-true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2.py&quot;&gt; &lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2.py&quot;&gt; &lt;/script&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;div class=&quot;gist-collapsed&quot;&gt;
-true&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2_intercepted_text.txt&quot;&gt; &lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5e6787833ada6725449960c741994294.js?file=smt_v2_intercepted_text.txt&quot;&gt; &lt;/script&gt;
 &lt;/div&gt;
 </content>
  </entry>

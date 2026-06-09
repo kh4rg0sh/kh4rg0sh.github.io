@@ -64,65 +64,65 @@
 
       
       
+        
+          
+        
       
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
       
+        
+          
+        
       
+        
       
+        
+          
+        
       
+        
+          
+        
       
-      <a class="sidebar-nav-item" href="/about/">About</a>
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+        
+          
+        
       
     </nav>
 
@@ -133,7 +133,26 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">Vlad and an Odd Ordering</h1>
-  
+  <p>during each stage, the numbers eliminated are of the form (2k - 1), and on each successive stage, we multiply it by 2. so we first delete all numbers of the form (2k - 1), then (4k - 2) and then (8k - 4), etc.</p>
+
+<p>so we just have to keep a track of count of numbers deleted in each stage and get the ith number using the formula for the stage.</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i64</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">k</span><span class="p">;</span>
+    <span class="n">i64</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">i64</span> <span class="n">cur</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="n">j</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">cur</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">k</span> <span class="o">-=</span> <span class="n">cur</span><span class="p">;</span>
+            <span class="n">i</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="n">j</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">i64</span> <span class="n">l</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">j</span> <span class="o">-</span> <span class="n">i</span><span class="p">;</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">l</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>   
+</code></pre></div></div>
 
 </div>
 

@@ -64,65 +64,65 @@
 
       
       
+        
+          
+        
       
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
       
+        
+          
+        
       
+        
       
+        
+          
+        
       
+        
+          
+        
       
-      <a class="sidebar-nav-item" href="/about/">About</a>
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+        
+          
+        
       
     </nav>
 
@@ -133,7 +133,18 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">D-Function</h1>
-  
+  <p>If D(nk) = kD(n), where D(n) = sum of digits of n, then each digit of n must become kn so we must have no carry overs else it wont satisfy =&gt; kd &lt;= 9 which means, if d is a digit of n then d &lt;= floor(9 / k).</p>
+
+<p>to count such number we just do ((9 / k) + 1)^r - ((9 / k) + 1)^l</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i64</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">l</span> <span class="o">&gt;&gt;</span> <span class="n">r</span> <span class="o">&gt;&gt;</span> <span class="n">k</span><span class="p">;</span>
+    <span class="n">z1</span> <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span> <span class="o">/</span> <span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">z1</span> <span class="n">up</span> <span class="o">=</span> <span class="n">binpow</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+    <span class="n">z1</span> <span class="n">down</span> <span class="o">=</span> <span class="n">binpow</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">l</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">up</span> <span class="o">-</span> <span class="n">down</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>   
+</code></pre></div></div>
 
 </div>
 

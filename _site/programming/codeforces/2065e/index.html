@@ -64,65 +64,65 @@
 
       
       
+        
+          
+        
       
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
       
+        
+          
+        
       
+        
       
+        
+          
+        
       
+        
+          
+        
       
-      <a class="sidebar-nav-item" href="/about/">About</a>
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+        
+          
+        
       
     </nav>
 
@@ -133,7 +133,54 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">Skibidus and Rizz</h1>
-  
+  <p>since we want max over all subarrays so for the entire subarray we must have abs(n - m) &lt;= k. if this is false we return -1 else we can begin construting. we also want the max to reach exactly k, so we can begin constructing k of the more abundant characters and after that we can alternate between 0s and 1s until one of them runs out and then just place the other after this. since abs(n - m) &lt;= k, it guarantees that place the other after this wont exceed val == k.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i64</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">m</span> <span class="o">&gt;&gt;</span> <span class="n">k</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">queue</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">zero</span><span class="p">,</span> <span class="n">one</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">zero</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">'0'</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">one</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">'1'</span><span class="p">);</span>
+
+        <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">zero</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+                    <span class="k">return</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">zero</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">zero</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">one</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">zero</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">one</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">one</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">zero</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">zero</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">one</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">one</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">one</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">one</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+                    <span class="k">return</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">one</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">one</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">one</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">zero</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">zero</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">zero</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">one</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">one</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">zero</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">zero</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">zero</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 
 </div>
 

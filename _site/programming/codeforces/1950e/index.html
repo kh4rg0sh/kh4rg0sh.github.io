@@ -64,65 +64,65 @@
 
       
       
+        
+          
+        
       
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
       
+        
+          
+        
       
+        
       
+        
+          
+        
       
+        
+          
+        
       
-      <a class="sidebar-nav-item" href="/about/">About</a>
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
+        
+          
+        
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+        
+          
+        
       
     </nav>
 
@@ -133,7 +133,46 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">Nearly Shortest Repeating Substring</h1>
-  
+  <p>the answer must be a divisor of n, hence we just need to solve for each divisor of n and check if such a string k exists. for each divisor, we can check this in O(n). suppose, d is divisor and k is the required string of length d. let k = s[0..d] then we check for each consecutive partition of length d and check how many mismatches occur, on what indices and what character was instead required. the passing condition is either &lt;= 1 mismatches in this entire string, or the mismatches are exactly (n / d) - 1 and these occur for the same index of string k and the required character in each of the case was the same. since there are about n^{1/3} divisors so we can solve this in O(n^{4/3}).</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i64</span> <span class="n">n</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">s</span><span class="p">;</span>
+
+    <span class="n">i64</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+
+        <span class="k">auto</span> <span class="n">compute</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">]</span> <span class="p">(</span><span class="n">i64</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">void</span> <span class="p">{</span>
+            <span class="n">i64</span> <span class="n">mis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="n">string</span> <span class="n">t</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">t</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+            <span class="p">}</span>
+
+            <span class="n">set</span><span class="o">&lt;</span><span class="n">i64</span><span class="o">&gt;</span> <span class="n">temp</span><span class="p">;</span>
+            <span class="n">set</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">store</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">!=</span> <span class="n">t</span><span class="p">[</span><span class="n">k</span> <span class="o">%</span> <span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+                    <span class="n">mis</span><span class="o">++</span><span class="p">;</span>
+                    <span class="n">temp</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">k</span> <span class="o">%</span> <span class="n">j</span><span class="p">);</span>
+                    <span class="n">store</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="kt">bool</span> <span class="n">valid</span> <span class="o">=</span> <span class="p">(</span><span class="n">mis</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">mis</span> <span class="o">==</span> <span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> 
+                <span class="o">&amp;&amp;</span> <span class="n">temp</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">store</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">valid</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+
+        <span class="n">compute</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">n</span><span class="p">)</span> <span class="n">compute</span><span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 </div>
 
