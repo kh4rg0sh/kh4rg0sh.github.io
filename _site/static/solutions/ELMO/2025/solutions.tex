@@ -1,0 +1,244 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+
+\begin{document}
+\title{ELMO 2025 Shortlist Solution Notes}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    A compilation of solutions for the ELMO 2025 Shortlist.
+    % https://artofproblemsolving.com/downloads/printable_post_collections/4369812
+\end{abstract}
+
+\tableofcontents
+
+\newpage 
+\section{Problems}
+\subsection{Algebra}
+\begin{problem*}[\texorpdfstring{\hyperref[sec:A1]{A1}}{A1}]
+    Let $\mathbb{Z}_{>0}$ denote the set of positive integers. Find all functions $f \colon \mathbb{Z}_{>0} \to \mathbb{Z}_{>0}$ such that for all positive integers $m$ and $n$,
+    \[f^m(n)+f(mn)=f(m)f(n).\]
+    Note: $f^m(n)=\underbrace{f(f(\cdots f}_{m\text{ times}}(n)\cdots))$, that is, $f$ applied $m$ times to $n$.
+\end{problem*}
+
+\newpage
+\subsection{Combinatorics}
+
+
+\newpage
+\subsection{Geometry}
+\begin{problem*}[\texorpdfstring{\hyperref[sec:G1]{G1}}{G1}]
+    Let $ABCD$ be a convex quadrilateral with $DA=AB=BC$. Let $M$ be the midpoint of $\overline{AB}$, and let $P$ be a point in the plane with $\angle PCA=\angle PDB=90^\circ$. A circle centered at $O$ is tangent to segments $DA$, $AB$, and $BC$. Prove that $M$, $O$, and $P$ are collinear.
+\end{problem*}
+
+\newpage
+\subsection{Number Theory}
+
+\newpage
+\section{Solutions to Algebra}
+\subsection{ELMO 2025 Shortlist A1}\label{sec:A1}
+\begin{problem*}[A1]
+    Let $\mathbb{Z}_{>0}$ denote the set of positive integers. Find all functions $f \colon \mathbb{Z}_{>0} \to \mathbb{Z}_{>0}$ such that for all positive integers $m$ and $n$,
+    \[f^m(n)+f(mn)=f(m)f(n).\]
+    Note: $f^m(n)=\underbrace{f(f(\cdots f}_{m\text{ times}}(n)\cdots))$, that is, $f$ applied $m$ times to $n$.
+\end{problem*}
+
+\subsubsection{Solution 1 (Using Injectivity \& Periodicity)}
+Let $P(m, n)$ denote the assertion,
+\[
+    f^m(n) + f(mn) = f(m) f(n)
+\]
+
+\begin{claim}
+    $f \equiv 2$ and $f \equiv m + 1$ are the only solutions.
+\end{claim}
+\begin{proof}
+    It's easy to see that these satisfy the assertion $P(m, n)$. We will show that these are the only solutions that satisfy.
+
+    From $P(1, 1)$, we have 
+    \[
+        f(1) + f(1) = f(1)f(1) \implies f(1) = 2
+    \]
+
+    From $P(m, 1)$, we have
+    \[
+        f^m(1) + f(m) = f(1) f(m) = 2f(m)
+    \]
+
+    Therefore, $f^m(1) = f(m)$. We will now deal with the following two cases independently.
+
+    \begin{enumerate}[itemsep=0.01em]
+        \item Suppose $f$ is injective. Then,
+        \[
+            f^{m+1}(1) = f(m + 1) \implies f(m + 1) = f(f(m)) \implies \boxed{f(m) = m + 1}
+        \]
+        
+        \item Suppose $f$ is not injective. Then there exists $a$, $b$ such that $a \neq b$ and $f(a) = f(b)$. Comparing $P(a, 1)$ and $P(b, 1)$,
+        \[ 
+            f^a(1) = f(a) = f(b) = f^b (1)
+        \]
+
+        Since, $f(m) = f^m(1)$. It follows that $f$ only takes finite values and $f$ is periodic. Suppose $f$ achieves the largest value $L$ at $u$. From $P(2, u)$,
+        \[
+            f(f(u)) + f(2u) = f(2)f(u) \implies 2L \geq f(L) + f(2u) = f(2)L
+        \]
+        Therefore $f(2) \le 2$. If $f(2) = 1$, then we get that
+        \[
+            f(m) =
+            \begin{cases}
+            1, & \text{if $m$ is even},\\
+            2, & \text{if $m$ is odd}.
+            \end{cases}
+        \]
+
+        which is wrong since $P(2, 2)$ $\implies$ $f(f(2)) + f(4) = f(2)^2$, for which we get that its impossible. If $f(2) = 2$, then $f(m) = f^{m - 1}(2) = 2$ $\implies$ $\boxed{f(m) = 2}$
+    \end{enumerate}
+\end{proof}
+
+\newpage
+\section{Solutions to Combinatorics}
+
+\newpage
+\section{Solutions to Geometry}
+\subsection{ELMO 2025 Shortlist G1}\label{sec:G1}
+\begin{problem*}[G1]
+    Let $ABCD$ be a convex quadrilateral with $DA=AB=BC$. Let $M$ be the midpoint of $\overline{AB}$, and let $P$ be a point in the plane with $\angle PCA=\angle PDB=90^\circ$. A circle centered at $O$ is tangent to segments $DA$, $AB$, and $BC$. Prove that $M$, $O$, and $P$ are collinear.
+\end{problem*}
+
+\subsubsection{Solution 1 (Using Centroid)}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, O, H, BB, CC, M, N, P, D, E, F, X;
+        A = dir(110); B = dir(220); C = dir(320);
+        H = orthocenter(A, B, C);
+        M = (B+C)/2; N = (C+A)/2; P=(A+B)/2;
+        D = extension(A, H, B, C); E = extension(B, H, C, A); F = extension(C, H, A, B);
+        CC = 2 * F - C; BB = 2 * E - B;
+
+        pair v1 = rotate(90)*(BB - B);
+        pair v2 = rotate(90)*(CC - C);
+        X = extension(BB, BB + v1, CC, CC + v2);
+        
+
+        dot("$O$", A, dir(185)); dot("$A$", B, dir(B)); dot("$B$", C, dir(C));
+        dot("$C$", BB,  dir(35)); dot("$D$", CC, dir(155)); dot("$P$", X, dir(95));
+    
+        draw(B--C--BB--X--CC--cycle); draw(BB--CC); draw(B--BB); draw(C--CC);
+        markrightangle(X, BB, B, 7); markrightangle(C, CC, X, 7); dot("$M$", M, dir(315));
+
+        draw(M--X, heavygray+dashed); draw(A--B, gray); draw(A--C, gray);
+        draw(B--X, gray+dotted); draw(C--X, gray+dotted);
+
+        dot("$K$", (B+X)/2, dir(165)); dot("$L$", (C+X)/2, dir(35));
+        draw((B+X)/2--A, gray+dashed); draw((C+X)/2--A, gray+dashed);
+
+        draw(circle(A, abs(A-D)), gray+dotted);
+    \end{asy}
+\end{figure}
+
+\begin{proof}
+    Let $K$ and $L$ be the midpoints of $\overline{AP}$ and $\overline{BP}$. Suppose $\omega$ is the circle tangent to sides $\overline{DA}$, $\overline{AB}$ and $\overline{BC}$.
+
+    \begin{claim}\label{sec:Claim4.1}
+        $L$ lies on line $OA$ and $K$ lies on line $OB$.
+    \end{claim}
+    \begin{proof}
+        Since, $\overline{AB}$ and $\overline{BC}$ are equal in length and are tangents drawn from $B$ to $\omega$, we have that $\overline{OB}$ is the perpendicular bisector of $\overline{AC}$. Similarly, $\overline{OA}$ is the perpendicular bisector of $\overline{BD}$. Since $\angle ACP = 90^{\circ}$ $\implies$ $\overline{OB}$ $\parallel$ $\overline{CP}$ and similarly, $\overline{OA}$ $\parallel$ $\overline{DP}$. Therefore by midpoint theorem in $\triangle ACP$ and $\triangle BDP$, we get that $OA$ passes through $L$ and $OB$ passes through $K$.
+    \end{proof}
+    
+    From \hyperref[sec:Claim4.1]{Claim 1}, we get that $O$ is the centroid of $\triangle PAB$ and therefore, $PO$ bisects $\overline{AB}$.    
+\end{proof}
+
+\newpage
+\subsubsection{Solution 2 (Using Areas)}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, O, H, BB, CC, M, N, P, D, E, F, X;
+        A = dir(110); B = dir(220); C = dir(320);
+        H = orthocenter(A, B, C);
+        M = (B+C)/2; N = (C+A)/2; P=(A+B)/2;
+        D = extension(A, H, B, C); E = extension(B, H, C, A); F = extension(C, H, A, B);
+        CC = 2 * F - C; BB = 2 * E - B;
+
+        pair v1 = rotate(90)*(BB - B);
+        pair v2 = rotate(90)*(CC - C);
+        X = extension(BB, BB + v1, CC, CC + v2);
+        
+
+        dot("$O$", A, dir(60)); dot("$A$", B, dir(B)); dot("$B$", C, dir(C));
+        dot("$C$", BB,  dir(35)); dot("$D$", CC, dir(155)); dot("$P$", X, dir(95));
+    
+        draw(B--C--BB--X--CC--cycle); draw(BB--CC); draw(B--BB); draw(C--CC);
+        markrightangle(X, BB, B, 7); markrightangle(C, CC, X, 7); dot("$M$", M, dir(315));
+
+        draw(A--X);
+        draw(M--A, heavygray+dashed); draw(A--B, gray); draw(A--C, gray);
+        draw(B--X, gray); draw(C--X, gray);
+        draw(A--CC, gray); draw(A--BB, gray);
+
+        draw(circle(A, abs(A-D)), gray+dotted);
+    \end{asy}
+\end{figure}
+
+\begin{proof}
+    \begin{claim}
+        Line $\overline{OA} \parallel \overline{DP}$ and $\overline{OB} \parallel \overline{CP}$.
+    \end{claim}
+    \begin{proof}
+        Same as \hyperref[sec:Claim4.1]{Claim 1}
+    \end{proof}
+    
+    Therefore,
+    \begin{align*}
+    \operatorname{Area} \left( \triangle AOP \right) &= \operatorname{Area} \left( \triangle AOD \right) = \operatorname{Area}\left( \triangle AOB \right) = \operatorname{Area} \left( \triangle BOC \right) \\ 
+        &= \operatorname{Area} \left( \triangle BOP \right)
+    \end{align*}
+    
+    Since, $\operatorname{Area} \left( \triangle AOP \right) = \operatorname{Area} \left( \triangle BOP \right)$ $\implies$ $PO$ bisects $\overline{AB}$    
+\end{proof}
+
+\newpage
+
+
+\section{Solutions to Number Theory}
+
+\end{document}

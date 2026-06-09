@@ -1,0 +1,162 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\usepackage{listings}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code listing setup for C++ (or Python)
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    frame=single,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{orange}
+}
+
+% Optional: caption color
+\usepackage[labelfont=bf,labelsep=colon]{caption}
+\usepackage{tikz} % for diagrams if needed
+
+\title{Codeforces 1166E (2100)}
+\author{kh4rg0sh}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    \centering
+    \url{https://codeforces.com/problemset/problem/1166/E} \\ 
+    \textbf{Accepted}: \url{https://codeforces.com/contest/1166/submission/359193366}
+\end{abstract}
+
+\section{Solution}
+
+\subsection{Explanation}
+\begin{lemma}
+    Consider two sets of natural numbers $A_1$ and $A_2$. If $A_1$ is a subset of $A_2$, then 
+    $$
+        \lcm(A_1) \le \lcm(A_2)
+    $$
+\end{lemma}
+\begin{proof}
+    Immediately follows by induction on the size of the set.
+\end{proof}
+
+\begin{lemma}
+    Suppose the set of indices of shops dora visits are 
+    \begin{align*}
+        D_1, D_2, \ldots , D_m
+    \end{align*}
+    If the problem condition is true, then for any $i \neq j$ we can never have, 
+    \begin{align*}
+        D_i \cap D_j = \phi
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    Suppose the set of indices of shops that swiper visits are
+    \begin{align*}
+        S_1, S_2, \ldots , S_m
+    \end{align*}
+    Since for any $i$, we have that $D_i$ and $S_i$ are disjoint partitions of the set of shops. Hence, if $D_i \cap D_j$ $=$ $\phi$ then $D_j \subseteq S_i$. This implies,
+    \begin{align*}
+        \lcm(S_j) < \lcm(D_j) \le \lcm(S_i) < \lcm(D_i)
+    \end{align*}
+    But $D_j \subseteq S_i$ $\implies$ $D_i \subseteq S_j$ $\implies$ $\lcm(D_i) \le \lcm(S_j)$, contradicting the problem statement.
+\end{proof}
+
+\paragraph{Back to the Problem} 
+
+Now we show that the above condition is the only sufficient condition for the problem condition to hold true. Consider $m$ distinct primes 
+\begin{align*}
+    p_1, p_2, \ldots, p_m
+\end{align*}
+and define $a_i$ as the product 
+\begin{align*}
+    a_i = \prod_{j \in D} p_j
+\end{align*}
+where $D$ is the set of days on which dora visits the $i$th store. Consider the $i$th day. Suppose $D_i$ is the set of stores that dora visits and $S_i$ is the store that swiper visits. Then we have $p_i$ does not divide $\lcm(S_i)$ because dora doesnt visit these stores on the $i$th day. However, for any $j$ we will always have $p_j$ divides $\lcm(D_i)$ because $D_i$ $\cap$ $D_j$ $\neq$ $\phi$. Hence $\lcm(D_i)$ $>$ $\lcm(S_i)$.
+
+\subsection{Code}
+
+\begin{lstlisting}[language=C++]
+void solve() {
+    ll m, n;
+    std::cin >> m >> n;
+
+    // 1. inputs
+    std::vector<ll> a[m + 1];
+    for (ll i = 1; i <= m; i++) {
+        ll x;
+        std::cin >> x;
+
+        for (ll j = 1; j <= x; j++) {
+            ll y;
+            std::cin >> y;
+
+            a[i].push_back(y);
+        }
+    }
+
+    // 2. O(nm^2) algorithm to check every D_i, D_j have non-empty intersection
+    bool ans = true;
+    for (ll i = 1; i <= m; i++) {
+        for (ll j = i + 1; j <= m; j++) {
+            std::vector<ll> val(n + 1);
+
+            for (auto u: a[i]) {
+                val[u]++;
+            }
+
+            for (auto u: a[j]) {
+                val[u]++;
+            }
+
+            bool check = false;
+            for (ll k = 1; k <= n; k++) {
+                if (val[k] == 2) {
+                    check = true;
+                }
+            }
+
+            if (!check) {
+                ans = false;
+            }
+        }
+    }
+
+    if (ans) {
+        std::cout << "possible\n";
+    } else {
+        std::cout << "impossible\n";
+    }
+} 
+\end{lstlisting}
+
+
+\end{document}

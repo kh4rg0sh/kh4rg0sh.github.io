@@ -1,0 +1,208 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\usepackage{listings}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code listing setup for C++ (or Python)
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=none,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    frame=single,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{orange}
+}
+
+% Optional: caption color
+\usepackage[labelfont=bf,labelsep=colon]{caption}
+\usepackage{tikz} % for diagrams if needed
+
+\title{Codeforces 1167E (2100)}
+\author{kh4rg0sh}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    \centering
+    \url{https://codeforces.com/contest/1167/problem/E} \\
+    \textbf{Accepted:} \url{https://codeforces.com/contest/1167/submission/359105151}
+\end{abstract}
+
+\section{Solution}
+
+\subsection{Explanation}
+
+\begin{definition}
+    Denote a pair $(l, r)$ as \emph{valid} if deleting all values such that 
+    \begin{align*}
+        l \le a_i \le r
+    \end{align*}
+    from the array results in a non-decreasing array.
+\end{definition}
+\begin{definition}
+    Denote a number $p$ as \emph{prefix-good} if the pair $(p + 1, x)$ is \emph{valid}.
+\end{definition}
+\begin{lemma}
+    If a pair $(l, r)$ is \emph{valid} then, $(l - 1, r)$ and $(l, r + 1)$ are \emph{valid} too.
+\end{lemma}
+\begin{proof}
+    If $(l, r)$ is valid then the remainder sequence of the array looks something like 
+    \begin{align*}
+        1 \cdots 1 \,\lvert\, 2 \cdots 2 \,\lvert\, \cdots \, (l - 1) \,\lvert\, (r + 1) \cdots \,\lvert\, x \cdots x
+    \end{align*}
+    Hence, if we remove either of $(l - 1)$ or $(r + 1)$ from the remaining sequence, it is still non-decreasing. This implies that $(l - 1, r)$ and $(l, r + 1)$ are valid too.
+\end{proof}
+\begin{lemma}
+    If $p$ is \emph{prefix-good} then for any $q < p$, we will have $q$ as \emph{prefix-good}. Similarly, if $p$ is not \emph{prefix-good} then for any $q > p$, we cannot have $q$ as \emph{prefix-good}. 
+\end{lemma}
+\begin{proof}
+    For the first part, if $p$ is prefix-good then all the numbers from $1$ to $p$ occur in a non-decreasing manner in the array. Hence any prefix of it will also be non-decreasing. 
+
+    For the second part, if $p$ is not prefix-good then the numbers $1$ to $p$ do not occur in a non-decreasing manner. So for any $q > p$, the numbers from $1$ to $q$ cannot be non-decreasing. The key fact used here is that any prefix of a non-decreasing sequence is also non-decreasing, and if a prefix of a sequence is not non-decreasing then the sequence cannot be non-decreasing.
+\end{proof}
+\begin{lemma}
+    If $p$ is not \emph{prefix-good} then for any $p < l \le r$, the pair $(l, r)$ can never be \emph{valid}.
+\end{lemma}
+\begin{proof}
+    If $(l, r)$ is valid then $(l - 1)$ has to be prefix-good, but $l - 1 \geq p$ is not prefix-good, which is a contradiction.
+\end{proof}
+
+\paragraph{Back to the Problem}
+\begin{enumerate}
+    \item Compute the first and last occurrence for each number $1 \le i \le x$. This can be done in a simple $\mathcal{O}(n)$ scan.
+    \item Compute the max value $p$ such that $p$ is prefix-good. To do this, we just have to keep comparing if $$\operatorname{last}[i - 1] < \operatorname{first}[i]$$
+    \item Similarly, we want to compute the minimum value $s$ such that $s$ is prefix-good on the reversed array. So basically this is the notion of suffix-good, which can be defined similarly. We just have to compute $$\operatorname{last}[i] < \operatorname{first}[i + 1]$$
+    \item if $p \geq s$, it should mean that $p = x$ and $s = 1$. If this does not hold then $p \geq s$ is impossible. We will always otherwise have $p < s$. If $p \geq s$ then all $(l, r)$ are valid. Otherwise, we proceed to the next step.
+    \item Now we have to understand that if $(l, r)$ is valid then $1 \le l \le p + 1$ and $s - 1 \le r \le x$. If any of this is violated, then the remaining sequence cannot be non-decreasing. Note how $p + 1 \le s - 1$ $\implies$ $l \le r$ which looks fine.
+    \item Now for each $l$ we want to find the minimum $r$ such that $(l, r)$ is valid. If suppose $g$ is a function that tells us the minimum $r$ for $l$ (that is $g(l) = r$), then the answer would be 
+    \begin{align*}
+        \sum_{i = 1}^{p + 1} (x - (g(i) - 1))
+    \end{align*}
+    \item To compute $g(i)$ we need to realise that if suppose $m$ is the maximum number occurring in $[1, \operatorname{last}[i - 1]]$, then $r$ has to be atleast $m$. So $r \geq \max(i, s - 1, m)$. So we have a way to compute $g(i)$
+    \begin{align*}
+        g(i) = \max(i, s - 1, \max({[1, \operatorname{last}[i - 1]]}))
+    \end{align*}
+\end{enumerate}
+
+\subsection{Code}
+
+\begin{lstlisting}[language=C++]
+void solve() {
+    // 1. input of the problem
+    ll n, x;
+    std::cin >> n >> x;
+
+    ll a[n + 1];
+    for (ll i = 1; i <= n; i++) {
+        std::cin >> a[i];
+    }
+
+
+    // 2. compute the first and last
+    std::vector<ll> first(x + 2, 0LL), last(x + 2, 0LL);
+    for (ll i = 1; i <= n; i++) {
+        if (first[a[i]] == 0) {
+            first[a[i]] = i;
+            last[a[i]] = i;
+        } else {
+            last[a[i]] = i;
+        }
+    }
+
+    // 3. compute p and s
+    ll b[n + 1];
+    for (ll i = 1; i <= n; i++) {
+        b[i] = a[i];
+    }
+    std::sort(b + 1, b + n + 1);
+    ll p = b[1], s = b[n];
+
+    // compute p here
+    for (ll i = 2; i <= n; i++) {
+        if (b[i - 1] == b[i]) {
+            if (i == n) {
+                p = x;
+            }
+            continue;
+        }
+        if (last[b[i - 1]] < first[b[i]]) {
+            p = b[i];
+            if (i == n) {
+                p = x;
+            }
+        } else {
+            p = b[i] - 1;
+            break;
+        }
+    }
+
+    // compute s here
+    for (ll i = n - 1; i > 0; i--) {
+        if (b[i] == b[i + 1]) {
+            if (i == 1) {
+                s = 1;
+            }
+            continue;
+        }
+        if (last[b[i]] < first[b[i + 1]]) {
+            s = b[i];
+            if (i == 1) {
+                s = 1;
+            }
+        } else {
+            s = b[i] + 1;
+            break;
+        }
+    }
+
+    // 4. compute g(i) for each i and get final ans
+    ll ans = 0;
+    ll mx[n + 1];
+    mx[0] = 0LL;
+
+    for (ll i = 1; i <= n; i++) {
+        mx[i] = std::max(mx[i - 1], a[i]);
+    }
+
+    for (ll i = 1; i <= x; i++) {
+        if (last[i] == 0) {
+            last[i] = last[i - 1];
+        }
+    }
+
+    for (ll i = 1; i <= std::min(x, p + 1); i++) {
+        ans += (x + 1 - std::max({i, s - 1, mx[last[i - 1]]}));
+    }
+
+    std::cout << ans << '\n';
+}   
+\end{lstlisting}
+
+\end{document}

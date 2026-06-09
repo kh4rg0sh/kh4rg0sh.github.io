@@ -1,0 +1,150 @@
+\begin{document}
+
+
+\section{Bisectors}
+
+what does bisecting mean?
+
+\subsection{Segment Bisector}
+what does a segment bisector mean.
+
+definition of a midpoint.
+how to construct the midpoint:
+proof for it.
+
+\subsection{Perpendicular Bisector}
+perpendicular bisector.
+show the construction.
+leave the proof as an exercise to the reader.
+also ask the reader to prove the construction for perpendicular line.
+
+any point on perpendicular bisector of a line segment forms an isoceles triangle.
+
+\subsection{Angle Bisector}
+angle bisector.
+show the construction.
+leave the proof as an exercise to the reader. 
+
+perpendicular bisector and the angle bisector of an isosceles triangle are the same. 
+
+
+\subsection{Tangents}
+Tangents to a circle give rise to a lot of beautiful properties. This happens because they meet the circle in a very delicate way and thus, encode deep geometric properties. 
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+
+        pair O = (0, 0);
+        real r = 1.5;
+
+        pair P = r * dir(35);
+        pair v = rotate(90) * (P - O);
+        pair u = v/length(v);
+
+        draw(circle(O, r));
+        draw(P-2*u -- P+2*u, dotted+linewidth(1));
+        label("$\ell$", P+2*u, NE);
+
+        draw(O--P, gray+1bp);
+        dot(O); label("$O$", O, S);
+        dot(P); label("$P$", P, NE);
+    \end{asy}
+    \caption{line $\ell$ tangent to circle $\mathcal{C}$ at point $P$}
+\end{figure}
+
+One of the interesting results about tangents is the following.
+\begin{theorem}
+Radius is perpendicular to the tangent at the point of contact.
+\end{theorem}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+
+        pair O = (0, 0);
+        real r = 1.5;
+
+        pair P = r * dir(90);
+        pair v = rotate(90) * (P - O);
+        pair u = v/length(v);
+
+        draw(circle(O, r));
+        draw(P-2*u -- P+2*u, linewidth(1));
+        label("$\ell$", P+2*u, NE);
+
+        draw(O--P, gray+1bp);
+        dot(O); label("$O$", O, S);
+        dot(P); label("$P$", P, NE);
+        markrightangle(O, P, P+u, 8);
+    \end{asy}
+    \caption{line $\ell$ is $\perp$ to $\overline{OP}$}
+\end{figure}
+\begin{proof}
+    
+\end{proof}
+
+\begin{exercise}
+Use the above theorem to show that, for any point not lying on a given line, the perpendicular from the point to the line is the path of shortest distance to the line.
+\end{exercise}
+
+\begin{exercise}
+Use the above theorem to show that, for a point $P$ on circle $\mathcal{C}$ there exists a unique tangent $\ell$ to circle $\mathcal{C}$ that passes through point $P$.
+\end{exercise}
+
+
+\begin{proposition}[Number of common tangents]
+
+\end{proposition}
+
+\section{Circles: Revisited}
+\subsection{Tangents from a Point}
+how many tangents can you draw from a point to a circle:
+0 if point interior.
+1 if point lies on the circle. 
+2 if the point lies outside the circle 
+
+tangent drawn are equal in length.
+pitots theorem.
+
+
+\section{Quadrilaterals}
+sum of all angles of quadrilateral
+general quadrilateral inequality.
+
+convex quadrilateral 
+
+trapezium: one side parallel.
+isoscseles trapezium: non parallel sides equal
+
+parallelogram:
+show diagonals of a parallelogram are segment bisectors.
+
+rhombus:
+show diagonals of a rhombus are perpendicular bisectors
+diagonals of a rhombus are angle bisectors
+
+kite:
+show diagonals of kite are perpendicular 
+and diagonal between equal sides is angle bisector 
+
+rectangle:
+diagonals are segment bisectors. 
+
+square:
+diagonals are perpendicular bisectors
+diagonals are angle bisectors 
+
+angle is 45
+
+
+\section{Polygons}
+sum of angles of polygon
+exterior angle of equal sided polygon 
+interior angle of equal sided polygon
+
+general polygon inequality
+
+
+\end{document}

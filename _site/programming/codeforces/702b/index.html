@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Powers of Two &middot; kh4rg0sh Blog!
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <img src="/assets/content.png">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          kh4rg0sh Blog!
+        </a>
+      </h1>
+      <p class="lead">You've just stumbled across a nerdy little corner of the internet. Come back soon to checkout more stuff as I keep updating the blog!</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    </nav>
+
+    <p>&copy; 2026. All rights reserved.</p>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="page">
+  <h1 class="page-title">Powers of Two</h1>
+  <p><a href="/static/solutions/codeforces/702b.pdf" target="_blank">Codeforces 702B Solution</a></p>
+
+<h2 id="explanation">Explanation</h2>
+
+<p><strong>Lemma:</strong> There are only $30$ powers of two less than $2 \times 10^9$.</p>
+
+<p>Let this set be denoted by $\mathbb{P}$.</p>
+
+<p>We want to compute</p>
+
+\[\sum_{i=1}^{n}\sum_{j=i+1}^{n}[a_i+a_j\in\mathbb{P}]\]
+
+<p>This can be rewritten as</p>
+
+\[\frac{1}{2}
+\left(
+\sum_{1\le i,j\le n}
+[a_i+a_j\in\mathbb{P}]
+-
+\sum_{1\le i\le n}
+[2a_i\in\mathbb{P}]
+\right)\]
+
+<p>Iterating over all pairs $(i,j)$ would require $\mathcal{O}(n^2)$ time.</p>
+
+<p>Instead, for every element $a_i$, we iterate over all powers of two in $\mathbb{P}$ and check whether the complement</p>
+
+\[\text{power} - a_i\]
+
+<p>exists in the array.</p>
+
+<p>Since there are only $30$ relevant powers of two, the complexity becomes</p>
+
+\[\mathcal{O}(30n\log n)\]
+
+<p>when using an ordered map.</p>
+
+<h2 id="code">Code</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ll</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ll</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">ll</span><span class="p">,</span> <span class="n">ll</span><span class="o">&gt;</span> <span class="n">mp</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">mp</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ll</span><span class="o">&gt;</span> <span class="n">powers</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">;</span> <span class="n">i</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">powers</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">ll</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">ll</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">sum</span> <span class="o">:</span> <span class="n">powers</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">sum</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="n">mp</span><span class="p">[</span><span class="n">sum</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">sum</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+                    <span class="n">ans</span><span class="o">--</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">ans</span> <span class="o">/=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="performance-optimizations">Performance Optimizations</h2>
+
+<p>Suppose we replace</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">sum</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="n">ans</span> <span class="o">+=</span> <span class="n">mp</span><span class="p">[</span><span class="n">sum</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">sum</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">ans</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>with</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ans</span> <span class="o">+=</span> <span class="n">mp</span><span class="p">[</span><span class="n">sum</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">sum</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+    <span class="n">ans</span><span class="o">--</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This results in roughly a <strong>10× slower runtime</strong>.</p>
+
+<p>The reason is how <code class="language-plaintext highlighter-rouge">std::map::operator[]</code> works. According to the GCC documentation:</p>
+
+<blockquote>
+  <p>If the key does not exist, a pair with that key is created using default values, which is then returned.</p>
+</blockquote>
+
+<p>As a result, every lookup for a missing key inserts a new entry into the map, causing significant overhead.</p>
+
+</div>
+
+    </div>
+
+  </body>
+</html>

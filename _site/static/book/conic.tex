@@ -1,0 +1,30 @@
+\documentclass[11pt,twoside=semi,openright,numbers=noenddot,titlepage=false]{scrbook}
+\newcommand{\napkinversion}{v1.6.\hbox{\the\year\twodigits\month\twodigits\day}}
+
+\input{tex/preamble.tex}
+\input{tex/macros.tex}
+\title{Geometry of Conics}
+\author{Mmukul Khedekar}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\begin{center}
+\begin{minipage}{0.7\textwidth}
+    \centering
+    This is a manually typed, English translated version of \href{https://lii4.github.io/Conic.pdf}{this} remarkable text on the geometry of conics. I have invested time in carefully understanding the original Chinese text and adding diagrams for better understanding. This translation is intended for personal study and educational purposes. Any translation or typographical errors are my own.
+\end{minipage}
+\end{center}
+
+\tableofcontents
+
+\mainmatter
+\setcounter{chapter}{-1}
+\label{part:notation}
+\include{tex/notations/notation.tex}
+\include{tex/fundamentals/fundamentals_conic_sections.tex}
+
+\end{document}

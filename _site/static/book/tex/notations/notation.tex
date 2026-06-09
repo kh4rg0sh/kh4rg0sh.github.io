@@ -1,0 +1,81 @@
+\chapter{Notations}
+
+These are some of the notations and conventions that we will follow throughout this book.
+
+\begin{enumerate}
+\item If $X$, $Y$ are two points (not lying on the line at infinity $\mathcal{L}_{\infty}$), then
+    \begin{itemize}
+        \item $XY$ denotes the line through $X$ and $Y$.
+        \item $\overline{XY}$ denotes the line segment joining $X$ and $Y$ (which does not intersect $\mathcal{L}_{\infty}$).
+    \end{itemize}
+
+\item If $K$ and $L$ are two lines, then 
+    \begin{itemize}
+        \item $K$ $\cap$ $L$ denotes their intersection point.
+        \item $\angle \left( K, L \right)$ denotes the \emph{unoriented} angle between $K$ and $L$.
+        \item $\dangle \left( K, L \right)$ denotes the \emph{oriented} angle between $K$ and $L$.
+    \end{itemize}
+
+\item We use $\triangle XYZ$ to denote a triangle with vertices $X$, $Y$ and $Z$.
+    \begin{itemize}
+        \item $\odot(XYZ)$ denotes the circumcircle of $\triangle XYZ$.
+        \item $\odot(XY)$ denotes the circle with $\overline{XY}$ as its diameter.
+        \item $\odot(X)$ denotes the circle centered at point $X$.
+    \end{itemize}
+
+\item Given a circle $\Gamma$ and a point $X$ on the circle, we use $XP$ $\cap$ $\Gamma$ or $\Gamma$ $\cap$ $XP$ to denote the intersection of $XP$ with $\Gamma$ other than at $X$ (if $XP$ is tangent to $\Gamma$, this point is still $X$).
+
+\item Given three lines $a$, $b$ and $c$, we use $\triangle abc$ to denote the triangle formed by these lines, namely $\triangle$ $\left( a \cap b \right)$ $\left( b \cap c \right)$ $\left( c \cap a \right)$.
+
+\item Unless specified otherwise, $\triangle ABC$ is taken as the reference triangle. The points $I$, $G$, $O$ and $H$ will denote the incenter, centroid, circumcenter, and orthocenter of $\triangle ABC$. Also, $I_{X}$ $\left( X = A, B, C\right)$ will denote the three excenters opposite to the corresponding vertex $X$.
+
+\item We say that $\triangle X_1Y_1Z_1$ and $\triangle X_2Y_2Z_2$ are \emph{directly similar}, written as $\triangle X_1Y_1Z_1$ $\overset{+}{\sim}$ $\triangle X_2Y_2Z_2$, and for these two triangles the following holds:
+    \begin{align*}
+        \dangle Y_1X_1Z_1 = \dangle Y_2X_2Z_2 ,\twotab
+        \dangle Z_1Y_1X_1 = \dangle Z_2Y_2X_2 ,\twotab
+        \dangle X_1Z_1Y_1 = \dangle X_2Z_2Y_2.
+    \end{align*}
+
+\item We say that $\triangle X_1Y_1Z_1$ and $\triangle X_2Y_2Z_2$ are \emph{oppositely similar}, written as $\triangle X_1Y_1Z_1$ $\overset{-}{\sim}$ $\triangle X_2Y_2Z_2$, and for these two triangles the following holds:
+    \begin{align*}
+        \dangle Y_1X_1Z_1 = - \dangle Y_2X_2Z_2 ,\twotab
+        \dangle Z_1Y_1X_1 = - \dangle Z_2Y_2X_2 ,\twotab
+        \dangle X_1Z_1Y_1 = - \dangle X_2Z_2Y_2.
+    \end{align*}
+
+\item Given a $\triangle ABC$ and a point $P$, we define
+    \begin{itemize}
+        \item the \vocab{Cevian Triangle of $P$} with respect to $\triangle ABC$ is
+            \begin{align*}
+                \triangle \left( AP \cap BC \right) \left( BP \cap CA \right) \left( CP \cap AB \right).
+            \end{align*}
+
+        \item the \vocab{Anti-Cevian Triangle of $P$} with respect to $\triangle ABC$, is a triangle for which the cevian triangle of $P$ is $\triangle ABC$.
+        
+        \item the \vocab{Pedal Triangle of $P$} with respect to $\triangle ABC$ is
+            \begin{align*}
+                \triangle \left( P\infty_{\perp BC} \cap BC \right) \left( P\infty_{\perp CA} \cap CA \right) \left( P\infty_{\perp AB} \cap AB \right).
+            \end{align*}
+
+        \item the \vocab{Anti-Pedal Triangle of $P$} with respect to $\triangle ABC$ is
+            \begin{align*}
+                \triangle \left( A\infty_{\perp AP} \right) \left( B\infty_{\perp BP} \right) \left( C\infty_{\perp CP} \right),
+            \end{align*}
+        whose pedal triangle is $\triangle ABC$.
+        
+        \item the \vocab{Circum-Cevian Triangle of $P$} with respect to $\triangle ABC$ is 
+            \begin{align*}
+                \triangle \left( AP \cap \odot(ABC) \right) \left( BP \cap \odot(ABC) \right) \left( CP \cap \odot(ABC) \right).
+            \end{align*}
+    \end{itemize}
+
+    \item Given a $\triangle ABC$ and a line $\ell$, we define
+    \begin{itemize}
+        \item the \vocab{Cevian Triangle of $\ell$} with respect to $\triangle ABC$,
+            \begin{align*}
+                \triangle \left( A \left( BC \cap \ell \right) \right) \left( B \left( CA \cap \ell \right) \right) \left( C \left( AB \cap \ell \right) \right).
+            \end{align*}
+
+        \item the \vocab{Anti-Cevian Triangle of $\ell$} with respect to $\triangle ABC$, is a triangle whose cevian triangle is $\triangle ABC$.
+    \end{itemize}
+\end{enumerate}

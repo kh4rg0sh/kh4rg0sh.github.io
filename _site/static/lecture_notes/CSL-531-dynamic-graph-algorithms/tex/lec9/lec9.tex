@@ -1,0 +1,75 @@
+\section{[Lecture] Feb 3, 2026}
+The discussion for today's lecture is the \vocab{Decremental Reachability Problem}.
+\begin{problem}[Decremental Reachability]
+    Given a directed graph $G = (V, E)$ and a source vertex $s$, maintain the set of vertices reachable from $s$ under edge deletions.
+\end{problem}
+
+\subsection{Brief Analysis}
+Let $R[n]$ be an array that stores if a node $u$ is reachable from $s$.
+\begin{align*}
+    R[u] = \begin{cases}
+        1, \qquad \text{if u is reachable from s}\\ 
+        0, \qquad \text{otherwise}  
+    \end{cases}
+\end{align*}
+If we want to delete an edge $(u, v)$, where $e(u, v) \in E$ then we could possible have the following cases.
+\begin{enumerate}
+    \item $R[u] = 0, R[v] = 0$ $\implies$ both are unreachable from $s$. So deleting $(u, v)$ does not affect reachability of either of them.
+    \item $R[u] = 0, R[v] = 1$ $\implies$ $u$ is unreachable from $s$, so deleting $(u, v)$ does not affect the reachability of either of them.
+    \item $R[u] = 1, R[v] = 0$ $\implies$ $v$ is unreachable from $s$, so deleting $(u, v)$ does not affect the reachability of either of them.
+    \item $R[u] = 1, R[v] = 1$ $\implies$ both are reachable from $s$, so deleting $(u,v)$ might make $v$ unreachable.
+\end{enumerate}
+To summarise, when we delete the edge $e(u, v)$ then the reachability of $u$ will never be affected. Furthermore, no vertex can turn to reachable from unreachable after deleting edge $e(u, v)$. Since, we are affecting the incoming edge of vertex $v$ so there is possibility of $v$ becoming unreachable, but that only happens when there is no other path from $s$ to $v$ that does not pass through $e(u, v)$.
+
+\begin{remark}
+The conclusion is that we only need to analyse the case when 
+\begin{align*}
+    R[u] = 1, R[v] = 1
+\end{align*}
+In the worst case, we can run a traversal algorithm again from $s$ that would compute the reachability in $\mathcal{O}(n + m)$ so we need to find a decremental algorithm with a better time complexity.
+\end{remark}
+
+Before we continue our discussion on \highlight{Decremental Reachability}, we shall take a quick detour and explore relevant problems and data structures.
+
+\subsection{BFS Trees}
+\begin{problem}[BFS Trees]
+    The \vocab{BFS Tree} (or Breadth First Search Tree) is a tree $T$ on $n$ vertices of a graph $G = (V, E)$ such that any edge $e$ $\in$ $T$ $\implies$ $e$ $\in$ $G(E)$ and $e(u, v)$ $\in$ $G(E)$ such that $e$ does not lie on the shortest path from the root of $T$ to $v$ $\implies$ $e(u, v) \not\in T$.
+\end{problem}
+Informally, the BFS tree maintains the shortest path for all vertices $u$ $\in$ $G$ from a fixed source vertex $s$ which is the root of the tree. The BFS tree could be trivially computed by running a breadth first search traversal starting from the source vertex $s$. There are some interesting properties of the structure of this tree, so let's take a look at those.
+
+\subsubsection{Properties of BFS Trees}
+Denote $d[u]$ as the shortest distance from $s$ to $u$ in $G$.
+\begin{enumerate}
+    \item For any edge $e(u, v)$ $\in$ $G$, we have 
+    \begin{align*}
+        d[v] \le d[u] + 1
+    \end{align*}
+    \item For any edge $e(u, v)$ $\in$ $T$, we have 
+    \begin{align*}
+        d[v] = d[u] + 1
+    \end{align*}
+    \item The graph $G$ could be directed/undirected and weighted/unweighted. Depending upon the properties of the underlying graph $G$, we have
+    \begin{itemize}
+        \item weighted/unweighted doesn't affect the structure of BFS trees.
+        \item if $G$ is undirected, then for any edge $e(u, v) \in G$
+        \begin{align*}
+            \underbrace{
+                \substack{
+                    \displaystyle d[u] + 1 \geq d[v] \,\,\,\text{and}\,\,\, \displaystyle d[v] + 1 \geq d[u]
+                }
+            }_{\displaystyle \implies d[u] + 1 \geq d[v] \geq d[u] - 1}
+        \end{align*}
+        \item if $G$ is directed, then for any edge $e(u, v) \in G$
+        \begin{align*}
+            d[u] + 1 \geq d[v]
+        \end{align*}
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Incremental BFS Trees}
+\begin{problem}
+    Suppose $T$ is the \highlight{BFS Tree} on the graph $G = (V, E)$. Maintain the BFS tree under edge insertions to $G$.
+\end{problem}
+
+
+

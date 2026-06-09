@@ -1,0 +1,416 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{Lecture Notes (29th Dec, 2025)}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    In this lecture we explore the incenter configuration and its extensions to the excenters.
+\end{abstract}
+
+\section{Ratio Lemma}
+
+\begin{lemma}[Ratio Lemma]
+    In $\triangle ABC$, let $D$ be a point on $\overline{BC}$. Then
+    \begin{align*}
+        \left( \frac{\overline{BD}}{\overline{DC}} \right)
+        = \left( \frac{\overline{AB}}{\overline{AC}} \right)
+          \cdot
+          \left( \frac{\sin \angle BAD}{\sin \angle DAC} \right)
+    \end{align*}
+\end{lemma}
+
+% add a diagram for ratio lemma
+
+\begin{proof}
+    Applying the Law of Sines in $\triangle ABD$ gives
+    \begin{align*}
+        \left( \frac{\overline{BD}}{\overline{AB}} \right)
+        = \left( \frac{\sin \angle BAD}{\sin \angle ADB} \right)
+    \end{align*}
+    and in $\triangle ADC$,
+    \begin{align*}
+        \left( \frac{\overline{DC}}{\overline{AC}} \right)
+        = \left( \frac{\sin \angle DAC}{\sin \angle ADC} \right)
+    \end{align*}
+
+    Since $\angle ADB$ and $\angle ADC$ are supplementary, we have
+    $\sin \angle ADB = \sin \angle ADC$. Dividing the two equalities yields the result.
+\end{proof}
+
+There are two popular variants of this lemma. They are not difficult to derive,
+but they appear frequently in complicated configurations, where using these
+forms makes computations significantly easier.
+
+\subsection{Extended Ratio Lemma (Angle Form)}
+
+\begin{lemma}[Extended Ratio Lemma (Angle Form)]
+    In $\triangle ABC$, let $D$ be a point on $\overline{BC}$. Then
+    \begin{align*}
+        \left( \frac{\overline{BD}}{\overline{DC}} \right)
+        = \left( \frac{\sin \angle ACB}{\sin \angle ABC} \right)
+          \cdot
+          \left( \frac{\sin \angle BAD}{\sin \angle DAC} \right)
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    From the Law of Sines in $\triangle ABC$,
+    \begin{align*}
+        \left( \frac{\overline{AB}}{\overline{AC}} \right)
+        = \left( \frac{\sin \angle ACB}{\sin \angle ABC} \right)
+    \end{align*}
+    Substituting this expression into the Ratio Lemma gives the desired result.
+\end{proof}
+
+\subsection{Extended Ratio Lemma (Cyclic Quadrilaterals)}
+
+\begin{lemma}[Extended Ratio Lemma (Cyclic Quadrilaterals)]
+    Let $ABCD$ be a cyclic quadrilateral, and suppose its diagonals
+    $\overline{AC}$ and $\overline{BD}$ intersect at $E$. Then
+    \begin{align*}
+        \left( \frac{\overline{BE}}{\overline{DE}} \right)
+        = \left( \frac{\overline{AB}}{\overline{AD}} \right)
+          \cdot
+          \left( \frac{\overline{BC}}{\overline{CD}} \right)
+    \end{align*}
+\end{lemma}
+
+% add a diagram here
+
+Although this identity looks quite different from the previous variants of the
+Ratio Lemma, it is essentially the same result in disguise. We now prove it.
+
+\begin{proof}
+    Applying the Ratio Lemma in $\triangle ABD$, we obtain
+    \begin{align*}
+        \left( \frac{\overline{BE}}{\overline{DE}} \right)
+        = \left( \frac{\overline{AB}}{\overline{AD}} \right)
+          \cdot
+          \left( \frac{\sin \angle BAC}{\sin \angle CAD} \right)
+    \end{align*}
+
+    Since $ABCD$ is cyclic, we have
+    $\angle BAC = \angle BDC$ and $\angle CAD = \angle CBD$.
+    Applying the Law of Sines in $\triangle BCD$ yields
+    \begin{align*}
+        \left( \frac{\sin \angle BAC}{\sin \angle CAD} \right)
+        &= \left( \frac{\sin \angle BDC}{\sin \angle CBD} \right) \\
+        &= \left( \frac{\overline{BC}}{\overline{CD}} \right)
+    \end{align*}
+
+    Substituting back into the earlier expression completes the proof.
+\end{proof}
+
+\section{Incenter \& Excenters}
+Let's begin by defining the notion of an angle bisector.
+\begin{definition}
+    In $\triangle ABC$, if $D$ is a point on $\overline{BC}$ such that $\angle BAD$ $=$ $\angle CAD$ then $\overline{AD}$ is the $A$-\vocab{angle bisector}.
+\end{definition}
+
+When we speak of angle bisectors of an angle, we must differentiate between two possibilities: the \vocab{internal angle bisector} and the \vocab{external angle bisector}. 
+
+The internal bisector of $\angle BAC$ lies in the region between the rays $\overrightarrow{AB}$ and $\overrightarrow{AC}$, dividing the angle into two equal parts. The external bisector, on the other hand, bisects the supplementary angle formed between the rays $\overrightarrow{AB}$ and $\overrightarrow{CA}$ (equivalently, between $\overrightarrow{BA}$ and $\overrightarrow{AC}$).
+
+A crucial property that relates both of them is as follows.
+\begin{proposition}
+    If $\ell_1$ and $\ell_2$ are the internal and external angle bisectors of an angle, then $\ell_1$ is perpendicular to $\ell_2$.
+\end{proposition}
+
+Consider the angle $\angle BAC$ and extend the ray $\overrightarrow{CA}$ to a point $D$. Then $\ell_2$ is the internal angle bisector of $\angle BAD$. 
+\begin{align*}
+\angle \left( \ell_2, \overrightarrow{AB} \right) &= \frac{1}{2} \angle BAD \\ 
+  &= \frac{1}{2} \left( 180^{\circ} - \angle BAC \right) \\ 
+  &= 90^{\circ} - \frac{1}{2} \angle BAC \\ 
+  &= 90^{\circ} - \angle \left( \overrightarrow{AB}, \ell_1 \right)
+\end{align*}
+which implies that $\ell_1 \perp \ell_2$.
+
+Now we can define the \vocab{Incenter} and the \vocab{Excenters} of a triangle.
+
+\begin{definition}
+In $\triangle ABC$, the three internal angle bisectors are concurrent at the \vocab{incenter}, usually denoted by $I$.
+\end{definition}
+
+Clearly, a triangle has exactly one incenter. The excenters, however, are defined in a slightly different way.
+
+\begin{definition}
+In $\triangle ABC$, the internal angle bisector of $\angle A$ and the external angle bisectors of $\angle B$ and $\angle C$ are concurrent. The point of concurrency is called the $A$-\vocab{excenter} of the triangle, and is usually denoted by $I_A$.
+\end{definition}
+
+
+There are three excenters in a triangle, one opposite to each vertex. The existence of the incenter can be shown trivially via \vocab{Trigonometric Form} of \vocab{Ceva's Theorem}. We will establish the existence of the excenters in the following subsections.
+
+\subsection{Incenter Angle Theorem}
+\begin{theorem}[Incenter Angle Theorem]
+Let $I$ be the incenter of $\triangle ABC$. Then
+\[
+\angle BIC = 90^\circ + \frac{1}{2}\angle A
+\]
+\end{theorem}
+
+Incenter configurations are often very convenient for angle chasing because of the angle bisector properties associated with the incenter.
+\[
+\begin{aligned}
+\angle BIC
+  &= 180^\circ - \left(\angle IBC + \angle ICB\right) \\
+  &= 180^\circ - \left(\tfrac{\angle B}{2} + \tfrac{\angle C}{2}\right) \\ 
+  &= 90^\circ + \tfrac{1}{2}\angle A
+\end{aligned}
+\]
+
+This result appears far more often than one might expect, and it is a favourite trick in construction problems that encode this angle in numerical form.
+
+\subsection{Angle Bisector Theorem}
+There are two popular variants of this theorem: one related to the internal angle bisector and the other to the external angle bisector.
+
+\begin{theorem}[Angle Bisector Theorem]
+In $\triangle ABC$, let points $D$ and $E$ lie on line $BC$ such that $\overline{AD}$ and $\overline{AE}$ are the internal and external angle bisectors of $\angle BAC$, respectively. Then
+\[
+\frac{\overline{BD}}{\overline{CD}}
+  = \frac{\overline{BE}}{\overline{CE}}
+  = \frac{\overline{AB}}{\overline{AC}}
+\]
+\end{theorem}
+
+This result is not very difficult to prove; it follows immediately from the \vocab{Ratio Lemma}. What is more interesting is that there are now two distinct points on line $BC$ that divide the segments to $B$ and $C$ in the same ratio. This phenomenon is closely related to Projective Geometry and Apollonian circles, as we shall see later on.
+
+\subsection{Lengths related to Incenter}
+\begin{proposition}
+    In $\triangle ABC$, let $D$, $E$ and $F$ be points on sides $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$, such that the cevians $\overline{AD}$, $\overline{BE}$ and $\overline{CF}$ are the internal angle bisectors of $\angle A$, $\angle B$ and $\angle C$. Then
+    \begin{enumerate}[itemsep=0.01em]
+      \item $\overline{AD} = \tfrac{2bc}{b + c} \cos \left( A / 2 \right)$
+      \item $\overline{BE} = \tfrac{2ca}{c + a} \cos \left( B / 2 \right)$
+      \item $\overline{CF} = \tfrac{2ab}{a + b} \cos \left( C / 2 \right)$
+    \end{enumerate}
+\end{proposition}
+
+It is also worth mentioning that $\triangle DEF$ is called the \vocab{incentral triangle} of $\triangle ABC$ with respect to $\triangle ABC$.
+
+To prove the proposition stated above, there are several possible approaches; however, the quickest one is to equate areas and use the sine formula for the area of a triangle. We have
+\begin{align*}
+[\triangle ABC]
+  &= [\triangle ABD] + [\triangle ADC] \\
+  \frac{1}{2}bc \sin A
+  &= \frac{1}{2}b \cdot \overline{AD}\,\sin\!\left(\frac{A}{2}\right)
+   + \frac{1}{2}c \cdot \overline{AD}\,\sin\!\left(\frac{A}{2}\right) \\
+  \overline{AD}
+  &= \frac{2bc}{b+c}\cos\!\left(\frac{A}{2}\right),
+\end{align*}
+which proves the proposition.
+
+
+Let's add the circumcircle of $\triangle ABC$ to the picture, which reveals our next major result in this configuration.
+\subsection{Incenter/Excenter Lemma}
+This is a collection of crucial propositions in this configuration that help us connect the big picture. Let us begin with the first proposition.
+\begin{proposition}
+In $\triangle ABC$, let $I$ be the incenter. Suppose $AI$ intersects $\odot(ABC)$ again at $D$. Then
+\[
+\overline{DB} = \overline{DI} = \overline{DC}
+\]
+or, $D$ is the circumcenter of $\triangle BIC$.
+\end{proposition}
+In other words, $D$ is the midpoint of the arc $BC$ of the circumcircle $\odot(ABC)$ that does not contain $A$. Let us first show that $\triangle DBC$ is isosceles. As mentioned earlier, angle chasing is usually the first thing we should try in incenter configurations:
+\[
+\angle DBC = \angle DAC
+           = \angle DAB
+           = \angle DCB
+\]
+
+
+which indeed shows that $\triangle DBC$ is isosceles. Now we would like to show that $\triangle BDI$ and $\triangle CDI$ are isosceles. It is sufficient to prove only one of them, since the other follows immediately. Fortunately, we can compute $\angle BID$, which leads to the following angle chase:
+\begin{align*}
+\angle BID
+  &= 180^{\circ} - \angle AIB \\
+  &= 180^{\circ} - \left(90^{\circ} + \frac{1}{2}\angle C\right) \\
+  &= 90^{\circ} - \frac{1}{2}\angle C \\
+  &= \frac{1}{2}\angle A + \frac{1}{2}\angle B \\
+  &= \angle DBC + \angle IBC \\
+  &= \angle DBI
+\end{align*}
+which proves that $\triangle DBI$ is isosceles as well, and hence the result follows. The next proposition ties the excenter to this diagram.
+
+
+\begin{proposition}
+In $\triangle ABC$, let $I$ be the incenter, and suppose $AI$ intersects $\odot(ABC)$ again at $D$. Let $I'$ be the reflection of $I$ across $D$. Then $I'$ is the $A$-excenter of $\triangle ABC$.
+\end{proposition}
+
+By definition of $I'$, the points $A$, $I$, and $I'$ are collinear. Thus $I'$ already lies on the $A$-angle bisector. It remains to show that $I'$ also lies on the external angle bisectors of $\angle B$ and $\angle C$ in $\triangle ABC$.
+
+Also $IBI'C$ is a cyclic quadrilateral, since it follows directly from the definition
+\[
+\overline{DB} = \overline{DI} = \overline{DC} = \overline{DI'}
+\]
+
+Hence $D$ is the center of the circle passing through $I$, $B$, $I'$, and $C$. Using this fact to angle chase, we obtain
+\begin{align*}
+\angle I'BC
+  &= \angle I'IC \\
+  &= 180^{\circ} - \angle AIC \\
+  &= 90^{\circ} - \frac{1}{2}\angle B
+\end{align*}
+
+This implies that $\overline{I'B} \perp BI$, and therefore $BI'$ is the external angle bisector of $\angle B$. Similarly, since $I'C \perp CI$, the line $I'C$ is the external angle bisector of $\angle C$. Hence $I'$ is indeed the $A$-excenter of $\triangle ABC$.
+
+
+For the sake of geometric terminology, the triangle formed by joining the excenters has a dedicated name.
+\begin{definition}
+In $\triangle ABC$, let $I_A$, $I_B$, and $I_C$ be the excenters opposite vertices $A$, $B$, and $C$, respectively. Then $\triangle I_A I_B I_C$ is called the \vocab{excentral triangle} of $\triangle ABC$.
+\end{definition}
+
+
+Let's look at some examples to realise why this lemma is such a big deal.
+
+\subsubsection{Examples}
+\begin{problem}[China 2012]
+  As shown in the figure below, the in-circle of $ABC$ is tangent to sides $AB$ and $AC$ at $D$ and $E$ respectively, and $O$ is the circumcenter of $BCI$. Prove that $\angle ODB = \angle OEC$.
+\end{problem}
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import graph;
+
+size(5.55cm);
+
+real xmin=-5.76, xmax=4.8, ymin=-3.69, ymax=3.71;
+
+pen zzttqq = rgb(0.6,0.2,0);
+pen wwwwqq = rgb(0.4,0.4,0);
+pen qqwuqq = rgb(0,0.39,0);
+
+pair A = (-2, 2.5);
+pair B = (-3,-1.5);
+pair C = ( 2,-1.5);
+pair I = (-1.27,-0.15);
+pair Dp = (-2.58,0.18);      // renamed from D -> Dp to avoid clash
+pair O = (-0.5,-2.92);
+pair E = (-0.31,0.81);
+
+// triangle
+draw(A--B--C--cycle, zzttqq);
+
+// two little angle‐arc wedges
+draw(arc(Dp,0.25,-104.04,-56.12)--Dp--cycle, qqwuqq);
+draw(arc(E,0.25,-92.92,-45)--E--cycle, qqwuqq);
+
+// triangle edges
+draw(A--B, zzttqq);
+draw(B--C, zzttqq);
+draw(C--A, zzttqq);
+
+// circles
+draw(circle(I,1.35), linewidth(1.2)+dotted+wwwwqq);
+draw(circle(O,2.87), linetype("2 2")+blue);
+
+// segments
+draw(Dp--O);
+draw(E--O);
+
+// points
+dot(A); dot(B); dot(C);
+dot(I); dot(Dp); dot(E); dot(O);
+
+// labels
+label("A", A, dir(110));
+label("B", B, dir(140));
+label("C", C, dir(20));
+label("D", Dp, dir(150));
+label("E", E, dir(60));
+label("O", O, dir(290));
+label("I", I, dir(100));
+
+// clip to figure window
+clip( (xmin,ymin)--(xmin,ymax)--(xmax,ymax)--(xmax,ymin)--cycle );
+  \end{asy}
+\end{figure}
+
+\begin{proof}
+    We claim that point $O$ lies on line $AI$. This follows from angle chasing because
+    \begin{align*}
+      \angle BIO &= 90^{\circ} - \frac{1}{2} \angle BOI \\ 
+            &= 90^{\circ} - \angle BCI \\ 
+            &= 90^{\circ} - \frac{1}{2} \angle C
+    \end{align*}
+    Since, $\angle AIB = 90^{\circ} + \frac{1}{2} \angle C$ $\implies$ $\angle AIB + \angle BIO$ $=$ $180^{\circ}$, which implies the collinearity of points $A$, $I$ and $O$. Since $\overline{AD}$ $=$ $\overline{AE}$ (as they are tangents from point $A$ to the incircle), by SAS congruence criterion we can show $\triangle DAO \cong \triangle EAO$. Therefore $\angle ADO = \angle AEO$ $\implies$ $\angle ODB$ $=$ $\angle OEC$, as desired.
+\end{proof}
+
+\begin{problem}[IMO 2006]
+  Let $ABC$ be triangle with incenter $I$. A point $P$ in the interior of the triangle satisfies\[\angle PBA+\angle PCA = \angle PBC+\angle PCB.\]Show that $AP \geq AI$, and that equality holds if and only if $P=I$.
+\end{problem}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+      import geometry; size(8cm); point A = dir(110), B = dir(210), C = dir(330), M = dir(270); triangle t = triangle(A,B,C); point I = incenter(t); point P = dir(120)+dir(270); draw(circle(A,B,C)); draw(circle(B,I,C), dotted); draw(A--B--C--A); draw(A--M--P--A); dot("$A$",A,dir(110)); dot("$B$",B, dir(190)); dot("$C$",C, dir(0)); dot("$I$",I,dir(240)); dot("$M$",M,dir(270)); dot("$P$",P,dir(250));
+    \end{asy}
+
+\end{figure}
+
+\begin{proof}
+  We claim that $BPIC$ is a cyclic quadrilateral. This can be shown using angle chasing
+\begin{align*}
+\angle PBA + \angle PCA &= \angle PBC + \angle PCB \\ 
+\implies \angle B + \angle C &= 2 \left( \angle PBC + \angle PCB \right) \\ 
+\implies 180^{\circ} - \angle A &= 2 \left( \angle PBC + \angle PCB \right) \\ 
+\implies 90^{\circ} - \frac{1}{2} \angle A &= \angle PBC + \angle PCB \\ 
+\implies \angle BPC &= 90^{\circ} + \frac{1}{2} \angle A = \angle BIC
+\end{align*}
+
+However, $\odot(A, AI)$ is tangent to $\odot(BIC)$ at $I$ because $M$ (midpoint of arc $BC$ not containing $A$) is the center of $\odot(BIC)$ and $AM$ $=$ $AI + IM$ which is due these points being collinear. Hence, any point $P$ $\in$ $\odot(BIC)$ is farther away from $A$ than $I$ $\implies$ $AP \geq AI$ where equality holds if and only if $P$ and $I$ coincide.
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}
+    In $\triangle ABC$, let $I$ be the incenter of $\triangle ABC$. Show that,
+    \begin{enumerate}[itemsep=0.01em]
+      \item $\overline{AI} = \tfrac{2bc}{a + b + c} \cos \left( A / 2 \right)$
+      \item $\overline{BI} = \tfrac{2ca}{a + b + c} \cos \left( B / 2 \right)$
+      \item $\overline{CI} = \tfrac{2ab}{a + b + c} \cos \left( C / 2 \right)$
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+  In the cyclic quadrilateral $ABCD$, let $I_1$ and $I_2$ denote the incenters of $\triangle{ABC}$ and ${DBC}$, respectively. Prove that $I_1I_2BC$ is cyclic.
+\end{exercise}
+
+\begin{exercise}
+  Let $ABC$ be an acute triangle inscribed in circle $\omega$. Let $X$ be the midpoint of the arc $BC$ not containing $A$ and define $Y,Z$ similarly. Show that the orthocenter of $\triangle{XYZ}$ is the incenter $I$ of $\triangle{ABC}$
+\end{exercise}
+
+\begin{exercise}
+  In $\triangle ABC$, let $I$ be the incenter of $\triangle ABC$ and $\triangle I_AI_BI_C$ be the excentral triangle. Show that $I$ is the orthocenter of $\triangle I_AI_BI_C$.
+\end{exercise}
+
+\end{document}

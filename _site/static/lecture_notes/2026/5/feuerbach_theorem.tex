@@ -1,0 +1,454 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+
+\begin{document}
+\title{On Feuerbach's Theorem}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    This article explores a synthetic proof of a celebrated result in euclidean geometry: \vocab{Feuerbach's Theorem}
+\end{abstract}
+
+\section{Statement}
+\begin{theorem}[Feuerbach's Theorem]
+The \vocab{Nine-Point Circle} of a triangle is \emph{internally tangent} to the \vocab{Incircle} and \emph{externally tangent} to the three \vocab{Excircles}. The points of tangencies are the interior and three exterior \vocab{Feuerbach Points}. 
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; 
+        size(12.5cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, I, O, I_A, I_B, I_C, M_A, M_B, M_C;
+        A = dir(110); B = dir(185); C = dir(355);
+
+        O = origin; I = incenter(A, B, C);
+        I_A = excenter(B, C, A); I_B = excenter(C, A, B); I_C = excenter(A, B, C);
+        M_A = (B + C) / 2; M_B = (C + A) / 2; M_C = (A + B) / 2;
+        
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+        
+        draw(A--B--C--cycle);
+        draw(incircle(A, B, C), red); draw(excircle(A, B, C), blue);
+        draw(excircle(B, C, A), blue); draw(excircle(C, A, B), blue);
+        draw(circumcircle(M_A, M_B, M_C));
+
+        pair X_1, X_2, X_3, X_4, X_5, X_6;
+        X_1 = foot(I_A, A, B); X_2 = foot(I_A, A, C);
+        X_3 = foot(I_B, B, C); X_4 = foot(I_B, A, B);
+        X_5 = foot(I_C, A, C); X_6 = foot(I_C, B, C);
+        
+        draw(B--X_1, gray); draw(C--X_2, gray); draw(C--X_3, gray); draw(A--X_4, gray); draw(A--X_5, gray); draw(B--X_6, gray);
+  
+        pair D = foot(I, B, C); pair Dp = reflect(A, I) * D;
+        pair FF[] = intersectionpoints(line(M_A, Dp), circumcircle(M_A, M_B, M_C));
+        
+        dot("$Fe$", FF[1], dir(45));
+
+        pair[] Fa, Fb, Fc;
+        Fa = intersectionpoints(circumcircle(M_A, M_B, M_C), excircle(B, C, A));
+        Fb = intersectionpoints(circumcircle(M_A, M_B, M_C), excircle(C, A, B));
+        Fc = intersectionpoints(circumcircle(M_A, M_B, M_C), excircle(A, B, C));
+    
+        dot("$F_a$", Fa[0], dir(300));
+        dot("$F_b$", Fb[0], dir(45));
+        dot("$F_c$", Fc[0], dir(180));
+    \end{asy}
+\end{figure}
+
+\section{Definitions}
+We need to state some definitions before we begin diving in this configuration.
+
+\begin{definition}
+    The \vocab{Nine-Point Circle} of $\triangle ABC$ is a circle that passes through the midpoints of $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$; midpoints of $\overline{AH}$, $\overline{BH}$ and $\overline{CH}$, and through the feet of perpendiculars $H_A$, $H_B$ and $H_C$ in $\triangle ABC$.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(10cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, O, M_A, M_B, M_C, H, H_A, H_B, H_C, E_A, E_B, E_C;
+        A = dir(110); B = dir(190); C = dir(350);
+
+        M_A = (B + C) / 2; M_B = (C + A) / 2; M_C = (A + B) / 2;
+        H_A = foot(A, B, C); H_B = foot(B, A, C); H_C = foot(C, A, B);        H = extension(A, H_A, B, H_B);
+
+        E_A = (A + H) / 2; E_B = (B + H) / 2; E_C = (C + H) / 2;
+
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+        dot("$M_A$", M_A, dir(315)); dot("$M_B$", M_B, dir(45)); dot("$M_C$", M_C, dir(135));
+        dot("$H_A$", H_A, dir(225)); dot("$H_B$", H_B, dir(60)); dot("$H_C$", H_C, dir(120));
+        dot("$E_A$", E_A, dir(55)); dot("$E_B$", E_B, dir(335)); dot("$E_C$", E_C, dir(205)); dot("$H$", H, dir(20));
+        
+        draw(A--B--C--cycle); draw(circumcircle(M_A, M_B, M_C));
+        draw(A--H_A); draw(B--H_B); draw(C--H_C);
+    \end{asy}
+\end{figure}
+The existence of the nine-point circle is a popular result in classical geometry. It follows from the fact that we can magnify the circumcircle $\odot(ABC)$ by a factor $\tfrac{1}{2}$ so that it maps to the nine-point circle.
+\begin{definition}
+The \vocab{Incircle} of $\triangle ABC$ is a circle tangent to all the three sides of the triangle internally.
+\end{definition}
+\begin{definition}
+The \vocab{Excircle} of $\triangle ABC$ is a circle tangent to one of the sides internally and the other two sides externally.
+\end{definition}
+Some popular triangle names that we shall use.
+\begin{definition}
+The \vocab{contact triangle} of $\triangle ABC$ is the triangle joining the incircle touchpoints with the triangle sides.
+\end{definition}
+\begin{definition}
+The \vocab{medial triangle} of $\triangle ABC$ is the triangle joining the midpoints of the sides of $\triangle ABC$.
+\end{definition}
+Finally, we will need the definition of an isogonal conjugate in a triangle.
+\begin{definition}
+    In a $\triangle ABC$, where $AD$, $BE$ and $CF$ are $A$-cevian, $B$-cevian and $C$-cevians. Let their concurrency point be $X$. Let $D'$, $E'$ and $F'$ be points on $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$ such that $\angle BAD$ $=$ $\angle D'AC$, $\angle CBE$ $=$ $\angle C'BA$ and $\angle ACF$ $=$ $\angle F'CB$, then the cevians $AD'$, $BE'$ and $CF'$ are concurrent too. The point of concurrency is the \vocab{Isogonal Conjugate} of point $X$ with respect to $\triangle ABC$.
+\end{definition}
+The proof of the above concurrency follows from \vocab{Ceva's Theorem}.
+
+\section{Important Lemmas}
+\begin{lemma}\label{sec:Lemma1}
+    The isogonal conjugate of a point $P$ with respect to $\triangle ABC$ is the point at infinity along the isogonal of line $\overline{AP}$ if and only if $P$ lies on $\odot(ABC)$.
+\end{lemma}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(8cm); defaultpen(fontsize(10pt));
+
+        pair A, B, C, O;
+        A = dir(110); B = dir(210); C = dir(330);
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+    
+        draw(A--B--C--cycle);
+        draw(circumcircle(A, B, C));
+
+        pair P = dir(10);
+        dot("$P$", P, dir(P));
+
+        pair I = incenter(A, B, C);
+        draw(A--P, blue); draw(B--P, blue); draw(C--P, blue);
+
+        draw(A--reflect(A, I) * P, red);
+        draw(B--reflect(B, I) * P, red);
+        draw(C--reflect(C, I) * P, red);
+
+        // helper for filled angles
+        path angleSector(pair X, pair Y, pair Z, real r) {
+            real a1 = degrees(dir(X - Y));
+            real a2 = degrees(dir(Z - Y));
+            return arc(Y, r, a1, a2) -- Y -- cycle;
+        }
+
+        // filled + marked angles at A
+        filldraw(
+            angleSector(reflect(A,I)*P, A, B, 0.2),
+            lightgray + opacity(0.35),
+            black
+        );
+        filldraw(
+            angleSector(C, A, P, 0.2),
+            lightgray + opacity(0.35),
+            black
+        );
+
+        markangle(reflect(A,I)*P, A, B, radius=15);
+        markangle(C, A, P, radius=15);
+
+        // filled + marked angles at C
+        filldraw(
+            angleSector(B, C, reflect(C,I)*P, 0.2),
+            lightgray + opacity(0.35),
+            gray
+        );
+        filldraw(
+            angleSector(P, C, A, 0.2),
+            lightgray + opacity(0.35),
+            gray
+        );
+    \end{asy}
+    \caption{Proof without words.}
+\end{figure}
+
+
+\begin{lemma}\label{sec:Lemma2}
+    Let $I$ be the incenter and $O$ be the circumcenter of $\triangle ABC$. Let $M$ be the midpoint of $\overline{BC}$. Suppose $\odot(I)$ touches $\overline{BC}$ at $D$ and $M'$ is the reflection of $M$ over $\overline{AI}$. Then $\overline{DM'} \perp \overline{OI}$.
+\end{lemma}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(11cm); defaultpen(fontsize(11pt));
+
+        pair A, B, C, O;
+        A = dir(164); B = dir(215); C = dir(325);
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+    
+        draw(A--B--C--cycle);
+        draw(circumcircle(A, B, C));
+
+        pair D, E, F, I;
+        I = incenter(A, B, C); D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        pair Dp, Ep, Fp;
+        Dp = reflect(A, I) * D; 
+        Ep = reflect(B, I) * E;
+        Fp = reflect(C, I) * F;
+
+        pair Ma, Mb, Mc;
+        Ma = (B + C) / 2; Mb= (C + A) / 2; Mc = (A + B) / 2;
+        pair Mar = reflect(A, I) * Ma;
+
+        draw(incircle(A, B, C));
+        dot("$D$", D, dir(240)); dot("$E$", E, dir(45)); dot("$F$", F, dir(165));
+        dot("$M_A$", Ma, dir(315));
+        dot("$M_A'$", Mar, dir(210));
+
+        dot("$I$", I, dir(80));
+        dot("$O$", O, dir(30));
+        draw(D--E--F--cycle);
+
+        pair[] TT = intersectionpoints(line(Ma, Dp), circumcircle(D, E, F));
+        pair[] TTr = intersectionpoints(line(Mar, D), circumcircle(D, E, F));
+        draw(I--O);
+
+        pair Ft = foot(O, D, TTr[1]);
+        draw(I--Ft, gray+dotted);
+        markrightangle(D, Ft, I, 7);
+        markrightangle(O, Ma, B, 7);
+
+        pair[] MM = intersectionpoints(line(A, I), circumcircle(A, B, C));
+        dot("$M$", MM[0], dir(315));
+
+        draw(A--MM[0], gray);
+        draw(MM[0]--O, gray);
+
+        pair Mr = reflect(B, C) * MM[0];
+        dot("$M'$", Mr, dir(45)); 
+        dot("$K$", Ft, dir(195));
+        
+        draw(Mar--Ft); draw(Mar--Ma, gray); draw(Mr--I, gray);
+        draw(circumcircle(D, I, Ma), gray(0.5)+dashed);
+
+        pair L = foot(Ma, A, I);
+        dot("$L$", L, dir(270));
+
+        markrightangle(Ma, L, A, 7);
+        markrightangle(Ma, D, I, 7);
+        draw(I--D, gray);
+
+        draw(D--L, gray(0.6));
+        draw(I--Ma, gray(0.6));
+    \end{asy}
+\end{figure}
+\begin{proof}
+The proof for this result could be broken down into several claims immediately following due to clever constructions. Suppose $L$ is the foot of perpendicular from $M_A$ to $\overline{AI}$. Let $M$ be the point of intersection of $\overline{AI}$ with $\odot(ABC)$ and $M'$ be the reflection of $M$ over $\overline{BC}$. Let $\overline{DM_A'} \cap \overline{OI}$ at $K$. We would like to show that $KDM_AO$ is cyclic, which should imply that $\angle OKD = 90^{\circ}$.
+
+\begin{claim}
+Quadrilateral $IDLM_A$ is cyclic.
+\end{claim}
+\begin{proof}
+Since $\angle IDM_A = 90^{\circ}$ and $\angle ILM_A = 90^{\circ}$, therefore the concyclicity is implied.
+\end{proof}
+\begin{claim}
+$\triangle DLM_A \sim \triangle IM_AM$
+\end{claim}
+\begin{proof}
+    Since $\angle DM_AL = \angle M_AML$ and $\angle LDM_A = \angle LIM_A$, thus due to AA similarity criterion we have $\triangle DLM_A \sim \triangle IM_AM$.
+\end{proof}
+\begin{claim}
+$\triangle DM_A'M_A \sim \triangle IM'M$
+\end{claim}
+\begin{proof}
+    We already have $\angle DM_AM_A' = \angle IMM'$ due to the previous claim. Since,
+    \begin{align*}
+        \left( \frac{\overline{DM_A}}{\overline{IM}} \right) = \left( \frac{\overline{LM_A}}{\overline{M_AM}} \right) = \left( \frac{\overline{M_A'M_A}}{\overline{M'M}} \right)
+    \end{align*}
+    Therefore, due to SAS similarly criterion we have $\triangle DM_A'M_A \sim \triangle IM'M$.
+\end{proof}
+\begin{claim}
+$\triangle IM'M \sim \triangle OIM$
+\end{claim}
+\begin{proof}
+This claim follows due to SAS similarity criterion because,
+\begin{align*}
+    \overline{IM}^2 = \overline{BM}^2 = 2R \cdot \overline{MM_A} = R \cdot \overline{M'M} = \overline{OM} \cdot \overline{M'M}
+\end{align*}
+\end{proof}
+Combining all the claims, we finally have $\angle M_A'DM_A = \angle IOM$ $\implies$ $KDM_AO$ is cyclic. Hence $\angle OKD = 90^{\circ}$ which proves the result.
+\end{proof}
+
+\section{Proof of Feuerbach's Theorem}
+We are now ready to prove the Feuerbach's Theorem. We will proceed with the proof in two steps. The first step establishes that the incircle is tangent to the nine-point circle. In the second step, we show that one of the excircles is tangent to the nine-point circle too, thus proving the statement.
+
+\subsection{Step 1: Interior Feuerbach Point}
+To prove two circles are tangent, a common strategy is to find two triangles on each of the circles and show that they are homothetic from a point that lies on one of the circles. In this way, we can ensure that the circles are tangent at the point of homothety.
+
+So we need to pick two triangles, one on the nine-point circle and the other on the incircle. We'll show that the following triangles are homothetic.
+\begin{claim}
+    Suppose $\triangle M_AM_BM_C$ is the medial triangle and $\triangle DEF$ is the contact triangle of $\triangle ABC$. Reflect $D$ over $\overline{AI}$ to $D'$ and similarly define $E'$ and $F'$. We claim that $\triangle M_AM_BM_C$ and $\triangle D'E'F'$ are homothetic.
+\end{claim}
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry;
+        size(11cm); defaultpen(fontsize(11pt));
+
+        pair A, B, C, O;
+        A = dir(160); B = dir(215); C = dir(325);
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+    
+        draw(A--B--C--cycle);
+        draw(circumcircle(A, B, C));
+
+        pair D, E, F, I;
+        I = incenter(A, B, C); D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        pair Dp, Ep, Fp;
+        Dp = reflect(A, I) * D; 
+        Ep = reflect(B, I) * E;
+        Fp = reflect(C, I) * F;
+
+        pair Ma, Mb, Mc;
+        Ma = (B + C) / 2; Mb= (C + A) / 2; Mc = (A + B) / 2;
+        
+        draw(incircle(A, B, C));
+        draw(Dp--Ep--Fp--cycle, red);
+        dot("$D$", D, dir(240)); dot("$E$", E, dir(45)); dot("$F$", F, dir(165));
+        dot("$D'$", Dp, dir(325)); dot("$E'$", Ep, dir(45)); dot("$F'$", Fp, dir(115));
+        dot("$M_A$", Ma, dir(315)); dot("$M_B$", Mb, dir(45)); dot("$M_C$", Mc, dir(155));
+
+        draw(D--E--F--cycle, gray+dashed);
+        draw(Ma--Mb--Mc--cycle, blue);
+        dot("$I$", I, dir(60));
+    \end{asy}
+\end{figure}
+\begin{proof}
+    To prove that $\triangle M_AM_BM_C$ and $\triangle D'E'F'$ are homothetic, we show that their sides are pairwise parallel. Since $\overline{EF}$ is perpendicular to $\overline{AI}$ $\implies$ $\overline{DD'}$ $\parallel$ $\overline{EF}$. As a result,
+    \begin{align*}
+        \angle BFD' = \angle FED' = \angle EFD = 90^{\circ} - \tfrac{1}{2} \angle C
+    \end{align*}
+    However, 
+    \begin{align*}
+        \angle FD'E' &= \angle FDE + \angle ED'E' = \angle FDE + 180^{\circ} - \angle BIF - \angle FIE \\ 
+        &=  \left( 90^{\circ} - \tfrac{1}{2} \angle A \right) + 180^{\circ} - \left( 90^{\circ} - \tfrac{1}{2} \angle B \right) - \left( 180^{\circ} - \angle A\right) \\ 
+        &= \tfrac{1}{2} \left( \angle A + \angle B \right) = 90^{\circ} - \tfrac{1}{2} \angle C 
+    \end{align*}
+    Therefore, $\angle BFD' = \angle FD'E'$ $\implies$ $\overline{D'E'}$ $\parallel$ $\overline{AB}$ $\parallel$ $\overline{M_AM_B}$. Similarly, we will have $\overline{E'F'} \parallel \overline{M_BM_C}$ and $\overline{F'D'} \parallel \overline{M_CM_A}$. Thus, we conclude that $\triangle M_AM_BM_C$ and $\triangle D'E'F'$ are homothetic.
+\end{proof}
+So far we have shown that the two triangles have their sides pairwise parallel. Due to \vocab{Desargues' Theorem}, we have that these triangles are perspective about a point, which is precisely their homothetic center. In our case, this point will be the tangency point of the nine-point circle and the incircle. This is due to the fact that existence of such homothetic center implies that the circumcircles of the two triangles $\triangle D'E'F'$ and $\triangle M_AM_BM_C$ are mapped under the transformation. Thus implying the desired tangency. So it is only left to find out this homothetic center.
+
+\begin{claim}
+    Let $T$ be the isogonal conjugate with respect to $\triangle DEF$ of the point at infinity of the line perpendicular to $\overline{OI}$. Then $T$ is the homothetic center of $\triangle D'E'F'$ and $\triangle M_AM_BM_C$.
+\end{claim}
+\begin{figure}
+    \centering
+    \begin{asy}
+        import geometry;
+        size(11cm); defaultpen(fontsize(11pt));
+
+        pair A, B, C, O;
+        A = dir(160); B = dir(215); C = dir(325);
+        dot("$A$", A, dir(A)); dot("$B$", B, dir(210)); dot("$C$", C, dir(335));
+    
+        draw(A--B--C--cycle);
+        draw(circumcircle(A, B, C));
+
+        pair D, E, F, I;
+        I = incenter(A, B, C); D = foot(I, B, C); E = foot(I, A, C); F = foot(I, A, B);
+        pair Dp, Ep, Fp;
+        Dp = reflect(A, I) * D; 
+        Ep = reflect(B, I) * E;
+        Fp = reflect(C, I) * F;
+
+        pair Ma, Mb, Mc;
+        Ma = (B + C) / 2; Mb= (C + A) / 2; Mc = (A + B) / 2;
+        pair Mar = reflect(A, I) * Ma;
+
+        draw(incircle(A, B, C));
+        dot("$D$", D, dir(240)); dot("$E$", E, dir(45)); dot("$F$", F, dir(165));
+        dot("$D'$", Dp, dir(355)); 
+        dot("$M_A$", Ma, dir(315));
+        dot("$M_A'$", Mar, dir(320));
+
+        dot("$I$", I, dir(80));
+        dot("$O$", O, dir(30));
+        draw(D--E--F--cycle);
+
+        pair[] TT = intersectionpoints(line(Ma, Dp), circumcircle(D, E, F));
+        pair[] TTr = intersectionpoints(line(Mar, D), circumcircle(D, E, F));
+
+        dot("$T$", TT[1], dir(60));
+        dot("$T'$", TTr[1], dir(140));
+
+        draw(Mar--TTr[1]);
+        draw(Ma--TT[1], gray+dashed);
+        draw(I--O); draw(D--TT[1], lightgray);
+        draw(A--I, lightgray);
+
+        pair Ft = foot(O, D, TTr[1]);
+        draw(I--Ft, gray+dotted);
+        markrightangle(D, Ft, I, 7);
+    \end{asy}
+\end{figure}
+\begin{proof}
+    We will prove that $\overline{D'M_A}$ passes through $T$. Similarly, we should be able to show that $\overline{E'M_B}$ and $\overline{F'M_C}$ pass through $T$ as well.
+    
+    Let the point at infinity along the line perpendicular to $\overline{OI}$ be $\infty_{\perp \overline{OI}}$. Suppose $D\infty_{\perp \overline{OI}}$ $\cap$ $\odot(I)$ again at $T'$. Then lines $\overline{DT}$ and $\overline{DT'}$ are isogonal with respect to $\angle FDE$, and $T'$ is the reflection of $T$ over $\overline{AI}$. Since $\overline{DT'}$ is perpendicular $\overline{OI}$ $\implies$ $\overline{DT'}$ passes through $M_A'$ due to \ref{sec:Lemma2}, where $M_A'$ is the reflection of $M_A$ over $\overline{AI}$. 
+
+    \noindent Therefore, reflecting the line $\overline{T'DM_A'}$ over $\overline{AI}$ implies that the points $T$, $D'$ and $M_A$ are collinear. Similarly, we can show that $\overline{E'M_B}$ and $\overline{F'M_C}$ pass through $T$, thus implying that $T$ is indeed the homothetic center of $\triangle D'E'F'$ and $\triangle M_AM_BM_C$. 
+\end{proof}
+The point $T$ is called the \vocab{Feuerbach Point}, which is the point of tangency of the nine-point circle and the incircle. It is also the isogonal conjugate with respect to $\triangle DEF$ of the point at infinity along the line perpendicular to $\overline{OI}$, denoted as $\infty_{\perp \overline{OI}}$.
+
+\subsection{Step 2: Exterior Feuerbach Point}
+We will show that the $A$-excircle is tangent to the nine-point circle. The proof is similar to the previous step. We first need to identify the homothetic triangles to imply the tangency.
+\begin{claim}
+Suppose that the $A$-excircle is tangent to the sides $\overline{BC}$, $CA$ and $AB$ at points $T$, $U$ and $V$. Reflect $T$ over $\overline{AI}$ to $T'$. Reflect $T'$ over $\overline{UI_A}$ and $\overline{VI_A}$ to $V'$ and $U'$ respectively. Then $\triangle M_AM_BM_C$ and $\triangle T'U'V'$ are homothetic.
+\end{claim}
+\begin{proof}
+Since $\overline{UI_A} \perp \overline{T'V'}$ and $\overline{VI_A} \perp \overline{T'U'}$ $\implies$ $\overline{T'U'} \parallel \overline{AB} \parallel \overline{M_AM_B}$ and $\overline{T'V'} \parallel \overline{CA} \parallel \overline{M_AM_C}$. Since points $T$, $U$ and $V$ are pairwise reflections of each other over the lines $\overline{AI}$, $\overline{BI_A}$ and $\overline{CI_A}$ 
+\begin{align*}
+    \overline{TU'} = \overline{UV} = \overline{TV'}
+\end{align*}
+Hence, $\overline{TI_A} \perp \overline{U'V'} \implies \overline{U'V'} \parallel \overline{BC} \parallel \overline{M_BM_C}$. This implies that $\triangle M_AM_BM_C$ and $\triangle T'U'V'$ are homothetic.
+\end{proof}
+The next step is similar as well. If we reflect $M_A$ over $\overline{AI}$ to $M_A'$, then $\overline{TM_A'}$ $\perp$ $\overline{OI_A}$, where $T$ is the point where $A$-excircle touches $\overline{BC}$.
+\begin{claim}
+Suppose that point $M_A$ is reflected over $\overline{AI}$ to $M_A'$. Then $\overline{TM_A'} \perp \overline{OI_A}$.
+\end{claim}
+\begin{proof}
+The idea is similar to showing $\overline{DM_A'} \perp \overline{OI}$. Let $R$ be the intersection of $\overline{TM_A'}$ and $\overline{OI_A}$. Let $M$ be the intersection of $\overline{AI}$ with $\odot(ABC)$ and $M'$ be the reflection of $M$ over $\overline{BC}$. Then $\triangle M_A'M_AT$ $\sim$ $\triangle M'MI_A$ $\sim$ $\triangle I_AMO$. These similar triangles imply that $OM_ART$ is cyclic $\implies$ $\overline{TM_A'} \perp \overline{OI_A}$.
+\end{proof}
+Finally, we finish the implication by identifying that the exterior feuerbach point $F_a$ is the isogonal conjugate of point at infinity of the line perpendicular to $\overline{OI_A}$ with respect to $\triangle TUV$. Reflecting the collinearity over $\overline{AI}$ implies that $\overline{M_AT'}$ passes through $F_a$. Similarly, we can show that $\overline{U'M_B}$ and $\overline{V'M_C}$ passes through $F_a$, implying that it is indeed the center of homothety for $\triangle M_AM_BM_C$ and $\triangle T'U'V'$.
+
+\end{document}

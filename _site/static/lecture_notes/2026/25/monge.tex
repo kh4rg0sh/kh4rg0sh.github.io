@@ -1,0 +1,473 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+
+\begin{document}
+\title{Monge-D'Alembert Circle Theorem}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering In this article we study about monge's circle theorem
+\end{abstract}
+
+Monge's Circle Theorem (also known as \highlight{Monge-D'Alembert Circle Theorem}) is a result related to similitudes of circles. Let's first state a few key definitions.
+\section{Homothetic Centers}
+We have already seen that when two circles are tangent, their point of tangency is a point of homothetic transformation that maps one circle onto another. Infact we can generalise this. We can state that for a pair circle (even when they are not tangent), we can find a point and a suitable homothety that maps one circle onto another.
+\begin{definition}
+  Consider two circles $\omega_1$ and $\omega_2$ with centers $O_1$ and $O_2$ and radii $r_1$ and $r_2$. Then
+  \begin{enumerate}
+    \item the \vocab{exsimilicenter} of $\omega_1$ and $\omega_2$ is the point $E$ on the line $O_1O_2$ that satisfies 
+    \begin{align*}
+      \frac{\overline{EO_1}}{\overline{EO_2}} = \frac{r_1}{r_2}
+    \end{align*}
+    \item the \vocab{insimilicenter} of $\omega_1$ and $\omega_2$ is the point $I$ lying on the line $O_1O_2$ that satisfies
+    \begin{align*}
+      \frac{\overline{IO_1}}{\overline{IO_2}} = - \frac{r_1}{r_2}
+    \end{align*}
+  \end{enumerate}
+\end{definition}
+Immediately from the definition of these, we have that
+\begin{proposition}
+  For two circles $\omega_1$ and $\omega_2$, their \highlight{insimilicenter} and \highlight{exsimilicenter} are the centers of homothetic transformations that map $\omega_1$ to $\omega_2$.
+\end{proposition}
+\begin{proof}
+  Follows from identifying similar triangles and using the SAS similarity criterion for proving the homothety.
+\end{proof}
+Infact, it is possible to construct these centers for pair of circles that lie outside each other.
+\begin{proposition}
+  For two circles $\omega_1$ and $\omega_2$ that are not contained within each other, the intersection of common internal tangents and common external tangents are the \highlight{insimilicenter} and \highlight{exsimilicenter} of $\omega_1$ and $\omega_2$.
+\end{proposition}
+The proof again follows from similar triangles, so we shall omit it here. Something even more counter-intuitive is that these centers exist even for circles contained in one another.
+
+\section{Statement of Monge's Circle Theorem}
+\begin{theorem}[Monge's Circle Theorem]
+  For three distinct circles, their pairwise exsimilicenters are collinear.
+\end{theorem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(12cm); defaultpen(fontsize(10pt));
+
+    pair tangent(pair P, pair O, real r, int n=1)
+    {
+        real d,R;
+        pair X,T;
+        d=abs(P-O);
+        if (d<r) return O;
+        R=sqrt(d^2-r^2);
+        X=intersectionpoint(circle(O,r),O--P);
+        if (n==1)
+        {
+            T=intersectionpoint(circle(P,R),arc(O,r,degrees(X-O),degrees(X-O)+180));
+        }
+        else if (n==2)
+        {
+            T=intersectionpoint(circle(P,R),arc(O,r,degrees(X-O)+180,degrees(X-O)+360));
+        }
+        else {T=O;}
+        return T;
+    }
+
+    pair O1 = (0, 0); 
+    pair O2 = (10, 0);
+    pair O3 = (7, -8); 
+    real r1 = 5; 
+    real r2 = 3;
+    real r3 = 1.8;
+    path C1 = circle(O1, r1); 
+    path C2 = circle(O2, r2); 
+    path C3 = circle(O3, r3);
+    draw(C1); draw(C2); draw(C3);
+
+    pair T1 = O1 + unit(O2 - O1) * (r1 / (r1 - r2)) * abs(O2 - O1);
+    pair T2 = O1 + unit(O3 - O1) * (r1 / (r1 - r3)) * abs(O3 - O1);
+    pair T3 = O2 + unit(O3 - O2) * (r2 / (r2 - r3)) * abs(O3 - O2);
+
+    dot("$O_1$", O1, dir(225)); 
+    dot("$O_2$", O2, dir(315));
+    dot("$O_3$", O3, dir(225));
+    dot("$T_1$", T1, dir(315));
+    dot("$T_3$", T2, dir(315));
+    dot("$T_2$", T3, dir(315));
+    draw(O1--T1, gray+dashed);
+    draw(O1--T2, gray+dashed);
+    draw(O2--T3, gray+dashed);
+
+    pair A1 = tangent(T1, O1, r1, 1);
+    pair A2 = tangent(T1, O1, r1, 2);
+    pair B1 = tangent(T1, O2, r2, 1);
+    pair B2 = tangent(T1, O2, r2, 2);
+    draw(A1--T1); draw(A2--T1);
+
+    pair A3 = tangent(T2, O1, r1, 1);
+    pair A4 = tangent(T2, O1, r1, 2);
+    pair C1 = tangent(T2, O3, r3, 1);
+    pair C2 = tangent(T2, O3, r3, 2);
+    draw(A3--T2); draw(A4--T2);
+
+    pair B3 = tangent(T3, O2, r2, 1);
+    pair B4 = tangent(T3, O2, r2, 2);
+    pair C3 = tangent(T3, O3, r3, 1);
+    pair C4 = tangent(T3, O3, r3, 2);
+    draw(B3--T3); draw(B4--T3);
+
+    draw(T1--T3, red);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Let the centers of the circles $\omega_1$, $\omega_2$ and $\omega_3$ be at $O_1$, $O_2$ and $O_3$, and let the pairwise exsimilicenters of $\left\{ \odot(O_1), \odot(O_2)\right\}$, $\left\{ \odot(O_2), \odot(O_3)\right\}$ and $\left\{ \odot(O_3), \odot(O_1)\right\}$ be $T_1$, $T_2$ and $T_3$. We want to show that $T_1$, $T_2$ and $T_3$ are collinear, and to prove this we shall use \highlight{Menelaus' Theorem}. Applying Menelaus' Theorem on $\triangle O_1O_2O_3$ we get
+  \begin{align*}
+    \frac{\overline{O_1T_1}}{\overline{T_1O_2}} \cdot
+    \frac{\overline{O_2T_2}}{\overline{T_2O_3}} \cdot
+    \frac{\overline{O_3T_3}}{\overline{T_3O_1}} = \frac{r_1}{r_2} \cdot \frac{r_2}{r_3} \cdot \frac{r_3}{r_1} = 1
+  \end{align*}
+  which implies that $T_1$, $T_2$ and $T_3$ are collinear.
+\end{proof}
+
+\begin{theorem}[Extension of Monge's Circle Theorem]
+  For three distinct circles, the exsimilicenter of a pair of circles is collinear with the insimilicenters of the other two pairs of circles.
+\end{theorem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(10cm); defaultpen(fontsize(10pt));
+
+    pair tangent(pair P, pair O, real r, int n=1)
+    {
+        real d,R;
+        pair X,T;
+        d=abs(P-O);
+        if (d<r) return O;
+        R=sqrt(d^2-r^2);
+        X=intersectionpoint(circle(O,r),O--P);
+        if (n==1)
+        {
+            T=intersectionpoint(circle(P,R),arc(O,r,degrees(X-O),degrees(X-O)+180));
+        }
+        else if (n==2)
+        {
+            T=intersectionpoint(circle(P,R),arc(O,r,degrees(X-O)+180,degrees(X-O)+360));
+        }
+        else {T=O;}
+        return T;
+    }
+
+    pair O1 = (0, 0); 
+    pair O2 = (10, 0);
+    pair O3 = (7, -8); 
+    real r1 = 5; 
+    real r2 = 3;
+    real r3 = 1.8;
+    path C1 = circle(O1, r1); 
+    path C2 = circle(O2, r2); 
+    path C3 = circle(O3, r3);
+    draw(C1); draw(C2); draw(C3);
+
+    pair T1 = O1 + unit(O2 - O1) * (r1 / (r1 + r2)) * abs(O2 - O1);
+    pair T2 = O1 + unit(O3 - O1) * (r1 / (r1 - r3)) * abs(O3 - O1);
+    pair T3 = O2 + unit(O3 - O2) * (r2 / (r2 + r3)) * abs(O3 - O2);
+
+    dot("$O_1$", O1, dir(225)); 
+    dot("$O_2$", O2, dir(315));
+    dot("$O_3$", O3, dir(225));
+    dot("$T_1$", T1, dir(90));
+    dot("$T_3$", T2, dir(315));
+    dot("$T_2$", T3, dir(350));
+    draw(O1--O2, gray+dashed);
+    draw(O2--O3, gray+dashed);
+    draw(O1--T2, gray+dashed);
+
+    pair A1 = tangent(T1, O1, r1, 1);
+    pair A2 = tangent(T1, O1, r1, 2);
+    pair B1 = tangent(T1, O2, r2, 1);
+    pair B2 = tangent(T1, O2, r2, 2);
+    draw(A1--B1); draw(A2--B2);
+
+    pair A3 = tangent(T2, O1, r1, 1);
+    pair A4 = tangent(T2, O1, r1, 2);
+    pair C1 = tangent(T2, O3, r3, 1);
+    pair C2 = tangent(T2, O3, r3, 2);
+    draw(A3--T2); draw(A4--T2);
+
+    pair B3 = tangent(T3, O2, r2, 1);
+    pair B4 = tangent(T3, O2, r2, 2);
+    pair C3 = tangent(T3, O3, r3, 1);
+    pair C4 = tangent(T3, O3, r3, 2);
+    draw(B3--C3); draw(B4--C4);
+
+    draw(T1--T2, red);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Let the centers of the circles $\omega_1$, $\omega_2$ and $\omega_3$ be at $O_1$, $O_2$ and $O_3$, and let the pairwise insimilicenters of $\left\{ \odot(O_1), \odot(O_2) \right\}$, $\left\{ \odot(O_2), \odot(O_3) \right\}$ and exsimilicenter of $\left\{ \odot(O_3), \odot(O_1) \right\}$ be $T_1$, $T_2$ and $T_3$. We want to show that $T_1$, $T_2$ and $T_3$ are collinear, and to prove this we shall use \highlight{Menelaus' Theorem}. Applying Menelaus' Theorem on $\triangle O_1O_2O_3$ we get
+  \begin{align*}
+    \frac{\overline{O_1T_3}}{\overline{T_3O_3}} \cdot
+    \frac{\overline{O_3T_2}}{\overline{T_2O_2}} \cdot
+    \frac{\overline{O_2T_1}}{\overline{T_1O_1}} = \frac{r_1}{r_3} \cdot \frac{r_3}{r_2} \cdot \frac{r_2}{r_1} = 1
+  \end{align*}
+  which implies that $T_1$, $T_2$ and $T_3$ are collinear.
+\end{proof}
+
+Now let's take a look at some applications of this theorem.
+\section{Exsimilicenter of $\odot(I)$ and $\odot(O)$}
+\begin{theorem}[Exsimilicenter of incenter and circumcenter]
+  Suppose $I$ is the incenter and $O$ is the circumcenter of $\triangle ABC$. Let $T_A$, $T_B$ and $T_C$ be the $A$-mixtilinear, $B$-mixtilinear and $C$-mixtilinear incircle touchpoints with the circumcircle. Then $\overline{AT_A}$, $\overline{BT_B}$ and $\overline{CT_C}$ are concurrent and the point of concurrency lies on $OI$.
+\end{theorem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O;
+    A = dir(130); B = dir(210); C = dir(330); O = circumcenter(A, B, C);
+
+    pair I = incenter(A, B, C);
+    pair Ma = -unit((B + C) / 2);
+    pair Mb = -unit((C + A) / 2);
+    pair Mc = -unit((A + B) / 2);
+
+    pair Ta, Tb, Tc;
+    pair[] Taa = intersectionpoints(line(Ma, I), circumcircle(A, B, C));
+    pair[] Tbb = intersectionpoints(line(Mb, I), circumcircle(A, B, C));
+    pair[] Tcc = intersectionpoints(line(Mc, I), circumcircle(A, B, C));
+    Ta = Taa[0]; Tb = Tbb[1]; Tc = Tcc[1];
+
+    pair K = extension(A, Ta, B, Tb);
+
+    dot("$A$", A, dir(130));
+    dot("$B$", B, dir(225));
+    dot("$C$", C, dir(315));
+    dot("$O$", O, dir(45));
+    dot("$I$", I, dir(135));
+    dot("$T_A$", Ta, dir(225));
+    dot("$T_B$", Tb, dir(45));
+    dot("$T_C$", Tc, dir(135));
+    dot("$K$", K, 1.5*dir(125));
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, B, C));
+
+    draw(A--Ta); draw(B--Tb); draw(C--Tc);
+    draw(K--O, gray+dashed);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Let $\omega_A$, $\omega_B$ and $\omega_C$ be the $A$-mixtilinear, $B$-mixtilinear and $C$-mixtilinear incircles of $\triangle ABC$. Let $K$ be the exsimilicenter of the incircle and circumcircle of $\triangle ABC$. Since $A$ is the exsimilicenter of the incircle and $\omega_A$ and $T_A$ is the exsimilicenter of $\omega_A$ and the circumcircle $\implies$ Applying monge's circle theorem on $\omega_A$, incircle and circumcircle, we get that $K$ lies on $\overline{AT_A}$. Similarly, applying monge's circle theorem on $\omega_B$, incircle and circumcircle $\implies$ $K$ $\in$ $\overline{BT_B}$ and on $\omega_C$, incircle and circumcircle $\implies$ $K$ $\in$ $\overline{CT_C}$. Therefore $\overline{AT_A}$, $\overline{BT_B}$ and $\overline{CT_C}$ are concurrent at the exsimilicenter of the incircle and circumcircle, which is $K$ and lies on $OI$ by definition.
+\end{proof}
+
+\section{Examples}
+\begin{problem}[USA TSTST 2017]
+  Let $ABC$ be a triangle with incenter $I$. Let $D$ be a point on side $BC$ and let $\omega_B$ and $\omega_C$ be the incircles of $\triangle ABD$ and $\triangle ACD$, respectively. Suppose that $\omega_B$ and $\omega_C$ are tangent to segment $BC$ at points $E$ and $F$, respectively. Let $P$ be the intersection of segment $AD$ with the line joining the centers of $\omega_B$ and $\omega_C$. Let $X$ be the intersection point of lines $BI$ and $CP$ and let $Y$ be the intersection point of lines $CI$ and $BP$. Prove that lines $EX$ and $FY$ meet on the incircle of $\triangle ABC$.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(10cm); defaultpen(fontsize(11pt)); 
+    pair A = dir(110); pair B = dir(210); pair C = dir(330);
+
+    draw(A--B--C--cycle); draw(incircle(A, B, C));
+
+    pair D = 0.35*B+0.65*C; draw(A--D);
+
+    pair I_B = incenter(A, B, D); 
+    pair I_C = incenter(A, C, D); 
+    pair E = foot(I_B, B, C); 
+    pair F = foot(I_C, B, C);
+
+    draw(incircle(A, B, D)); 
+    draw(incircle(A, C, D)); 
+    pair I = incenter(A, B, C);
+
+    pair P = extension(I_B, I_C, A, D); 
+    draw(I_B--I_C);
+
+    pair X = extension(B, I, C, P); 
+    pair Y = extension(C, I, B, P); 
+    pair Z = extension(E, X, F, Y); 
+    
+    draw(B--I--C); 
+    draw(X--C, dotted); 
+    draw(Y--B, dotted); 
+    draw(E--Z--F, dashed);
+
+    pair T = extension(B, C, I_B, I_C);
+    pair W = foot(I, B, C);
+    draw(W--Z);
+
+    dot("$A$", A, dir(A)); 
+    dot("$B$", B, dir(270)); 
+    dot("$C$", C, dir(270)); 
+    dot("$D$", D, dir(D)); 
+    dot("$I_B$", I_B, dir(170)); 
+    dot("$I_C$", I_C, dir(30)); 
+    dot("$E$", E, dir(E)); 
+    dot("$F$", F, dir(F)); 
+    dot("$I$", I, dir(60)); 
+    dot("$P$", P, dir(250)); 
+    dot("$X$", X, dir(160)); 
+    dot("$Y$", Y, dir(40)); 
+    dot("$Z$", Z, dir(140)); 
+    dot("$W$", W, dir(W));
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Suppose the incircle touches $\overline{BC}$ at $W$ and let $Z$ be the diametrically opposite point of $W$ in the incircle. 
+  \begin{claim}
+    $X$ lies on $\overline{EZ}$.
+  \end{claim}
+  \begin{proof}
+    Observe that $P$ is the insimilicenter of $\omega_B$ and $\omega_C$. This is because $\overline{AD}$ is the internal common tangent of $\omega_B$ and $\omega_C$ and $P$ lies on $\overline{I_BI_C}$. Furthmore, $C$ is the exsimilicenter of $\omega_C$ and $\odot(I)$. This is because, $\overline{AC}$ and $\overline{BC}$ are external common tangents to $\omega_C$ and $\odot(I)$. Therefore, the insimilicenter of $\omega_B$ and $\odot(I)$ must lie on the line $CP$. This is precisely point $X$ because $X$ lies on $\overline{II_B}$. Since $Z$ is the diametrically opposite point to the point of tangency of the external common tangent $\implies$ $X$ lies on $\overline{EZ}$. 
+  \end{proof}
+  Similarly, we can show that $Y$ is the insimilicenter of $\odot(I)$ and $\omega_C$ $\implies$ $Y$ lies on $\overline{ZF}$ $\implies$ $\overline{EX}$ and $\overline{YF}$ meet on the incircle at point $Z$.
+\end{proof}
+
+\begin{problem}[IMO Shortlist 2007]
+  Point $ P$ lies on side $ AB$ of a convex quadrilateral $ ABCD$. Let $ \omega$ be the incircle of triangle $ CPD$, and let $ I$ be its incenter. Suppose that $ \omega$ is tangent to the incircles of triangles $ APD$ and $ BPC$ at points $ K$ and $ L$, respectively. Let lines $ AC$ and $ BD$ meet at $ E$, and let lines $ AK$ and $ BL$ meet at $ F$. Prove that points $ E$, $ I$, and $ F$ are collinear.
+\end{problem}
+\begin{figure}
+  \centering
+  \begin{asy}
+    import geometry;
+    size(12cm); defaultpen(fontsize(10pt)); 
+
+    pair P,C,D,I,K,L,IA,IB,A,B,EE,F,Q,O,I1,I2; 
+    P=dir(120); C=dir(205); D=dir(335); 
+    I=incenter(P,C,D); K=foot(I,P,D); 
+    L=foot(I,P,C); IA=K+0.8*(K-I); 
+    IB=extension(L,I,P,P+(C-P)*dir(90)*(IA-P)/(I-P)); 
+    A=extension(P,reflect(P,IA)*K,D,reflect(D,IA)*K); 
+    B=extension(P,reflect(P,IB)*L,C,reflect(C,IB)*L); 
+    EE=extension(A,C,B,D); F=extension(A,K,B,L); 
+    Q=extension(A,D,B,C); O=incenter(Q,A,B); 
+    I1=extension(A,IA,C,I); I2=extension(B,IB,D,I);
+
+    draw(B--F--A); 
+    draw(B--D); 
+    draw(A--C); 
+    draw(C--foot(O,B,C)); 
+    draw(incircle(Q,A,B),dotted); 
+    draw(circle(I1,abs(I1-foot(I1,C,D))),heavygray+dashed); 
+    draw(circle(I2,abs(I2-foot(I2,C,D))),heavygray+dashed); 
+    draw(incircle(P,A,D)); draw(incircle(P,C,B)); 
+    draw(incircle(P,C,D)); draw(A--B--C--D--cycle); 
+    draw(C--P--D); draw((EE+4*(EE-O))--(O+3*(O-EE)));
+
+    dot("\(P\)",P,N); 
+    dot("\(C\)",C,SW); 
+    dot("\(D\)",D,SE); 
+    dot("\(A\)",A,NE); 
+    dot("\(B\)",B,W); 
+    dot("\(K\)",K,dir(15)); 
+    dot("\(L\)",L,dir(120)); 
+    dot("\(E\)",EE,S); 
+    dot("\(F\)",F,dir(280)); 
+    dot("\(I\)",I,dir(260)); 
+    dot("\(O\)",O,SE);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Let $\omega_A$ and $\omega_B$ be the incircles of $\triangle APD$ and $\triangle BPC$. Since
+  \begin{align*}
+    \frac{\overline{PC} + \overline{PD} - \overline{CD}}{2} = \overline{PK} = \frac{\overline{PA} + \overline{PD} - \overline{AD}}{2}
+  \end{align*}
+  which implies that $\overline{PC} + \overline{AD} = \overline{PA} + \overline{CD}$. Therefore by pitot's theorem, the quadrilateral $PADC$ is circumscribed and has an incircle. Similarly, $PBCD$ has is circumscribed and has an incircle too. Let $\Omega_A$ be the inscribed circle of $PACD$ and $\Omega_B$ be the inscribed circle of $PBCD$. Let $\Omega$ be the circle tangent to the sides $\overline{AB}$, $\overline{BC}$ and $\overline{AD}$ and let $O$ be the center of $\Omega$. 
+  \begin{claim}
+    $F$ is the insimilicenter of $\omega$ and $\Omega$.
+  \end{claim}
+  \begin{proof}
+    Applying Monge's Circle Theorem on triplets of circles $\omega_A$, $\omega$ and $\Omega$, and $\omega_B$, $\omega$ and $\Omega$, we get that the insimilicenter of $\omega$ and $\Omega$ must lie on $BL$ and $AK$. This is because $A$ is the exsimilicenter of $\omega_A$ and $\Omega$ and $K$ is the insimilicenter of $\omega_A$ and $\omega$. Similarly, $B$ is the exsimilicenter of $\omega_B$ and $\Omega$ and $L$ is the insimilicenter of $\omega_B$ and $\omega$ $\implies$ $F$ is the insimilicenter and must lie on $OI$.
+  \end{proof}
+
+  \begin{claim}
+    $E$ is the exsimilicenter of $\omega$ and $\Omega$.
+  \end{claim}
+  \begin{proof}
+    Applying Monge's Circle Theorem on triplets of circles $\omega$, $\Omega_A$ and $\Omega$, and $\omega$, $\Omega_B$ and $\Omega$, we get that $E$ lies on $BD$ and $AC$. This is because $C$ is the exsimilicenter of $\omega$ and $\Omega_A$ an $A$ is the exsimilicenter of $\Omega$ and $\Omega_A$. Similarly, $D$ is the exsimilicenter of $\omega$ and $\Omega_B$ and $B$ is the exsimilicenter of $\Omega$ and $\Omega_B$ $\implies$ $E$ is the exsimilicenter and must lie on $OI$.
+  \end{proof}
+  This implies the points $E$, $F$, $I$ and $O$ are collinear.
+\end{proof}
+
+\section{Exercises}
+\begin{exercise}
+  Let $k_{1}$ and $k_{2}$ be two given circles. Consider all circles $k$ externally tangent to both of them and denote the tangency points by $T_{1}$ and $T_{2}$ respectively. Prove that line $T_{1}T_{2}$ passes through a fixed point.
+\end{exercise}
+
+\begin{exercise}
+  Given a triangle $ABC$, let $\Gamma_{A}$ be a circle tangent to $AB$ and $AC$, let $\Gamma_{B}$ be a circle tangent to sides $BA$ and $BC$, and let $\Gamma_{C}$ be a circle tangent to $CA$ and $CB$. Suppose $\Gamma_{A}, \Gamma_{B}, \Gamma_{C}$ are all tangents to one another . Let $E$ be tangency point between $\Gamma_{C}$ and $\Gamma_{A}$ and let $F$ be the tangency point between $\Gamma_{A}$ and $\Gamma_{B}$. Prove that the lines $BF$ and $CE$ concur on the $A-$internal angle bisector of $\Delta ABC$.
+\end{exercise}
+
+\begin{exercise}[Romania TST 2007]
+  Let $ABC$ be a triangle, and $\omega_{a}$, $\omega_{b}$, $\omega_{c}$ be circles inside $ABC$, that are tangent (externally) one to each other, such that $\omega_{a}$ is tangent to $AB$ and $AC$, $\omega_{b}$ is tangent to $BA$ and $BC$, and $\omega_{c}$ is tangent to $CA$ and $CB$. Let $D$ be the common point of $\omega_{b}$ and $\omega_{c}$, $E$ the common point of $\omega_{c}$ and $\omega_{a}$, and $F$ the common point of $\omega_{a}$ and $\omega_{b}$. Show that the lines $AD$, $BE$ and $CF$ have a common point.
+\end{exercise}
+
+\begin{exercise}[China 2013]
+  Let non-intersecting circles $\omega_{1}, \omega_{2}, \omega_{3}$ all be internally tangent to a circle $\Omega$ at points $A, B, C$ respectively. Let lines $\l_{1}$ and $\l_{2}$ and $\l_{3}$ be common external tangents to circles $\omega_{2}, \omega_{3}$ and $\omega_{3}, \omega_{1}$ and $\omega_{1}, \omega_{2}$ and let $X= \l_{1}\cap \l_{3}, Y= \l_{3}\cap l_{1}$, and $Z= \l_{1}\cap \l_{2}$. Prove that lines $AX, BY, CZ$ concur om line $IO$ where $I$ is the incenter of $XYZ$ and $O$ is the center of $\Omega$
+\end{exercise}
+
+
+\section{Practice Problems}
+
+\begin{exercise}[ELMO Shortlist 2011]
+  Let $ABC$ be a triangle. Draw circles $\omega_A$, $\omega_B$, and $\omega_C$ such that $\omega_A$ is tangent to $AB$ and $AC$, and $\omega_B$ and $\omega_C$ are defined similarly. Let $P_A$ be the insimilicenter of $\omega_B$ and $\omega_C$. Define $P_B$ and $P_C$ similarly. Prove that $AP_A$, $BP_B$, and $CP_C$ are concurrent.
+\end{exercise}
+
+\begin{exercise}
+  Let $k_{1}, k_{2}$ be two circles and let $\omega$ be a circle externally tangent to both $ k_{1}$ and $ k_{2}$ at $A, B$ respectively. Let $\Omega$ be a circle orthogonal to both $ k_{1}$ and $ k_{2}$ and let $C$ be one of the intersections of $\Omega$ and $ k_{1}$ and let $D$ be one of the intersections of $\Omega$ and $ k_{2}$. Then the exsimilicenter $X$ of $ k_{1}$ and $ k_{2}$ is on radical axis of $\omega$ and $\Omega$.
+\end{exercise}
+
+\begin{exercise}
+  Circles $k_{1}$ and $k_{2}$ are tangent to one of their common external tangents at $T_{1}$ and $T_{2}$ respectively. A circle $k$ is externally tangent to $ k_{1}$ and $ k_{2}$ at points $L_{2}, L_{2}$ respectively. Prove that lines $L_{1}T_{1}$ and $L_{2}T_{2}$ concur on $k$.
+\end{exercise}
+
+\begin{exercise}[RMM 2010]
+  Let $A_1A_2A_3A_4$ be a quadrilateral with no pair of parallel sides. For each $i=1, 2, 3, 4$, define $\omega_1$ to be the circle touching the quadrilateral externally, and which is tangent to the lines $A_{i-1}A_i, A_iA_{i+1}$ and $A_{i+1}A_{i+2}$ (indices are considered modulo $4$ so $A_0=A_4, A_5=A_1$ and $A_6=A_2$). Let $T_i$ be the point of tangency of $\omega_i$ with the side $A_iA_{i+1}$. Prove that the lines $A_1A_2, A_3A_4$ and $T_2T_4$ are concurrent if and only if the lines $A_2A_3, A_4A_1$ and $T_1T_3$ are concurrent.
+\end{exercise}
+
+\begin{exercise}[RMM Shortlist 2019]
+  Let $\Omega$ be the circumcircle of an acute-angled triangle $ABC$. A point $D$ is chosen on the internal bisector of $\angle ACB$ so that the points $D$ and $C$ are separated by $AB$. A circle $\omega$ centered at $D$ is tangent to the segment $AB$ at $E$. The tangents to $\omega$ through $C$ meet the segment $AB$ at $K$ and $L$, where $K$ lies on the segment $AL$. A circle $\Omega_1$ is tangent to the segments $AL, CL$, and also to $\Omega$ at point $M$. Similarly, a circle $\Omega_2$ is tangent to the segments $BK, CK$, and also to $\Omega$ at point $N$. The lines $LM$ and $KN$ meet at $P$. Prove that $\angle KCE = \angle LCP$.
+\end{exercise}
+
+\begin{exercise}[Turkey 2022]
+  We have three circles $w_1$, $w_2$ and $\Gamma$ at the same side of line $l$ such that $w_1$ and $w_2$ are tangent to $l$ at $K$ and $L$ and to $\Gamma$ at $M$ and $N$, respectively. We know that $w_1$ and $w_2$ do not intersect and they are not in the same size. A circle passing through $K$ and $L$ intersect $\Gamma$ at $A$ and $B$. Let $R$ and $S$ be the reflections of $M$ and $N$ with respect to $l$. Prove that $A, B, R, S$ are concyclic.
+\end{exercise}
+
+\begin{exercise}[Russia 2013]
+  Let $ \omega $ be the incircle of the triangle $ABC$ and with centre $I$. Let $\Gamma $ be the circumcircle of the triangle $AIB$. Circles $ \omega $ and $ \Gamma $ intersect at the point $X$ and $Y$. Let $Z$ be the intersection of the common tangents of the circles $\omega$ and $\Gamma$. Show that the circumcircle of the triangle $XYZ$ is tangent to the circumcircle of the triangle $ABC$.
+\end{exercise}
+
+\begin{exercise}[RMM Shortlist 2019]
+  A quadrilateral $ABCD$ is circumscribed about a circle with center $I$. A point $P \ne I$ is chosen inside $ABCD$ so that the triangles $PAB, PBC, PCD,$ and $PDA$ have equal perimeters. A circle $\Gamma$ centered at $P$ meets the rays $PA, PB, PC$, and $PD$ at $A_1, B_1, C_1$, and $D_1$, respectively. Prove that the lines $PI, A_1C_1$, and $B_1D_1$ are concurrent.
+\end{exercise}
+
+\end{document}

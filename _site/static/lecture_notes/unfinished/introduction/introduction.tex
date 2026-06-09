@@ -1,0 +1,433 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{Introduction to Euclidean Geometry}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    This article serves as an introductory text to Euclidean Geometry. No prior knowledge is required to read this text. This text is expected to be read in a sequential manner from the start to the end.
+\end{abstract}
+
+\section{Elements of Euclidean Geometry}
+
+\vocab{Euclidean Geometry} is best understood as geometry on a flat, 2D plane. The treatment of geometry in this hypothetical world is based on \vocab{Euclid's Postulate} (assumptions that are always assumed to be true).
+\begin{postulate}[Euclid's Postulate]
+    Euclid's Postulate states that,
+    \begin{enumerate}[itemsep=0.05em]
+        \item A straight line segment can be drawn joining any two points.
+        \item A straight line segment can be extended indefinitely in either direction.
+        \item Given any straight line segment, a circle can be drawn with center on one endpoint and radius as the line segment.
+        \item All right angles are congruent.
+        \item If two lines are drawn that intersect a third line such that the sum of the interior angles on one side is less than two right angles, then the two lines will eventually intersect on that side when extended far enough.
+    \end{enumerate}
+\end{postulate}
+
+\section{Constructs in Euclidean Geometry}
+
+A \emph{Euclidean Construction} is a geometrical construction that can be derived using a series of operations only using the \vocab{Compass} and \vocab{Ruler}. Let's take a look at the fundamental constructs in euclidean geometry.
+
+\subsection{Point}
+\begin{definition}
+    A \vocab{Point} is a specific location in the 2D space.
+\end{definition}
+A point does not have any dimension or size. Any point could be labelled with a letter unique to that specific point.
+
+\subsection{Lines, Segments and Rays}
+
+\begin{definition}
+    A \vocab{Line Segment} is the shortest path between any two points in the space. For a line segment connecting two points $A$ and $B$, we shall denote it as $\overline{AB}$.
+\end{definition}
+\begin{definition}
+    A \vocab{Line} is an indefinite extension of a line segment on both side. For a line passing through points $A$ and $B$, we shall denote it as $AB$.
+\end{definition}
+\begin{definition}
+    A \vocab{Ray} is an indefinite extension of a line segment only on one side of the line segment. For a ray emanating from point $A$ and passing through point $B$, we shall denote it as $\overrightarrow{AB}$.
+\end{definition}
+
+According to the Euclid's Postulate, we can always draw a \emph{unique line} that passes through any two distinct points in the space. A similar argument holds for line segments too.
+
+On the other hand, through a single point in space, we can always draw \emph{infinitely} many distinct lines.
+
+So far, we have seen that:
+\begin{enumerate}[itemsep=0.05em]
+    \item Two distinct points determine a unique line.
+    \item A single point lies on infinitely many lines.
+\end{enumerate}
+
+What happens with three or more points? Can we always draw a line that passes through $n$ points in space (where, $n \geq 3$)?
+
+\subsubsection{Collinearity and Concurrency}
+
+\begin{definition}
+    A collection of $n$ points (where, $n \geq 3$) are said to be \vocab{Collinear} if and only if there exists a unique line that passes through all the $n$ points. If no such line exists, then the collection of points is termed as \vocab{Non-Collinear}.
+\end{definition}
+
+Collinearity of points is an interesting characteristic of a collection of points and as we shall see later on that it leads to some interesting results. There is another interesting property of a collection of lines called \vocab{Concurrency}. But before we could define concurrency, let's talk about intersection of lines. 
+
+\begin{proposition}[Intersection of two lines]
+    Intersection of two lines is defined as the set of common points between these two lines. For any two lines, either
+    \begin{enumerate}[itemsep=0.05em]
+        \item this set is infinite. This implies that the two lines \emph{coincide}.
+        \item this set has a single point. This point is termed as the \vocab{Intersection Point} of the two lines and these two lines are called \vocab{Intersecting Lines}.
+        \item this set is empty. In this case, the two lines are called \vocab{Parallel Lines}. Such lines are denoted with the $\parallel$ symbol.
+    \end{enumerate}
+\end{proposition}
+
+An immediate implication of the above proposition is a criteria to determine if two lines coincide!
+\begin{corollary}[Distinct-\emph{ness} of two lines]
+    Two lines coincide if and only if they have atleast two points in common.
+\end{corollary}
+
+Now that we know what it means for two lines to intersect, we can define concurrency of lines.
+
+\begin{definition}
+    A collection of $n$ lines (where, $n \geq 3$) are said to be \vocab{Concurrent} if and only if all of them intersect each other at a single point. This point is called the \vocab{Concurrency Point} of the collection of lines.
+\end{definition}
+
+Note that it does not make sense for two lines to be concurrent. This construct is strictly defined for three or more lines.
+
+\subsection{Angle}
+\begin{definition}
+    An \vocab{Angle} is defined as the inclination between two distinct rays emanating from a single point. For the rays $\overrightarrow{PQ}$ and $\overrightarrow{PR}$, we denote the angle included between these two rays as $\angle RPQ$.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+        point P = (0,0);
+        point Q = (1, 1.5);
+        point R = (2, 0);
+        dot(P, linewidth(4));
+        label("$P$", P, SW);
+        dot(Q, linewidth(4));
+        label("$Q$", Q, NW);
+        dot(R, linewidth(4));
+        label("$R$", R, SE);
+        draw(P -- (P + 1.3*(Q-P)), Arrow(DefaultHead));
+        draw(P -- (P + 1.3*(R-P)), Arrow(DefaultHead));
+        markangle(R, P, Q, radius=12);
+    \end{asy}
+    \caption{Angle $\angle RPQ$ between rays $\overrightarrow{PQ}$ and $\overrightarrow{PR}$.}
+\end{figure}
+
+Now that we know how to describe the tilt between two rays, we might also be interested in comparing these \emph{tilts}. How could we assign a numerical value to these tilts and quantify an angle?
+
+\subsubsection{Measure of an Angle}
+There are two commonly used measurement systems for measuring an angle: \vocab{Degrees} and \vocab{Radians}. 
+
+\begin{enumerate}
+    \item \textbf{Degrees}: The degree system divides the entire circle into $360$ divisions each called a degree.
+    \item \textbf{Radians}: The radian system defines one radian as the angle subtended at the center of a circle by an arc equal in length to the radius of that cicle. A full circle measures $2 \pi$ radians.
+\end{enumerate}
+
+We will use the degree system throughout this article. From the definition, an angle measure lies in the interval $\left [0^{\circ}, 360^{\circ}\right ]$.
+\begin{definition} On the basis of measure of the angle $\theta$, we can classify the angle as follows:
+\begin{enumerate}[itemsep=0.05em]
+    \item a \emph{zero angle} if $\theta = 0^{\circ}$.
+    \item an \emph{acute angle} if $\theta \in (0^{\circ}, 90^{\circ})$.
+    \item a \emph{right angle} if $\theta = 90^{\circ}$.
+    \item an \emph{obtuse angle} if $\theta \in (90^{\circ}, 180^{\circ})$.
+    \item a \emph{straight angle} if $\theta = 180^{\circ}$.
+    \item a \emph{reflex angle} if $\theta \in (180^{\circ}, 360^{\circ})$.
+    \item a \emph{complete angle} if $\theta = 360^{\circ}$.
+\end{enumerate}
+\end{definition}
+
+Okay, now we have a way to quantify an angle. However, there is still a fundamental flaw with the way we denote an angle. 
+\begin{ques}
+Consider the following situation. For two rays, $\overrightarrow{PQ}$ and $\overrightarrow{PR}$ emanating from a single point $P$. Which of the two angles do we actually mean when we say $\angle RPQ$ and how do we prevent the ambiguity?
+\end{ques}
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \begin{asy}
+            import geometry; unitsize(1cm);
+            point P = (0,0);
+            point Q = (1, 1.5);
+            point R = (2, 0);
+            dot(P, linewidth(4));
+            label("$P$", P, SW);
+            dot(Q, linewidth(4));
+            label("$Q$", Q, NW);
+            dot(R, linewidth(4));
+            label("$R$", R, SE);
+            draw(P -- (P + 1.3*(Q-P)), Arrow(DefaultHead));
+            draw(P -- (P + 1.3*(R-P)), Arrow(DefaultHead));
+            markangle(R, P, Q, radius=15);
+        \end{asy}
+    \end{minipage}
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \begin{asy}
+            import geometry; unitsize(1cm);
+            point P = (0,0);
+            point Q = (1, 1.5);
+            point R = (2, 0);
+            dot(P, linewidth(4));
+            label("$P$", P, SW);
+            dot(Q, linewidth(4));
+            label("$Q$", Q, NW);
+            dot(R, linewidth(4));
+            label("$R$", R, SE);
+            draw(P -- (P + 1.3*(Q-P)), Arrow(DefaultHead));
+            draw(P -- (P + 1.3*(R-P)), Arrow(DefaultHead));
+            markangle(Q, P, R, radius=15);
+        \end{asy}
+    \end{minipage}
+    \caption{acute angle $\angle RPQ$ and reflex angle $\angle RPQ$}
+\end{figure}
+
+\begin{assume}[Resolving the angle notation ambiguity]
+    There are two popular ways to resolve this ambiguity.
+    \begin{enumerate}[itemsep=0.05em]
+        \item The first way is to define a convention that angles are always measured in the \emph{counter-clockwise direction}. In this framework, $\angle RPQ$ would refer to the first case and $\angle QPR$ would refer to the second.
+        \item The other way to resolve this is to restrict the range of angle measures between rays to $\left [0^{\circ}, 180^{\circ} \right ]$. Under such assumptions, $\angle RPQ$ would always refer to the \emph{smaller angle} and the reflex angle would be denoted as $360^{\circ} - \angle RPQ$.
+    \end{enumerate}
+Henceforth, we shall adopt the second assumption.
+\end{assume}
+
+It's easier to understand the concept of angles for a pair of rays. Furthermore, we could extend the definition of angles to a pair of intersecting lines or segments.
+
+\begin{definition}
+    For a pair of intersecting line segments $\overline{AB}$ and $\overline{CD}$ with intersection point $X$, the angle $\angle AXC$ is defined as the angle enclosed between the line segments $\overline{AX}$ and $\overline{CX}$.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+        point X = (0, 0);
+        point B = (-2, 0);
+        point A = (2, 0);
+        point C = (1, 1);
+        point D = (-1, -1);
+
+        dot(A, linewidth(4));
+        label("$A$", A, NW);
+        dot(B, linewidth(4));
+        label("$B$", B, NW);
+        dot(C, linewidth(4));
+        label("$C$", C, NW);
+        dot(D, linewidth(4));
+        label("$D$", D, NW);
+        dot(X, linewidth(4));
+        label("$X$", X, NW);
+    
+        draw(A--B);
+        draw(C--D);
+        markangle(A, X, C, radius=15);
+    \end{asy}
+    \caption{$\angle ACX$ marked for pair of intersecting line segments $\overline{AB}$ and $\overline{CD}$}
+\end{figure}
+
+Since lines are just an extension of line segments on both the sides, we can extend a pair of intersecting line segments and use the above definition to define an angle for intersecting lines.
+
+A few interesting properties arise when the angle included between a pair intersecting lines is a right angle (or $90^{\circ}$). Such pair of lines are termed as \vocab{Perpendicular Lines}. We will only define these in the next subsection momentarily, but investigate their properties later on.
+
+\subsubsection{Perpendicular Lines}
+\begin{definition}
+    \vocab{Perpendicular Lines} are a pair of lines that intersect each other at $90^{\circ}$. Two perpendicular lines (or segments) are denoted using the symbol $\perp$.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+        point X = (0, 0);
+        point B = (-2, 0);
+        point A = (2, 0);
+        point C = (0, 1);
+        point D = (0, -1);
+
+        dot(A, linewidth(4));
+        label("$A$", A, NW);
+        dot(B, linewidth(4));
+        label("$B$", B, NW);
+        dot(C, linewidth(4));
+        label("$C$", C, NW);
+        dot(D, linewidth(4));
+        label("$D$", D, NW);
+        dot(X, linewidth(4));
+        label("$X$", X, NW);
+    
+        draw(A--B);
+        draw(C--D);
+        markrightangle(A, X, C, size=10);
+    \end{asy}
+    \caption{Perpendicular line segments $\overline{AB}$ $\perp$ $\overline{CD}$}
+\end{figure}
+
+% perpendicular lines form 4 right angles. to be proved later on! (dont forget tho)
+An important property of perpendicular lines is the following.
+
+\begin{fact}
+    If two lines are perpendicular, then the four angles formed by their intersection are all right angles!
+\end{fact}
+We will prove this later on when we discuss about \vocab{Transversals}.
+
+\subsection{Circle}
+\begin{definition}
+    A \vocab{Circle} is the set of points in the plane that are at a fixed distance from a fixed point. The fixed distance is called the \vocab{Radius} of a circle and the fixed point is called the \vocab{Center} of the circle.
+\end{definition}
+
+We require two parameters to define a unique circle. The center of the circle and the radius of a circle. There are several notations to denote a circle, with the most popular being $\odot$. 
+\begin{definition}
+    A \vocab{Circle} centered at point $O$ with radius $r$ is denoted as $\odot \left(O, r\right)$.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+        point O = (0,0);
+        point P = (1.5, 0);
+        dot(O, linewidth(4));
+        label("$O$", O, NW);
+        dot(P, linewidth(4));
+        label("$P$", P, NE);
+        draw(O--P);
+        label("$r$", midpoint(O--P), N);
+        draw(circle(O, 1.5));
+    \end{asy}
+    \caption{A circle $\odot \left(O, r\right)$ and a point $P$ on the circle}
+\end{figure}
+
+Now let's investigate several combinations of different geometrical constructs that we have learnt yet.
+\subsubsection{A Point and a Circle}
+
+\begin{definition}
+A point $P$ not lying on the circle is said to be in the \vocab{Interior} of the circle if $\left\lvert \overline{OP} \right\rvert$ $<$ $r$, and in the \vocab{Exterior} of the circle if $\left\lvert \overline{OP} \right\rvert$ $>$ $r$, where $r$ is the radius and $O$ is the center of the circle.
+\end{definition}
+
+A fixed circle divides the entire space into two regions and an arbitrary point $P$ in the space could belong to either of these two regions (or may just lie on the circle).
+
+\subsubsection{Intersection of a Segment and Circle}
+\begin{definition}
+    For two points $P$ and $Q$ lying on a circle, the line segment $\overline{PQ}$ is called a \vocab{Chord} of the circle.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+
+        pair O = (0, 0);
+        real r = 1.5;
+
+        pair Q = r * dir(45);
+        pair P = r * dir(165);
+
+        draw(circle(O, r));
+        draw(P--Q);
+
+        dot(P); label("$P$", P, NW);
+        dot(Q); label("$Q$", Q, NE);
+    \end{asy}    
+    \caption{Chord $\overline{PQ}$ of a circle}
+\end{figure}
+
+A special chord of interest is the \vocab{Diameter} of the circle, which is a chord that passes through the center of the circle. There are infinitely many diameters of a circle. An important property about the diameter is that it is the \emph{longest} chord of the circle with length equal to \emph{twice} the radius!
+
+Another interesting construct that arises in circles are \emph{arcs}.
+
+\begin{definition}
+    An \vocab{Arc} of a circle is a continuous portion of the circle between any two points on the circle.
+\end{definition}
+
+A chord partitions the circle into two arcs. The arc of smaller length is called the \emph{minor arc}, and the arc of greater length is called the \emph{major arc}.
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+
+        pair O = (0,0);
+        real r = 1.5;
+        
+        real a = 30;
+        real b = 160;
+        
+        pair P = r*dir(a);
+        pair Q = r*dir(b);
+        draw(circle(O,r));
+        
+        pair d = Q-P;
+        draw(P--Q);
+        
+        path minorArc = arc(O, r, a, b);
+        draw(minorArc, blue+1bp);
+        
+        dot(O); label("$O$", O, S);
+        dot(P); label("$Q$", P, NE);
+        dot(Q); label("$P$", Q, NW);
+    \end{asy}
+    \caption{A chord $\overline{PQ}$ divides circle $\mathcal{C}$ into minor and major arcs.}
+\end{figure}
+
+\subsubsection{Intersection of a Line and Circle}
+Now, consider an arbitrary line and a circle in the space. A natural question to ask is how many points of intersections can this line make with the circle?
+
+\begin{proposition}[Intersection of a Line and Circle]
+    Let $\ell$ be a line and $\mathcal{C}$ be a circle. The line $\ell$ intersects $\mathcal{C}$ in
+    \begin{enumerate}[itemsep=0.05em]
+        \item no points, if and only if $\ell$ is \emph{exterior} to $\mathcal{C}$.
+        \item exactly one point, if and only if $\ell$ is \vocab{Tangent} to $\mathcal{C}$.
+        \item exactly two points, if and only if $\ell$ is a \vocab{Secant} of $\mathcal{C}$.
+    \end{enumerate}
+\end{proposition}
+
+An immediate corollary of the above proposition is the following simple but important fact!
+\begin{corollary}[Upper bound on number of intersections]
+    There cannot exist a line $\ell$ that cuts a circle $\mathcal{C}$ in $\geq 3$ distinct points.
+\end{corollary}
+
+This fact proves to be extremely useful because it forms the basis for many clever constructions in geometry, such as the technique of \vocab{Phantom Points}. We will look into what that is soon.
+
+\subsubsection{Intersection of Circles}
+Consider the scenario of two distinct circles drawn in the space. These circles could either intersect or we could have one of them contain the other or we may just have them drawn distant apart. These cases depend on the distance between the centers of the two circles and the respective radii. The following proposition sums them up.
+
+\begin{proposition}[Intersection of two Circles]
+    Let $\omega_1$ and $\omega_2$ be two distinct circles centered at $O_1$ and $O_2$ with radii $r_1$ and $r_2$, respectively. The circle $\omega_1$ intersects $\omega_2$ in
+    \begin{enumerate}[itemsep=0.05em]
+        \item no points, if and only if $\left\lvert r_1 + r_2 \right\rvert$ $<$ $\left\lvert \overline{O_1O_2} \right\rvert$ or $\left\lvert r_1 - r_2 \right\rvert$ $>$ $\left\lvert \overline{O_1O_2} \right\rvert$.
+        \item exactly one point, if and only if $d = \left\lvert r_1 + r_2\right\rvert$ (\vocab{externally tangent}) or $d = \left\lvert r_1 - r_2\right\rvert$ (\vocab{internally tangent}).
+        \item exactly two points, if and only if $\left\lvert r_1 - r_2\right\rvert < d < \left\lvert r_1 + r_2\right\rvert$.
+    \end{enumerate}
+\end{proposition}
+
+If the centers of the two circles coincide, then such pair of circles are called \vocab{Coaxial Circles}. There are several interesting properties of coaxial circles and tangential circles, which we will explore in the upcoming sections. This will give us a deeper insight into the geometry of lines and circles!
+
+\end{document}

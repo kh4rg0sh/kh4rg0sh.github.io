@@ -41,7 +41,7 @@ Here are the links to my socials!
   <tr>
     <td>6.</td>
     <td>Atcoder</td>
-    <td><a href="https://atcoder.jp/users/fooker" target="_blank">atcoder.jp/users/fooker</a></td>
+    <td><a href="https://atcoder.jp/users/kh4rg0sh" target="_blank">atcoder.jp/users/kh4rg0sh</a></td>
   </tr>
 </table>
 

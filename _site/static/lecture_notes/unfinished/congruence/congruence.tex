@@ -1,0 +1,466 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{Congruence of Triangles}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    In this article we dive deeper into some foundational geometry principles and investigate the properties of the simplest polygon to exist: Triangle!
+\end{abstract}
+
+\section{Transverals}
+Let's start with the most fundamental and frequently encountered geometric constructions, \emph{Transversals}. Understanding transverals helps us navigate through complex geometric diagrams and prove interesting properties.
+
+\begin{definition}
+    A \vocab{Transversal} is a straight line that intersects two or more other lines.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+
+        pair A = (-2, 1), B = (2, 0);
+        pair C = (-2.5,-1), D = (2,-1);
+
+        draw(A--B, Arrows);
+        draw(C--D, Arrows);
+
+        pair P = (-2,-2), Q = (2,1.5);
+        draw(P--Q, red+1bp, Arrows);
+
+        pair X = intersectionpoint(P--Q, A--B);
+        pair Y = intersectionpoint(P--Q, C--D);
+
+        dot(X); label("$X$", X, N);
+        dot(Y); label("$Y$", Y, SE);
+
+        label("$\ell_1$", (A), N);
+        label("$\ell_2$", (D), S);
+        label("$\ell$", (P+Q)/2, NW);
+    \end{asy}
+    \caption{Transveral $\ell$ intersects lines $\ell_1$ and $\ell_2$ at $X$ and $Y$}
+\end{figure}
+
+The transveral $\ell$ forms \emph{eight} angles with the two intersecting lines $\ell_1$ and $\ell_2$. These angles have a special relationship and we will investigate these in the following subsections. However, let's learn a couple of definitions first.
+
+\subsubsection{Complementary and Supplementary Angles}
+\begin{definition}
+    A pair of angles whose measures add up to $90^{\circ}$ are called \vocab{Complementary Angles}.
+\end{definition}
+
+\begin{definition}
+    A pair of angles whose measures add up to $180^{\circ}$ are called \vocab{Supplementary Angles}.
+\end{definition}
+
+Such pair of angles naturally arise in geometric configurations, and recognizing them allows us to leverage their properties when analyzing diagrams and solving problems.
+
+\subsection{Linear Pairs}
+
+\begin{definition}
+A pair of adjacent angles whose non-common sides form a straight line is called a \vocab{Linear Pair}.
+\end{definition}
+
+% fix the diagram for linear pair
+\begin{figure}[h]
+    \centering
+    % \begin{asy}
+    %     import geometry; 
+    %     import olympiad;
+    %     unitsize(1cm);
+
+    %     // Lines
+    %     pair A = (-2, 1), B = (2, 0);
+    %     pair C = (-2.5,-1), D = (2,-1);
+    %     draw(A--B, Arrows);
+    %     draw(C--D, Arrows);
+
+    %     // Transversal
+    %     pair P = (-2,-2), Q = (2,1.5);
+    %     draw(P--Q, red+1bp, Arrows);
+
+    %     // Intersection points
+    %     pair X = intersectionpoint(P--Q, A--B);
+    %     pair Y = intersectionpoint(P--Q, C--D);
+    %     dot(X); dot(Y);
+    %     label("$X$", X, NW);
+    %     label("$Y$", Y, SE);
+
+    %     // Rays along lines for angle marking
+    %     pair v1 = X + (B - A)/length(B - A); // along top line
+    %     pair v2 = X + (Q - P)/length(Q - P); // along transversal
+
+    %     // Draw linear pair angles at X
+    %     draw(anglemark(v1--X--v2, radius=0.5cm, blue));
+    %     draw(anglemark(v2--X--v1, radius=0.4cm, blue));
+
+    %     // Label the angles
+    %     label("$\alpha$", bisectorpoint(v1--X--v2), NW, blue);
+    %     label("$\beta$", bisectorpoint(v2--X--v1), NE, blue);
+    % \end{asy}
+    \caption{Linear pair at intersection $X$}
+\end{figure}
+
+An interesting fact about linear pairs is that they always add up to $180^{\circ}$.
+
+\begin{fact}[Linear pairs]
+Linear pairs are always supplementary angles.
+\end{fact}
+
+\begin{exercise}
+    How many pairs of linear pairs arise when a transversal $\ell$ cuts two lines $\ell_1$ and $\ell_2$.
+\end{exercise}
+
+\subsection{Vertical Angles}
+\begin{definition}
+Pair of opposite angles formed when two lines intersect are called \vocab{Vertical Angles}. Vertical angles are always equal in measure.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \caption{Vertical angles at intersection $X$}
+\end{figure}
+
+\begin{exercise}
+    How many pairs of vertical angles arise when a transversal $\ell$ cuts two lines $\ell_1$ and $\ell_2$.
+\end{exercise}
+
+These results help us comment about the relationship between angles in the proposed scenario. Note that currently we are not able to comment anything about the relationship between angles formed by the transveral and line $\ell_1$ and the transveral and line $\ell_2$. However, things get interesting when $\ell_1$ is parallel to $\ell_2$. The following relations that we will deduce are due to Euclid's 5th postulate.
+
+\subsection{Corresponding Angles}
+
+In particular, Euclid's fifth postulate implies that the pair of corresponding angles are \emph{equal} if and only if lines $\ell_1 \parallel \ell_2$. But what even are corresponding angles? Lets define them.
+
+\begin{definition}
+    \vocab{Corresponding Angles} are pairs of angles in the same relative position at each intersection when a transversal line cross the two other lines.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \caption{Corresponding angles at intersection $X$}
+\end{figure}
+
+Note the if and only if, carefully. Since the parallel condition holds if and only if corresponding angles are equal, therefore proving that corresponding angles are equal forms a very good criteria to prove that two lines are parallel. This is therefore a very important fact and in the future we will use this cleverly to prove that two lines are parallel. Also if two lines are parallel that helps us establish the relationship between the angles formed at two different lines, all courtesy to Euclid's fifth postulate!
+
+\begin{fact}
+    Corresponding Angles are equal if and only if the two lines cut by the transversal are parallel.
+\end{fact}
+
+\begin{exercise}
+    How many pairs of corresponding angles arise when a transveral $\ell$ cuts two parallel lines $\ell_1$ and $\ell_2$.
+\end{exercise}
+
+\subsection{Alternate Angles}
+
+Pertaining to mathematical logic, the properties of alternate angles are redundant. This is because the fundamental properties of a transversal are only linked to linear pair and corresponding angles. Vertical angles, alternate angles and consecutive angles are derived from their existence. However, since mathematicians love giving explicit names to anything that is different all in regards to the preserve formality and distinctions, we shall define these as well.
+
+\begin{definition}
+    \vocab{Alternate Angles} are pairs of angles on opposite sides of a transveral line that cuts the two other parallel lines.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \caption{Alternate angles at intersection $X$}
+\end{figure}
+
+An even pedantic classification of alternate angles exists on the basis of where these angles face.
+\begin{enumerate}[itemsep=0.05em]
+    \item \vocab{Alternate Interior Angles} are alternate angles formed between the two lines.
+    \item \vocab{Alternate Exterior Angles} are alternate angles formed outside the two lines.
+\end{enumerate}
+
+\begin{exercise}
+    Show that pair of alternate angles are equal if and only if the two lines are parallel.
+\end{exercise}
+
+\begin{exercise}
+    How many pairs of alternate interior angles and alternate exterior angles arise when a transveral $\ell$ cuts two parallel lines $\ell_1$ and $\ell_2$.
+\end{exercise}
+
+\subsection{Consecutive Angles}
+\begin{definition}
+    \vocab{Consecutive Angles} are angles that are next to each other sharing a common side.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \caption{Corresponding angles at intersection $X$}
+\end{figure}
+
+Similar to the interior/exterior classification in alternate angles, we have something similar in consecutive angles as well!
+
+\begin{enumerate}[itemsep=0.05em]
+    \item \vocab{Co-Interior Angles} are consecutive angles formed between the two lines.
+    \item \vocab{Co-Exterior Angles} are consecutive angles formed on the outer side of the two lines.
+\end{enumerate}
+
+The reason why consecutive angles are interesting is because they form a pair of \emph{Supplementary Angles} if and only if the two lines are parallel.
+
+\begin{exercise}
+    Show that the pair of consecutive angles are equal if and only if the two lines are parallel.
+\end{exercise}
+
+\begin{exercise}
+    How many pairs of consecutive interior angles and consecutive exterior angles arise when a transveral $\ell$ cuts two parallel lines $\ell_1$ and $\ell_2$.
+\end{exercise}
+
+With the completion of discussion of the properties of transversal, we can now continue studying the properties of the simplest polygon to exist: Triangles!
+
+\section{Triangles}
+
+You might wonder, why did we study transversals right before triangles. What do transversals have anything to do with triangles? 
+
+Here's a pictorial representation that gives a complete picture of why triangle arise in the same configuration as transversals do!
+
+\begin{figure}[h]
+    \centering
+    \caption{A complete picture of Transversals giving rise to Triangles.}
+\end{figure}
+
+Infact, the most foundational properties of triangles use the properties of transversals to prove them. For example, 
+\begin{ques}
+Prove that the sum of angles of a triangle is $180^{\circ}$.
+\end{ques}
+
+Many students take this fact for granted however, this is not a universally true fact. Infact the sum of angles of a triangle do not sum to $180^{\circ}$ on lets say a curved surface. This fact is very fundamentally tied to the euclidean plane being flat and Euclid's Postulate. As we shall see later on a proof for this, which uses the properties of transversals to establish that the sum of angles of a triangle are $180^{\circ}$. Nevertheless, let's just first define what a triangle is and what we mean by that.
+
+\begin{definition}
+    A \vocab{Triangle} is a closed shape formed by three straight line segments. 
+\end{definition}
+
+There is a concept of degeneracy and non-degeneracy of triangles. This concept arises due to a bad structure of chosen line segments.
+
+\subsection{Degeneracy of Triangles}
+A triangle is said to be degenerate if any of the two line segments of the triangles sides are a part of the same line. In this case, we cannot form a 2D shape. A general condition that can be stated for non-degeneracy of triangles is the following.
+
+\begin{fact}[Non-degeneracy of triangles]
+    Given any three non-collinear points, you can always draw a non-degenerate triangle with these three points as the vertices of the triangle.
+\end{fact}
+
+Another way to word the same is that any angle of a triangle is always lesser than $180^{\circ}$. This implication would be trivial once we show that the sum of angles of a triangle is indeed $180^{\circ}$, however in the current state, this is a weaker result as the only upper bound we can get over the sum of angles of a triangle is that it cannot exceed $540^{\circ}$.
+
+\subsection{General Properties of Triangles}
+We usually denote a triangle with the symbol $\triangle$. A triangle has three sides and three angles, each pair of adjacent side enclosing an angle. 
+
+\begin{figure}[h]
+    \centering
+    \begin{asy}
+        import geometry; unitsize(1cm);
+
+        point A = (1, 2);
+        point B = (0, 0);
+        point C = (2.5, 0);
+
+        draw(A--B);
+        draw(B--C);
+        draw(C--A);
+
+        dot(A); label("$A$", A, NW);
+        dot(B); label("$B$", B, SW);
+        dot(C); label("$C$", C, SE);
+    \end{asy}
+    \caption{Triangle $\triangle ABC$}
+\end{figure}
+
+For example, let's consider a triangle and label it as $\triangle ABC$. The three sides of this triangle are $\overline{AB}$, $\overline{BC}$ and $\overline{CA}$. The three angles at the vertices $A$, $B$ and $C$ are denoted as $\angle A$, $\angle B$ and $\angle C$, respectively which act as a shorthand for the angles $\angle BAC$, $\angle ABC$ and $\angle BCA$.
+
+Now it's the time to prove the most fundamental result about triangles.
+
+\begin{theorem}[Sum of Angles of a Triangle]
+    The sum of all three angles of a triangle add up to $180^{\circ}$.
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \caption{Draw the line parallel to side BC through A of triangle ABC.}
+\end{figure}
+
+\begin{proof}
+    write the proof here using the construction of a parallel line to one of the sides of the triangle and use the fact about transversals to give a good and complete proof.
+\end{proof}
+
+\subsection{Types of Triangles}
+there are two popular ways to classify types of triangles. The first one relies on comparing the sides of a triangle.
+
+\subsubsection{Classification on basis of sides}
+We classify a triangle on the basis of equalities of its sides. 
+\begin{enumerate}[itemsep=0.05em]
+    \item A triangle is called \vocab{Equilateral} if all of its three sides are equal.
+    \item A triangle is called \vocab{Isosceles} if any two of its sides are equal.
+    \item A triangle is called \vocab{Scalene} if all three sides are unequal.
+\end{enumerate}
+
+There is a way to tie the equalities of the sides to their angles. The general rule of thumb is that the angles in a triangle opposite to longer sides are greater in magnitude. We will prove this fact later on, however it implies that in an equilateral triangle all the angles are equal and in an isosceles triangle atleast two angles are equal.
+
+\subsubsection{Classification on basis of angles}
+Here we will classify the triangle on the basis of the measure of its angle.
+\begin{enumerate}[itemsep=0.01em]
+    \item A triangle with an obtuse angle is called an \emph{Obtuse}-angled triangled.
+    \item A triangle with a right angle is called a \emph{Right}-angled triangle.
+    \item A triangle with all acute angles is called an \emph{Acute}-angled triangle.
+\end{enumerate}
+
+\section{Congruence of Triangles}
+
+The property of discussion of this section arises as an answer to the question of what properties are preserved when perform rotation and translations of geometrical figures. Congruence means equivalence and is a much broader concept that is not strictly limited to only triangles. Two shapes are said to be congruent if they can be superimposed on each other. In this section, we will take a look at strategies at proving two different triangles are congruent. And there are many reasons why we might want to do this. If we can show that two triangles are congruent in a configuration, it means deducing information about one triangle helps us get to know information about the other and in this sense it helps us tie and link up the properties in a geometric configuration.
+
+Let's begin by reiterating the definition of congruent triangles.
+
+\begin{definition}
+    Two triangles are said to be \vocab{Congruent} if they can be superimposed exactly onto one another. We denote congruency through the symbol $\cong$.
+\end{definition}
+
+As an implication of congruency of two triangles is that all their three sides and three angles are equal.
+
+Suppose two triangles $\triangle ABC$ and $\triangle DEF$ are congruent. We would write that as $\triangle ABC$ $\cong$ $\triangle DEF$. And it would imply that the lengths $\overline{AB}$ $=$ $\overline{DE}$, $\overline{BC}$ $=$ $\overline{EF}$ and $\overline{CA}$ $=$ $\overline{FD}$ and the angle measures $\angle ABC$ $=$ $\angle DEF$, $\angle BCA$ $=$ $\angle EFD$ and $\angle CAB$ $=$ $\angle FDE$. In particular, its worth observing that we take the respective sides and angles in the expressed congruency and its important to preserve this correlation.
+% add a diagram here.
+\begin{figure}[h]
+    \centering
+    \caption{$\triangle ABC$ and $\triangle DEF$ are congruent.}
+\end{figure}
+
+Now there are several ways you could use to show that two triangle are congruent. These are termed as \vocab{Congruence Criterion}. There are four standard congruence criterion that must be studied in order to prove that two triangles are congruent. The proof for these are clever super-imposition arguments and we will omit them here. \footnote{Euclid's Elements Book I includes the proofs for the congruence criterion: https://mathcs.clarku.edu/~djoyce/java/elements/bookI/}
+
+It's very intuitive to start with the \vocab{SSS Congruence Criterion} as it is easy to imagine why this might be true.
+
+\subsection{SSS Congruence Criterion}
+
+\begin{postulate}[SSS Congruence Criterion]
+    For $\triangle ABC$ and $\triangle DEF$, if we know that 
+    \begin{enumerate}[itemsep=0.01em]
+        \item $\overline{AB} = \overline{DE}$
+        \item $\overline{BC} = \overline{EF}$
+        \item $\overline{CA} = \overline{FD}$
+    \end{enumerate}
+
+    then $\triangle ABC \cong \triangle DEF$
+\end{postulate}
+
+\begin{figure}[h]
+    \centering
+    \caption{$\triangle ABC$ $\cong$ $\triangle DEF$ under SSS Congruence Criterion.}
+\end{figure}
+
+To imagine why this might be true, imagine placing $\triangle DEF$ over $\triangle ABC$ such that point $D$ overlaps with point $A$ and point $E$ overlaps with point $B$. now imagine two circles centered at point $A$ and point $B$ with radius $\overline{AC}$ and $\overline{BC}$. The intersections of these circle are candidate points for point $C$ and point $F$ and there can be atmost two such intersections. However $\overline{AB}$ acts as a line of symmetry for the circles and hence they are invariant under rotation and translation.
+
+It's not a very formal argument but it gives a clue about why the SSS Congruence Criterion must be true. Moving on to an even intuitive criterion, that involve an equal angle between two sides with equal measures: \vocab{SAS Congruence Criterion}.
+
+\subsection{SAS Congruence Criterion}
+\begin{postulate}
+    For $\triangle ABC$ and $\triangle DEF$, if we know that 
+    \begin{enumerate}[itemsep=0.01em]
+        \item $\overline{AB} = \overline{DE}$
+        \item $\angle BAC = \angle EDF$
+        \item $\overline{CA} = \overline{FD}$
+    \end{enumerate}
+
+    then $\triangle ABC \cong \triangle DEF$
+\end{postulate}
+
+\begin{figure}[h]
+    \centering
+    \caption{$\triangle ABC$ $\cong$ $\triangle DEF$ under SAS Congruence Criterion.}
+\end{figure}
+
+A similar argument as in the previous subsection explains easily why this is true too. Super impose $\triangle DEF$ over $\triangle ABC$ such that point $D$ overlaps over point $A$ and such that the lines $\overline{AB}$ and $\overline{DE}$ align together. Since the angles are equal it implies that the lines $\overline{AC}$ and $\overline{DF}$ align too and since $E$ and $F$ are points at a fixed distance on the two lines, therefore they have to coincide with $B$ and $C$ respectively, thus implying the congruency.
+
+A very beautiful application of the SAS Congruence Criterion is to prove the fact that the angles opposite to equal sides of an isosceles triangle are equal. We will leave this as an exercise for the reader.
+\begin{exercise}
+    Use the \emph{SAS Congruence Criterion} to show that the angles opposite to equal sides in an isosceles triangle are equal. \footnote{\textbf{Hint}. Consider the isosceles triangles $\triangle ABC$ and $\triangle ACB$}
+\end{exercise}
+
+\begin{exercise}
+    Use the \emph{SSS Congruence Criterion} to show that the angles of an equilateral triangle are all equal to $60^{\circ}$.
+\end{exercise}
+
+In the spirit similar to the SAS Congruence Criterion, we have \vocab{ASA Congruence Criterion} that establishes congruence given an equal side along with all three angles of the triangle are equal.
+
+\subsection{ASA Congruence Criterion}
+
+\begin{postulate}
+    For $\triangle ABC$ and $\triangle DEF$, if we know that 
+    \begin{enumerate}[itemsep=0.01em]
+        \item $\angle ABC = \angle DEF$
+        \item $\overline{BC} = \overline{EF}$
+        \item $\angle BCA = \angle EFD$
+    \end{enumerate}
+
+    then $\triangle ABC \cong \triangle DEF$
+\end{postulate}
+
+\begin{figure}[h]
+    \centering
+    \caption{$\triangle ABC$ $\cong$ $\triangle DEF$ under ASA Congruence Criterion.}
+\end{figure}
+
+A similar super-imposition argument gives us a clear visual about why the ASA Congruence Criterion might be true. Its worth mentioning that the SAS and ASA Congruence Criterion capture the properties of symmetry and reflection very well. It's very useful to intuitively absorb the reflection argument as a visual tool to observe congruence and any time you want to prove an argument that hints to a reflection argument, we might want to head towards SAS or ASA congruence criterion.
+
+The next Congruence Criterion is one of my favourite congruence criterion, not only because of it's usefulness or its proof but about what a deeper geometric structure it hints towards. We will talk about this after stating the \vocab{RHS Congruence Criterion}.
+
+\subsection{RHS Congruence Criterion}
+
+\begin{postulate}
+    For $\triangle ABC$ and $\triangle DEF$, if we know that 
+    \begin{enumerate}[itemsep=0.01em]
+        \item $\angle ABC = \angle DEF = 90^{\circ}$
+        \item $\overline{BC} = \overline{EF}$
+        \item $\overline{CA} = \overline{FD}$
+    \end{enumerate}
+
+    then $\triangle ABC \cong \triangle DEF$
+\end{postulate}
+
+\begin{figure}[h]
+    \centering
+    \caption{$\triangle ABC$ $\cong$ $\triangle DEF$ under RHS Congruence Criterion.}
+\end{figure}
+
+The intuition behind the proof is simple. It again has to do with the reflection argument and the property of isosceles triangles. It's left to the readers to figure this out. However, there is something even more interesting to discuss.
+
+Upon carefully observing the conditions required to satisfy the RHS Congruence Criterion, we realise that it is a specific case of the \emph{SSA Congruence Criterion}, but SSA is never taught as a Congruence Criterion. The reason for that is that SSA is an ambiguous Congruence Criterion. The reason is that the conditions of SSA lead to two distinct possible configurations which is not enough to force the congruence. However, when the angle is $90^{\circ}$ the two configurations merge into a single leading to a guaranteed RHS Congruence Criterion which is the reason we are usually taught RHS but not SSA. It's even more surprising to know that you could add another weaker condition to the SSA congruence criterion and that would be enough for us to force the SSA Congruence Criterion. It's a condition about the third angle being acute or obtuse. Proving this is left as an exercise to the reader.
+\begin{exercise}
+    Show that for triangles $\triangle ABC$ and $\triangle DEF$, if we know that 
+    \begin{enumerate}[itemsep=0.01em]
+        \item $\angle ABC = \angle DEF$
+        \item $\overline{BC} = \overline{EF}$
+        \item $\overline{CA} = \overline{FD}$
+        \item $\angle BAC$ and $\angle EDF$ are both acute angled or obtused angled.
+    \end{enumerate}
+    Then $\triangle ABC \cong \triangle DEF$.
+\end{exercise}
+
+\begin{exercise}
+    Show that the perpendicular is the line of closest path from a point not on a line to a line.
+\end{exercise}
+
+\end{document}

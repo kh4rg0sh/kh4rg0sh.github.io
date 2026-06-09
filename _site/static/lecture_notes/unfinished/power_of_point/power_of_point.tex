@@ -1,0 +1,446 @@
+\documentclass[11pt]{scrartcl}
+\let\captionof\undefined
+\usepackage[sexy,von]{evan}
+\usepackage{wrapfig}
+% \renewcommand{\vonenvname}{example}
+\lstset{basicstyle=\small\ttfamily,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!70!black},
+  identifierstyle=\color{green!20!black},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none
+}
+
+\usepackage{xcolor}
+\setkomafont{captionlabel}{\bfseries\color{red}}
+\renewcommand*{\figurename}{Fig}
+
+\usepackage{answers}
+\usepackage{cancel}
+\usepackage{asymptote}
+\usepackage{hyperref}
+
+\begin{document}
+\title{Power of a Point}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \centering
+    In this article, we will learn about the power of a point theorem and it's applications in geometry.
+\end{abstract}
+
+\section{Power of a Point}
+The power of a point theorem is a useful result that helps us attack a whole new set of problems that are out of the realms of angle chasing. We want to primarily deal with circles and be able to convert information about angles to lengths. Now, let's state the result.
+
+\begin{theorem}
+  Suppose $\omega$ is a circle and $P$ is a point. Draw two lines $\ell_1$ and $\ell_2$ passing through $P$ that intersect the circle in points $A$, $B$ and $C$, $D$. Then,
+  \begin{align*}
+    \overline{PA} \cdot \overline{PB} = \overline{PC} \cdot \overline{PD}
+  \end{align*}
+\end{theorem}
+
+There are two cases of this result, one when the point $P$ lies inside the circle and when it lies outside the circle $\omega$. Surprisingly, the result holds true in both the cases. Proving this is just uses properties of the cyclic quadrilaterals to establish similar triangles, so we will omit the proof here.
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, D, O;
+    O = origin;
+
+    A = dir(150); B = dir(20);
+    C = dir(240); D = dir(340);
+
+    dot("$A$", A, dir(A));
+    dot("$B$", B, dir(60));
+    dot("$C$", C, dir(220));
+    dot("$D$", D, dir(310));
+
+    draw(unitcircle);
+
+    pair P = extension(A, B, C, D);
+    dot("$P$", P, dir(40));
+
+    draw(A--P); draw(C--P);
+  \end{asy}
+\end{figure}
+
+A powerful form of the above stated result is the following theorem
+\begin{theorem}
+Suppose $\omega$ is a circle and $P$ is a point lying outside the circle. Let $\ell$ be a line that passes through $P$ and cuts the circle in points $X$ and $Y$. Let $T$ be a point on the circle such that $\overline{PT}$ is tangent to $\omega$. Then
+\begin{align*}
+\overline{PX} \cdot \overline{PY} = \overline{PT}^2 
+\end{align*}
+\end{theorem}
+We can intuitively imagine why this might be true. If we bring the points $X$ and $Y$ so close that they basically coincide, then the line is a tangent and we would have square of the length of tangent drawn.
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, D, O;
+    O = origin;
+
+    A = dir(80); B = dir(79.99);
+    C = dir(240); D = dir(340);
+
+    dot("$T$", A, dir(120));
+    dot("$Y$", C, dir(220));
+    dot("$X$", D, dir(310));
+
+    draw(unitcircle);
+
+    pair P = extension(A, B, C, D);
+    dot("$P$", P, dir(40));
+    dot("$O$", O, dir(190));
+
+    draw(A--P); draw(C--P);
+
+    draw(O--P, dashed); draw(O--A); markrightangle(O, A, P, 9);
+  \end{asy}
+\end{figure}
+
+If we look at the result carefully, we realise that regardless of what the line is, we will always have that the product of line segments the line makes will stay equal. Hence, if define the following quantity for a point $P$ and a circle $\omega$,
+\begin{align*}
+  \operatorname{Pow}_{\omega} \left( P \right) = \overline{PX} \cdot \overline{PY}
+\end{align*}
+where, $\ell$ is a line that passes through $P$ cutting $\omega$ at $X$ and $Y$. Then the quantity $\operatorname{Pow}_{\omega} \left( P \right)$ will stay constant for a fixed $P$ and $\omega$. To be even more formal, the function $\operatorname{Pow}_{\omega} \left( P \right)$ should depend only on $P$ and $\omega$. But looks like the way we have define it right now also uses a line $\ell$ that passes through $P$ and its intersections with $X$ and $Y$ with a circle $\omega$. We can rewrite the above expression as 
+\begin{align*}
+\operatorname{Pow}_{\omega} \left( P \right) &= \overline{PX} \cdot \overline{PY} \\  
+          &= \overline{PT}^2 \\   
+          &= \overline{OP}^2 - \overline{OT}^2 \\ 
+          &= \overline{OP}^2 - r^2
+\end{align*}
+The above expression is only dependent on the circle $\omega$ and the point $P$. Therefore, we go ahead and define this quantity
+\begin{definition}
+Given a circle $\omega$ centered at $O$ with radius $r$ and a point $P$, the power of point $P$ is given by
+\begin{align*}
+  \operatorname{Pow}_{\omega} \left( P \right) = \overline{OP}^2 - r^2
+\end{align*}
+\end{definition}
+
+With the above definition, we can rewrite the previously stated results as 
+\begin{theorem}[Power of a Point Theorem]
+  Given a circle $\omega$ and a point $P$,
+  \begin{enumerate}[itemsep=0.01em]
+    \item the quantity $\operatorname{Pow}_{\omega} \left( P \right)$ is positive, zero or negative depending on whether $P$ is outside, on or inside $\omega$, respectively.
+    \item if $\ell$ is a line through $P$ intersecting $\omega$ at two distinct points $X$ and $Y$, then
+    \begin{align*}
+      \overline{PX} \cdot \overline{PY} = \left\lvert \,\operatorname{Pow}_{\omega} \left( P \right) \, \right\rvert
+    \end{align*}
+    \item if $P$ is outside $\omega$ and $\overline{PA}$ is a tangent to $\omega$ at a point $A$ on $\omega$, then
+    \begin{align*}
+      \overline{PA}^2 = \operatorname{Pow}_{\omega} \left( P \right)
+    \end{align*} 
+  \end{enumerate}
+\end{theorem}
+Infact the converse of the above result holds true as well.
+\begin{theorem}[Converse of Power of a Point Theorem]
+  Suppose $A$, $B$, $X$ and $Y$ are four distinct points in the plane. Let the lines $AB$ and $XY$ intersect at $P$. Then points $A$, $B$, $X$ and $Y$ are concyclic if and only if
+  \begin{align*}
+    \overline{PA} \cdot \overline{PB} = \overline{PX} \cdot \overline{PY}
+  \end{align*}
+\end{theorem}
+As it turns out, this is a very powerful result in our toolbox that we can use to prove that a quadrilateral is cyclic. Let's look at a few examples of these results.
+
+\subsection{Examples}
+\begin{problem}[USA Math Olympiad 1990]
+  An acute-angled triangle $ABC$ is given in the plane. The circle with diameter $\, AB \,$ intersects altitude $\, CC' \,$ and its extension at points $\, M \,$ and $\, N \,$, and the circle with diameter $\, AC \,$ intersects altitude $\, BB' \,$ and its extensions at $\, P \,$ and $\, Q \,$. Prove that the points $\, M, N, P, Q \,$ lie on a common circle.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(7cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, O;
+    O = origin;
+    A = dir(110); B = dir(210); C = dir(330);
+
+    dot("$A$", A, dir(110));
+    dot("$B$", B, dir(230));
+    dot("$C$", C, dir(310));
+
+    draw(A--B--C--cycle);
+
+    pair D, E, F, H;
+    D = foot(A, B, C); E = foot(B, A, C); F = foot(C, A, B); H = extension(A, D, B, E);
+
+    draw(circumcircle(A, B, D));
+    draw(circumcircle(A, C, D));
+
+    pair[] EE, FF;
+    EE = intersectionpoints(line(C, F), circumcircle(A, B, D));
+    FF = intersectionpoints(line(B, E), circumcircle(A, C, D));
+
+    draw(circumcircle(EE[0], EE[1], FF[0]), heavygray+dashed);
+
+    dot("$B'$", E, dir(10)); dot("$C'$", F, dir(195));
+    dot("$P$", FF[0], dir(255)); dot("$Q$", FF[1], dir(40));
+    dot("$M$", EE[0], dir(285)); dot("$N$", EE[1], dir(170));
+    dot("$A'$", D, dir(260)); dot("$H$", H, dir(120));
+
+    draw(C--EE[1]); draw(B--FF[1]); draw(A--D);
+    markrightangle(B, E, C, 7); markrightangle(B, F, C, 7); markrightangle(C, D, A, 7);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  Let $H$ be the orthocenter of $\triangle ABC$ and $A'$ be the foot of perpendicular dropped from point $A$ onto $\overline{BC}$. By power of a point theorem applied on circles with diameter $\overline{AC}$, $\overline{BC}$ and $\overline{AB}$, we have
+  \begin{align*}
+    \overline{HP} \cdot \overline{HQ} &= \overline{HC} \cdot \overline{HC'} \\
+        &= \overline{HB} \cdot \overline{HB'} \\
+        &= \overline{HM} \cdot \overline{HN}
+  \end{align*}
+  Therefore, by the converse of power of a point theorem $\implies$ $MNPQ$ is a cyclic quadrilateral.
+\end{proof}
+
+\begin{problem}[USA TSTST 2012]
+  In scalene triangle $ABC$, let the feet of the perpendiculars from $A$ to $BC$, $B$ to $CA$, $C$ to $AB$ be $A_1, B_1, C_1$, respectively. Denote by $A_2$ the intersection of lines $BC$ and $B_1C_1$. Define $B_2$ and $C_2$ analogously. Let $D, E, F$ be the respective midpoints of sides $BC, CA, AB$. Show that the perpendiculars from $D$ to $AA_2$, $E$ to $BB_2$ and $F$ to $CC_2$ are concurrent.
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(8cm); defaultpen(fontsize(10pt));
+
+    pair A, B, C, A1, B1, C1, D, A2, H;
+    A = dir(120);
+    B = dir(210);
+    C = dir(330);
+    B1 = foot(B, C, A);
+    C1 = foot(C, A, B);
+    A1 = foot(A, B, C);
+    D = .5B + .5C;
+    A2 = extension(B1, C1, B, C);
+    H = orthocenter(A, B, C);
+
+    draw(A--B--C--cycle);
+    draw(circumcircle(B, C, A));
+    draw(A2--B); draw(A2--B1);
+    draw(C--C1); draw(B--B1);
+
+    pair DD = foot(D, A, A2); draw(A--A1);
+    draw(A--A2); draw(D--DD, gray+dashed);
+    markrightangle(D, DD, A, 7);
+    markrightangle(B, C1, C, 7);
+    markrightangle(B, B1, C, 7);
+    markrightangle(C, A1, A, 7);
+
+    dot("$A$", A, N);
+    dot("$B$", B, SW);
+    dot("$C$", C, SE);
+    dot("$A_1$", A1, SW);
+    dot("$B_1$", B1, NE);
+    dot("$C_1$", C1, NW);
+    dot("$A_2$", A2, S);
+    dot("$D$", D, S);
+    dot("$H$", H, dir(310));
+    dot("$A_3$", DD, NW);
+
+    draw(circumcircle(A, D, A1), heavygray+dashed);
+    draw(circumcircle(A1, B1, C1), heavygray+dashed);
+    draw(circumcircle(B, C, B1), gray+dotted);
+    draw(circumcircle(A, B1, C1), gray+dotted);
+  \end{asy}
+\end{figure}
+\begin{proof}
+  We shall show that the perpendiculars from $D$ to $\overline{AA_2}$, $E$ to $\overline{BB_2}$ and $F$ to $\overline{CC_2}$, all pass through the orthocenter $H$ of $\triangle ABC$, which is their concurrency point. Suppose $A_3$ is the foot of perpendicular from $D$ to $\overline{AA_2}$. Since, $\angle AA_3D$ $=$ $90^{\circ}$ and $\angle AA_1D$ $=$ $90^{\circ}$ $\implies$ $AA_3A_1D$ is cyclic. However, $B_1C_1A_1D$ is cyclic too because they lie on the nine-point circle of $\triangle ABC$, and $BC_1B_1C$ is cyclic too because $\angle BC_1C$ $=$ $90^{\circ}$ and $\angle BB_1C$ $=$ $90^{\circ}$. By applying the power of a point theorem on these circles, we have
+  \begin{align*}
+    \overline{A_2A_3} \cdot \overline{A_2A} &= \overline{A_2A_1} \cdot \overline{A_2D} \\ 
+            &= \overline{A_2C_1} \cdot \overline{A_2B_1} \\ 
+            &= \overline{A_2B} \cdot \overline{A_2C}
+  \end{align*}
+  By the converse of power of a point theorem, this implies that $AA_3C_1B_1$ and $AA_3BC$ are cyclic quadrilaterals too. Since $\overline{AH}$ is the diameter of $\odot(AC_1B_1)$ $\implies$ $\angle AA_3H$ $=$ $90^{\circ}$. However we know that, $\angle AA_3D$ $=$ $90^{\circ}$ $\implies$ $\overline{A_3D}$ passes through $H$. Similarly, we can show that the others pass through the orthocenter $H$, thus implying the concurrency.
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}
+  Let $\triangle ABC$ be an acute angled triangle with circumcenter $O$ and orthocenter $H$. Prove that
+  \begin{align*}
+    \overline{OH}^2 = R^2 \left( 1 - 8\cos A \cos B \cos C\right)
+  \end{align*}
+\end{exercise}
+
+\begin{exercise}[IMO Shortlist 2011]
+Let $A_1A_2A_3A_4$ be a non-cyclic quadrilateral. Let $O_1$ and $r_1$ be the circumcentre and the circumradius of the triangle $A_2A_3A_4$. Define $O_2,O_3,O_4$ and $r_2,r_3,r_4$ in a similar way. Prove that
+\[\frac{1}{O_1A_1^2-r_1^2}+\frac{1}{O_2A_2^2-r_2^2}+\frac{1}{O_3A_3^2-r_3^2}+\frac{1}{O_4A_4^2-r_4^2}=0.\]
+\end{exercise}
+
+\begin{exercise}[USA Math Olympiad 1998]
+  Let ${\cal C}_1$ and ${\cal C}_2$ be concentric circles, with ${\cal C}_2$ in the interior of ${\cal C}_1$. From a point $A$ on ${\cal C}_1$ one draws the tangent $AB$ to ${\cal C}_2$ ($B\in {\cal C}_2$). Let $C$ be the second point of intersection of $AB$ and ${\cal C}_1$, and let $D$ be the midpoint of $AB$. A line passing through $A$ intersects ${\cal C}_2$ at $E$ and $F$ in such a way that the perpendicular bisectors of $DE$ and $CF$ intersect at a point $M$ on $AB$. Find, with proof, the ratio $AM/MC$.
+\end{exercise}
+
+\begin{exercise}[USA Math Olympiad 2009]
+  Given circles $ \omega_1$ and $ \omega_2$ intersecting at points $ X$ and $ Y$, let $ \ell_1$ be a line through the center of $ \omega_1$ intersecting $ \omega_2$ at points $ P$ and $ Q$ and let $ \ell_2$ be a line through the center of $ \omega_2$ intersecting $ \omega_1$ at points $ R$ and $ S$. Prove that if $ P, Q, R$ and $ S$ lie on a circle then the center of this circle lies on line $ XY$.
+\end{exercise}
+
+\section{Radical Axis Theorem}
+So far, we have developed tools that allow us to tackle problems involving a single circle. We now move onto problems involving multiple circles. We begin by introducing a few key definitions.
+\begin{definition}
+  Given two circles $\omega_1$ and $\omega_2$ with distinct centers, the \vocab{Radical Axis} of the circles is the set of points $P$ such that
+\begin{align*}
+\operatorname{Pow}_{\omega_1} \left( P \right) = \operatorname{Pow}_{\omega_2} \left( P \right)
+\end{align*}
+\end{definition}
+
+Looking at the definition of the radical axis doesnt seem that intuitive. However, it basically tells us this
+\begin{corollary}
+  For two intersecting circles $\omega_1$ and $\omega_2$, their radical axis is the line passing through their points of intersections.
+\end{corollary}
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    pair O1, O2;
+
+    O1 = (0, 0); O2 = (4, 0);
+    dot("$O_1$", O1, dir(135));
+    dot("$O_2$", O2, dir(45));
+
+    pair[] AA = intersectionpoints(circle(O1, 3), circle(O2, 2.5));
+
+    pair A = AA[0], B = AA[1];
+    pair v = unit(B - A);
+
+    draw((A - v) -- (B + v), dashed);
+    draw(circle(O1, 3)); draw(circle(O2, 2.5));
+  \end{asy}  
+\end{figure}
+Something even more counter-intuitive is that the radical axis is defined even for a pair of \emph{non-intersecting} circles too. A common misconception is to imagine the radical axis as the perpendicular bisector of the line joining the centers, but that is not true. It is only the locus of points in the space that have equal powers from both the circles. So what is interesting about this? The following result is what makes radical axis a useful tool in geometry.
+
+\begin{theorem}[Radical Axis Theorem]
+  Given three distinct circles $\omega_1$, $\omega_2$ and $\omega_3$, their pairwise radical axes are concurrent. This point of concurrency is known as the \vocab{Radical Center} of the three circles.
+\end{theorem}
+
+The proof immediately follows from the definition of radical axis. Infact, the converse of radical axis theorem holds is true and serves as a criterion for proving cyclicity of one of the three circles. Essentially, this is just equivalent to applying the power of a point theorem twice and then concluding via its converse.
+
+\begin{figure}[h]
+  \centering
+  \begin{asy}
+    import geometry;
+    size(6cm); defaultpen(fontsize(10pt));
+    pair O1, O2, O3;
+
+    O1 = (0, 0); O2 = (4, 0); O3 = (2.8, 3.8);
+    dot("$O_1$", O1, dir(135));
+    dot("$O_2$", O2, dir(45));
+    dot("$O_3$", O3, dir(80));
+
+    pair[] AA = intersectionpoints(circle(O1, 3), circle(O2, 2.5));
+    pair vA = unit(AA[1] - AA[0]);
+    draw((AA[0] - vA) -- (AA[1] + vA), dashed);
+
+    pair[] BB = intersectionpoints(circle(O2, 2.5), circle(O3, 3));
+    pair vB = unit(BB[1] - BB[0]);
+    draw((BB[0] - vB) -- (BB[1] + vB), dashed);
+
+    pair[] CC = intersectionpoints(circle(O3, 3), circle(O1, 3));
+    pair vC = unit(CC[1] - CC[0]);
+    draw((CC[0] - vC) -- (CC[1] + vC), dashed);
+    
+    draw(circle(O1, 3)); draw(circle(O2, 2.5)); draw(circle(O3, 3));
+  \end{asy}
+\end{figure}
+
+This theorem is particularly useful because it gives us a powerful new tool for proving concurrencies. Let us now explore some examples.
+
+\subsection{Examples}
+\begin{problem}[IMO 1995]
+  Let $ A,B,C,D$ be four distinct points on a line, in that order. The circles with diameters $ AC$ and $ BD$ intersect at $ X$ and $ Y$. The line $ XY$ meets $ BC$ at $ Z$. Let $ P$ be a point on the line $ XY$ other than $ Z$. The line $ CP$ intersects the circle with diameter $ AC$ at $ C$ and $ M$, and the line $ BP$ intersects the circle with diameter $ BD$ at $ B$ and $ N$. Prove that the lines $ AM,DN,XY$ are concurrent.
+\end{problem}
+\begin{proof}
+
+\end{proof}
+
+\begin{problem}[IMO 2008]
+  Let $ H$ be the orthocenter of an acute-angled triangle $ ABC$. The circle $ \Gamma_{A}$ centered at the midpoint of $ BC$ and passing through $ H$ intersects the sideline $ BC$ at points $ A_{1}$ and $ A_{2}$. Similarly, define the points $ B_{1}$, $ B_{2}$, $ C_{1}$ and $ C_{2}$.
+
+Prove that the six points $ A_{1}$, $ A_{2}$, $ B_{1}$, $ B_{2}$, $ C_{1}$ and $ C_{2}$ are concyclic.
+\end{problem}
+\begin{proof}
+
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}[USA Math Olympiad 1997]
+  Let $ABC$ be a triangle. Take points $D$, $E$, $F$ on the perpendicular bisectors of $BC$, $CA$, $AB$ respectively. Show that the lines through $A$, $B$, $C$ perpendicular to $EF$, $FD$, $DE$ respectively are concurrent.
+\end{exercise}
+
+\begin{exercise}
+  Let $ABC$ be a triangle and let $D$ and $E$ be points on sides $AB$ and $AC$, respectively, such that $DE \parallel BC$. Let $P$ be any point interior to triangle $ADE$, and let $F$ and $G$ be the intersections of $DE$ with the lines $BP$ and $CP$, respectively. Let $Q$ be the second intersection point of the circumcircles of triangles $PDG$ and $PFE$. Prove that the points $A,P,$ and $Q$ are collinear.
+\end{exercise}
+
+\begin{exercise}
+  Let $ABC$ be an acute triangle with incenter $I$. Points $E$ and $F$ are the midpoints of the shorter arcs $\widehat{AC}$ and $\widehat{AB}$ of the circumcircle $\odot(ABC)$, respectively. Segment $EF$ intersects sides $AB$ and $AC$ at points $P$ and $Q$, respectively. Point $D$ is defined by the conditions $PD \parallel BI$ and $QD \parallel CI$. Let $T$ be the intersection point of $BF$ and $CE$. Prove that points $T,I,D$ are collinear.
+\end{exercise}
+
+\newpage
+\section{Common Tangents}
+
+\subsection{Examples}
+\begin{problem}[IMO Shortlist 2000]
+  Two circles $ G_1$ and $ G_2$ intersect at two points $ M$ and $ N$. Let $ AB$ be the line tangent to these circles at $ A$ and $ B$, respectively, so that $ M$ lies closer to $ AB$ than $ N$. Let $ CD$ be the line parallel to $ AB$ and passing through the point $ M$, with $ C$ on $ G_1$ and $ D$ on $ G_2$. Lines $ AC$ and $ BD$ meet at $ E$; lines $ AN$ and $ CD$ meet at $ P$; lines $ BN$ and $ CD$ meet at $ Q$. Show that $ EP = EQ$.
+\end{problem}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{problem}[APMO 1999]
+  Let $\Gamma_1$ and $\Gamma_2$ be two circles intersecting at $P$ and $Q$. The common tangent, closer to $P$, of $\Gamma_1$ and $\Gamma_2$ touches $\Gamma_1$ at $A$ and $\Gamma_2$ at $B$. The tangent of $\Gamma_1$ at $P$ meets $\Gamma_2$ at $C$, which is different from $P$, and the extension of $AP$ meets $BC$ at $R$. Prove that the circumcircle of triangle $PQR$ is tangent to $BP$ and $BR$.
+\end{problem}
+
+\begin{proof}
+
+\end{proof}
+
+\subsection{Exercises}
+\begin{exercise}
+  Circles $\omega_1$ and $\omega_2$ intersect at points $X$ and $Y$. Their two common tangents meet at a point $P$. A line $\ell$ through $P$ intersects $\omega_1$ at points $A$ and $C$ and intersects $\omega_2$ at points $B$ and $D$, where the points $A,B,C,D$ lie on $\ell$ in this order.
+Prove that the tangent to $\omega_1$ at $C$ and the tangent to $\omega_2$ at $B$ intersect at a point lying on the line $XY$.
+\end{exercise}
+
+\begin{exercise}
+  Let $\omega_1$ and $\omega_2$ be two circles. Line $\ell_1$ is tangent to $\omega_1$ at $A$ and to $\omega_2$ at $B$, such that the two circles lie on the same side of $\ell_1$. Line $\ell_2$ is tangent to $\omega_1$ at $C$ and to $\omega_2$ at $D$, such that the two circles lie on different sides of $\ell_2$.
+  
+  Prove that the intersection point of $AC$ and $BD$ lies on the line joining the centers of $\omega_1$ and $\omega_2$.
+\end{exercise}
+
+\newpage
+\section{Practice Problems}
+\begin{exercise}
+  Let $\overline{AD}$, $\overline{BE}$, $\overline{CF}$ be the altitudes of a scalene triangle with circumcenter $O$. Prove that $\odot(AOD)$, $\odot(BOE)$, and $\odot(COF)$ intersect at point $X$ other than $O$.
+\end{exercise}
+
+\begin{exercise}[USA Junior Math Olympiad 2024]
+  Let $ABCD$ be a cyclic quadrilateral with $AB = 7$ and $CD = 8$. Point $P$ and $Q$ are selected on segment $AB$ such that $AP = BQ = 3$. Points $R$ and $S$ are selected on segment $CD$ such that $CR = DS = 2$. Prove that $PQRS$ is a cyclic quadrilateral.
+\end{exercise}
+
+\begin{exercise}[USA Junior Math Olympiad 2012]
+  Given a triangle $ABC$, let $P$ and $Q$ be points on segments $\overline{AB}$ and $\overline{AC}$, respectively, such that $AP=AQ$. Let $S$ and $R$ be distinct points on segment $\overline{BC}$ such that $S$ lies between $B$ and $R$, $\angle BPS=\angle PRS$, and $\angle CQR=\angle QSR$. Prove that $P,Q,R,S$ are concyclic (in other words, these four points lie on a circle).
+\end{exercise}
+
+\begin{exercise}[USA Math Olympiad 2023]
+  In an acute triangle $ABC$, let $M$ be the midpoint of $\overline{BC}$. Let $P$ be the foot of the perpendicular from $C$ to $AM$. Suppose that the circumcircle of triangle $ABP$ intersects line $BC$ at two distinct points $B$ and $Q$. Let $N$ be the midpoint of $\overline{AQ}$. Prove that $NB=NC$.
+\end{exercise}
+
+\begin{exercise}[IMO 2009]
+  Let $ ABC$ be a triangle with circumcentre $ O$. The points $ P$ and $ Q$ are interior points of the sides $ CA$ and $ AB$ respectively. Let $ K,L$ and $ M$ be the midpoints of the segments $ BP,CQ$ and $ PQ$. respectively, and let $ \Gamma$ be the circle passing through $ K,L$ and $ M$. Suppose that the line $ PQ$ is tangent to the circle $ \Gamma$. Prove that $ OP = OQ.$
+\end{exercise}
+
+
+
+\end{document}
